@@ -1,0 +1,33 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <math.h>
+        -:    3:
+        -:    4:int count_hours(int seconds);
+        -:    5:int count_minutes(int seconds);
+        -:    6:void output(int ans_hour, int ans_minutes, int ans_seconds);
+        -:    7:
+        -:    8:int main()
+        -:    9:{
+        -:   10:	int seconds;
+        2:   11:	scanf("%d", &seconds);
+        1:   12:	output(count_hours(seconds), count_minutes(seconds), seconds - count_hours(seconds) * 3600 - count_minutes(seconds) * 60);
+        1:   13:}
+        -:   14:
+        -:   15:int count_hours(int seconds)
+        -:   16:{
+        2:   17:	return seconds / 3600;
+        -:   18:}
+        -:   19:
+        -:   20:int count_minutes(int seconds)
+        -:   21:{
+        2:   22:	return (seconds % 3600) / 60;
+        -:   23:}
+        -:   24:
+        -:   25:void output(int ans_hour, int ans_minutes, int ans_seconds)
+        -:   26:{
+        1:   27:	printf("%d %d %d", ans_hour, ans_minutes, ans_seconds);
+        1:   28:}

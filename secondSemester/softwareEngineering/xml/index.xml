@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.18">
+  <compound refid="get_8c" kind="file"><name>get.c</name>
+    <member refid="get_8c_1a4b23a645f3f197fd12e47ebac942fd39" kind="define"><name>ERRORFLAG_ERROR</name></member>
+    <member refid="get_8c_1a19fe98869bc1d23afbd33be05d6c3e40" kind="define"><name>ERRORFLAG_OK</name></member>
+    <member refid="get_8c_1a5f9c84e5e97bb798cb4f780cb3f2748f" kind="define"><name>MAXSIZEMATRIX</name></member>
+    <member refid="get_8c_1a220f38b26fa99d4d91b574f42d991516" kind="define"><name>MAX_STRING_SIZE</name></member>
+    <member refid="get_8c_1af270dda16b2fd850b788fa54c85fdb54" kind="function"><name>findmaxelement</name></member>
+    <member refid="get_8c_1ab4b6c35f865713ac037728cc6272360e" kind="function"><name>refreshfrequent</name></member>
+    <member refid="get_8c_1aa6cb3f8dbdf255d33a07bd2a7361ed65" kind="function"><name>getnumbers</name></member>
+    <member refid="get_8c_1a0864f825628874d6ffb73922e3138c0c" kind="function"><name>trim</name></member>
+    <member refid="get_8c_1aac35ab48c27cfef8552ca63405dba48d" kind="function"><name>checkstrings</name></member>
+    <member refid="get_8c_1a75c3bea48b02b4cf6153a73abeda7361" kind="function"><name>getnextelement</name></member>
+  </compound>
+  <compound refid="get_8h" kind="file"><name>get.h</name>
+    <member refid="get_8h_1af270dda16b2fd850b788fa54c85fdb54" kind="function"><name>findmaxelement</name></member>
+    <member refid="get_8h_1ab4b6c35f865713ac037728cc6272360e" kind="function"><name>refreshfrequent</name></member>
+    <member refid="get_8h_1aa6cb3f8dbdf255d33a07bd2a7361ed65" kind="function"><name>getnumbers</name></member>
+    <member refid="get_8h_1a75c3bea48b02b4cf6153a73abeda7361" kind="function"><name>getnextelement</name></member>
+    <member refid="get_8h_1aac35ab48c27cfef8552ca63405dba48d" kind="function"><name>checkstrings</name></member>
+    <member refid="get_8h_1a0864f825628874d6ffb73922e3138c0c" kind="function"><name>trim</name></member>
+  </compound>
+  <compound refid="main_8c" kind="file"><name>main.c</name>
+    <member refid="main_8c_1a4b23a645f3f197fd12e47ebac942fd39" kind="define"><name>ERRORFLAG_ERROR</name></member>
+    <member refid="main_8c_1a19fe98869bc1d23afbd33be05d6c3e40" kind="define"><name>ERRORFLAG_OK</name></member>
+    <member refid="main_8c_1a0ddf1224851353fc92bfbff6f499fa97" kind="function"><name>main</name></member>
+  </compound>
+</doxygenindex>

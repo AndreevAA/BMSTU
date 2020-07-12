@@ -1,0 +1,158 @@
+\hypertarget{get_8h}{}\doxysection{Файл get.\+h}
+\label{get_8h}\index{get.h@{get.h}}
+
+
+Заголовочный файл с описанием функций  
+
+
+\doxysubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{get_8h_af270dda16b2fd850b788fa54c85fdb54}{findmaxelement}} (int $\ast$list\+\_\+of\+\_\+numbers)
+\item 
+void \mbox{\hyperlink{get_8h_ab4b6c35f865713ac037728cc6272360e}{refreshfrequent}} (long int number, int $\ast$list\+\_\+of\+\_\+numbers, int $\ast$errorflag)
+\item 
+void \mbox{\hyperlink{get_8h_aa6cb3f8dbdf255d33a07bd2a7361ed65}{getnumbers}} (long int $\ast$tempnumber, int $\ast$list\+\_\+of\+\_\+numbers, int $\ast$errorflag)
+\item 
+void \mbox{\hyperlink{get_8h_a75c3bea48b02b4cf6153a73abeda7361}{getnextelement}} (F\+I\+LE $\ast$file, int $\ast$list\+\_\+of\+\_\+numbers, int $\ast$errorflag, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{get_8h_aac35ab48c27cfef8552ca63405dba48d}{checkstrings}} (int $\ast$errorflag, int hight, int width, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{get_8h_a0864f825628874d6ffb73922e3138c0c}{trim}} (char $\ast$s)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Заголовочный файл с описанием функций 
+
+\begin{DoxyAuthor}{Автор}
+\char`\"{}Андреев Александр\char`\"{} 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Версия}
+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Дата}
+21 мая 2020
+\end{DoxyDate}
+Данный файл содержит в себе определения функций, используемых в демонстрационной программе 
+
+\doxysubsection{Функции}
+\mbox{\Hypertarget{get_8h_aac35ab48c27cfef8552ca63405dba48d}\label{get_8h_aac35ab48c27cfef8552ca63405dba48d}} 
+\index{get.h@{get.h}!checkstrings@{checkstrings}}
+\index{checkstrings@{checkstrings}!get.h@{get.h}}
+\doxysubsubsection{\texorpdfstring{checkstrings()}{checkstrings()}}
+{\footnotesize\ttfamily void checkstrings (\begin{DoxyParamCaption}\item[{int $\ast$}]{errorflag,  }\item[{int}]{hight,  }\item[{int}]{width,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Проверяет матрицу в файле на предмет размерности 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em hight} & Высота матрицы \\
+\hline
+\mbox{\texttt{ in}}  & {\em width} & Ширина матрицы \\
+\hline
+\mbox{\texttt{ in}}  & {\em errorflag} & Флаг об ошибке \\
+\hline
+\mbox{\texttt{ out}}  & {\em errorflag} & Измененный флаг об ошибке \\
+\hline
+ & {\em \mbox{[}int\mbox{]}} & argv Массив с названием открываемого файла для проверки \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{get_8h_af270dda16b2fd850b788fa54c85fdb54}\label{get_8h_af270dda16b2fd850b788fa54c85fdb54}} 
+\index{get.h@{get.h}!findmaxelement@{findmaxelement}}
+\index{findmaxelement@{findmaxelement}!get.h@{get.h}}
+\doxysubsubsection{\texorpdfstring{findmaxelement()}{findmaxelement()}}
+{\footnotesize\ttfamily int findmaxelement (\begin{DoxyParamCaption}\item[{int $\ast$}]{list\+\_\+of\+\_\+numbers }\end{DoxyParamCaption})}
+
+Находит наболее часто встречающийся элемент 
+\begin{DoxyParams}{Аргументы}
+{\em list\+\_\+of\+\_\+numbers} & Массив количества встреч цифр среди элементов матрицы \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Позицию числа в массиве с наибольшим значением
+\end{DoxyReturn}
+Код функции выглядит следующим образом\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{get_8c_af270dda16b2fd850b788fa54c85fdb54}{findmaxelement}}(\textcolor{keywordtype}{int} *list\_of\_numbers)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} numberofelement = 0, element = 0;}
+\DoxyCodeLine{    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 10; i++)}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{        \textcolor{keywordflow}{if} (*(list\_of\_numbers + i) > numberofelement)}
+\DoxyCodeLine{        \{}
+\DoxyCodeLine{            numberofelement = *(list\_of\_numbers + i);}
+\DoxyCodeLine{            element = i;}
+\DoxyCodeLine{        \}}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} element;}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+ \mbox{\Hypertarget{get_8h_a75c3bea48b02b4cf6153a73abeda7361}\label{get_8h_a75c3bea48b02b4cf6153a73abeda7361}} 
+\index{get.h@{get.h}!getnextelement@{getnextelement}}
+\index{getnextelement@{getnextelement}!get.h@{get.h}}
+\doxysubsubsection{\texorpdfstring{getnextelement()}{getnextelement()}}
+{\footnotesize\ttfamily void getnextelement (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{file,  }\item[{int $\ast$}]{list\+\_\+of\+\_\+numbers,  }\item[{int $\ast$}]{errorflag,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Получает следущее число матрицы 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em file} & Ресурсный файл, откуда считывается матрицы \\
+\hline
+\mbox{\texttt{ in}}  & {\em errorflag} & Флаг об ошибке \\
+\hline
+\mbox{\texttt{ out}}  & {\em errorflag} & Измененный флаг об ошибке \\
+\hline
+\mbox{\texttt{ in}}  & {\em list\+\_\+of\+\_\+numbers} & Массив количества встреч цифр среди элементов матрицы \\
+\hline
+\mbox{\texttt{ out}}  & {\em list\+\_\+of\+\_\+numbers} & Измененный массив количества встреч цифр среди элементов матрицы \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{get_8h_aa6cb3f8dbdf255d33a07bd2a7361ed65}\label{get_8h_aa6cb3f8dbdf255d33a07bd2a7361ed65}} 
+\index{get.h@{get.h}!getnumbers@{getnumbers}}
+\index{getnumbers@{getnumbers}!get.h@{get.h}}
+\doxysubsubsection{\texorpdfstring{getnumbers()}{getnumbers()}}
+{\footnotesize\ttfamily void getnumbers (\begin{DoxyParamCaption}\item[{long int $\ast$}]{tempnumber,  }\item[{int $\ast$}]{list\+\_\+of\+\_\+numbers,  }\item[{int $\ast$}]{errorflag }\end{DoxyParamCaption})}
+
+Получает цифры чисел матрицы 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em tempnumber} & Текущее число матрицы \\
+\hline
+\mbox{\texttt{ in}}  & {\em errorflag} & Флаг об ошибке \\
+\hline
+\mbox{\texttt{ out}}  & {\em errorflag} & Измененный флаг об ошибке \\
+\hline
+\mbox{\texttt{ in}}  & {\em list\+\_\+of\+\_\+numbers} & Массив количества встреч цифр среди элементов матрицы \\
+\hline
+\mbox{\texttt{ out}}  & {\em list\+\_\+of\+\_\+numbers} & Измененный массив количества встреч цифр среди элементов матрицы \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{get_8h_ab4b6c35f865713ac037728cc6272360e}\label{get_8h_ab4b6c35f865713ac037728cc6272360e}} 
+\index{get.h@{get.h}!refreshfrequent@{refreshfrequent}}
+\index{refreshfrequent@{refreshfrequent}!get.h@{get.h}}
+\doxysubsubsection{\texorpdfstring{refreshfrequent()}{refreshfrequent()}}
+{\footnotesize\ttfamily void refreshfrequent (\begin{DoxyParamCaption}\item[{long int}]{number,  }\item[{int $\ast$}]{list\+\_\+of\+\_\+numbers,  }\item[{int $\ast$}]{errorflag }\end{DoxyParamCaption})}
+
+Обновляет цифры числа элементов матрицы 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em number} & Текущая цифра числа матрицы \\
+\hline
+\mbox{\texttt{ in}}  & {\em errorflag} & Флаг об ошибке \\
+\hline
+\mbox{\texttt{ out}}  & {\em errorflag} & Измененный флаг об ошибке \\
+\hline
+\mbox{\texttt{ in}}  & {\em list\+\_\+of\+\_\+numbers} & Массив количества встреч цифр среди элементов матрицы \\
+\hline
+\mbox{\texttt{ out}}  & {\em list\+\_\+of\+\_\+numbers} & Измененный массив количества встреч цифр среди элементов матрицы \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{get_8h_a0864f825628874d6ffb73922e3138c0c}\label{get_8h_a0864f825628874d6ffb73922e3138c0c}} 
+\index{get.h@{get.h}!trim@{trim}}
+\index{trim@{trim}!get.h@{get.h}}
+\doxysubsubsection{\texorpdfstring{trim()}{trim()}}
+{\footnotesize\ttfamily void trim (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+Удаляет пробелы и табуляцию в начале и конце строки 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em s} & Строка \\
+\hline
+\mbox{\texttt{ out}}  & {\em errorflag} & Измененная строка \\
+\hline
+\end{DoxyParams}

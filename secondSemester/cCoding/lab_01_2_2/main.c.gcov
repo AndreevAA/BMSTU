@@ -1,0 +1,38 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <math.h>
+        -:    3:
+        -:    4:float distance(float ax, float ay, float bx, float by);
+        -:    5:float perimeter(float ax, float ay, float bx, float by, float cx, float cy);
+        -:    6:void output(float perimeter_data);
+        -:    7:
+        -:    8:int main()
+        -:    9:{
+        -:   10:	float ax, ay, bx, by, cx, cy;
+        1:   11:	scanf("%f%f%f%f%f%f", &ax, &ay, &bx, &by, &cx, &cy);
+        1:   12:	output(perimeter(ax, ay, bx, by, cx, cy));
+        1:   13:	return 0;
+        -:   14:}
+        -:   15:
+        -:   16:float distance(float ax, float ay, float bx, float by)
+        -:   17:{
+        3:   18:	return sqrt((ax - bx) * (ax - bx) + (ay - by) * (ay - by));
+        -:   19:}
+        -:   20:
+        -:   21:float perimeter(float ax, float ay, float bx, float by, float cx, float cy)
+        -:   22:{
+        -:   23:	float side_ab, side_bc, side_ca;
+        1:   24:	side_ab = distance(ax, ay, bx, by);
+        1:   25:	side_bc = distance(bx, by, cx, cy);
+        1:   26:	side_ca = distance(cx, cy, ax, ay);
+        1:   27:	return side_ab + side_bc + side_ca;;
+        -:   28:}
+        -:   29:
+        -:   30:void output(float perimeter_data)
+        -:   31:{
+        1:   32:	printf("%f\n", perimeter_data);
+        1:   33:}

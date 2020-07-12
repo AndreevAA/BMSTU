@@ -1,0 +1,2 @@
+sdfdsfsdfsdf
+Enter char to search for: g

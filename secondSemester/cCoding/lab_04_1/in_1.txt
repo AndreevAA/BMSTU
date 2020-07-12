@@ -1,0 +1,2 @@
+s
+Enter char to search for: s

@@ -1,0 +1,2 @@
+Found on pos 0 
+Str from char: s

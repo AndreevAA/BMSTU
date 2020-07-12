@@ -1,0 +1,69 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:5
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <math.h>
+        -:    3:
+        -:    4:int gcd(int a, int b);
+        -:    5:void output(int data);
+        -:    6:int abs(int a);
+        -:    7:int throw_exception(void);
+        -:    8:
+        -:    9:int main()
+        -:   10:{
+        5:   11:    int a, b, code_err = 0;
+        5:   12:    int res = scanf("%d %d", &a, &b);
+        9:   13:    if (res != 2 || a <= 0)
+        -:   14:    {
+        3:   15:        code_err = throw_exception();
+        3:   16:    }
+        -:   17:    else
+        -:   18:    {
+        2:   19:        if (b <= 0)
+        -:   20:        {
+    #####:   21:            code_err = throw_exception();
+    #####:   22:        }
+        -:   23:        else
+        -:   24:        {
+        2:   25:            output(gcd(abs(a), abs(b)));
+        -:   26:        }
+        -:   27:    }
+        5:   28:    return code_err;
+        -:   29:}
+        -:   30:
+        -:   31:int throw_exception(void)
+        -:   32:{
+        6:   33:    printf("ERR");
+        3:   34:    return 1;
+        -:   35:}
+        -:   36:
+        -:   37:int gcd(int a, int b)
+        -:   38:{
+       14:   39:    if (a == b) 
+        2:   40:        return a;
+       12:   41:    if (a > b) 
+        -:   42:    {
+        2:   43:        int temp = a;
+        2:   44:        a = b;
+        2:   45:        b = temp;
+        2:   46:    }
+       12:   47:    return gcd(a, b - a);
+       14:   48:}
+        -:   49:
+        -:   50:int abs(int a)
+        -:   51:{
+        4:   52:    if (a > 0)
+        4:   53:        return a;
+        -:   54:    else
+        -:   55:    {
+    #####:   56:        return -1 * a;
+        -:   57:    }
+        4:   58:}
+        -:   59:
+        -:   60:void output(int data)
+        -:   61:{
+        2:   62:    printf("%d\n", data);
+        2:   63:}
+        -:   64:

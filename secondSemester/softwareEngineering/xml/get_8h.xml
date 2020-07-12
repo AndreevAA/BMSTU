@@ -1,0 +1,410 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.18">
+  <compounddef id="get_8h" kind="file" language="C++">
+    <compoundname>get.h</compoundname>
+    <includedby refid="get_8c" local="yes">get.c</includedby>
+    <includedby refid="main_8c" local="yes">main.c</includedby>
+    <invincdepgraph>
+      <node id="3">
+        <label>main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="2">
+        <label>get.c</label>
+        <link refid="get_8c"/>
+      </node>
+      <node id="1">
+        <label>get.h</label>
+        <link refid="get_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="get_8h_1af270dda16b2fd850b788fa54c85fdb54" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int findmaxelement</definition>
+        <argsstring>(int *list_of_numbers)</argsstring>
+        <name>findmaxelement</name>
+        <param>
+          <type>int *</type>
+          <declname>list_of_numbers</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Находит наболее часто встречающийся элемент <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Позицию числа в массиве с наибольшим значением</para>
+</simplesect>
+Код функции выглядит следующим образом: <programlisting><codeline><highlight class="normal">int<sp/>findmaxelement(int<sp/>*list_of_numbers)</highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>int<sp/>numberofelement<sp/>=<sp/>0,<sp/>element<sp/>=<sp/>0;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>for<sp/>(int<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>10;<sp/>i++)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(*(list_of_numbers<sp/>+<sp/>i)<sp/>&gt;<sp/>numberofelement)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>numberofelement<sp/>=<sp/>*(list_of_numbers<sp/>+<sp/>i);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>element<sp/>=<sp/>i;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>element;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="get.h" line="34" column="5" bodyfile="get.c" bodystart="25" bodyend="37" declfile="get.h" declline="34" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="get_8h_1ab4b6c35f865713ac037728cc6272360e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void refreshfrequent</definition>
+        <argsstring>(long int number, int *list_of_numbers, int *errorflag)</argsstring>
+        <name>refreshfrequent</name>
+        <param>
+          <type>long int</type>
+          <declname>number</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>list_of_numbers</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>errorflag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Обновляет цифры числа элементов матрицы <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">number</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Текущая цифра числа матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="get.h" line="44" column="6" bodyfile="get.c" bodystart="39" bodyend="50" declfile="get.h" declline="44" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="get_8h_1aa6cb3f8dbdf255d33a07bd2a7361ed65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void getnumbers</definition>
+        <argsstring>(long int *tempnumber, int *list_of_numbers, int *errorflag)</argsstring>
+        <name>getnumbers</name>
+        <param>
+          <type>long int *</type>
+          <declname>tempnumber</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>list_of_numbers</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>errorflag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Получает цифры чисел матрицы <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">tempnumber</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Текущее число матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="get.h" line="54" column="6" bodyfile="get.c" bodystart="52" bodyend="64" declfile="get.h" declline="54" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="get_8h_1a75c3bea48b02b4cf6153a73abeda7361" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void getnextelement</definition>
+        <argsstring>(FILE *file, int *list_of_numbers, int *errorflag, char *argv[])</argsstring>
+        <name>getnextelement</name>
+        <param>
+          <type>FILE *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>list_of_numbers</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>errorflag</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>argv</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Получает следущее число матрицы <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">file</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Ресурсный файл, откуда считывается матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">list_of_numbers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный массив количества встреч цифр среди элементов матрицы </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="get.h" line="64" column="6" bodyfile="get.c" bodystart="127" bodyend="173" declfile="get.h" declline="64" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="get_8h_1aac35ab48c27cfef8552ca63405dba48d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void checkstrings</definition>
+        <argsstring>(int *errorflag, int hight, int width, char *argv[])</argsstring>
+        <name>checkstrings</name>
+        <param>
+          <type>int *</type>
+          <declname>errorflag</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>hight</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>argv</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Проверяет матрицу в файле на предмет размерности <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">hight</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Высота матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Ширина матрицы </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененный флаг об ошибке </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>[int]</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>argv Массив с названием открываемого файла для проверки </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="get.h" line="74" column="6" bodyfile="get.c" bodystart="89" bodyend="125" declfile="get.h" declline="74" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="get_8h_1a0864f825628874d6ffb73922e3138c0c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void trim</definition>
+        <argsstring>(char *s)</argsstring>
+        <name>trim</name>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Удаляет пробелы и табуляцию в начале и конце строки <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Строка </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">errorflag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Измененная строка </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="get.h" line="81" column="6" bodyfile="get.c" bodystart="66" bodyend="87" declfile="get.h" declline="81" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Заголовочный файл с описанием функций </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="author"><para>&quot;Андреев Александр&quot; </para>
+</simplesect>
+<simplesect kind="version"><para>1 </para>
+</simplesect>
+<simplesect kind="date"><para>21 мая 2020</para>
+</simplesect>
+Данный файл содержит в себе определения функций, используемых в демонстрационной программе </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="34"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="get_8h_1af270dda16b2fd850b788fa54c85fdb54" kindref="member">findmaxelement</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*list_of_numbers);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="get_8h_1ab4b6c35f865713ac037728cc6272360e" kindref="member">refreshfrequent</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>number,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*list_of_numbers,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*errorflag);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="get_8h_1aa6cb3f8dbdf255d33a07bd2a7361ed65" kindref="member">getnumbers</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*tempnumber,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*list_of_numbers,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*errorflag);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="get_8h_1a75c3bea48b02b4cf6153a73abeda7361" kindref="member">getnextelement</ref>(FILE<sp/>*file,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*list_of_numbers,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*errorflag,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*argv[]);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="get_8h_1aac35ab48c27cfef8552ca63405dba48d" kindref="member">checkstrings</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*errorflag,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>hight,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>width,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*argv[]);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="get_8h_1a0864f825628874d6ffb73922e3138c0c" kindref="member">trim</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*s);</highlight></codeline>
+    </programlisting>
+    <location file="get.h"/>
+  </compounddef>
+</doxygen>

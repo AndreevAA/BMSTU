@@ -1,0 +1,5 @@
+3/0
+6*(6*3)
+2*2
+5+3
+<function history at 0x10fad50d0>

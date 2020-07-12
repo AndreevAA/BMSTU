@@ -1,0 +1,68 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:0
+        -:    0:Programs:0
+        -:    1:#include <math.h>
+        -:    2:#include <stdlib.h>
+        -:    3:#include <stdio.h>
+        -:    4:#include <math.h>
+        -:    5:
+        -:    6:void output(float s_ans, float f_ans, float ans_absolute, float ans_local);
+        -:    7:int throw_exception(void);
+        -:    8:float s_func(float x, float eps);
+        -:    9:
+        -:   10:int main()
+        -:   11:{
+       14:   12:    float x, eps, code_err = 0;
+       14:   13:    int rc = scanf("%f %f", &x, &eps);
+       48:   14:    if (rc != 2 || (eps <= 0) || (eps > 1) || x > 1 || x < -1)
+        -:   15:    {
+       10:   16:        code_err = throw_exception();
+       10:   17:    }
+        -:   18:    else
+        -:   19:    {
+        4:   20:        if (x == 0)
+        -:   21:        {
+    #####:   22:            output(0, 0, 0, 0);
+    #####:   23:        }
+        -:   24:        else
+        -:   25:        {
+        4:   26:            float s_ans = s_func(x, eps);
+        4:   27:            float f_ans = atan(x);
+        4:   28:            float ans_absolute = fabs(f_ans - s_ans);
+        4:   29:            float ans_local = fabs(1 - (s_ans / f_ans));
+        4:   30:            output(s_ans, f_ans, ans_absolute, ans_local);
+        -:   31:        }
+        -:   32:    }
+       14:   33:    return code_err;
+        -:   34:}
+        -:   35:
+        -:   36:int throw_exception(void)
+        -:   37:{
+       20:   38:    printf("ERR");
+       10:   39:    return 1;
+        -:   40:}
+        -:   41:
+        -:   42:float s_func(float x, float eps)
+        -:   43:{
+        -:   44:    float sprev, snext, numerator, s;
+        4:   45:    int i = 1;
+        -:   46:
+        4:   47:    sprev = numerator = s = x;
+        -:   48:    
+        8:   49:    while (fabs(sprev) > eps)
+        -:   50:    {
+    #####:   51:        i += 2;
+    #####:   52:        numerator *= -1 * x * x;
+    #####:   53:        snext = numerator / i;
+    #####:   54:        s += snext;
+    #####:   55:        sprev = snext;
+        -:   56:    }
+        4:   57:    return s;
+        -:   58:}
+        -:   59:
+        -:   60:void output(float s_ans, float f_ans, float ans_absolute, float ans_local)
+        -:   61:{
+        4:   62:    printf("%f\n%f\n%f %f\n", s_ans, f_ans, ans_absolute, ans_local);
+        4:   63:}
