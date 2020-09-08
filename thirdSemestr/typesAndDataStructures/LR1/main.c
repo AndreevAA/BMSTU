@@ -113,18 +113,76 @@ int scanf_numbers(number* first_number, number* second_number)
 	return error_flag;
 }
 
+// int multiply_numbers(char * first_number, char * second_number, char * answer_number)
+// {
+
+// }
+
+int contain_point(char * temp_mantisa, int * mantisa_order)
+{
+	int contain_point_status = ERROR_STATUS;
+
+	char new_mantisa[MAX_NUMBERS];
+
+	int add_cursor = 0, check_cursur = 0;
+
+	while (check_cursur != strlen(temp_mantisa) - 1)
+	{
+		if (temp_mantisa[check_cursur] == '.')
+		{
+			*mantisa_order = check_cursur - (strlen(temp_mantisa) - 1);
+			contain_point_status = SUCCESS_STATUS;
+			add_cursor += 0;
+		}
+
+		else if (temp_mantisa[check_cursur] != '.')
+		{
+			new_mantisa[add_cursor] = temp_mantisa[check_cursur];
+			add_cursor++;
+		}
+
+		check_cursur++;
+	}
+
+	printf("\n%s\n", new_mantisa);
+
+	*temp_mantisa = *new_mantisa;
+
+	return contain_point_status;
+}
+
+void transform_mantisa(number* temp_number)
+{
+	int mantisa_order = 0;
+
+	if (contain_point((*temp_number).mantisa, &mantisa_order) == SUCCESS_STATUS)
+	{
+		printf("\nHERE2\n");
+		printf("\n%s, %d\n", (*temp_number).mantisa, mantisa_order);
+	}
+}
+
+void get_composition(number* first_number, number* second_number, number* answer_number)
+{
+	transform_mantisa(second_number);
+}
+
 int main()
 {
 	int error_flag = ERROR_STATUS;
 
 	number first_number;
 	number second_number;
+	number answer_number;
 
 	if (scanf_numbers(&first_number, &second_number) == SUCCESS_STATUS)
 	{
 		printf("first_number:\nsign: %c; mantisa: %s; order_sign: %c; order_order: %s", first_number.mantisa_sign, first_number.mantisa, first_number.order_sign, first_number.order);
 
 		printf("second_number:\nsign: %c; mantisa: %s; order_sign: %c; order_order: %s", second_number.mantisa_sign, second_number.mantisa, second_number.order_sign, second_number.order);
+		
+		get_composition(&first_number, &second_number, &answer_number);
+
 		error_flag = SUCCESS_STATUS;
 	}
 
