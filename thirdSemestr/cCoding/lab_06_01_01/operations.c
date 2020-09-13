@@ -42,7 +42,7 @@ void add_temp_film(struct films* all_films, int *number_of_films, char* temp_tit
 
 int search_field(struct films* all_films, int number_of_films, char* field, char* key)
 {	
-	int errorflag = 0;
+	int errorflag = SUCCESS_STATUS;
 
 	int left_border = 0, right_border = number_of_films - 1;
 	int search_index = -1;
@@ -71,17 +71,14 @@ int search_field(struct films* all_films, int number_of_films, char* field, char
 	}
 	
 	if (search_index == -1)
-	{
-		errorflag = 1;
 		printf("Not found\n");
-	}
 
 	return errorflag;
 }
 
 void fill_struct(struct films* all_films)
 {
-	for (int i = 0; i < MAX_SIZE; i++)
+	for (int i = 0; i < MAX_NUMBER; i++)
 	{
 		*all_films[i].title = '\0';
 		*all_films[i].name = '\0';

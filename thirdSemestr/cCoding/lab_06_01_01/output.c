@@ -6,7 +6,8 @@
 
 void output_data(char * title, char * name, char * year)
 {
-	printf("%s, %lu\n%s, %lu\n%d\n", title, strlen(title), name, strlen(name), atoi(year));
+	//printf("%s, %lu\n%s, %lu\n%d\n", title, strlen(title), name, strlen(name), atoi(year));
+	printf("%s\n%s\n%d\n", title, name, atoi(year));
 }
 
 void output_sorted_data(struct films* all_films, int number_of_films)
