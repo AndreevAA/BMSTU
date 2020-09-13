@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "main.h"
 #include "operations.h"
 
 //сортировка вставками
@@ -25,17 +26,15 @@ void insertionsort(struct films* all_films, int number_of_films, char * key_to_c
 }
 
 
-void add_temp_film(films** all_films, int *number_of_films, char* temp_title, char* temp_name, char* temp_year)
+void add_temp_film(struct films* all_films, int *number_of_films, char* temp_title, char* temp_name, char* temp_year)
 {
 
-	(*all_films)[*number_of_films].title = (char*) malloc(strlen(temp_title) + 1);
-	strcpy((*all_films)[*number_of_films].title, temp_title);
-
-	(*all_films)[*number_of_films].name = (char*) malloc(strlen(temp_name) + 1);
-	strcpy((*all_films)[*number_of_films].name, temp_name);
-
-	(*all_films)[*number_of_films].year = (char*) malloc(strlen(temp_year) + 1);
-	strcpy((*all_films)[*number_of_films].year, temp_year);
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		all_films[*number_of_films].title[i] = temp_title[i];
+		all_films[*number_of_films].name[i] = temp_name[i];
+		all_films[*number_of_films].year[i] = temp_year[i];
+	}
 
 	*number_of_films += 1;
 	
@@ -78,4 +77,14 @@ int search_field(struct films* all_films, int number_of_films, char* field, char
 	}
 
 	return errorflag;
+}
+
+void fill_struct(struct films* all_films)
+{
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		*all_films[i].title = '\0';
+		*all_films[i].name = '\0';
+		*all_films[i].year = '\0';
+	}
 }

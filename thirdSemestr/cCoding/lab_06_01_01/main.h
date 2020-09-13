@@ -12,9 +12,9 @@
 #define ERROR_STATUS 1
 
 typedef struct films {
-  char *title;
-  char *name;
-  char *year;
+  char title[MAX_SIZE];
+  char name[MAX_SIZE];
+  char year[MAX_SIZE];
 } films;
 
 #endif
