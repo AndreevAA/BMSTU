@@ -22,7 +22,7 @@
 \param[in] second_film Структура второго фильма
 \param[in] key_to_compare Содержание ключа к сравнению
 */
-int compare_elems(films one_film, films second_film, char* key_to_compare);
+int compare_elems(films one_film, films second_film, char *key_to_compare);
 
 /*!
 Вынесенный декомпозированный модуль из бин-поиска по сравнению с серидиной и переназначением границ для <title>
@@ -33,7 +33,7 @@ int compare_elems(films one_film, films second_film, char* key_to_compare);
 \param[in] right_border Правая граница массива
 \param[in] search_index Показывает, нашлось ли равное значение в массиве
 */
-int strcmp_title(char* key, films* all_films, int middle_position, int *left_border, int *right_border, int *search_index);
+int strcmp_title(char *key, films *all_films, int middle_position, int *left_border, int *right_border, int *search_index);
 
 /*!
 Вынесенный декомпозированный модуль из бин-поиска по сравнению с серидиной и переназначением границ для <name>
@@ -44,7 +44,7 @@ int strcmp_title(char* key, films* all_films, int middle_position, int *left_bor
 \param[in] right_border Правая граница массива
 \param[in] search_index Показывает, нашлось ли равное значение в массиве
 */
-int strcmp_name(char* key, films* all_films, int middle_position, int *left_border, int *right_border, int *search_index);
+int strcmp_name(char *key, films *all_films, int middle_position, int *left_border, int *right_border, int *search_index);
 
 /*!
 Вынесенный декомпозированный модуль из бин-поиска по сравнению с серидиной и переназначением границ для <year>
@@ -55,4 +55,4 @@ int strcmp_name(char* key, films* all_films, int middle_position, int *left_bord
 \param[in] right_border Правая граница массива
 \param[in] search_index Показывает, нашлось ли равное значение в массиве
 */
-int strcmp_year(char* key, films* all_films, int middle_position, int *left_border, int *right_border, int *search_index);
+int strcmp_year(char *key, films *all_films, int middle_position, int *left_border, int *right_border, int *search_index);

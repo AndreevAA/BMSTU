@@ -2,36 +2,34 @@
 #include <string.h>
 #include <stdlib.h>
 #include "input.h"
-#include "main.h"
 #include "output.h"
 
-void delete_enter(char * temp_text)
+void delete_enter(char *temp_text)
 {
 	if (temp_text[strlen(temp_text) - 1] == '\n')
 		temp_text[strlen(temp_text) - 1] = '\0';
 }
 
-void input_data_transomation(char * temp_title, char * temp_name, char * temp_year)
+void input_data_transomation(char *temp_title, char *temp_name, char *temp_year)
 {
 	delete_enter(temp_title);
 	delete_enter(temp_name);
 	delete_enter(temp_year);
 }
 
-int read_string(char* temp_string, FILE *operationfile)
+int read_string(char *temp_string, FILE *operationfile)
 {
-	if (fgets (temp_string, MAX_SIZE, operationfile) != NULL)
+	if (fgets(temp_string, MAX_SIZE, operationfile) != NULL)
 		return SUCCESS_STATUS;
+		
 	return ERROR_STATUS;
 }
 
-int scanf_input_data(char* temp_title, char* temp_name, char* temp_year, FILE *operationfile)
+int scanf_input_data(char *temp_title, char *temp_name, char *temp_year, FILE *operationfile)
 {
-	if (read_string(temp_title, operationfile) == SUCCESS_STATUS && read_string(temp_name, operationfile) == SUCCESS_STATUS && read_string(temp_year, operationfile) == SUCCESS_STATUS)
-		{
-			// output_data(temp_title, temp_name, temp_year);
-		return SUCCESS_STATUS;
-		}
+	if (feof(operationfile) == 0)
+		if (read_string(temp_title, operationfile) == SUCCESS_STATUS && read_string(temp_name, operationfile) == SUCCESS_STATUS && read_string(temp_year, operationfile) == SUCCESS_STATUS)
+			return SUCCESS_STATUS;
 
 	return ERROR_STATUS;
 }
@@ -49,9 +47,9 @@ int is_data_right(char *data)
 
 	if (data[0] == '0')
 		input_error_status = ERROR_STATUS;
-	
+
 	if (input_error_status == SUCCESS_STATUS)
-		if (atoi(data) >= 2020 || atoi(data) <= 0)
+		if (atoi(data) > 2020 || atoi(data) <= 0)
 			input_error_status = ERROR_STATUS;
 
 	return input_error_status;
@@ -84,4 +82,27 @@ int check_input_argv(int argc, char *argv[])
 	}
 
 	return input_error_status;
+}
+
+int check_input_film(char *temp_title, char *temp_name, char *temp_year)
+{
+	int error_flag = SUCCESS_STATUS;
+
+	if (strlen(temp_name) > 25 || strlen(temp_title) > 25 || is_data_right(temp_year) == ERROR_STATUS || strlen(temp_name) == 0 || strlen(temp_title) == 0 || strlen(temp_year) == 0)
+		error_flag = ERROR_STATUS;
+	else if (temp_title[0] == '\n' || temp_name[0] == '\n' || temp_year[0] == '\n')
+		error_flag = ERROR_STATUS;
+
+	return error_flag;
+}
+
+int num_of_structures(struct films *all_films, int number_of_films)
+{
+	int answer = 0;
+
+	for (int i = 0; i < number_of_films; i++)
+		if (strlen((all_films)[i].title) > 0 && strlen(all_films[i].name))
+			answer++;
+
+	return answer;
 }

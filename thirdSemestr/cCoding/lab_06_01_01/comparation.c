@@ -16,7 +16,7 @@
 #include "comparation.h"
 
 // Сравнение двух фильмов на предмет алфавитности
-int compare_elems(films one_film, films second_film, char* key_to_compare)
+int compare_elems(films one_film, films second_film, char *key_to_compare)
 {	
 	if (strcmp(key_to_compare, "title") == 0)
 		return (strcmp(one_film.title, second_film.title));
@@ -27,7 +27,7 @@ int compare_elems(films one_film, films second_film, char* key_to_compare)
 }
 
 // Вынесенная функция бинпоиска по сравнению поля <title>
-int strcmp_title(char* key, films* all_films, int middle_position, int *left_border, int *right_border, int *search_index)
+int strcmp_title(char *key, films *all_films, int middle_position, int *left_border, int *right_border, int *search_index)
 {
 	int break_status = ERROR_STATUS;
 
@@ -51,7 +51,7 @@ int strcmp_title(char* key, films* all_films, int middle_position, int *left_bor
 }
 
 // Вынесенная функция бинпоиска по сравнению поля <name>
-int strcmp_name(char* key, films* all_films, int middle_position, int *left_border, int *right_border, int *search_index)
+int strcmp_name(char *key, films *all_films, int middle_position, int *left_border, int *right_border, int *search_index)
 {
 	int break_status = ERROR_STATUS;
 
@@ -75,7 +75,7 @@ int strcmp_name(char* key, films* all_films, int middle_position, int *left_bord
 }
 
 // Вынесенная функция бинпоиска по сравнению поля <name>
-int strcmp_year(char* key, films* all_films, int middle_position, int *left_border, int *right_border, int *search_index)
+int strcmp_year(char *key, films *all_films, int middle_position, int *left_border, int *right_border, int *search_index)
 {
 	int break_status = ERROR_STATUS;
 
