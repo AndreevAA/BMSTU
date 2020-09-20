@@ -16,7 +16,7 @@
 #include "operations.h"
 
 // Модуль сортировки вставками
-void insertionsort(struct films *all_films, int number_of_films, char *key_to_compare)
+void insert_sort(struct films *all_films, int number_of_films, char *key_to_compare)
 {
 	int location;
 	films new_element;

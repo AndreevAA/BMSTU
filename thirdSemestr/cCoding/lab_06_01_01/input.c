@@ -4,6 +4,9 @@
 #include "input.h"
 #include "output.h"
 
+int is_data_right(char *data);
+void delete_enter(char *temp_text);
+
 void delete_enter(char *temp_text)
 {
 	if (temp_text[strlen(temp_text) - 1] == '\n')
@@ -34,6 +37,17 @@ int scanf_input_data(char *temp_title, char *temp_name, char *temp_year, FILE *o
 	return ERROR_STATUS;
 }
 
+int get_number_of_films(struct films *all_films, int number_of_films)
+{
+	int temp_number_of_films = 0;
+
+	for (int i = 0; i < number_of_films; i++)
+		if (strlen((all_films)[i].title) > 0 && strlen((all_films)[i].name) > 0 && strlen((all_films)[i].year) > 0)
+			temp_number_of_films++;
+
+	return temp_number_of_films;
+}
+
 int is_data_right(char *data)
 {
 	int input_error_status = SUCCESS_STATUS;
@@ -55,6 +69,15 @@ int is_data_right(char *data)
 	return input_error_status;
 }
 
+int is_only_string(char *text)
+{
+	for (int i = 0; i < strlen(text); i++)
+		if ('0' <= text[i] && text[i] <= '9')
+			return ERROR_STATUS;
+
+	return SUCCESS_STATUS;
+}
+
 int check_input_argv(int argc, char *argv[])
 {
 	int input_error_status = ERROR_STATUS;
@@ -70,7 +93,7 @@ int check_input_argv(int argc, char *argv[])
 		}
 		else if (strcmp(argv[2], "title") == SUCCESS_STATUS || strcmp(argv[2], "name") == SUCCESS_STATUS)
 		{
-			if (argc == MAX_NUM_OF_ARGC && strlen(argv[3]) <= 25)
+			if (argc == MAX_NUM_OF_ARGC && strlen(argv[3]) <= 25 && is_only_string(argv[3]) == SUCCESS_STATUS)
 			{
 				input_error_status = SUCCESS_STATUS;
 			}
@@ -90,7 +113,9 @@ int check_input_film(char *temp_title, char *temp_name, char *temp_year)
 
 	if (strlen(temp_name) > 25 || strlen(temp_title) > 25 || is_data_right(temp_year) == ERROR_STATUS || strlen(temp_name) == 0 || strlen(temp_title) == 0 || strlen(temp_year) == 0)
 		error_flag = ERROR_STATUS;
-	else if (temp_title[0] == '\n' || temp_name[0] == '\n' || temp_year[0] == '\n')
+	if (temp_title[0] == '\n' || temp_name[0] == '\n' || temp_year[0] == '\n')
+		error_flag = ERROR_STATUS;
+	if (is_only_string(temp_title) == ERROR_STATUS || is_only_string(temp_name) == ERROR_STATUS)
 		error_flag = ERROR_STATUS;
 
 	return error_flag;

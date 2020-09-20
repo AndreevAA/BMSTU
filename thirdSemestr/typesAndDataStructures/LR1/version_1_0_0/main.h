@@ -15,18 +15,17 @@
 #ifndef MAINH
 #define MAINH
 
-#define MIN_NUM_OF_ARGC 3
-#define MAX_NUM_OF_ARGC 4
-#define MAX_SIZE 50
-#define MAX_NUMBER 50
-#define SUCCESS_STATUS 0
+#define MAX_NUMBERS 30
 #define ERROR_STATUS 1
+#define SUCCESS_STATUS 0
+#define NUMBER_OF_MULTIPLIERS 2
 
-typedef struct films 
-{
-	char title[MAX_SIZE];
-	char name[MAX_SIZE];
-	char year[MAX_SIZE];
-} films;
+typedef struct number {
+    char mantisa_sign;			// Знак числа '-'/'+'
+	char mantisa[MAX_NUMBERS];  // Число свободное от знаков кроме цифр
+
+	char order_sign;
+	char order[MAX_NUMBERS];
+} number;
 
 #endif
