@@ -74,6 +74,8 @@ int is_integer_number_ok(char *temp_number)
 		if (counter_of_numbers == temp_vector_size - start_check_position)
 			error_code = SUCCESS_STATUS;
 	}
+	if (temp_vector_size > MAX_NUMBERS)
+		printf("“Вы некорректно ввели целое число. Исправьте и повторите заново.\n");
 
 	return error_code;
 }

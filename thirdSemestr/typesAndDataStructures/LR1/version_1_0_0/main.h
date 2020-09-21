@@ -21,11 +21,11 @@
 #define NUMBER_OF_MULTIPLIERS 2
 
 typedef struct number {
-    char mantisa_sign;			// Знак числа '-'/'+'
-	char mantisa[MAX_NUMBERS];  // Число свободное от знаков кроме цифр
+    char mantisa_sign;			// Знак мантиссы числа '-'/'+'
+	char mantisa[MAX_NUMBERS];  // Мантисса числа
 
-	char order_sign;
-	char order[MAX_NUMBERS];
+	char order_sign;            // Знак порядка числа '-'/'+'
+	char order[MAX_NUMBERS];	// Порядок числа
 } number;
 
 #endif
