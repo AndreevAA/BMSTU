@@ -95,20 +95,27 @@ int is_float_number_ok(char *temp_number)
 	return error_code;
 }
 
-void represent_integer_number_in_expanded_form(char *temp_first_number, number *first_number)
+int represent_integer_number_in_expanded_form(char *temp_first_number, number *first_number)
 {
 	(*first_number).mantisa_sign = get_mantisa_sign(temp_first_number);
 	int first_number_E_position = get_mantisa(temp_first_number, (*first_number).mantisa);
 	(*first_number).order_sign = '+';
 	(*first_number).order[0] = '1';
+
+	return SUCCESS_STATUS;
 }
 
-void represent_float_number_in_expanded_form(char *temp_second_number, number *second_number)
+int represent_float_number_in_expanded_form(char *temp_second_number, number *second_number)
 {
 	(*second_number).mantisa_sign = get_mantisa_sign(temp_second_number);
 	int second_number_E_position = get_mantisa(temp_second_number, (*second_number).mantisa);
 	(*second_number).order_sign = get_order_sign(temp_second_number, second_number_E_position);
 	get_order(temp_second_number, second_number_E_position, (*second_number).order);
+
+	if (strlen((*second_number).order) > 30)
+		return ERROR_STATUS;
+
+	return SUCCESS_STATUS;
 }
 
 int get_point_position(char *second_number_mantisa)
@@ -135,10 +142,8 @@ int scanf_input_numbers(number *first_number, number *second_number)
 	{
 		if (is_integer_number_ok(temp_first_number) == SUCCESS_STATUS && is_float_number_ok(temp_second_number) == SUCCESS_STATUS)
 		{
-			represent_integer_number_in_expanded_form(temp_first_number, first_number);
-			represent_float_number_in_expanded_form(temp_second_number, second_number);
-
-			error_flag = SUCCESS_STATUS;
+			if (represent_integer_number_in_expanded_form(temp_first_number, first_number) == SUCCESS_STATUS && represent_float_number_in_expanded_form(temp_second_number, second_number) == SUCCESS_STATUS)
+				error_flag = SUCCESS_STATUS;
 		}
 	}
 

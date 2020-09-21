@@ -1,4 +1,5 @@
 #include "multiplication.h"
+#include <math.h> 
 
 void get_multiplied_mantisa_sign(number *first_number, number *second_number, char *mantisa_sign);
 void get_multiplied_mantisa(number *first_number, number *second_number, char *mantisa);
@@ -128,14 +129,18 @@ void get_transformed_mantisa_to_char_vector(char *mantisa, int *answer_number_ma
 {
 	int start_reading_position = get_start_reading_position(answer_number_mantisa_int_vector, answer_number_mantisa_int_vector_size);
 
-	int add_cursor = 0;
+	int add_cursor = 2;
+	
+	mantisa[0] = '0';
+	mantisa[1] = '.';
+
 	for (int check_cursor = start_reading_position; check_cursor < answer_number_mantisa_int_vector_size; check_cursor++)
 	{	
-		if (answer_number_mantisa_int_vector_size - number_of_decemal_order - start_reading_position - 1 == add_cursor)
-		{
-			mantisa[add_cursor] = '.';
-			add_cursor++;
-		}
+		// if (answer_number_mantisa_int_vector_size - number_of_decemal_order - start_reading_position - 1 == add_cursor)
+		// {
+		// 	mantisa[add_cursor] = '.';
+		// 	add_cursor++;
+		// }
 		
 		mantisa[add_cursor] = int_to_char(answer_number_mantisa_int_vector[check_cursor]);
 		add_cursor++;
@@ -146,6 +151,7 @@ void get_transformed_mantisa_to_char_vector(char *mantisa, int *answer_number_ma
 void get_multiplied_mantisa(number *first_number, number *second_number, char *mantisa)
 {
 	int number_of_decemal_order = 0;
+	
 	if (is_mantisa_float(second_number->mantisa) == SUCCESS_STATUS)
 		number_of_decemal_order = get_number_of_decimal_order(second_number->mantisa);
 
@@ -175,8 +181,46 @@ void get_multiplied_order_sign(number *first_number, number *second_number, char
 	*order_sign = second_number->order_sign;
 }
 
-void get_multiplied_order(char *second_number_order, char *order)
+int get_size_int(int number)
 {
+	int counter = 0;
+
+	while (number > 0)
+	{
+		number /= 10;
+		counter++;
+	}
+
+	return counter;
+}
+
+void sum_decimal_and_order(int number_of_decemal_order, char *second_number_order)
+{
+	int temp_sum = 0;
+
+	int p = strlen(second_number_order) - 1;
+	for (int i = 0; i < strlen(second_number_order); i++)
+	{
+		temp_sum += char_to_int(second_number_order[i]) * (pow(10, p));
+		p--;
+	}
+
+	temp_sum += number_of_decemal_order;
+
+	int i = get_size_int(temp_sum) - 1;
+	
+	while (i >= 0)
+	{
+		second_number_order[i] = int_to_char(temp_sum % 10);
+		temp_sum /= 10;
+		i--;
+	}
+}
+
+void get_multiplied_order(char *second_number_order, char *order, int number_of_decemal_order)
+{
+	sum_decimal_and_order(number_of_decemal_order, second_number_order);
+
 	for (int i = 0; i < MAX_NUMBERS; i++)
 		order[i] = '\0';
 
@@ -189,8 +233,13 @@ void get_multiplied_order(char *second_number_order, char *order)
 
 void multiply_integer_and_float(number *first_number, number *second_number, number *answer_number)
 {
+	int number_of_decemal_order = 0;
+	
+	if (is_mantisa_float(second_number->mantisa) == SUCCESS_STATUS)
+		number_of_decemal_order = get_number_of_decimal_order(second_number->mantisa);
+
 	get_multiplied_mantisa_sign(first_number, second_number, &answer_number->mantisa_sign);
 	get_multiplied_mantisa(first_number, second_number, answer_number->mantisa);
 	get_multiplied_order_sign(first_number, second_number, &answer_number->order_sign);
-	get_multiplied_order(second_number->order, answer_number->order);
+	get_multiplied_order(second_number->order, answer_number->order, number_of_decemal_order);
 }
