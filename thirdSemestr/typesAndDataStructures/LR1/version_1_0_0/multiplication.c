@@ -408,19 +408,20 @@ void multiply_integer_and_float(number *first_number, number *second_number, num
 		//printf("We are HERE1\n");
 		get_multiplied_mantisa(first_number, second_number, answer_number->mantisa);
 		//update_mantisa(answer_number->mantisa);
+		int par = strlen(answer_number->mantisa);
+
+		while (answer_number->mantisa[par] > '9' || answer_number->mantisa[par] <= '0')
+		{
+			answer_number->mantisa[par] = '\0';
+			par--;
+		}
 	}
 
 	//printf("%s\n", answer_number->order);
 	get_multiplied_order_sign(first_number, second_number, &answer_number->order_sign);
 	get_multiplied_order(first_number->mantisa, second_number->order, answer_number->order, number_of_decemal_order, second_number->order_sign, second_number->mantisa, answer_number);
 	
-	int par = strlen(answer_number->mantisa);
-
-	while (answer_number->mantisa[par] > '9' || answer_number->mantisa[par] <= '0')
-	{
-		answer_number->mantisa[par] = '\0';
-		par--;
-	}
+	
 
 	//printf("%lu\n", strlen(answer_number->mantisa));
 
