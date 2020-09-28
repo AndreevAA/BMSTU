@@ -15,7 +15,9 @@
 #ifndef MAINH
 #define MAINH
 
-#define MAX_NUMBERS 30
+#define MAX_NUMBERS 60
+#define MAX_MANTISA_SIZE 30
+#define MAX_ORDER_SIZE 5
 #define ERROR_STATUS 1
 #define SUCCESS_STATUS 0
 #define NUMBER_OF_MULTIPLIERS 2

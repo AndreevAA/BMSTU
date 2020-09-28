@@ -89,7 +89,27 @@ int is_float_number_ok(char *temp_number)
 
 	if (temp_vector_size > 0 && temp_vector_size <= MAX_NUMBERS)
 	{
-		error_code = SUCCESS_STATUS;
+		int number_of_points = 0;
+		int number_of_E = 0;
+		int number_of_znaks = 0;
+		int number_of_numbers = 0;
+
+		for (int i = 0; i < strlen(temp_number); i++)
+		{
+			if (temp_number[i] >= '0' && temp_number[i] <= '9')
+				number_of_numbers++;
+			else if (temp_number[i] == '-' || temp_number[i] == '+')
+				number_of_znaks++;
+			else if (temp_number[i] == 'E')
+				number_of_E++;
+			else if (temp_number[i] == '.')
+				number_of_points++;
+		}
+
+		if (((number_of_numbers + number_of_points + number_of_E + number_of_znaks) == strlen(temp_number)) && number_of_znaks <= 2 && number_of_E == 1 && number_of_points == 1)
+			error_code = SUCCESS_STATUS;
+		else
+			printf("Вы некорректно ввели вещественное число. Исправьте и повторите заново.\n");
 	}
 
 	return error_code;
@@ -97,12 +117,25 @@ int is_float_number_ok(char *temp_number)
 
 int represent_integer_number_in_expanded_form(char *temp_first_number, number *first_number)
 {
+	int error_code = SUCCESS_STATUS;
+
 	(*first_number).mantisa_sign = get_mantisa_sign(temp_first_number);
 	int first_number_E_position = get_mantisa(temp_first_number, (*first_number).mantisa);
 	(*first_number).order_sign = '+';
 	(*first_number).order[0] = '1';
 
-	return SUCCESS_STATUS;
+	if (strlen((*first_number).mantisa) > MAX_MANTISA_SIZE)
+	{
+		printf("Вы ввели целое число большее 30 разрядов. Уменьшите число и повторите попытку.\n");
+		error_code = ERROR_STATUS;
+	}
+	else if (strlen((*first_number).order) > MAX_ORDER_SIZE)
+	{
+		printf("Вы ввели вещественное число с порядком большее 5 разрядов. Исправьте и повторите попытку.\n");
+		error_code = ERROR_STATUS;
+	}
+
+	return error_code;
 }
 
 int represent_float_number_in_expanded_form(char *temp_second_number, number *second_number)
@@ -138,6 +171,7 @@ int scanf_input_numbers(number *first_number, number *second_number)
 
 	char temp_first_number[MAX_NUMBERS], temp_second_number[MAX_NUMBERS];
 
+	printf("+1~~~~~~~~~11~~~~~~~~21~~~~~~~30\n");
 	if (scanf("%s\n%s", temp_first_number, temp_second_number) == NUMBER_OF_MULTIPLIERS)
 	{
 		if (is_integer_number_ok(temp_first_number) == SUCCESS_STATUS && is_float_number_ok(temp_second_number) == SUCCESS_STATUS)
@@ -150,7 +184,20 @@ int scanf_input_numbers(number *first_number, number *second_number)
 	return error_flag;
 }
 
+// void clear_zero_in_matisa(char *mantisa)
+// {
+// 	int i = strlen(mantisa) - 1;
+// 	while (mantisa[i] == '0')
+// 	{
+// 		mantisa[i] = '\0';
+// 		i--;
+// 	}
+
+// }
+
 void print_multiplied_result(char mantisa_sign, char *mantisa, char order_sign, char *order)
 {
-	printf("Result of multiplication: %c%sE%c%s\n", mantisa_sign, mantisa, order_sign, order);
+	//clear_zero_in_matisa(mantisa);
+	printf("");
+	printf("Произведение введенного целого и вещественных чисел: %c%sE%c%s\n", mantisa_sign, mantisa, order_sign, order);
 }
