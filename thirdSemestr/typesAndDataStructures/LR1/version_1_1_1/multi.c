@@ -204,9 +204,26 @@ void get_transformed_mantisa_to_char_vector(char *mantisa, int *answer_number_ma
 	}
 }
 
-void update_mantisa(int *mantisa, int mantisa_size)
+void update_mantisa(int *mantisa, int *mantisa_size)
 {
-	int check_cursor = mantisa_size - 1;
+	int check_cursor = *mantisa_size - 1;
+
+	// printf("%d\n", *mantisa_size);
+
+	while (mantisa[*mantisa_size - 1] == 0)
+	{
+		mantisa[*mantisa_size - 1] = '\0';
+		(*mantisa_size)--;
+	}
+
+	// printf("%d\n", *mantisa_size);
+
+	// for (int i = 0; i < *mantisa_size; i++)
+	// 	printf("%d", mantisa[i]);
+
+	// printf("\n");
+
+	*mantisa_size = check_cursor;
 
 	while (check_cursor >= 0)
 	{
@@ -223,6 +240,53 @@ void update_mantisa(int *mantisa, int mantisa_size)
 
 		check_cursor--;
 	}
+
+	mantisa[*mantisa_size - 1] = '\0';
+	(*mantisa_size)--;
+
+
+	if (mantisa[0] == 0)
+		for (int i = 1; i < *mantisa_size; i++)
+		{
+			mantisa[i - 1] = mantisa[i];
+		}
+
+	mantisa[*mantisa_size - 1] = '\0';
+	mantisa[*mantisa_size - 2] = '\0';
+
+	*mantisa_size -= 2;
+	// int par = 0;
+
+	// int search_cursor = 0;
+
+	// while (mantisa[search_cursor] == 0)
+	// 	search_cursor++;
+
+	// for (int i = 0; i < mantisa_size; i++)
+	// {
+	// 	mantisa[i] = mantisa[i + search_cursor];
+	// }
+
+
+	// int right_border = mantisa_size - 1;
+	// while (right_border >= mantisa_size - 1 - search_cursor)
+	// {
+	// 	mantisa[right_border] = '\0';
+	// 	printf("YP\n");
+	// 	right_border--;
+	// }
+	// // for (int i = mantisa_size - 1; i >= mantisa_size - 1 - search_cursor; i--)
+	// // 	mantisa[i] = '\0';
+
+	// mantisa_size -= search_cursor + 1;
+	// printf("%d, %d\n", mantisa_size, search_cursor);
+
+	for (int i = 0; i < *mantisa_size; i++)
+		printf("%d", mantisa[i]);
+
+	printf("\n");
+
+	
 }
 
 void get_multiplied_mantisa(number *first_number, number *second_number, char *mantisa)
@@ -255,7 +319,7 @@ void get_multiplied_mantisa(number *first_number, number *second_number, char *m
 	}
 
 	if (answer_number_mantisa_int_vector_size > MAX_MANTISA_SIZE)
-		update_mantisa(answer_number_mantisa_int_vector, answer_number_mantisa_int_vector_size);
+		update_mantisa(answer_number_mantisa_int_vector, &answer_number_mantisa_int_vector_size);
 
 	get_transformed_mantisa_to_char_vector(mantisa, answer_number_mantisa_int_vector,answer_number_mantisa_int_vector_size, number_of_decemal_order);
 
