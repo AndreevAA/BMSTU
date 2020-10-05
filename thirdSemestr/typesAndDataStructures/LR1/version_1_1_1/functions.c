@@ -2,7 +2,7 @@
 
 int is_right_order(number *answer_number)
 {
-	if (answer_number->order > 99999)
+	if (answer_number->order - 1 > 99999)
 		return ERROR_STATUS;
 
 	return SUCCESS_STATUS;
