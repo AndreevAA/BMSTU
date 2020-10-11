@@ -1,5 +1,7 @@
 #include "menu.h"
 #include "io.h"
+#include "operations.h"
+#include "check.h"
 
 int main(int argc, char const *argv[])
 {
@@ -18,18 +20,16 @@ int main(int argc, char const *argv[])
 			if (get_in_file_information(in_file, input_table_information, &input_table_information_size) == SUCCESS_STATUS)
 			{
 				output_welcome_information();
-
 				int menu_status = get_menu_status();
 
-				while (menu_status != INPUT_COMMAND_EXIT);
+				while (menu_status != INPUT_COMMAND_EXIT)
 				{
-					menu_comprator_by_menu_status(menu_status, input_table_information, input_table_information_size);
+					menu_comprator_by_menu_status(menu_status, input_table_information, &input_table_information_size, argv);
 
 					menu_status = get_menu_status();
 				}
 			}
 		}
 	}
-	
 	return errorflag;
 }

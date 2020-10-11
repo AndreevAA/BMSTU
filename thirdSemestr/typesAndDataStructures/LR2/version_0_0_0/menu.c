@@ -1,9 +1,11 @@
 #include "menu.h"
+#include "io.h"
+#include "operations.h"
 
 int get_menu_status()
 {
-	char *input_command_text;
-
+	char input_command_text[INPUT_STRING_MAX_SIZE];
+	output_welcome_command();
 	if (scanf("%s", input_command_text) == 1)
 	{
 		if (strcmp(input_command_text, "EXIT") == SUCCESS_STATUS)
@@ -26,26 +28,26 @@ int get_menu_status()
 	
 }
 
-void menu_comprator_by_menu_status(int menu_status, struct students_accommodation_information *input_table_information, int input_table_information_size)
+void menu_comprator_by_menu_status(int menu_status, struct students_accommodation_information *input_table_information, int *input_table_information_size, char const *argv[])
 {
 	if (menu_status == INPUT_COMMAND_PRINT_ALL)
-	{
-		printf("menu_status == INPUT_COMMAND_PRINT_ALL\n");
-	}
+		output_all_students(input_table_information, input_table_information_size);
 	else if (menu_status == INPUT_COMMAND_PRINT_FILTERED_STUDENTS)
-	{
-		printf("menu_status == INPUT_COMMAND_PRINT_FILTERED_STUDENTS\n");
-	}
+		output_filtered_students(input_table_information, *input_table_information_size);
 	else if (menu_status == INPUT_COMMAND_SORT_TABLE_BY_KEY)
-	{
-		printf("menu_status == INPUT_COMMAND_SORT_TABLE_BY_KEY\n");
-	}
+		sort_students_by_key(input_table_information, *input_table_information_size);
 	else if (menu_status == INPUT_COMMAND_ADD_NOTE)
-	{
-		printf("menu_status == INPUT_COMMAND_ADD_NOTE\n");
-	}
+		*input_table_information_size = add_note(input_table_information, input_table_information_size);
 	else if (menu_status == INPUT_COMMAND_DELETE_NOTE)
+		*input_table_information_size = delete_note(input_table_information, input_table_information_size);
+	else if (menu_status == INPUT_COMMAND_SAVE_TABLE)
 	{
-		printf("menu_status == INPUT_COMMAND_DELETE_NOTE\n");
+		save_information_into_file(argv, input_table_information, input_table_information_size);
 	}
+	else
+	{
+		printf("Вы указали неверную команду. Попробуйте еще раз...\n");
+	}
+	
 }
+
