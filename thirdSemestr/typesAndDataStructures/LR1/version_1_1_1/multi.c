@@ -223,7 +223,7 @@ void update_mantisa(int *mantisa, int *mantisa_size)
 
 	// printf("\n");
 
-	*mantisa_size = check_cursor;
+	// *mantisa_size = check_cursor;
 
 	while (check_cursor >= 0)
 	{
@@ -241,20 +241,20 @@ void update_mantisa(int *mantisa, int *mantisa_size)
 		check_cursor--;
 	}
 
-	mantisa[*mantisa_size - 1] = '\0';
-	(*mantisa_size)--;
+	// mantisa[*mantisa_size - 1] = '\0';
+	// (*mantisa_size)--;
 
 
-	if (mantisa[0] == 0)
-		for (int i = 1; i < *mantisa_size; i++)
-		{
-			mantisa[i - 1] = mantisa[i];
-		}
+	// if (mantisa[0] == 0)
+	// 	for (int i = 1; i < *mantisa_size; i++)
+	// 	{
+	// 		mantisa[i - 1] = mantisa[i];
+	// 	}
 
-	mantisa[*mantisa_size - 1] = '\0';
-	mantisa[*mantisa_size - 2] = '\0';
+	// mantisa[*mantisa_size - 1] = '\0';
+	// mantisa[*mantisa_size - 2] = '\0';
 
-	*mantisa_size -= 2;
+	// *mantisa_size -= 2;
 	// int par = 0;
 
 	// int search_cursor = 0;
@@ -281,10 +281,10 @@ void update_mantisa(int *mantisa, int *mantisa_size)
 	// mantisa_size -= search_cursor + 1;
 	// printf("%d, %d\n", mantisa_size, search_cursor);
 
-	for (int i = 0; i < *mantisa_size; i++)
-		printf("%d", mantisa[i]);
+	// for (int i = 0; i < *mantisa_size; i++)
+	// 	printf("%d", mantisa[i]);
 
-	printf("\n");
+	// printf("\n");
 
 	
 }

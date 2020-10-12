@@ -31,7 +31,11 @@ void output_metric_line()
 
 void output_multiplied_result(char mantisa_sign, char *mantisa, char order_sign, int order)
 {
-	printf("Произведение введенного целого и вещественных чисел: %c%sE%c%d\n", mantisa_sign, mantisa, order_sign, order);
+	if (strlen(mantisa) > 32)
+		for (int i = 32; i < strlen(mantisa); i++)
+			mantisa[i] = '\0';
+
+	printf("Произведение введенного целого и вещественных чисел: %c%sE%c%d\n", mantisa_sign, mantisa, order_sign, order - 1);
 }
 
 int scanf_input_numbers(number *first_number, number *second_number)
@@ -189,7 +193,16 @@ int represent_float_number_in_expanded_form(char *temp_second_number, number *se
 	// 	second_number->order *= -1;
 
 	if (second_number->order > MAX_ORDER_SIZE)
+	{
+		printf("Вы ввели вещественное число с порядком большее 5 разрядов. Исправьте и повторите попытку.\n");
 		return ERROR_STATUS;
+	}
+
+	if (strlen(second_number->mantisa) > MAX_MANTISA_SIZE + 1)
+	{
+		printf("Вы ввели вещественное число с мантиссой большее 30 разрядов. Исправьте и повторите попытку.\n");
+		return ERROR_STATUS;
+	}
 	
 	free_mass(second_number->mantisa);
 
@@ -221,6 +234,9 @@ void get_order(char *temp_number, int temp_number_E_position, number *second_num
 		
 		check_cursur--;
 	}
+
+	if (temp_number[check_cursur] == '-')
+		second_number->order *= -1;
 
 }
 
