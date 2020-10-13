@@ -1,0 +1,1 @@
+./a.out neg_01_in.txt neg_01_out.txt

@@ -19,7 +19,5 @@ int is_right_argv(int argc, char const *argv[]);
 
 void get_size_of_vector(const char *in_file_name, int *size_of_integer_vector);
 void allocate_memory_by_size(int *integer_vector, int size_of_integer_vector);
-
-int get_integer_elements_from_file_to_vector(FILE *in_file, int *integer_vector, int *size_of_integer_vector);
-
-void output_integer_vector_into_out_file(FILE *out_file, int *integer_vector, int size_of_integer_vector);
+int get_int_elem_from_file_to_vec(FILE *in_file, int *integer_vector, int *size_of_integer_vector);
+void output_int_vec_into_out_file(FILE *out_file, int *integer_vector, int size_of_integer_vector);
