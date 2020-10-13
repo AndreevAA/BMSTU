@@ -20,16 +20,76 @@ void output_welcome_command()
 	printf("Введите команду: ");
 }
 
+void output_spaces(int first, int max)
+{
+	if (max > first * 0.5)
+		for (int i = 0; i < max - first * 0.5; i++)
+			printf(" ");
+}
+
 void output_head_of_table()
 {
-	printf("┌───────────┬────────────────┬──────────────┬──────────────┐\n");
-	printf("│ %12.18s │ %21.20s │ %15.20s │ %15.20s │ %21.20s │\n", "Тип", "Фамилия", "Имя", "Пол", "Возраст");
+	printf("┌───────────┬─────────────┬────────────┬────┬────────┬──────────┬─────────────────────┬─────────────────┬───────────┬────────────┐\n");
+	
+	printf("│ %.18s", "Тип");
+	output_spaces(strlen("Тип"), 10);
+
+	printf("│ %.20s", "Фамилия");
+	output_spaces(strlen("Фамилия"), 12);
+
+	printf("│ %.20s", "Имя");
+	output_spaces(strlen("Имя"), 11);
+
+	printf("│ %.20s", "Пол");
+	output_spaces(strlen("Пол"), 3);
+
+	printf("│ %.20s", "Возраст");
+	output_spaces(strlen("Возраст"), 7);
+
+	printf("│ %.20s", "Ср. балл");
+	output_spaces(strlen("Ср. балл"), 8);
+
+	printf("│ %.25s", "Ул. дома");
+	output_spaces(strlen("Ул. дома"), 19);
+
+	printf("│ %.20s", "№ Дома/Общ.");
+	output_spaces(strlen("№ Дома/Общ."), 15);
+
+	printf("│ %.20s", "№ Кв./Ком.");
+	output_spaces(strlen("№ Кв./Ком."), 7);
+
+	printf("│ %.20s", "Дата пос-я");
+	output_spaces(strlen("Дата пос-я"), 10);
+
+	printf("│\n");
 }
 
 void output_person(struct students_accommodation_information temp_person)
 {
-	printf("├───────────┼────────────────┼──────────────┼──────────────┤\n");
-	printf("│ %12.18s │ %20.20s │ %.30s │ %6.1d │ %6.1d │ %6.2lf │ %.30s │ %6.1d │ %6.1d │ %d.%d.%d │\n", temp_person.accommodation, temp_person.student.surname, temp_person.student.name, temp_person.student.gender, temp_person.student.age, temp_person.student.average_score_per_session, temp_person.address.street, temp_person.address.house_or_campus_number, temp_person.address.flat_or_room_number, temp_person.student.receipt_date.day, temp_person.student.receipt_date.month, temp_person.student.receipt_date.year);
+	printf("├───────────┼─────────────┼────────────┼────┼────────┼──────────┼─────────────────────┼─────────────────┼───────────┼────────────┤\n");
+	printf("│ %12.18s ", temp_person.accommodation);
+
+	//output_spaces(strlen(temp_person.student.surname), 20);
+	printf("│ %.20s ", temp_person.student.surname);
+	output_spaces(strlen(temp_person.student.surname), 11);
+
+	printf("│ %.20s ", temp_person.student.name);
+	output_spaces(strlen(temp_person.student.name), 10);
+
+	printf("│ %0.1d  ", temp_person.student.gender);
+
+	printf("│ %0.1d     ", temp_person.student.age);
+
+	printf("│ %4.1lf     ", temp_person.student.average_score_per_session);
+
+	printf("│ %.25s ", temp_person.address.street);
+	output_spaces(strlen(temp_person.address.street), 19);
+
+	printf("│ %3.1d             ", temp_person.address.house_or_campus_number);
+
+	printf("│ %5.1d     ", temp_person.address.flat_or_room_number);
+
+	printf("│ %2.1d.%2.1d.%2.1d │\n",  temp_person.student.receipt_date.day, temp_person.student.receipt_date.month, temp_person.student.receipt_date.year);
 }
 
 void output_all_students(struct students_accommodation_information *input_table_information, int *input_table_information_size)
@@ -43,7 +103,7 @@ void output_all_students(struct students_accommodation_information *input_table_
 		{
 			output_person(input_table_information[search_cursor]);
 		}
-		printf("└────────────────┴──────────────┴──────────────┘\n");
+		printf("└───────────┴─────────────┴────────────┴────┴────────┴──────────┴─────────────────────┴─────────────────┴───────────┴────────────┘\n");
 	}
 }
 
