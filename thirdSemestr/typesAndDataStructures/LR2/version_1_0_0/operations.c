@@ -42,137 +42,151 @@ void allocate_memory_to_input_table_information(union students_accommodation_inf
 	}
 }
 
-// int is_key_right(char *key)
-// {
-// 	return SUCCESS_STATUS;
-// }
+int is_key_right(char *key)
+{
+	return SUCCESS_STATUS;
+}
 
-// void sort_students_by_key(struct students_accommodation_information *input_table_information, int input_table_information_size)
-// {
-// 	char key[INPUT_STRING_MAX_SIZE];
-// 	printf("Доступные ключи сортировки таблицы:\n");
-// 	printf("\t - accommodation\n");
-// 	printf("\t - surname\n");
-// 	printf("\t - name\n");
-// 	printf("\t - gender\n");
-// 	printf("\t - age\n");
-// 	printf("\t - average_score_per_session\n");
-// 	printf("\t - street\n");
-// 	printf("\t - house_or_campus_number\n");
-// 	printf("\t - flat_or_room_number\n");
-// 	printf("\t - date_in\n\n");
+void sort_students_by_key(union students_accommodation_information *input_table_information, int input_table_information_size)
+{
+	char key[INPUT_STRING_MAX_SIZE];
+	printf("Доступные ключи сортировки таблицы:\n");
+	printf("\t - accommodation\n");
+	printf("\t - surname\n");
+	printf("\t - name\n");
+	printf("\t - gender\n");
+	printf("\t - age\n");
+	printf("\t - average_score_per_session\n");
+	printf("\t - street\n");
+	printf("\t - house_or_campus_number\n");
+	printf("\t - flat_or_room_number\n");
+	printf("\t - date_in\n\n");
 
-// 	printf("Введите ключ сортировки: ");
-// 	scanf("%s", key);
-// 	if (is_key_right(key) == SUCCESS_STATUS)
-// 	{
-// 		for (int i = input_table_information_size - 1; i >= 0; i--)
-// 	    {
-// 	        for (int j = 0; j < i; j++)
-// 	        {
-// 	        	if (strcmp(key, "accommodation") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (strcmp(input_table_information[j].accommodation, input_table_information[j + 1].accommodation) > 0)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "surname") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (strcmp(input_table_information[j].student.surname, input_table_information[j + 1].student.surname) > 0)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "name") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (strcmp(input_table_information[j].student.name, input_table_information[j + 1].student.name) > 0)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "gender") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (input_table_information[j].student.gender > input_table_information[j + 1].student.gender)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "age") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (input_table_information[j].student.age > input_table_information[j + 1].student.age)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "average_score_per_session") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (input_table_information[j].student.average_score_per_session > input_table_information[j + 1].student.average_score_per_session)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "street") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (strcmp(input_table_information[j].address.street, input_table_information[j + 1].address.street) > 0)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "house_or_campus_number") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (input_table_information[j].address.house_or_campus_number > input_table_information[j + 1].address.house_or_campus_number)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "flat_or_room_number") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (input_table_information[j].address.flat_or_room_number > input_table_information[j + 1].address.flat_or_room_number)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 	        	else if (strcmp(key, "date_in") == SUCCESS_STATUS)
-// 	        	{
-// 	        		if (input_table_information[j].student.receipt_date.day + input_table_information[j].student.receipt_date.month * 30 + input_table_information[j].student.receipt_date.year * 360 > input_table_information[j + 1].student.receipt_date.day + input_table_information[j + 1].student.receipt_date.month * 30 + input_table_information[j + 1].student.receipt_date.year * 360)
-// 	        		{
-// 	        			students_accommodation_information tmp = input_table_information[j];
-// 		                input_table_information[j] = input_table_information[j + 1];
-// 		                input_table_information[j + 1] = tmp;
-// 	        		}
-// 	        	}
-// 				else
-// 				{
-// 					printf("Вы ввели некорректный ключ. Попробуйте заново...\n");
-// 					break;
-// 				}
-// 	        }
-// 	    }
-// 	}
-// 	else
-// 	{
-// 		printf("Вы ввели некорректный ключ. Попробуйте заново...\n");
-// 	}
-// }
+	printf("Введите ключ сортировки: ");
+	scanf("%s", key);
+	if (is_key_right(key) == SUCCESS_STATUS)
+	{
+		for (int i = input_table_information_size - 1; i >= 0; i--)
+	    {
+	        for (int j = 0; j < i; j++)
+	        {
+	        	if (strcmp(key, "accommodation") == SUCCESS_STATUS)
+	        	{
+	        		if (input_table_information[j].social_home.is_social_home == SUCCESS_STATUS)
+	        		{
+	        			students_accommodation_information tmp = input_table_information[j];
+		                input_table_information[j] = input_table_information[j + 1];
+		                input_table_information[j + 1] = tmp;
+	        		}
+	        	}
+	        	// else if (strcmp(key, "surname") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (strcmp(input_table_information[j].student.surname, input_table_information[j + 1].student.surname) > 0)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "name") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (strcmp(input_table_information[j].student.name, input_table_information[j + 1].student.name) > 0)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "gender") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (input_table_information[j].student.gender > input_table_information[j + 1].student.gender)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "age") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (input_table_information[j].student.age > input_table_information[j + 1].student.age)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "average_score_per_session") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (input_table_information[j].student.average_score_per_session > input_table_information[j + 1].student.average_score_per_session)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "street") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (strcmp(input_table_information[j].address.street, input_table_information[j + 1].address.street) > 0)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "house_or_campus_number") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (input_table_information[j].address.house_or_campus_number > input_table_information[j + 1].address.house_or_campus_number)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	// else if (strcmp(key, "flat_or_room_number") == SUCCESS_STATUS)
+	        	// {
+	        	// 	if (input_table_information[j].address.flat_or_room_number > input_table_information[j + 1].address.flat_or_room_number)
+	        	// 	{
+	        	// 		students_accommodation_information tmp = input_table_information[j];
+		        //         input_table_information[j] = input_table_information[j + 1];
+		        //         input_table_information[j + 1] = tmp;
+	        	// 	}
+	        	// }
+	        	else if (strcmp(key, "date_in") == SUCCESS_STATUS)
+	        	{
+	        		int first, second;
+
+	        		if (input_table_information[j].social_home.is_social_home == SUCCESS_STATUS)
+	        			first = input_table_information[j].social_home.student.receipt_date.day + input_table_information[j].social_home.student.receipt_date.month * 30 + input_table_information[j].social_home.student.receipt_date.year * 360;
+	        		else 
+	        			first = input_table_information[j].private_home.student.receipt_date.day + input_table_information[j].private_home.student.receipt_date.month * 30 + input_table_information[j].private_home.student.receipt_date.year * 360;
+	        		
+
+	        		if (input_table_information[j + 1].social_home.is_social_home == SUCCESS_STATUS)
+	        			second = input_table_information[j + 1].social_home.student.receipt_date.day + input_table_information[j + 1].social_home.student.receipt_date.month * 30 + input_table_information[j + 1].social_home.student.receipt_date.year * 360;
+	        		else 
+	        			second = input_table_information[j + 1].private_home.student.receipt_date.day + input_table_information[j + 1].private_home.student.receipt_date.month * 30 + input_table_information[j + 1].private_home.student.receipt_date.year * 360;
+	        		
+
+	        		if (first > second)
+	        		{
+	        			students_accommodation_information tmp = input_table_information[j];
+		                input_table_information[j] = input_table_information[j + 1];
+		                input_table_information[j + 1] = tmp;
+	        		}
+	        	}
+				else
+				{
+					printf("Вы ввели некорректный ключ. Попробуйте заново...\n");
+					break;
+				}
+	        }
+	    }
+	}
+	else
+	{
+		printf("Вы ввели некорректный ключ. Попробуйте заново...\n");
+	}
+}
 
 // int delete_note(struct students_accommodation_information *input_table_information, int *input_table_information_size)
 // {
