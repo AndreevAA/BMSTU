@@ -17,10 +17,16 @@ int main(int argc, char const *argv[])
 			students_accommodation_information input_table_information[INPUT_TABLE_INFORMATION_MAX_SIZE];
 			allocate_memory_to_input_table_information(input_table_information);
 
+			
+
 			if (get_in_file_information(in_file, input_table_information, &input_table_information_size) == SUCCESS_STATUS)
 			{
+
 				output_welcome_information();
 				int menu_status = get_menu_status();
+
+				printf("HERE1\n");
+				
 
 				while (menu_status != INPUT_COMMAND_EXIT)
 				{

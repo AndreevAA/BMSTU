@@ -40,22 +40,42 @@ typedef struct student_personal_information
 	struct date receipt_date;
 } student_personal_information;
 
-typedef struct student_address 
+typedef struct social_home_address
+{
+	int house_number;
+	int room_number;
+} social_home_address;
+
+typedef struct social_home
+{
+	int is_social_home;
+	struct student_personal_information student;
+	struct social_home_address 			address;
+} social_home;
+
+typedef struct private_home_address
 {
 	char street[INPUT_TABLE_INFORMATION_MAX_SIZE];
-	int house_or_campus_number;
-	int flat_or_room_number;
-} student_address;
+	int house_number;
+	int flat_number;
+} private_home_address;
 
-typedef struct students_accommodation_information 
+typedef struct private_home
 {
-	char accommodation[INPUT_STRING_MAX_SIZE];
 	struct student_personal_information student;
-	struct student_address address;
+	struct private_home_address 		address;
+} private_home;
+
+typedef union students_accommodation_information
+{
+	int is_social_home;
+	struct social_home  social_home;
+	struct private_home private_home;
 } students_accommodation_information;
+
 
 #endif
 
 int get_menu_status();
 
-void menu_comprator_by_menu_status(int menu_status, struct students_accommodation_information *input_table_information, int *input_table_information_size, char const *argv[]);
+void menu_comprator_by_menu_status(int menu_status, union students_accommodation_information *input_table_information, int *input_table_information_size, char const *argv[]);
