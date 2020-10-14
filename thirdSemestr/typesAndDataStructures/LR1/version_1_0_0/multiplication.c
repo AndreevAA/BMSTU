@@ -70,7 +70,8 @@ int get_temp_number_int_vector(number *temp_number, int *temp_number_int_vector)
 			add_cursor++;
 		}
 	}
-	return add_cursor;
+	return add_cursor; 
+
 }
 
 void multiply_digit_and_int_vector(int temp_digit, int *second_number_mantisa_int_vector, int second_number_mantisa_int_vector_size, int *answer_number_mantisa_int_vector, int right_cursor, int answer_number_mantisa_int_vector_size)
@@ -149,15 +150,29 @@ void get_transformed_mantisa_to_char_vector(char *mantisa, int *answer_number_ma
 
 void update_mantisa(int *mantisa, int mantisa_size)
 {
-	int check_cursor = mantisa_size - 1;
 
+	int check_cursor = mantisa_size - 2;
+
+	//if (mantisa[mantisa_size - 2] >= 5 && mantisa[mantisa_size - 2] <= 9)
 	while (check_cursor >= 0)
 	{
+		//printf("%d\n", mantisa[check_cursor]);
+		
+
 		if (mantisa[check_cursor] >= 5)
 		{
 			mantisa[check_cursor] = 0;
-			mantisa[check_cursor - 1] += 1;
+
+			if (mantisa[check_cursor - 1] < 9)
+			{
+				mantisa[check_cursor - 1] += 1;
+				break;
+			}
+
+			
 		}
+
+
 
 		check_cursor--;
 	}
@@ -201,7 +216,10 @@ void get_multiplied_mantisa(number *first_number, number *second_number, char *m
 	}
 
 	if (answer_number_mantisa_int_vector_size > MAX_MANTISA_SIZE)
+	{
+
 		update_mantisa(answer_number_mantisa_int_vector, answer_number_mantisa_int_vector_size);
+	}
 
 	get_transformed_mantisa_to_char_vector(mantisa, answer_number_mantisa_int_vector,answer_number_mantisa_int_vector_size, number_of_decemal_order);
 
@@ -246,7 +264,7 @@ void sum_decimal_and_order(char *first_number_mantisa, int number_of_decemal_ord
 	{
 		if (second_number_order_sign == '+')
 		{
-			printf("%f\n", char_to_int(second_number_order[i])* (pow(10, p)));
+			//printf("%f\n", char_to_int(second_number_order[i])* (pow(10, p)));
 			temp_sum += char_to_int(second_number_order[i]) * (pow(10, p));
 		}
 		else
@@ -297,8 +315,28 @@ void sum_decimal_and_order(char *first_number_mantisa, int number_of_decemal_ord
 	temp_sum = 0;
 }
 
-void get_multiplied_order(char *first_number_mantisa, char *second_number_order, char *order, int number_of_decemal_order, char second_number_order_sign, char *second_number_mantisa, number *answer_number)
+void free_mass(char *temp_mass)
 {
+	int i = strlen(temp_mass) - 1; 
+	while (temp_mass[i] < '0' || temp_mass[i] > '9')
+	{
+		temp_mass[i] = '\0';
+		i--;
+	}
+}
+
+void get_multiplied_order(int first_order_int, int second_order_int, char *first_number_mantisa, char *second_number_order, char *order, int number_of_decemal_order, char second_number_order_sign, char *second_number_mantisa, number *answer_number)
+{
+	printf("first_order_int = %d, second_order_int = %d\n", first_order_int, second_order_int);
+
+	free_mass(answer_number->mantisa);
+	printf("%s\n", answer_number->mantisa);
+	printf("%d, %d, %lu\n", first_order_int, second_order_int, strlen(answer_number->mantisa));
+	int next_order = + second_order_int - strlen(answer_number->mantisa);
+
+	printf("%lu\n", strlen(answer_number->mantisa));
+	printf("next_order = %d\n", next_order);
+
 	int i = strlen(answer_number->mantisa) - 1;
 
 	while (answer_number->mantisa[i] < '0' || answer_number->mantisa[i] > '9')
@@ -308,10 +346,11 @@ void get_multiplied_order(char *first_number_mantisa, char *second_number_order,
 	}
 
 	int num = 0;
-	int p = strlen(second_number_mantisa);
+	int p = strlen(second_number_mantisa) - 1;
 	while (second_number_mantisa[p] != '.')
 	{
-		num++;
+		if (second_number_mantisa[p] != '.')
+			num++;
 		p--;
 	}
 
@@ -319,10 +358,16 @@ void get_multiplied_order(char *first_number_mantisa, char *second_number_order,
 	//printf("%lu, %d\n", strlen(answer_number->mantisa), num);
 	//printf("%lu\n", strlen(answer_number->mantisa) - num - 1);
 	//printf("ZERO %s\n", second_number_order);
-	int future_order = strlen(answer_number->mantisa) - num - 1;
-	if (future_order >= 30)
+	int future_order = (strlen(answer_number->mantisa) - 1) - num + strlen(first_number_mantisa) - number_of_decemal_order + 1;
+
+	printf("strlen(answer_number->mantisa) - 1 = %lu, num = %d\n", strlen(answer_number->mantisa) - 2, num);
+	printf("answer_number->mantisa = %s\n", answer_number->mantisa);
+	printf("future_order = %d\n", future_order);
+
+	if (future_order > 30)
 	{
 		sum_decimal_and_order(first_number_mantisa, number_of_decemal_order, second_number_order, second_number_order_sign, second_number_mantisa);
+		
 		for (int i = 0; i < MAX_NUMBERS; i++)
 		order[i] = '\0';
 
@@ -335,6 +380,12 @@ void get_multiplied_order(char *first_number_mantisa, char *second_number_order,
 	else
 	{
 		int temp_sum = 0;
+		
+
+		//printf("second_number_order = %s\n", second_number_order);
+
+		free_mass(second_number_order);
+
 		p = strlen(second_number_order) - 1;
 
 		for (int i = 0; i < strlen(second_number_order); i++)
@@ -350,9 +401,15 @@ void get_multiplied_order(char *first_number_mantisa, char *second_number_order,
 			p--;
 		}
 
-		//printf("temp_sum = %d\n", temp_sum);
+		printf("second_number_order = %s\n", second_number_order);
 
+		printf("temp_sum = %d\n", temp_sum);
+
+		printf("future_order = %d, temp_sum = %d\n", future_order, temp_sum);
 		future_order += temp_sum;
+
+		printf("future_order = %d, temp_sum = %d\n", future_order, temp_sum);
+
 
 		int i = get_size_int(future_order) - 1;
 		while (i >= 0)
@@ -363,6 +420,8 @@ void get_multiplied_order(char *first_number_mantisa, char *second_number_order,
 			future_order /= 10;
 			i--;
 		}
+
+		free_mass(order);
 	}
 	//printf("%d, %s\n", number_of_decemal_order, second_number_order);
 
@@ -407,6 +466,7 @@ void multiply_integer_and_float(number *first_number, number *second_number, num
 	{
 		//printf("We are HERE1\n");
 		get_multiplied_mantisa(first_number, second_number, answer_number->mantisa);
+
 		//update_mantisa(answer_number->mantisa);
 		int par = strlen(answer_number->mantisa);
 
@@ -419,8 +479,9 @@ void multiply_integer_and_float(number *first_number, number *second_number, num
 
 	//printf("%s\n", answer_number->order);
 	get_multiplied_order_sign(first_number, second_number, &answer_number->order_sign);
-	get_multiplied_order(first_number->mantisa, second_number->order, answer_number->order, number_of_decemal_order, second_number->order_sign, second_number->mantisa, answer_number);
+	get_multiplied_order(first_number->order_int, second_number->order_int, first_number->mantisa, second_number->order, answer_number->order, number_of_decemal_order, second_number->order_sign, second_number->mantisa, answer_number);
 	
+	//printf("%s\n", answer_number->order);
 	
 
 	//printf("%lu\n", strlen(answer_number->mantisa));
@@ -448,16 +509,17 @@ int is_right_order(number *answer_number)
 {
 	int temp_sum = 0;
 
-	int p = strlen(answer_number->order) - 1;
-	for (int i = 0; i < strlen(answer_number->order); i++)
-	{
+	int p = strlen(answer_number->order);
+	// for (int i = 0; i < strlen(answer_number->order); i++)
+	// {
 
-		temp_sum += char_to_int(answer_number->order[i]) * (pow(10, p));
-		p--;
-	}
+	// 	temp_sum += char_to_int(answer_number->order[i]) * (pow(10, p));
+	// 	p--;
+	// }
 
 	//printf("%s, %d\n",answer_number->order, temp_sum);
-	if (temp_sum > 30)
+	//printf("p = %d\n", p);
+	if (p >= 6)
 		return ERROR_STATUS;
 
 	return SUCCESS_STATUS;
@@ -487,6 +549,7 @@ void get_and_multiply()
 
 		multiply_integer_and_float(&first_number, &second_number, &answer_number);
 		
+		//printf("%s, %s\n", answer_number.mantisa, answer_number.order);
 		//printf("%s\n", answer_number.mantisa);
 		//printf("%s, %d\n", answer_number.order, strcmp(answer_number.order, "30"));
 		if (is_right_order(&answer_number) == ERROR_STATUS)

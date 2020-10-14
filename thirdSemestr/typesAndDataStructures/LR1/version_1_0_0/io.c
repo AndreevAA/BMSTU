@@ -1,4 +1,6 @@
 #include "io.h"
+#include "multiplication.h"
+#include <math.h>
 
 char get_mantisa_sign(char *temp_number);
 int get_mantisa(char *temp_vector, char * result_number_mantisa);
@@ -134,8 +136,29 @@ int represent_integer_number_in_expanded_form(char *temp_first_number, number *f
 		printf("Вы ввели вещественное число с порядком большее 5 разрядов. Исправьте и повторите попытку.\n");
 		error_code = ERROR_STATUS;
 	}
+	else
+	{
+		first_number->order_int = strlen(first_number->mantisa) - 1;
+	}
 
 	return error_code;
+}
+
+int order_in_mantissa(char *mantissa)
+{
+	int answer_order = 0;
+
+	free_mass(mantissa);
+
+	int i = strlen(mantissa) - 1;
+
+	while (mantissa[i] != '.')
+	{
+		answer_order++;
+		i--;
+	}
+
+	return answer_order;
 }
 
 int represent_float_number_in_expanded_form(char *temp_second_number, number *second_number)
@@ -147,6 +170,23 @@ int represent_float_number_in_expanded_form(char *temp_second_number, number *se
 
 	if (strlen((*second_number).order) > 30)
 		return ERROR_STATUS;
+
+	free_mass((*second_number).order);
+
+	int cursor = strlen((*second_number).order) - 1;
+	int order_int = 0;
+
+	while (cursor >= 0)
+	{
+		order_int += char_to_int((*second_number).order[cursor]) * pow(10, cursor);
+		cursor--;
+	}
+
+	//second_number->order_int = order_int + order_in_mantissa(second_number->mantisa);
+
+	if (second_number->order_sign == '-')
+		second_number->order_int = order_int * (-1);
+	second_number->order_int += order_in_mantissa(second_number->mantisa);
 
 	return SUCCESS_STATUS;
 }

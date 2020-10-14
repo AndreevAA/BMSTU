@@ -28,6 +28,8 @@ typedef struct number {
 
 	char order_sign;            // Знак порядка числа '-'/'+'
 	char order[MAX_NUMBERS];	// Порядок числа
+
+	int order_int;
 } number;
 
 #endif

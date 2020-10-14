@@ -1,0 +1,1 @@
+./a.out pos_00_in.txt pos_00_out.txt f
