@@ -94,24 +94,25 @@ Suite* calc_avg_suite(void)
     
     // Создадим тестовый случай из функций-тестов, которые проверяют разного
     // рода ошибочные ситуации при вызове calc_avg
-    tc_neg = tcase_create("negatives");
-    // Добавим в tc_neg соответствующие функции-тесты
-    tcase_add_test(tc_neg, test_calc_avg_bad_array);
-    tcase_add_test(tc_neg, test_calc_avg_bad_array_size);
-    tcase_add_test(tc_neg, test_calc_avg_bad_avg_ptr);
-    tcase_add_test(tc_neg, test_calc_avg_empty_array);
+    // tc_neg = tcase_create("negatives");
+    // // Добавим в tc_neg соответствующие функции-тесты
+    // tcase_add_test(tc_neg, test_calc_avg_bad_array);
+    // tcase_add_test(tc_neg, test_calc_avg_bad_array_size);
+    // tcase_add_test(tc_neg, test_calc_avg_bad_avg_ptr);
+    // tcase_add_test(tc_neg, test_calc_avg_empty_array);
 
-    // Добавим сформированный тестовый случай в тестовый набор
-    suite_add_tcase(s, tc_neg);
+    // // Добавим сформированный тестовый случай в тестовый набор
+    // suite_add_tcase(s, tc_neg);
     
     // Создадим тестовый случай из функций-тестов, которые проверяют работу
     // calc_avg для корректных параметров
     tc_pos = tcase_create("positives");
     // Добавим в tc_pos соответствующие функции-тесты
-    tcase_add_test(tc_pos, test_calc_avg_zero_avg);
-    tcase_add_test(tc_pos, test_calc_avg_usual_array);
-    tcase_add_test(tc_pos, test_calc_avg_array_with_one_element);
-
+    tcase_add_test(tc_pos, test_calc_all_in_is_not_sorted);
+    tcase_add_test(tc_pos, test_calc_all_in_is_sorted);
+    tcase_add_test(tc_pos, test_calc_all_in_not_uniq);
+    tcase_add_test(tc_pos, test_calc_all_in_simmilar_filter);
+    tcase_add_test(tc_pos, test_calc_all_in_not_simmilar_filter);
     // Добавим сформированный тестовый случай в тестовый набор
     suite_add_tcase(s, tc_pos);
 

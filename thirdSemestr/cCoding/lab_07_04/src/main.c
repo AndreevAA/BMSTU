@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
 				int *start_integer_vector_cursor = integer_vector;
 				int *end_integer_vector_cursor = integer_vector + size_of_integer_vector;
 
-				if (get_int_elem_from_file_to_vec(in_file, integer_vector, &size_of_integer_vector) == SUCCESS_STATUS)
+				if (get_int_elem_from_file_to_vec(in_file, integer_vector, size_of_integer_vector) == SUCCESS_STATUS)
 				{
 					if (argc == 4 && strcmp(argv[3], "f") == 0)
 					{
@@ -42,6 +42,8 @@ int main(int argc, char const *argv[])
 				}
 			}
 		}
+
+		fclose(out_file);
 	}
 
 	return errorflag;

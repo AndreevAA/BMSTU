@@ -39,10 +39,10 @@ void menu_comprator_by_menu_status(int menu_status, union students_accommodation
 		*input_table_information_size = add_note(input_table_information, input_table_information_size);
 	else if (menu_status == INPUT_COMMAND_DELETE_NOTE)
 		*input_table_information_size = delete_note(input_table_information, input_table_information_size);
-	// else if (menu_status == INPUT_COMMAND_SAVE_TABLE)
-	// {
-	// 	save_information_into_file(argv, input_table_information, input_table_information_size);
-	// }
+	else if (menu_status == INPUT_COMMAND_SAVE_TABLE)
+	{
+		save_information_into_file(argv, input_table_information, input_table_information_size);
+	}
 	else
 	{
 		printf("Вы указали неверную команду. Попробуйте еще раз...\n");

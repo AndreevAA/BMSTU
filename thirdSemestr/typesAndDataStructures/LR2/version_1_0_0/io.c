@@ -242,16 +242,25 @@ int get_input_table_information_size(FILE *in_file)
 	return temp_number;
 }
 
-// void save_information_into_file(char const *argv[], struct students_accommodation_information *input_table_information, int *input_table_information_size)
-// {
-// 	FILE *out_file = fopen(argv[1], "w");
-// 	fprintf(out_file, "%d\n", *input_table_information_size);
-// 	for (int check_cursor = 0; check_cursor < *input_table_information_size; check_cursor++)
-// 	{
-// 		fprintf(out_file, "%s\n%s\n%s\n%d\n%d\n%lf\n%s\n%d\n%d\n%d\n%d\n%d\n", input_table_information[check_cursor].accommodation, input_table_information[check_cursor].student.surname, input_table_information[check_cursor].student.name, input_table_information[check_cursor].student.gender, input_table_information[check_cursor].student.age, input_table_information[check_cursor].student.average_score_per_session, input_table_information[check_cursor].address.street, input_table_information[check_cursor].address.house_or_campus_number, input_table_information[check_cursor].address.flat_or_room_number, input_table_information[check_cursor].student.receipt_date.day, input_table_information[check_cursor].student.receipt_date.month, input_table_information[check_cursor].student.receipt_date.year);
-// 	}
-// 	fclose(out_file);
-// }
+void save_information_into_file(char const *argv[], union students_accommodation_information *input_table_information, int *input_table_information_size)
+{
+	FILE *out_file = fopen(argv[1], "w");
+	fprintf(out_file, "%d\n", *input_table_information_size);
+	for (int check_cursor = 0; check_cursor < *input_table_information_size; check_cursor++)
+	{
+		if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+		{
+			fprintf(out_file, "Дом\n");
+			fprintf(out_file, "%s\n%s\n%d\n%d\n%lf\n%s\n%d\n%d\n%d\n%d\n%d\n", input_table_information[check_cursor].private_home.student.surname, input_table_information[check_cursor].private_home.student.name, input_table_information[check_cursor].private_home.student.gender, input_table_information[check_cursor].private_home.student.age, input_table_information[check_cursor].private_home.student.average_score_per_session, input_table_information[check_cursor].private_home.address.street, input_table_information[check_cursor].private_home.address.house_number, input_table_information[check_cursor].private_home.address.flat_number, input_table_information[check_cursor].private_home.student.receipt_date.day, input_table_information[check_cursor].private_home.student.receipt_date.month, input_table_information[check_cursor].private_home.student.receipt_date.year);
+		}
+		else
+		{
+			fprintf(out_file, "Общежитие\n");
+			fprintf(out_file, "%s\n%s\n%d\n%d\n%lf\n%d\n%d\n%d\n%d\n%d\n", input_table_information[check_cursor].social_home.student.surname, input_table_information[check_cursor].social_home.student.name, input_table_information[check_cursor].social_home.student.gender, input_table_information[check_cursor].social_home.student.age, input_table_information[check_cursor].social_home.student.average_score_per_session, input_table_information[check_cursor].social_home.address.house_number, input_table_information[check_cursor].social_home.address.room_number, input_table_information[check_cursor].social_home.student.receipt_date.day, input_table_information[check_cursor].social_home.student.receipt_date.month, input_table_information[check_cursor].social_home.student.receipt_date.year);
+		}
+	}
+	fclose(out_file);
+}
 
 void output_filtered_students(union students_accommodation_information *input_table_information, int input_table_information_size)
 {

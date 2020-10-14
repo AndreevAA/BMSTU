@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
 				output_welcome_information();
 				int menu_status = get_menu_status();
 
-				printf("HERE1\n");
+				//printf("HERE1\n");
 				
 
 				while (menu_status != INPUT_COMMAND_EXIT)
