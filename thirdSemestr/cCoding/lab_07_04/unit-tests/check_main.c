@@ -35,5 +35,5 @@ int main(void)
     // Перед завершением main "runner" нужно обязательно освободить.
     srunner_free(runner);
 
-    return (no_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+    return no_failed;
 }
