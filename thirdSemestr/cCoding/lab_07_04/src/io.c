@@ -2,7 +2,7 @@
 
 int is_right_argc(int argc)
 {
-	if (argc >= MIN_NUM_OF_ARGC && MIN_NUM_OF_ARGC <= MAX_NUM_OF_ARGC)
+	if (argc >= MIN_NUM_OF_ARGC && argc <= MAX_NUM_OF_ARGC)
 		return SUCCESS_STATUS;
 	return ERROR_STATUS;
 }
@@ -12,7 +12,7 @@ int is_right_argv(int argc, char const *argv[])
 	int errorflag = ERROR_STATUS;
 	if (argc == MAX_NUM_OF_ARGC)
 	{
-		if (strcmp(argv[3], "f") == SUCCESS_STATUS)
+		if (argv[3][0] == 'f' && strlen(argv[3]) == 1)
 			errorflag = SUCCESS_STATUS;
 	}
 	else if (argc == MIN_NUM_OF_ARGC)
@@ -20,104 +20,65 @@ int is_right_argv(int argc, char const *argv[])
 	return errorflag;
 }
 
-void get_size_of_vector(const char *in_file_name, int *size_of_integer_vector)
+int get_size_of_vector(const char *in_file_name, int *size_of_integer_vector)
 {
 	FILE *in_file = fopen(in_file_name, "r");
 
-	while (!feof(in_file))
-		if (fgetc(in_file) == '\n')
-			(*size_of_integer_vector)++;
-
-	fclose(in_file);
-}
-
-int get_int_elem_from_file_to_vec(FILE *in_file, int *integer_vector, int size_of_integer_vector)
-{
-	int temp_number_of_readed_strings = 0;
-	// int rc = 0;
-
-	for (; temp_number_of_readed_strings < size_of_integer_vector && fscanf(in_file, "%d", integer_vector); integer_vector++)
-		temp_number_of_readed_strings++;
-	fclose(in_file);
-
-	//printf("%d, %d, %d\n", temp_number_of_readed_strings, size_of_integer_vector, temp_number_of_readed_strings == size_of_integer_vector);
+	if (in_file != NULL)
+	{
+		int input_number = 0;
+		while (!feof(in_file) && fscanf(in_file, "%d", &input_number) > EOF)
+			(*size_of_integer_vector) += 1;
 	
-	if (temp_number_of_readed_strings == size_of_integer_vector)
+		fclose(in_file);
 		return SUCCESS_STATUS;
+	}
+
+	fclose(in_file);
 	return ERROR_STATUS;
-
-	//return temp_number_of_readed_strings == size_of_integer_vector;
-
-	// while ((rc = fscanf(in_file, "%d", &integer_vector[temp_number_of_readed_strings])) == 1)
-	// 	temp_number_of_readed_strings++;
-
-	// if (rc != EOF)
-	// 	return errorflag;
-	
-	// errorflag = SUCCESS_STATUS;
-	
-	// // if (temp_number_of_readed_strings == *size_of_integer_vector)
-	// // 	errorflag = SUCCESS_STATUS;
-
-	// return errorflag;
 }
 
-// int get_int_elem_from_file_to_vec(FILE *in_file, int *integer_vector, int *size_of_integer_vector)
-// {
-// 	int errorflag = ERROR_STATUS, temp_number_of_readed_strings = 0;
-// 	int rc = 0;
+int get_int_elem_from_file_to_vec(const char *in_file_name, int *integer_vector, int size_of_integer_vector)
+{
+	FILE *in_file = fopen(in_file_name, "r");
+	int temp_number_of_readed_strings = 0;
 	
-// 	while ((rc = fscanf(in_file, "%d", &integer_vector[temp_number_of_readed_strings])) == 1)
-// 		temp_number_of_readed_strings++;
+	if (in_file != NULL)
+	{
+		for (; temp_number_of_readed_strings < size_of_integer_vector && fscanf(in_file, "%d", integer_vector); integer_vector++)
+			temp_number_of_readed_strings++;
+		fclose(in_file);
 
-// 	if (rc != EOF)
-// 		return errorflag;
-	
-// 	errorflag = SUCCESS_STATUS;
-	
-// 	// if (temp_number_of_readed_strings == *size_of_integer_vector)
-// 	// 	errorflag = SUCCESS_STATUS;
+		if (temp_number_of_readed_strings == size_of_integer_vector)
+			return SUCCESS_STATUS;
+		return ERROR_STATUS;
+	}
 
-// 	return errorflag;
-// }
-
-// int read(char *filename, int *array, int size)
-// {
-//     FILE *file = NULL;
-//     int read = 0;
-//     if ((file = fopen(filename, "r")) != NULL)
-//     {
-//         for (; read < size && fscanf(file, "%d", array); array++)
-//             read++;
-//         fclose(file);
-//     }
-//     return read == size;
-// }
-
-// int write(int *sarray, int *earray, char *filename)
-// {
-//     int has_error = sarray >= earray;
-//     FILE *file = fopen(filename, "w");
-//     if (file != NULL)
-//     {
-//         for (; sarray < earray && !has_error; sarray++)
-//             has_error = fprintf(file, "%d ", *sarray) <= 0;
-
-//         if (!has_error)
-//             has_error = ferror(file);
-
-//         fclose(file);
-//     }
-//     return !has_error && sarray == earray;
-// }
+	fclose(in_file);
+	return ERROR_STATUS;
+}
 
 void allocate_memory_by_size(int *integer_vector, int size_of_integer_vector)
 {
 	integer_vector = (int*)malloc(size_of_integer_vector * sizeof(int));
 }
 
-void output_int_vec_into_out_file(FILE *out_file, int *integer_vector, int size_of_integer_vector)
+int output_int_vec_into_out_file(const char *out_file_name, int *integer_vector, int size_of_integer_vector)
 {
-	for (int check_cursor = 0; check_cursor < size_of_integer_vector; check_cursor++)
-		fprintf(out_file, "%d ", integer_vector[check_cursor]);
+	FILE *out_file = fopen(out_file_name, "w");
+
+	if (out_file != NULL)
+	{
+		for (int check_cursor = 0; check_cursor < size_of_integer_vector; check_cursor++)
+		{
+			if (check_cursor == size_of_integer_vector - 1)
+				fprintf(out_file, "%d", integer_vector[check_cursor]);
+			else
+				fprintf(out_file, "%d ", integer_vector[check_cursor]);
+		}
+		fclose(out_file);
+		return SUCCESS_STATUS;
+	}
+	fclose(out_file);
+	return ERROR_STATUS;
 }

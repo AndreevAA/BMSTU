@@ -5,6 +5,7 @@
 int main(void)
 {
     int no_failed = 0;
+    
     SRunner *runner;
 
     Suite *sort_suite = sort_test_suite();
@@ -21,6 +22,8 @@ int main(void)
     // Перед завершением main "runner" нужно обязательно освободить.
     srunner_free(runner);
 
+
+
     Suite *key_suite = key_test_suite();
     // Для запуска тестов, всходящих в тестовый набор, нужно создать так называемый
     // "runner".
@@ -35,5 +38,5 @@ int main(void)
     // Перед завершением main "runner" нужно обязательно освободить.
     srunner_free(runner);
 
-    return no_failed;
+    return (no_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

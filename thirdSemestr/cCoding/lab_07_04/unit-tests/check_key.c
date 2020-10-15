@@ -17,17 +17,30 @@
 #include <stdio.h>
 
 
-START_TEST(test_calc_all_in_simmilar_filter)
-{
-    int integer_vector[5] = {1, 1, 1, 1, 1}, size_of_integer_vector = 5;
+// START_TEST(test_calc_all_in_simmilar_filter)
+// {
+//     int integer_vector[5] = {1, 1, 1, 1, 1};
 
-    int *start_integer_vector_cursor = integer_vector;
-    int *end_integer_vector_cursor = integer_vector + size_of_integer_vector;
+//     int *start_integer_vector_cursor = NULL;
+//     int *end_integer_vector_cursor = NULL;
 
-    int filter_status = key(integer_vector, integer_vector + size_of_integer_vector, &start_integer_vector_cursor, &end_integer_vector_cursor);
+//     int filter_status = key(integer_vector, integer_vector + 5, &start_integer_vector_cursor, &end_integer_vector_cursor);
     
-    ck_assert_int_eq(filter_status, 1);
-    ck_assert_ptr_eq(start_integer_vector_cursor, NULL);
+//     ck_assert_int_eq(filter_status, 1);
+//     ck_assert_ptr_eq(start_integer_vector_cursor, NULL);
+// }
+// END_TEST
+
+START_TEST(test_filter_zero_len)
+{
+    int array[1];
+
+    int *start = NULL, *end = NULL;
+
+    int result = key(array, array + 0, &start, &end);
+
+    ck_assert_int_eq(result, 1);
+    ck_assert_ptr_eq(start, NULL);
 }
 END_TEST
 
@@ -48,14 +61,14 @@ START_TEST(test_calc_all_in_not_simmilar_filter)
     // if (!filter_status)
     //     free (start_integer_vector_cursor);
 
-    int array[5] = {4, 6, 8, 0, 7};
-    int copy[3] = {6, 7, 8};
+    int array[5] = {10, 20, 30, 90, 10000};
+    int copy[1] = {10000};
     int *start = NULL, *end = NULL;
 
     int result = key(array, array + 5, &start, &end);
 
     ck_assert_int_eq(result, 0);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 1; i++)
         ck_assert_int_eq(copy[i], start[i]);
 
     if (!result)
@@ -76,7 +89,8 @@ Suite* key_test_suite(void)
 
     tc_neg = tcase_create("negatives");
     // Добавим в tc_neg соответствующие функции-тесты
-    tcase_add_test(tc_neg, test_calc_all_in_simmilar_filter);
+    tcase_add_test(tc_neg, test_filter_zero_len);
+    
 
     // Добавим сформированный тестовый случай в тестовый набор
     suite_add_tcase(s, tc_neg);
@@ -84,6 +98,7 @@ Suite* key_test_suite(void)
     tc_pos = tcase_create("positives");
 
    // tcase_add_test(tc_pos, test_calc_all_in_simmilar_filter);
+    //tcase_add_test(tc_neg, test_calc_all_in_simmilar_filter);
     tcase_add_test(tc_pos, test_calc_all_in_not_simmilar_filter);
     // Добавим сформированный тестовый случай в тестовый набор
     suite_add_tcase(s, tc_pos);
