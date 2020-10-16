@@ -45,29 +45,23 @@ void allocate_memory_to_input_table_information(union students_accommodation_inf
 
 int is_key_right(char *key)
 {
-	return SUCCESS_STATUS;
+ 	if (strcmp(key, "accommodation") == SUCCESS_STATUS || strcmp(key, "surname") == SUCCESS_STATUS || strcmp(key, "age") == SUCCESS_STATUS  || strcmp(key, "name") == SUCCESS_STATUS || strcmp(key, "gender") == SUCCESS_STATUS || strcmp(key, "average_score_per_session") == SUCCESS_STATUS || strcmp(key, "street") == SUCCESS_STATUS || strcmp(key, "house_or_campus_number") == SUCCESS_STATUS || strcmp(key, "flat_or_room_number") == SUCCESS_STATUS || strcmp(key, "date_in") == SUCCESS_STATUS)
+		return SUCCESS_STATUS;
+	return ERROR_STATUS;
 }
 
 int get_sort_status(union students_accommodation_information *input_table_information, int left, int right, char *key)
 {
 	if (strcmp(key, "accommodation") == SUCCESS_STATUS)
 	{
-		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
+		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS && input_table_information[right].social_home.is_social_home == ERROR_STATUS)
 		{
 			return 1;
 		}
+		return 0;
 	}
 	else if (strcmp(key, "surname") == SUCCESS_STATUS)
 	{
-		char first[INPUT_STRING_MAX_SIZE];
-		char second[INPUT_STRING_MAX_SIZE];
-
-		for (int u = 0; u < INPUT_STRING_MAX_SIZE; u++)
-		{
-			first[u] = '\0';
-			second[u] = '\0';
-		}
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
 		{
 			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
@@ -85,171 +79,121 @@ int get_sort_status(union students_accommodation_information *input_table_inform
 	}
 	else if (strcmp(key, "name") == SUCCESS_STATUS)
 	{
-		char first[INPUT_STRING_MAX_SIZE];
-		char second[INPUT_STRING_MAX_SIZE];
-
-		for (int u = 0; u < INPUT_STRING_MAX_SIZE; u++)
-		{
-			first[u] = '\0';
-			second[u] = '\0';
-		}
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
 		{
-			for (int u = 0; u < strlen(input_table_information[left].social_home.student.name); u++)
-				first[u] = input_table_information[left].social_home.student.name[u];
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return strcmp(input_table_information[left].social_home.student.name, input_table_information[left].social_home.student.name);
+			else
+				return strcmp(input_table_information[left].social_home.student.name, input_table_information[left].private_home.student.name);
 		}
-		else 
+		else
 		{
-			for (int u = 0; u < strlen(input_table_information[left].private_home.student.name); u++)
-				first[u] = input_table_information[left].private_home.student.name[u];
-		}
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-		{
-			for (int u = 0; u < strlen(input_table_information[left].social_home.student.name); u++)
-				second[u] = input_table_information[right].social_home.student.name[u];
-		}
-		else 
-		{
-			for (int u = 0; u < strlen(input_table_information[right].private_home.student.name); u++)
-				second[u] = input_table_information[right].private_home.student.name[u];
-		}
-
-		if (strcmp(first, second) > 0)
-		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return strcmp(input_table_information[left].private_home.student.name, input_table_information[left].social_home.student.name);
+			else
+				return strcmp(input_table_information[left].private_home.student.name, input_table_information[left].private_home.student.name);
 		}
 	}
 	else if (strcmp(key, "gender") == SUCCESS_STATUS)
 	{
-		int first, second;
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
-			first = input_table_information[left].social_home.student.gender;
-		else 
-			first = input_table_information[left].private_home.student.gender;
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-			second = input_table_information[right].social_home.student.gender;
-		else 
-			second = input_table_information[right].private_home.student.gender;
-
-		if (first < second)
 		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].social_home.student.gender < input_table_information[left].social_home.student.gender;
+			else
+				return input_table_information[left].social_home.student.gender < input_table_information[left].private_home.student.gender;
+		}
+		else
+		{
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].private_home.student.gender < input_table_information[left].social_home.student.gender;
+			else
+				return input_table_information[left].private_home.student.gender < input_table_information[left].private_home.student.gender;
 		}
 	}
 	else if (strcmp(key, "age") == SUCCESS_STATUS)
 	{
-		int first, second;
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
-			first = input_table_information[left].social_home.student.age;
-		else 
-			first = input_table_information[left].private_home.student.age;
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-			second = input_table_information[right].social_home.student.age;
-		else 
-			second = input_table_information[right].private_home.student.age;
-
-		if (first > second)
 		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].social_home.student.age < input_table_information[left].social_home.student.age;
+			else
+				return input_table_information[left].social_home.student.age < input_table_information[left].private_home.student.age;
+		}
+		else
+		{
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].private_home.student.age < input_table_information[left].social_home.student.age;
+			else
+				return input_table_information[left].private_home.student.age < input_table_information[left].private_home.student.age;
 		}
 	}
 	else if (strcmp(key, "average_score_per_session") == SUCCESS_STATUS)
 	{
-		int first, second;
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
-			first = input_table_information[left].social_home.student.average_score_per_session;
-		else 
-			first = input_table_information[left].private_home.student.average_score_per_session;
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-			second = input_table_information[right].social_home.student.average_score_per_session;
-		else 
-			second = input_table_information[right].private_home.student.average_score_per_session;
-
-		if (first > second)
 		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].social_home.student.average_score_per_session < input_table_information[left].social_home.student.average_score_per_session;
+			else
+				return input_table_information[left].social_home.student.average_score_per_session < input_table_information[left].private_home.student.average_score_per_session;
+		}
+		else
+		{
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].private_home.student.average_score_per_session < input_table_information[left].social_home.student.average_score_per_session;
+			else
+				return input_table_information[left].private_home.student.average_score_per_session < input_table_information[left].private_home.student.average_score_per_session;
 		}
 	}
 	else if (strcmp(key, "street") == SUCCESS_STATUS)
 	{
-		char first[INPUT_STRING_MAX_SIZE];
-		char second[INPUT_STRING_MAX_SIZE];
-
-		for (int u = 0; u < INPUT_STRING_MAX_SIZE; u++)
-		{
-			first[u] = '\0';
-			second[u] = '\0';
-		}
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
 		{
-			first[0] = '-';
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return strcmp("-", "-");
+			else
+				return strcmp("-", input_table_information[left].private_home.address.street);
 		}
-		else 
+		else
 		{
-			for (int u = 0; u < strlen(input_table_information[left].private_home.address.street); u++)
-				first[u] = input_table_information[left].private_home.address.street[u];
-		}
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-		{
-			second[0] = '-';
-		}
-		else 
-		{
-			for (int u = 0; u < strlen(input_table_information[right].private_home.address.street); u++)
-				second[u] = input_table_information[right].private_home.address.street[u];
-		}
-
-		if (strcmp(first, second) > 0)
-		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return strcmp(input_table_information[left].private_home.address.street, "-");
+			else
+				return strcmp(input_table_information[left].private_home.address.street, input_table_information[left].private_home.address.street);
 		}
 	}
 	else if (strcmp(key, "house_or_campus_number") == SUCCESS_STATUS)
 	{
-		int first, second;
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
-			first = input_table_information[left].social_home.address.house_number;
-		else 
-			first = input_table_information[left].private_home.address.house_number;
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-			second = input_table_information[right].social_home.address.house_number;
-		else 
-			second = input_table_information[right].private_home.address.house_number;
-
-		if (first > second)
 		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].social_home.address.house_number < input_table_information[left].social_home.address.house_number;
+			else
+				return input_table_information[left].social_home.address.house_number < input_table_information[left].private_home.address.house_number;
+		}
+		else
+		{
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].private_home.address.house_number < input_table_information[left].social_home.address.house_number;
+			else
+				return input_table_information[left].private_home.address.house_number < input_table_information[left].private_home.address.house_number;
 		}
 	}
 	else if (strcmp(key, "flat_or_room_number") == SUCCESS_STATUS)
 	{
-		int first, second;
-
 		if (input_table_information[left].social_home.is_social_home == SUCCESS_STATUS)
-			first = input_table_information[left].social_home.address.room_number;
-		else 
-			first = input_table_information[left].private_home.address.flat_number;
-
-		if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
-			second = input_table_information[right].social_home.address.room_number;
-		else 
-			second = input_table_information[right].private_home.address.flat_number;
-
-		if (first > second)
 		{
-			return 1;
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].social_home.address.room_number < input_table_information[left].social_home.address.room_number;
+			else
+				return input_table_information[left].social_home.address.room_number < input_table_information[left].private_home.address.flat_number;
+		}
+		else
+		{
+			if (input_table_information[right].social_home.is_social_home == SUCCESS_STATUS)
+				return input_table_information[left].private_home.address.flat_number < input_table_information[left].social_home.address.room_number;
+			else
+				return input_table_information[left].private_home.address.flat_number < input_table_information[left].private_home.address.flat_number;
 		}
 	}
 	else if (strcmp(key, "date_in") == SUCCESS_STATUS)
@@ -266,12 +210,7 @@ int get_sort_status(union students_accommodation_information *input_table_inform
 			second = input_table_information[right].social_home.student.receipt_date.day + input_table_information[right].social_home.student.receipt_date.month * 30 + input_table_information[right].social_home.student.receipt_date.year * 360;
 		else 
 			second = input_table_information[right].private_home.student.receipt_date.day + input_table_information[right].private_home.student.receipt_date.month * 30 + input_table_information[right].private_home.student.receipt_date.year * 360;
-		
-
-		if (first > second)
-		{
-			return 1;
-		}
+		return first < second;
 	}
 
 	return -1;
@@ -304,6 +243,36 @@ void qs(union students_accommodation_information *s_arr, int first, int last, ch
     }
 }
 
+int comp_int (const int *i, const int *j)
+{
+	return ((sort_key*)i)->int_value < ((sort_key*)j)->int_value;
+}
+
+int comp_string (const int *i, const int *j)
+{
+	return strcmp(((sort_key*)i)->string_value, ((sort_key*)j)->string_value);
+}
+
+
+int comp_double (const int *i, const int *j)
+{
+	return ((sort_key*)i)->double_value < ((sort_key*)j)->double_value;
+}
+
+
+double get_time_sort_by_field(struct sort_key *input_vector, int input_vector_size, int key_to_sort)
+{
+	clock_t start_qsort = clock();
+	if (key_to_sort == 1)
+		qsort(input_vector, input_vector_size, sizeof (input_vector), (int(*) (const void *, const void *)) comp_int);
+	else if (key_to_sort == 2)
+		qsort(input_vector, input_vector_size, sizeof (input_vector), (int(*) (const void *, const void *)) comp_string);
+	else if (key_to_sort == 3)
+		qsort(input_vector, input_vector_size, sizeof (input_vector), (int(*) (const void *, const void *)) comp_double);
+	clock_t end_qsort = clock();
+	return (double) (end_qsort - start_qsort) / CLOCKS_PER_SEC;
+}
+
 void sort_students_by_key(union students_accommodation_information *input_table_information, int input_table_information_size)
 {
 	char key[INPUT_STRING_MAX_SIZE];
@@ -322,9 +291,140 @@ void sort_students_by_key(union students_accommodation_information *input_table_
 	printf("Введите ключ сортировки: ");
 	scanf("%s", key);
 
-	clock_t start_bubble = clock();
+	
 	if (is_key_right(key) == SUCCESS_STATUS)
 	{
+		int key_to_sort = 0;
+		sort_key key_sort_table[INPUT_TABLE_INFORMATION_MAX_SIZE] ;
+		for (int check_cursor = 0; check_cursor < input_table_information_size; check_cursor++)
+		{
+			if (strcmp(key, "accommodation") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].int_value = 0;
+				else
+					key_sort_table[check_cursor].int_value = 1;
+				key_to_sort = 1;
+			}
+			if (strcmp(key, "gender") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].private_home.student.gender;
+				else
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].social_home.student.gender;
+				key_to_sort = 1;
+			}
+			else if (strcmp(key, "house_or_campus_number") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].private_home.address.house_number;
+				else
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].social_home.address.house_number;
+				key_to_sort = 1;
+			}
+			else if (strcmp(key, "date_in") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].private_home.student.receipt_date.day + input_table_information[check_cursor].private_home.student.receipt_date.month * 30 + input_table_information[check_cursor].private_home.student.receipt_date.year * 360;
+				else
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].social_home.student.receipt_date.day + input_table_information[check_cursor].social_home.student.receipt_date.month * 30 + input_table_information[check_cursor].social_home.student.receipt_date.year * 360;
+				key_to_sort = 1;
+			}
+			else if (strcmp(key, "flat_or_room_number") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].private_home.address.flat_number;
+				else
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].social_home.address.room_number;
+				key_to_sort = 1;
+			}
+			else if (strcmp(key, "average_score_per_session") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].private_home.student.average_score_per_session;
+				else
+					key_sort_table[check_cursor].int_value = input_table_information[check_cursor].social_home.student.average_score_per_session;
+				key_to_sort = 2;
+			}
+			else if (strcmp(key, "surname") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					sim_str(input_table_information[check_cursor].private_home.student.surname, key_sort_table[check_cursor].string_value);
+				else
+					sim_str(input_table_information[check_cursor].social_home.student.surname, key_sort_table[check_cursor].string_value);
+				key_to_sort = 2;
+			}
+			else if (strcmp(key, "name") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					sim_str(input_table_information[check_cursor].private_home.student.name, key_sort_table[check_cursor].string_value);
+				else
+					sim_str(input_table_information[check_cursor].social_home.student.name, key_sort_table[check_cursor].string_value);
+				key_to_sort = 2;
+			}
+			else if (strcmp(key, "street") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					sim_str(input_table_information[check_cursor].private_home.address.street, key_sort_table[check_cursor].string_value);
+				else
+					sim_str("-", key_sort_table[check_cursor].string_value);
+				key_to_sort = 2;
+			}
+			else if (strcmp(key, "average_score_per_session") == SUCCESS_STATUS)
+			{
+				if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+					key_sort_table[check_cursor].double_value = input_table_information[check_cursor].private_home.student.average_score_per_session;
+				else
+					key_sort_table[check_cursor].double_value = input_table_information[check_cursor].social_home.student.average_score_per_session;
+				key_to_sort = 3;
+			}
+		}
+		// students_accommodation_information temp_table_information[INPUT_TABLE_INFORMATION_MAX_SIZE];
+		// allocate_memory_to_input_table_information(temp_table_information);
+
+		// for (int check_cursor = 0; check_cursor < input_table_information_size; check_cursor++)
+		// {
+		// 	if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
+		// 	{	
+		// 		temp_table_information[check_cursor].social_home.is_social_home = ERROR_STATUS;
+
+		// 		sim_str(input_table_information[check_cursor].private_home.student.surname, temp_table_information[check_cursor].private_home.student.surname);
+		// 		sim_str(input_table_information[check_cursor].private_home.student.name, temp_table_information[check_cursor].private_home.student.name);
+		// 		sim_str(input_table_information[check_cursor].private_home.address.street, temp_table_information[check_cursor].private_home.address.street);
+
+		// 		temp_table_information[check_cursor].private_home.student.gender = input_table_information[check_cursor].private_home.student.gender;
+		// 		temp_table_information[check_cursor].private_home.student.age = input_table_information[check_cursor].private_home.student.age;
+		// 		temp_table_information[check_cursor].private_home.student.average_score_per_session = input_table_information[check_cursor].private_home.student.average_score_per_session;
+
+		// 		temp_table_information[check_cursor].private_home.address.house_number = input_table_information[check_cursor].private_home.address.house_number;
+		// 		temp_table_information[check_cursor].private_home.address.flat_number = input_table_information[check_cursor].private_home.address.flat_number;
+		// 		temp_table_information[check_cursor].private_home.student.receipt_date.day = input_table_information[check_cursor].private_home.student.receipt_date.day;
+		// 		temp_table_information[check_cursor].private_home.student.receipt_date.month = input_table_information[check_cursor].private_home.student.receipt_date.month;
+		// 		temp_table_information[check_cursor].private_home.student.receipt_date.year = input_table_information[check_cursor].private_home.student.receipt_date.year;
+
+		// 	}
+
+		// 	if (input_table_information[check_cursor].social_home.is_social_home == SUCCESS_STATUS)
+		// 	{
+		// 		input_table_information[check_cursor].social_home.is_social_home = SUCCESS_STATUS;
+
+		// 		sim_str(input_table_information[check_cursor].social_home.student.surname, temp_table_information[check_cursor].social_home.student.surname);
+		// 		sim_str(input_table_information[check_cursor].social_home.student.name, temp_table_information[check_cursor].social_home.student.name);
+		
+		// 		temp_table_information[check_cursor].social_home.student.gender = input_table_information[check_cursor].social_home.student.gender;
+		// 		temp_table_information[check_cursor].social_home.student.age = input_table_information[check_cursor].social_home.student.age;
+		// 		temp_table_information[check_cursor].social_home.student.average_score_per_session = input_table_information[check_cursor].social_home.student.average_score_per_session;
+
+		// 		temp_table_information[check_cursor].social_home.address.house_number = input_table_information[check_cursor].social_home.address.house_number;
+		// 		temp_table_information[check_cursor].social_home.address.room_number = input_table_information[check_cursor].social_home.address.room_number;
+		// 		temp_table_information[check_cursor].social_home.student.receipt_date.day = input_table_information[check_cursor].social_home.student.receipt_date.day ;
+		// 		temp_table_information[check_cursor].social_home.student.receipt_date.month = input_table_information[check_cursor].social_home.student.receipt_date.month ;
+		// 		temp_table_information[check_cursor].social_home.student.receipt_date.year = input_table_information[check_cursor].social_home.student.receipt_date.year ;
+
+		// 	}
+		// }
+
+		clock_t start_bubble = clock();
 		for (int i = input_table_information_size - 1; i >= 0; i--)
 	    {
 	        for (int j = 0; j < i; j++)
@@ -584,76 +684,28 @@ void sort_students_by_key(union students_accommodation_information *input_table_
 		                input_table_information[j + 1] = tmp;
 	        		}
 	        	}
-				else
-				{
-					printf("Вы ввели некорректный ключ. Попробуйте заново...\n");
-					break;
-				}
 	        }
 	    }
+	    clock_t end_bubble = clock();
+
+		// clock_t start_qsort = clock();
+		// qs(temp_table_information, 0, input_table_information_size - 1, key);
+		// clock_t end_qsort = clock();
+
+		double buble = (double) (end_bubble - start_bubble) / CLOCKS_PER_SEC;
+		double q_sort = get_time_sort_by_field(key_sort_table, input_table_information_size, key_to_sort);
+		double comp_ans = (1 - (q_sort / buble)) * 100;
+		printf("Информация по сортировкам: \n");
+		printf("Сортировка пузырьком: %f(сек)\n", buble);
+		printf("Сортировка по ключам: %f(сек)\n", q_sort);
+		printf("Сортировка по ключам быстрее на: %f%%\n", comp_ans);
+
 	}
 	else
 	{
 		printf("Вы ввели некорректный ключ. Попробуйте заново...\n");
 	}
-	clock_t end_bubble = clock();
-
-	students_accommodation_information temp_table_information[INPUT_TABLE_INFORMATION_MAX_SIZE];
-	allocate_memory_to_input_table_information(temp_table_information);
-
-	for (int check_cursor = 0; check_cursor < input_table_information_size; check_cursor++)
-	{
-		if (input_table_information[check_cursor].social_home.is_social_home != SUCCESS_STATUS)
-		{	
-			temp_table_information[check_cursor].social_home.is_social_home = ERROR_STATUS;
-
-			sim_str(input_table_information[check_cursor].private_home.student.surname, temp_table_information[check_cursor].private_home.student.surname);
-			sim_str(input_table_information[check_cursor].private_home.student.name, temp_table_information[check_cursor].private_home.student.name);
-			sim_str(input_table_information[check_cursor].private_home.address.street, temp_table_information[check_cursor].private_home.address.street);
-
-			temp_table_information[check_cursor].private_home.student.gender = input_table_information[check_cursor].private_home.student.gender;
-			temp_table_information[check_cursor].private_home.student.age = input_table_information[check_cursor].private_home.student.age;
-			temp_table_information[check_cursor].private_home.student.average_score_per_session = input_table_information[check_cursor].private_home.student.average_score_per_session;
-
-			temp_table_information[check_cursor].private_home.address.house_number = input_table_information[check_cursor].private_home.address.house_number;
-			temp_table_information[check_cursor].private_home.address.flat_number = input_table_information[check_cursor].private_home.address.flat_number;
-			temp_table_information[check_cursor].private_home.student.receipt_date.day = input_table_information[check_cursor].private_home.student.receipt_date.day;
-			temp_table_information[check_cursor].private_home.student.receipt_date.month = input_table_information[check_cursor].private_home.student.receipt_date.month;
-			temp_table_information[check_cursor].private_home.student.receipt_date.year = input_table_information[check_cursor].private_home.student.receipt_date.year;
-
-		}
-
-		if (input_table_information[check_cursor].social_home.is_social_home == SUCCESS_STATUS)
-		{
-			input_table_information[check_cursor].social_home.is_social_home = SUCCESS_STATUS;
-
-			sim_str(input_table_information[check_cursor].social_home.student.surname, temp_table_information[check_cursor].social_home.student.surname);
-			sim_str(input_table_information[check_cursor].social_home.student.name, temp_table_information[check_cursor].social_home.student.name);
 	
-			temp_table_information[check_cursor].social_home.student.gender = input_table_information[check_cursor].social_home.student.gender;
-			temp_table_information[check_cursor].social_home.student.age = input_table_information[check_cursor].social_home.student.age;
-			temp_table_information[check_cursor].social_home.student.average_score_per_session = input_table_information[check_cursor].social_home.student.average_score_per_session;
-
-			temp_table_information[check_cursor].social_home.address.house_number = input_table_information[check_cursor].social_home.address.house_number;
-			temp_table_information[check_cursor].social_home.address.room_number = input_table_information[check_cursor].social_home.address.room_number;
-			temp_table_information[check_cursor].social_home.student.receipt_date.day = input_table_information[check_cursor].social_home.student.receipt_date.day ;
-			temp_table_information[check_cursor].social_home.student.receipt_date.month = input_table_information[check_cursor].social_home.student.receipt_date.month ;
-			temp_table_information[check_cursor].social_home.student.receipt_date.year = input_table_information[check_cursor].social_home.student.receipt_date.year ;
-
-		}
-	}
-
-	clock_t start_qsort = clock();
-	qs(temp_table_information, 0, input_table_information_size - 1, key);
-	clock_t end_qsort = clock();
-
-	double buble = (double) (end_bubble - start_bubble) / CLOCKS_PER_SEC;
-	double q_sort = (double) (end_qsort - start_qsort) / CLOCKS_PER_SEC;
-	double comp_ans = (1 - (buble / q_sort)) * 100;
-	printf("Информация по сортировкам: \n");
-	printf("Сортировка пузырьком: %f(сек)\n", buble);
-	printf("Сортировка быстрая: %f(сек)\n", q_sort);
-	printf("Сортировка пуз-ом быстрее на: %f%%\n", comp_ans);
 }
 
 int delete_note(union students_accommodation_information *input_table_information, int *input_table_information_size)

@@ -144,7 +144,7 @@ void output_all_students(union students_accommodation_information *input_table_i
 
 void sim_str(char *first, char *second)
 {
-	int j = strlen(second) - 1;
+	int j = strlen(first) - 1;
 	while (j >= 0)
 	{
 		second[j] = '\0';
