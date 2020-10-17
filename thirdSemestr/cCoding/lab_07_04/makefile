@@ -1,8 +1,8 @@
 all: app.exe unit_tests.exe
 
 # APP.EXE
-app.exe : main.o key.o sort.o io.o
-	gcc -o app.exe out/main.o out/key.o out/sort.o out/io.o
+app.exe : main.o key.o sort.o io.o functions.o
+	gcc -o app.exe out/main.o out/key.o out/sort.o out/io.o out/functions.o
 
 key.o :
 	mkdir -p out
@@ -16,13 +16,17 @@ io.o :
 	mkdir -p out
 	gcc -std=c99 -Wall -Werror -ggdb -pedantic -c -o out/io.o src/io.c
 
+functions.o :
+	mkdir -p out
+	gcc -std=c99 -Wall -Werror -ggdb -pedantic -c -o out/functions.o src/functions.c
+	
 main.o :
 	mkdir -p out
 	gcc -std=c99 -Wall -Werror -ggdb -pedantic -c -o out/main.o src/main.c
 
 #UNIT_TESTS.EXE
-unit_tests.exe : check_sort.o check_main.o check_key.o main.o key.o sort.o io.o
-	gcc -o unit_tests.exe out/check_main.o out/check_sort.o out/check_key.o out/key.o out/sort.o out/io.o -lcheck -lpthread -lrt
+unit_tests.exe : check_sort.o check_main.o check_key.o main.o key.o sort.o io.o functions.o
+	gcc -o unit_tests.exe out/check_main.o out/check_sort.o out/check_key.o out/key.o out/sort.o out/io.o out/functions.o -lcheck -lpthread -lrt
 
 check_main.o :
 	mkdir -p out

@@ -23,19 +23,18 @@ int is_right_argv(int argc, char const *argv[])
 int get_size_of_vector(const char *in_file_name, int *size_of_integer_vector)
 {
 	FILE *in_file = fopen(in_file_name, "r");
-
+	int errorflag = ERROR_STATUS;
 	if (in_file != NULL)
 	{
 		int input_number = 0;
 		while (!feof(in_file) && fscanf(in_file, "%d", &input_number) > EOF)
 			(*size_of_integer_vector) += 1;
-	
-		fclose(in_file);
-		return SUCCESS_STATUS;
 	}
 
 	fclose(in_file);
-	return ERROR_STATUS;
+	if (*size_of_integer_vector)
+		errorflag = SUCCESS_STATUS;
+	return errorflag;
 }
 
 int get_int_elem_from_file_to_vec(const char *in_file_name, int *integer_vector, int size_of_integer_vector)
