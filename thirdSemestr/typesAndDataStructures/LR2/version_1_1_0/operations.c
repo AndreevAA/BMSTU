@@ -45,8 +45,6 @@ void allocate_memory_to_input_table_information(union students_accommodation_inf
 
 int is_key_right(char *key)
 {
- 	// if (strcmp(key, "accommodation") == SUCCESS_STATUS || strcmp(key, "surname") == SUCCESS_STATUS || strcmp(key, "age") == SUCCESS_STATUS  || strcmp(key, "name") == SUCCESS_STATUS || strcmp(key, "gender") == SUCCESS_STATUS || strcmp(key, "average_score_per_session") == SUCCESS_STATUS || strcmp(key, "street") == SUCCESS_STATUS || strcmp(key, "house_or_campus_number") == SUCCESS_STATUS || strcmp(key, "flat_or_room_number") == SUCCESS_STATUS || strcmp(key, "date_in") == SUCCESS_STATUS)
-		// return SUCCESS_STATUS;
 	if (strcmp(key, "average_score_per_session") == SUCCESS_STATUS || strcmp(key, "house_or_campus_number") == SUCCESS_STATUS || strcmp(key, "flat_or_room_number") == SUCCESS_STATUS || strcmp(key, "date_in") == SUCCESS_STATUS || strcmp(key, "age") == SUCCESS_STATUS)
 		return SUCCESS_STATUS;
 	return ERROR_STATUS;
@@ -293,13 +291,8 @@ void sort_students_by_key(union students_accommodation_information *input_table_
 {
 	char key[INPUT_STRING_MAX_SIZE];
 	printf("Доступные ключи сортировки таблицы:\n");
-	// printf("\t - accommodation\n");
-	// printf("\t - surname\n");
-	// printf("\t - name\n");
-	// printf("\t - gender\n");
 	printf("\t - age\n");
 	printf("\t - average_score_per_session\n");
-	//printf("\t - street\n");
 	printf("\t - house_or_campus_number\n");
 	printf("\t - flat_or_room_number\n");
 	printf("\t - date_in\n\n");
