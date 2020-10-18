@@ -73,11 +73,10 @@ typedef union students_accommodation_information
 	struct private_home private_home;
 } students_accommodation_information;
 
+// Только сортировка по числовым полям
 typedef struct sort_key
 {
 	int position;
-	int int_value;
-	char string_value[INPUT_STRING_MAX_SIZE];
 	double double_value;
 } sort_key;
 

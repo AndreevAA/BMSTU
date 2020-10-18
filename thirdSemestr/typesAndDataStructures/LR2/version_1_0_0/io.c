@@ -144,7 +144,7 @@ void output_all_students(union students_accommodation_information *input_table_i
 
 void sim_str(char *first, char *second)
 {
-	int j = strlen(first) - 1;
+	int j = 256;
 	while (j >= 0)
 	{
 		second[j] = '\0';
@@ -265,13 +265,13 @@ void save_information_into_file(char const *argv[], union students_accommodation
 void output_filtered_students(union students_accommodation_information *input_table_information, int input_table_information_size)
 {
 	int day, month, year, number_of_output_students = 0;
-	printf("Укажите дату поступления через пробел (ДД ММ ГГ): ");
-	scanf("%d%d%d", &day, &month, &year);
+	printf("Укажите год поступления через пробел (ГГ): ");
+	scanf("%d", &year);
 	for (int search_cursor = 0; search_cursor < input_table_information_size; search_cursor++)
 	{
 		if (input_table_information[search_cursor].social_home.is_social_home == SUCCESS_STATUS)
 		{
-			if (day == input_table_information[search_cursor].social_home.student.receipt_date.day && month == input_table_information[search_cursor].social_home.student.receipt_date.month && year == input_table_information[search_cursor].social_home.student.receipt_date.year)
+			if (year == input_table_information[search_cursor].social_home.student.receipt_date.year)
 			{
 				if (number_of_output_students == 0)
 					output_head_of_table();
