@@ -10,6 +10,7 @@ void output_welcome_information()
 	printf("\tPRINT_ALL - Печать всех студентов\n");
 	printf("\tPRINT_FILTERED_STUDENTS - Печать только студентов по ключам\n");
 	printf("\tSORT_TABLE_BY_KEY - Сортировка таблицы по ключу\n");
+	printf("\tGET_KEY_TABLE - Вывод таблицы ключей (Сортировка копии)\n");
 	printf("\tADD_NOTE - Добавление записи в таблицу\n");
 	printf("\tDELETE_NOTE - Удаление записи из таблицы\n");
 	printf("\tSAVE_TABLE - Сохранение изменений\n");

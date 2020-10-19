@@ -7,3 +7,5 @@ int get_in_file_information(FILE *in_file, union students_accommodation_informat
 void output_all_students(union students_accommodation_information *input_table_information, int *input_table_information_size);
 void sim_str(char *first, char *second);
 void save_information_into_file(char const *argv[], union students_accommodation_information *input_table_information, int *input_table_information_size);
+void output_person(union students_accommodation_information temp_person);
+void output_spaces(int first, int max);

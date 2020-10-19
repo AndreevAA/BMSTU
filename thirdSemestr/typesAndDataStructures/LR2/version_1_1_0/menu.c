@@ -16,6 +16,8 @@ int get_menu_status()
 			return INPUT_COMMAND_PRINT_FILTERED_STUDENTS;
 		else if (strcmp(input_command_text, "SORT_TABLE_BY_KEY") == SUCCESS_STATUS)
 			return INPUT_COMMAND_SORT_TABLE_BY_KEY;
+		else if (strcmp(input_command_text, "GET_KEY_TABLE") == SUCCESS_STATUS)
+			return INPUT_COMMAND_GET_KEY_TABLE;
 		else if (strcmp(input_command_text, "ADD_NOTE") == SUCCESS_STATUS)
 			return INPUT_COMMAND_ADD_NOTE;
 		else if (strcmp(input_command_text, "DELETE_NOTE") == SUCCESS_STATUS)
@@ -40,9 +42,9 @@ void menu_comprator_by_menu_status(int menu_status, union students_accommodation
 	else if (menu_status == INPUT_COMMAND_DELETE_NOTE)
 		*input_table_information_size = delete_note(input_table_information, input_table_information_size);
 	else if (menu_status == INPUT_COMMAND_SAVE_TABLE)
-	{
 		save_information_into_file(argv, input_table_information, input_table_information_size);
-	}
+	else if (menu_status == INPUT_COMMAND_GET_KEY_TABLE)
+		get_key_table(input_table_information, *input_table_information_size);
 	else
 	{
 		printf("Вы указали неверную команду. Попробуйте еще раз...\n");
