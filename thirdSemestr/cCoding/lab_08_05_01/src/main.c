@@ -21,18 +21,26 @@ int main()
 	if (get_matrix(&A, &A_matrix_height, &A_matrix_width) || get_matrix(&B, &B_matrix_height, &B_matrix_width))
 		return ERROR_INPUT_MATRIX;
 
-	for (int i = 0; i < A.matrix_height; i++)
-	{
-		printf("%d ", *(A.matrix_indicators[i]));
-	}
-
-	if (delete_min_string_or_table(A) || delete_min_string_or_table(B))
+	if (delete_min_string_or_table(&A) || delete_min_string_or_table(&B))
 		return ERROR_DELETE_MATRIX;
 
-	printf("\n\n");
+	int ro, gamma;
+	if (!get_degrees(&ro, &gamma))
+		return ERROR_WHILE_INPUT_DEGREES;
 
-	for (int i = 0; i < A.matrix_height; i++)
-	{
-		printf("%d ", *(A.matrix_indicators[i]));
-	}
+	if (!is_correct_degree(&ro, &gamma))
+		return ERROR_INPUT_DEGREES;
+
+	printf("\n");
+	output_matrix(&A);
+
+	printf("\n");
+	output_matrix(&B);
+
+	struct matrix AB;
+	if (get_multiplicated_powed_matrix(&AB, &A, &B, &ro, &gamma))
+		printf("POPA\n");
+
+	printf("\n");
+	output_matrix(&AB);
 }

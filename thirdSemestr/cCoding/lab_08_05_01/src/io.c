@@ -32,5 +32,22 @@ int get_matrix(struct matrix *I_matrix, int *I_matrix_height, int *I_matrix_widt
 	return SUCCESS_STATUS;
 }
 
+int get_degrees(int *ro, int *gamma)
+{
+	return (scanf("%d", ro) == 1 && scanf("%d", gamma));
+}
 
+int is_correct_degree(int *ro, int *gamma)
+{
+	return (*ro >= 0 && *gamma >= 0);
+}
 
+void output_matrix(struct matrix *I)
+{
+	for (int check_string_number = 0; check_string_number < I->matrix_height; check_string_number++)
+	{
+		for (int check_row_number = 0; check_row_number < I->matrix_width; check_row_number++)
+			printf("%d ", *(I->matrix_indicators[check_string_number] + check_row_number));
+		printf("\n");
+	}
+}
