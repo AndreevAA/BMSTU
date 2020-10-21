@@ -47,6 +47,18 @@ int get_multiplicated_powed_matrix(struct matrix *AB, struct matrix *A, struct m
 
 int pow_matrix(struct matrix *I, int degree)
 {
+	int *first_matrix = (int *)malloc(I->matrix_height * sizeof(int)), second_matrix =  (int *)malloc(I->matrix_width * sizeof(int));
+	for (int number_of_operations = 0; number_of_operations < degree number_of_operations++)
+	{
+		for (int i = 0; i < I->matrix_height; i++)
+		{
+			for (int j = 0; j < I->matrix_width; j++)
+			{
+				
+			}
+		}
+	}
+
 	printf("*(I->matrix_indicators[check_string_number] + 0) =%d\n", *(I->matrix_indicators[0] + 0));
 	printf("HERE1\n");
 	// for (int counter = 0; counter < degree; counter++)
@@ -60,38 +72,28 @@ int mult_matrix(struct matrix *result_matrix, struct matrix *first_matrix, struc
 	result_matrix->matrix_width = second_matrix->matrix_width;
 	result_matrix->matrix_indicators = (int **)malloc((result_matrix->matrix_height) * sizeof(int *));
 	result_matrix->matrix_elements = (int *)malloc((result_matrix->matrix_height * result_matrix->matrix_width) * sizeof(int));
-	printf("HERE2\n");
 	for (int check_string_number = 0; check_string_number < result_matrix->matrix_height; check_string_number++)
 	{
 		int temp_row_sum = get_string_sum(first_matrix, check_string_number);
-		printf("HERE3\n");
 		for (int check_row_number = 0; check_row_number < result_matrix->matrix_width; check_row_number++)
-			result_matrix->matrix_elements[check_string_number * check_row_number - 1] = temp_row_sum * get_string_sum(second_matrix, check_row_number);
-		printf("HERE4\n");
-		*(result_matrix->matrix_indicators + sizeof(void) * check_string_number) = result_matrix->matrix_elements + check_string_number * result_matrix->matrix_width - 1;
-		printf("HERE5\n");
+			*(result_matrix->matrix_elements + check_string_number * result_matrix->matrix_width + check_row_number) = temp_row_sum * get_row_sum(second_matrix, check_row_number);
+		*(result_matrix->matrix_indicators + sizeof(void) * check_string_number) = result_matrix->matrix_elements + check_string_number * result_matrix->matrix_width;
 	}
 	return SUCCESS_STATUS;
 }
 
 int get_string_sum(struct matrix *first_matrix, int check_string_number)
 {
-	printf("HERE SUM 1\n");
-	printf("check_string_number = %d\n", check_string_number);
-	printf("first_matrix->matrix_height = %d\n", first_matrix->matrix_height);
-	printf("*(first_matrix->matrix_indicators[check_string_number] + 0) = %d\n", *(first_matrix->matrix_indicators[check_string_number] + 0));
 	int temp_row_sum = *(first_matrix->matrix_indicators[check_string_number] + 0);
-	printf("HERE SUM 2\n");
-	for (int check_row_number = 0; check_row_number < first_matrix->matrix_width; check_row_number++)
+	for (int check_row_number = 1; check_row_number < first_matrix->matrix_width; check_row_number++)
 		temp_row_sum +=	*(first_matrix->matrix_indicators[check_string_number] + check_row_number);
-	printf("HERE SUM 3\n");
 	return temp_row_sum;
 }
 
 int get_row_sum(struct matrix *second_matrix, int check_row_number)
 {
 	int temp_row_sum = *(second_matrix->matrix_indicators[0] + check_row_number);
-	for (int check_string_number = 0; check_string_number < second_matrix->matrix_height; check_string_number++)
+	for (int check_string_number = 1; check_string_number < second_matrix->matrix_height; check_string_number++)
 		temp_row_sum +=	*(second_matrix->matrix_indicators[check_string_number] + check_row_number);
 	return temp_row_sum;
 }
@@ -102,15 +104,12 @@ int get_minimal_element(struct matrix *I, int is_vertical_matrix)
 	int minimanl_element_string_position = 0, minimanl_element_row_position = 0, minimanl_element = *(I->matrix_indicators[0] + 0);
 	for (int check_string_number = 0; check_string_number < I->matrix_height; check_string_number++)
 		for (int check_row_number = 0; check_row_number < I->matrix_width; check_row_number++)
-		{
 			if (minimanl_element > *(I->matrix_indicators[check_string_number] + check_row_number))
 			{
 				minimanl_element = *(I->matrix_indicators[check_string_number] + check_row_number);
 				minimanl_element_string_position = check_string_number;
 				minimanl_element_row_position = check_row_number;
 			}
-		}
-
 	if (is_vertical_matrix == SUCCESS_STATUS)
 		return minimanl_element_string_position;
 	return minimanl_element_row_position;
