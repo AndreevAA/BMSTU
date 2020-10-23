@@ -6,7 +6,7 @@
 START_TEST(test_big_size)
 {
     int width = 1000, height = 2000, result = ERROR_STATUS;
-    if ((width) >= MIN_SIZE && (width) <= MAX_SIZE && (height) >= MIN_SIZE && (height) <= MAX_SIZE)
+    if (is_correct_matrix_size(&height, &width))
         result = SUCCESS_STATUS;
 
     ck_assert_int_eq(result, ERROR_STATUS);
@@ -16,7 +16,7 @@ END_TEST
 START_TEST(test_normal_size)
 {
     int width = 10, height = 20, result = ERROR_STATUS;
-    if ((width) >= MIN_SIZE && (width) <= MAX_SIZE && (height) >= MIN_SIZE && (height) <= MAX_SIZE)
+    if (is_correct_matrix_size(&height, &width))
         result = SUCCESS_STATUS;
     ck_assert_int_eq(result, SUCCESS_STATUS);
 }
@@ -25,7 +25,7 @@ END_TEST
 
 // Функции-тесты группируются в тестовые случаи (test case, TCase), а несколько
 // тестовых случаев образуют тестовый набор (test suite, Suite).
-Suite* check_is_correct_matrix_size(void)
+Suite* check_io(void)
 {
     Suite *s;
     TCase *tc_neg;

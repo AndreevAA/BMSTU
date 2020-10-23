@@ -17,8 +17,8 @@ main.o :
 	gcc -std=c99 -Wall -Werror -ggdb -pedantic -c -o out/main.o src/main.c
 
 #UNIT_TESTS.EXE
-unit_tests.exe :  check_main.o check_io.o io.o operations.o
-	gcc -o unit_tests.exe out/check_main.o out/check_io.o out/io.o out/operations.o -lcheck -lpthread  
+unit_tests.exe :  check_main.o check_io.o check_operations.o io.o operations.o
+	gcc -o unit_tests.exe out/check_main.o out/check_operations.o out/check_io.o out/io.o out/operations.o -lcheck -lpthread  
 
 check_main.o :
 	mkdir -p out
@@ -28,9 +28,13 @@ check_io.o :
 	mkdir -p out
 	gcc -std=c99 -c -o out/check_io.o unit-tests/check_io.c
 
+check_operations.o :
+	mkdir -p out
+	gcc -std=c99 -c -o out/check_operations.o unit-tests/check_operations.c
+
 #UNIT_TESTS_COVERAGE.EXE
-unit_tests_coverage.exe : check_main.o check_io.o operations_coverage.o io_coverage.o
-	gcc --coverage -o unit_tests_coverage.exe out/check_main.o out/check_io.o out/io.o out/operations.o -lcheck -lpthread
+unit_tests_coverage.exe : check_main.o check_io.o operations_coverage.o io_coverage.o check_operations.o
+	gcc --coverage -o unit_tests_coverage.exe out/check_main.o out/check_operations.o out/check_io.o out/io.o out/operations.o -lcheck -lpthread
 
 operations_coverage.o :
 	gcc -std=c99 -Wall -Werror -pedantic --coverage -c -o out/operations.o src/operations.c

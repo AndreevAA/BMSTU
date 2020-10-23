@@ -4,6 +4,6 @@
 #include <stdlib.h>
 #include <check.h>
 
-Suite* check_is_correct_matrix_size(void);
+Suite* check_io(void);
 
 #endif //LAB_08_SIZE_TESTS_H
