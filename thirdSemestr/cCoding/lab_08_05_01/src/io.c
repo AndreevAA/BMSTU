@@ -1,28 +1,28 @@
 #include "../inc/io.h"
 
-int get_matrix_size(int *matrix_height, int *matrix_width)
+int get_matrix_size(int *height, int *width)
 {
-	return (scanf("%d", matrix_height) == 1 && scanf("%d", matrix_width));
+	return (scanf("%d", height) == 1 && scanf("%d", width));
 }
 
-int is_correct_matrix_size(int *matrix_height, int *matrix_width)
+int is_correct_matrix_size(int *height, int *width)
 {
-	return ((*matrix_width) >= MIN_SIZE && (*matrix_width) <= MAX_SIZE && (*matrix_width) >= MIN_SIZE && (*matrix_width) <= MAX_SIZE);
+	return ((*width) >= MIN_SIZE && (*width) <= MAX_SIZE && (*height) >= MIN_SIZE && (*height) <= MAX_SIZE);
 }
 
-int get_matrix(struct matrix *I_matrix, int *I_matrix_height, int *I_matrix_width)
+int get_matrix(struct matrix *i_matrix, int *i_height, int *i_width)
 {
-	I_matrix->matrix_height = *I_matrix_height;
-	I_matrix->matrix_width = *I_matrix_width;
-	I_matrix->matrix_indicators = (int **)malloc((I_matrix->matrix_height) * sizeof(int *));
-	I_matrix->matrix_elements = (int *)malloc((I_matrix->matrix_height * I_matrix->matrix_width) * sizeof(int));
+	i_matrix->height = *i_height;
+	i_matrix->width = *i_width;
+	i_matrix->indicators = (int **)malloc((i_matrix->height) * sizeof(int *));
+	i_matrix->elements = (int *)malloc((i_matrix->height * i_matrix->width) * sizeof(int));
 
-	for (int add_position = 0; add_position < (I_matrix->matrix_width * I_matrix->matrix_height); add_position++)
+	for (int add_position = 0; add_position < (i_matrix->width * i_matrix->height); add_position++)
 	{
-		if (scanf("%d", &I_matrix->matrix_elements[add_position]) == 1)
+		if (scanf("%d", &i_matrix->elements[add_position]) == 1)
 		{
-			if (add_position % I_matrix->matrix_width == 0)
-				*(I_matrix->matrix_indicators + sizeof(void) * (add_position / I_matrix->matrix_width)) = I_matrix->matrix_elements + add_position;
+			if (add_position % i_matrix->width == 0)
+				*(i_matrix->indicators + sizeof(void *) * (add_position / i_matrix->width)) = i_matrix->elements + add_position;
 		}
 		else
 		{
@@ -32,5 +32,22 @@ int get_matrix(struct matrix *I_matrix, int *I_matrix_height, int *I_matrix_widt
 	return SUCCESS_STATUS;
 }
 
+int get_degrees(int *ro, int *gamma)
+{
+	return (scanf("%d", ro) == 1 && scanf("%d", gamma));
+}
 
+int is_correct_degree(int *ro, int *gamma)
+{
+	return (*ro >= 0 && *gamma >= 0);
+}
 
+void output_matrix(struct matrix *i)
+{
+	for (int check_string_number = 0; check_string_number < i->height; check_string_number++)
+	{
+		for (int check_row_number = 0; check_row_number < i->width; check_row_number++)
+			printf("%d ", *(i->indicators[check_string_number] + check_row_number));
+		printf("\n");
+	}
+}

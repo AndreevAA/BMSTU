@@ -8,6 +8,9 @@
 #define ERROR_INPUT_SIZE 2
 #define ERROR_INPUT_MATRIX 3
 #define ERROR_DELETE_MATRIX 4;
+#define ERROR_WHILE_INPUT_DEGREES 5;
+#define ERROR_INPUT_DEGREES 6;
+#define ERROR_NEW_SIZE 7;
 
 #define SUCCESS_STATUS 0
 #define ERROR_STATUS 1
@@ -18,10 +21,10 @@
 
 struct matrix
 {
-	int **matrix_indicators;
-	int *matrix_elements;
-	int matrix_height;
-	int matrix_width;
+	int **indicators;
+	int *elements;
+	int height;
+	int width;
 } matrix;
 
 #endif

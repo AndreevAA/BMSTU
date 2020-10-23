@@ -4,35 +4,44 @@
 
 int main()
 {
-	int A_matrix_height, A_matrix_width;
-	if (!get_matrix_size(&A_matrix_height, &A_matrix_width))
+	int a_matrix_height, a_matrix_width;
+	if (!get_matrix_size(&a_matrix_height, &a_matrix_width))
 		return ERROR_WHILE_INPUT_SIZE;
-	if (!is_correct_matrix_size(&A_matrix_height, &A_matrix_width))
+	if (!is_correct_matrix_size(&a_matrix_height, &a_matrix_width))
 		return ERROR_INPUT_SIZE;
-	struct matrix A; 
+	struct matrix a; 
 
-	int B_matrix_height, B_matrix_width;
-	if (!get_matrix_size(&B_matrix_height, &B_matrix_width))
+	int b_matrix_height, b_matrix_width;
+	if (!get_matrix_size(&b_matrix_height, &b_matrix_width))
 		return ERROR_WHILE_INPUT_SIZE;
-	if (!is_correct_matrix_size(&B_matrix_height, &B_matrix_width))
+	if (!is_correct_matrix_size(&b_matrix_height, &b_matrix_width))
 		return ERROR_INPUT_SIZE;
-	struct matrix B;
+	struct matrix b;
 
-	if (get_matrix(&A, &A_matrix_height, &A_matrix_width) || get_matrix(&B, &B_matrix_height, &B_matrix_width))
+	if (get_matrix(&a, &a_matrix_height, &a_matrix_width) || get_matrix(&b, &b_matrix_height, &b_matrix_width))
 		return ERROR_INPUT_MATRIX;
 
-	for (int i = 0; i < A.matrix_height; i++)
-	{
-		printf("%d ", *(A.matrix_indicators[i]));
-	}
-
-	if (delete_min_string_or_table(A) || delete_min_string_or_table(B))
+	if (delete_min_string_or_table(&a) || delete_min_string_or_table(&b))
 		return ERROR_DELETE_MATRIX;
 
-	printf("\n\n");
+	int ro, gamma;
+	if (!get_degrees(&ro, &gamma))
+		return ERROR_WHILE_INPUT_DEGREES;
 
-	for (int i = 0; i < A.matrix_height; i++)
-	{
-		printf("%d ", *(A.matrix_indicators[i]));
-	}
+	if (!is_correct_degree(&ro, &gamma))
+		return ERROR_INPUT_DEGREES;
+
+	if (is_correct_new_size(&a, &b) == ERROR_STATUS)
+		return ERROR_NEW_SIZE;
+
+	// printf("\n");
+	// output_matrix(&A);
+
+	// printf("\n");
+	// output_matrix(&B);
+
+	struct matrix ab;
+	if (get_multiplicated_powed_matrix(&ab, &a, &b, &ro, &gamma))
+		output_matrix(&ab);	
+	return SUCCESS_STATUS;
 }
