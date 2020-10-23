@@ -21,10 +21,10 @@
 
 struct matrix
 {
-	int **matrix_indicators;
-	int *matrix_elements;
-	int matrix_height;
-	int matrix_width;
+	int **indicators;
+	int *elements;
+	int height;
+	int width;
 } matrix;
 
 #endif
