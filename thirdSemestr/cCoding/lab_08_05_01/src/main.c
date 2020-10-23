@@ -31,16 +31,17 @@ int main()
 	if (!is_correct_degree(&ro, &gamma))
 		return ERROR_INPUT_DEGREES;
 
-	printf("\n");
-	output_matrix(&A);
+	if (is_correct_new_size(&A, &B) == ERROR_STATUS)
+		return ERROR_NEW_SIZE;
 
-	printf("\n");
-	output_matrix(&B);
+	// printf("\n");
+	// output_matrix(&A);
+
+	// printf("\n");
+	// output_matrix(&B);
 
 	struct matrix AB;
 	if (get_multiplicated_powed_matrix(&AB, &A, &B, &ro, &gamma))
-		printf("POPA\n");
-
-	printf("\n");
-	output_matrix(&AB);
+		output_matrix(&AB);	
+	return SUCCESS_STATUS;
 }

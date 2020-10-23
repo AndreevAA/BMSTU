@@ -5,10 +5,9 @@ int is_vertical_matrix(int *matrix_height, int *matrix_width);
 int is_square_matrix(int *matrix_height, int *matrix_width);
 int get_minimal_element(struct matrix *I, int is_vertical_matrix);
 int update_minimanl_element_position(int *matrix_elements, int minimanl_element_position, int check_cursor);
-int get_string_sum(struct matrix *first_matrix, int check_string_number);
-int get_row_sum(struct matrix *second_matrix, int check_row_number);
 int pow_matrix(struct matrix *I, int degree);
 int mult_matrix(struct matrix *result_matrix, struct matrix *first_matrix, struct matrix *second_matrix);
+int get_sum(struct matrix *first_matrix, struct matrix *second_matrix, int check_string_number, int check_row_number);
 
 int delete_min_string_or_table(struct matrix *I)
 {
@@ -38,7 +37,10 @@ int get_multiplicated_powed_matrix(struct matrix *AB, struct matrix *A, struct m
 {
 	if (pow_matrix(A, *ro) == SUCCESS_STATUS && pow_matrix(B, *gamma) == SUCCESS_STATUS)
 	{
-		printf("HERE\n");
+		AB->matrix_height = A->matrix_height;
+		AB->matrix_width = B->matrix_width;
+		AB->matrix_indicators = (int **)malloc((AB->matrix_height) * sizeof(int *));
+		AB->matrix_elements = (int *)malloc((AB->matrix_height * AB->matrix_width) * sizeof(int));
 		if (mult_matrix(AB, A, B))
 			return SUCCESS_STATUS;
 	}
@@ -47,55 +49,46 @@ int get_multiplicated_powed_matrix(struct matrix *AB, struct matrix *A, struct m
 
 int pow_matrix(struct matrix *I, int degree)
 {
-	int *first_matrix = (int *)malloc(I->matrix_height * sizeof(int)), second_matrix =  (int *)malloc(I->matrix_width * sizeof(int));
-	for (int number_of_operations = 0; number_of_operations < degree number_of_operations++)
-	{
-		for (int i = 0; i < I->matrix_height; i++)
-		{
-			for (int j = 0; j < I->matrix_width; j++)
-			{
-				
-			}
-		}
-	}
+	int operation = 0;
+	struct matrix result_matrix;
+	result_matrix.matrix_height = I->matrix_height;
+	result_matrix.matrix_width = I->matrix_width;
+	result_matrix.matrix_indicators = (int **)malloc((result_matrix.matrix_height) * sizeof(int *));
+	result_matrix.matrix_elements = (int *)malloc((result_matrix.matrix_height * result_matrix.matrix_width) * sizeof(int));
+	for (; operation < degree; operation++)
+		mult_matrix(&result_matrix, I, I);
 
-	printf("*(I->matrix_indicators[check_string_number] + 0) =%d\n", *(I->matrix_indicators[0] + 0));
-	printf("HERE1\n");
-	// for (int counter = 0; counter < degree; counter++)
-	// 	mult_matrix(I, I, I);
-	return SUCCESS_STATUS;
+	if (operation == degree)
+	{
+		for (int check_string_number = 0; check_string_number < result_matrix.matrix_height; check_string_number++)
+			for (int check_row_number = 0; check_row_number < result_matrix.matrix_width; check_row_number++)
+				*(I->matrix_elements + check_string_number * I->matrix_width + check_row_number) = *(result_matrix.matrix_elements + check_string_number * result_matrix.matrix_width + check_row_number);
+		return SUCCESS_STATUS;
+	}
+	return ERROR_STATUS;
 }
 
 int mult_matrix(struct matrix *result_matrix, struct matrix *first_matrix, struct matrix *second_matrix)
 {
-	result_matrix->matrix_height = first_matrix->matrix_height;
-	result_matrix->matrix_width = second_matrix->matrix_width;
-	result_matrix->matrix_indicators = (int **)malloc((result_matrix->matrix_height) * sizeof(int *));
-	result_matrix->matrix_elements = (int *)malloc((result_matrix->matrix_height * result_matrix->matrix_width) * sizeof(int));
 	for (int check_string_number = 0; check_string_number < result_matrix->matrix_height; check_string_number++)
 	{
-		int temp_row_sum = get_string_sum(first_matrix, check_string_number);
 		for (int check_row_number = 0; check_row_number < result_matrix->matrix_width; check_row_number++)
-			*(result_matrix->matrix_elements + check_string_number * result_matrix->matrix_width + check_row_number) = temp_row_sum * get_row_sum(second_matrix, check_row_number);
+			*(result_matrix->matrix_elements + check_string_number * result_matrix->matrix_width + check_row_number) = get_sum(first_matrix, second_matrix, check_string_number, check_row_number);
 		*(result_matrix->matrix_indicators + sizeof(void) * check_string_number) = result_matrix->matrix_elements + check_string_number * result_matrix->matrix_width;
 	}
 	return SUCCESS_STATUS;
 }
 
-int get_string_sum(struct matrix *first_matrix, int check_string_number)
+int get_sum(struct matrix *first_matrix, struct matrix *second_matrix, int check_string_number, int check_row_number)
 {
-	int temp_row_sum = *(first_matrix->matrix_indicators[check_string_number] + 0);
-	for (int check_row_number = 1; check_row_number < first_matrix->matrix_width; check_row_number++)
-		temp_row_sum +=	*(first_matrix->matrix_indicators[check_string_number] + check_row_number);
-	return temp_row_sum;
-}
-
-int get_row_sum(struct matrix *second_matrix, int check_row_number)
-{
-	int temp_row_sum = *(second_matrix->matrix_indicators[0] + check_row_number);
-	for (int check_string_number = 1; check_string_number < second_matrix->matrix_height; check_string_number++)
-		temp_row_sum +=	*(second_matrix->matrix_indicators[check_string_number] + check_row_number);
-	return temp_row_sum;
+	int result_sum = 0;
+	for (int check_string_number_second = 0, check_row_number_first = 0; check_string_number_second < second_matrix->matrix_height; check_string_number_second++, check_row_number_first++)
+	{
+		int first = *(first_matrix->matrix_indicators[check_string_number] + check_string_number_second);
+		int second = *(second_matrix->matrix_indicators[check_string_number_second] + check_row_number);
+		result_sum += first * second;
+	}
+	return result_sum;
 }
 
 
@@ -131,6 +124,13 @@ int is_vertical_matrix(int *matrix_height, int *matrix_width)
 int is_square_matrix(int *matrix_height, int *matrix_width)
 {
 	if ((*matrix_width) == (*matrix_height))
+		return SUCCESS_STATUS;
+	return ERROR_STATUS;
+}
+
+int is_correct_new_size(struct matrix *first_matrix, struct matrix *second_matrix)
+{
+	if (first_matrix->matrix_height == second_matrix->matrix_width)
 		return SUCCESS_STATUS;
 	return ERROR_STATUS;
 }
