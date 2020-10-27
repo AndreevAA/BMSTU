@@ -3,66 +3,66 @@
 int is_square_matrix(int *height, int *width);
 int is_vertical_matrix(int *height, int *width);
 int is_square_matrix(int *height, int *width);
-int get_minimal_element(struct matrix *I, int is_vertical_matrix);
-int update_minimanl_element_position(int *elements, int minimanl_element_position, int check_cursor);
-int pow_matrix(struct matrix *I, int degree);
+int get_minimal_element(struct matrix *i, int is_vertical_matrix);
+int up_min_elem_pos(int *elements, int min_elem_pos, int check_cursor);
+int pow_matrix(struct matrix *i, int degree);
 int mult_matrix(struct matrix *result_matrix, struct matrix *first_matrix, struct matrix *second_matrix);
 int get_sum(struct matrix *first_matrix, struct matrix *second_matrix, int check_string_number, int check_row_number);
 
-int delete_min_string_or_table(struct matrix *I)
+int delete_min_string_or_table(struct matrix *i)
 {
-	while (is_square_matrix(&I->height, &I->width) == ERROR_STATUS)
+	while (is_square_matrix(&i->height, &i->width) == ERROR_STATUS)
 	{
-		if (is_vertical_matrix(&I->height, &I->width))
+		if (is_vertical_matrix(&i->height, &i->width))
 		{
-			for (int check_string_number = get_minimal_element(I, SUCCESS_STATUS); check_string_number < I->height - 1; check_string_number++)
-				I->indicators[check_string_number] = I->indicators[check_string_number + 1];
-			I->height--;
+			for (int check_string_number = get_minimal_element(i, SUCCESS_STATUS); check_string_number < i->height - 1; check_string_number++)
+				i->indicators[check_string_number] = i->indicators[check_string_number + 1];
+			i->height--;
 			return SUCCESS_STATUS;
 		}
 		else
 		{
-			int temp_check_row_number = get_minimal_element(I, ERROR_STATUS);
-			for (int check_string_number = 0; check_string_number < I->height; check_string_number++)
-				for (int check_row_number = temp_check_row_number; check_row_number < I->width - 1; check_row_number++)
-					I->elements[check_string_number * I->width + check_row_number] = I->elements[check_string_number * I->width + check_row_number + 1];
-			I->width--;
+			int temp_check_row_number = get_minimal_element(i, ERROR_STATUS);
+			for (int check_string_number = 0; check_string_number < i->height; check_string_number++)
+				for (int check_row_number = temp_check_row_number; check_row_number < i->width - 1; check_row_number++)
+					i->elements[check_string_number * i->width + check_row_number] = i->elements[check_string_number * i->width + check_row_number + 1];
+			i->width--;
 			return SUCCESS_STATUS;
 		}
 	}
 	return ERROR_STATUS;
 }
 
-int get_multiplicated_powed_matrix(struct matrix *AB, struct matrix *A, struct matrix *B, int *ro, int *gamma)
+int get_multiplicated_powed_matrix(struct matrix *ab, struct matrix *a, struct matrix *b, int *ro, int *gamma)
 {
-	if (pow_matrix(A, *ro) == SUCCESS_STATUS && pow_matrix(B, *gamma) == SUCCESS_STATUS)
+	if (pow_matrix(a, *ro) == SUCCESS_STATUS && pow_matrix(b, *gamma) == SUCCESS_STATUS)
 	{
-		AB->height = A->height;
-		AB->width = B->width;
-		AB->indicators = (int **)malloc((AB->height) * sizeof(int *));
-		AB->elements = (int *)malloc((AB->height * AB->width) * sizeof(int));
-		if (mult_matrix(AB, A, B))
+		ab->height = a->height;
+		ab->width = b->width;
+		ab->indicators = (int **)malloc((ab->height) * sizeof(int *));
+		ab->elements = (int *)malloc((ab->height * ab->width) * sizeof(int));
+		if (mult_matrix(ab, a, b))
 			return SUCCESS_STATUS;
 	}
 	return ERROR_STATUS;
 }
 
-int pow_matrix(struct matrix *I, int degree)
+int pow_matrix(struct matrix *i, int degree)
 {
 	int operation = 0;
 	struct matrix result_matrix;
-	result_matrix.height = I->height;
-	result_matrix.width = I->width;
+	result_matrix.height = i->height;
+	result_matrix.width = i->width;
 	result_matrix.indicators = (int **)malloc((result_matrix.height) * sizeof(int *));
 	result_matrix.elements = (int *)malloc((result_matrix.height * result_matrix.width) * sizeof(int));
 	for (; operation < degree; operation++)
-		mult_matrix(&result_matrix, I, I);
+		mult_matrix(&result_matrix, i, i);
 
 	if (operation == degree)
 	{
 		for (int check_string_number = 0; check_string_number < result_matrix.height; check_string_number++)
 			for (int check_row_number = 0; check_row_number < result_matrix.width; check_row_number++)
-				*(I->elements + check_string_number * I->width + check_row_number) = *(result_matrix.elements + check_string_number * result_matrix.width + check_row_number);
+				*(i->elements + check_string_number * i->width + check_row_number) = *(result_matrix.elements + check_string_number * result_matrix.width + check_row_number);
 		return SUCCESS_STATUS;
 	}
 	return ERROR_STATUS;
@@ -74,7 +74,7 @@ int mult_matrix(struct matrix *result_matrix, struct matrix *first_matrix, struc
 	{
 		for (int check_row_number = 0; check_row_number < result_matrix->width; check_row_number++)
 			*(result_matrix->elements + check_string_number * result_matrix->width + check_row_number) = get_sum(first_matrix, second_matrix, check_string_number, check_row_number);
-		*(result_matrix->indicators + sizeof(void) * check_string_number) = result_matrix->elements + check_string_number * result_matrix->width;
+		*(result_matrix->indicators + sizeof(void *) * check_string_number) = result_matrix->elements + check_string_number * result_matrix->width;
 	}
 	return SUCCESS_STATUS;
 }
@@ -92,28 +92,27 @@ int get_sum(struct matrix *first_matrix, struct matrix *second_matrix, int check
 }
 
 
-int get_minimal_element(struct matrix *I, int is_vertical_matrix)
+int get_minimal_element(struct matrix *i, int is_vertical_matrix)
 {
-	int minimanl_element_string_position = 0, minimanl_element_row_position = 0, minimanl_element = *(I->indicators[0] + 0);
-	for (int check_string_number = 0; check_string_number < I->height; check_string_number++)
-		for (int check_row_number = 0; check_row_number < I->width; check_row_number++)
-			if (minimanl_element > *(I->indicators[check_string_number] + check_row_number))
+	int min_elem_str_pos = 0, minimanl_element_row_position = 0, minimanl_element = *(i->indicators[0] + 0);
+	for (int check_string_number = 0; check_string_number < i->height; check_string_number++)
+		for (int check_row_number = 0; check_row_number < i->width; check_row_number++)
+			if (minimanl_element > *(i->indicators[check_string_number] + check_row_number))
 			{
-				minimanl_element = *(I->indicators[check_string_number] + check_row_number);
-				minimanl_element_string_position = check_string_number;
+				minimanl_element = *(i->indicators[check_string_number] + check_row_number);
+				min_elem_str_pos = check_string_number;
 				minimanl_element_row_position = check_row_number;
 			}
 	if (is_vertical_matrix == SUCCESS_STATUS)
-		return minimanl_element_string_position;
+		return min_elem_str_pos;
 	return minimanl_element_row_position;
-	
 }
 
-int update_minimanl_element_position(int *elements, int minimanl_element_position, int check_cursor)
+int up_min_elem_pos(int *elements, int min_elem_pos, int check_cursor)
 {
-	if (elements[check_cursor] < minimanl_element_position)
+	if (elements[check_cursor] < min_elem_pos)
 		return check_cursor;
-	return minimanl_element_position;
+	return min_elem_pos;
 }
 
 int is_vertical_matrix(int *height, int *width)
