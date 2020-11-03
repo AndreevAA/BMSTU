@@ -1,0 +1,6 @@
+a.out
+*.DS_Store
+*.out
+*.gcno
+*.sh
+*.exe
