@@ -14,7 +14,7 @@ void v_push(struct v_stack_s *v_stack)
 	else
 	{
 		int temp_num;
-		printf("Введите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
+		printf("\tВведите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
 		if (scanf("%d", &temp_num))
 		{
 			if (-1 < temp_num && temp_num < 10)
@@ -24,7 +24,7 @@ void v_push(struct v_stack_s *v_stack)
 			}
 			else 
 			{
-				printf("Вы ввели некорректное число...\n");
+				printf("\tВы ввели некорректное число...\n");
 			}
 		}
 	}
@@ -54,9 +54,9 @@ void v_is_palindrom(struct v_stack_s *v_stack)
 				break;
 			}
 		if (ans == OK)
-			printf("Число в стеке - Палиндром.\n");
+			printf("\tЧисло в стеке - Палиндром.\n");
 		else
-			printf("Число в стеке - Не Палиндром.\n");
+			printf("\tЧисло в стеке - Не Палиндром.\n");
 	}
 }
 
@@ -74,7 +74,7 @@ void v_print(struct v_stack_s *v_stack)
 
 int scanf_v_menu_code()
 {
-	print_menu_input_welcome();
+	print_menu_sec_input_welcome();
 	int temp_menu_code;
 	if (scanf("%d", &temp_menu_code))
 		return temp_menu_code;

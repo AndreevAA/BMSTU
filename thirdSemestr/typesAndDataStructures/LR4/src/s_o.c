@@ -75,7 +75,7 @@ void s_push(struct s_stack_s *s_stack)
 	if (s_stack->data == S_STACK_NULL)
 	{
 		int temp_num;
-		printf("Введите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
+		printf("\tВведите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
 		if (scanf("%d", &temp_num))
 		{
 			if (-1 < temp_num && temp_num < 10)
@@ -85,7 +85,7 @@ void s_push(struct s_stack_s *s_stack)
 			}
 			else 
 			{
-				printf("Вы ввели некорректное число...\n");
+				printf("\tВы ввели некорректное число...\n");
 			}
 		}
 	}
@@ -94,14 +94,14 @@ void s_push(struct s_stack_s *s_stack)
 	else
 	{
 		int temp_num;
-		printf("Введите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
+		printf("\n\tВведите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
 		if (scanf("%d", &temp_num))
 		{
 			printf("HERE\n");
 			if (-1 < temp_num && temp_num < 10)
 				append_node(&s_stack, temp_num);
 			else 
-				printf("Вы ввели некорректное число...\n");
+				printf("\tВы ввели некорректное число...\n");
 		}
 	}
 }
@@ -169,7 +169,7 @@ void s_is_palindrom(struct s_stack_s *s_stack)
 	if (s_stack->data == S_STACK_NULL)
 		print_stack_is_empty();
 	else if (temp_s_size == 1)
-		printf("Число в стеке - Палиндром.\n");
+		printf("\tЧисло в стеке - Палиндром.\n");
 	else 
 	{
 		int ans = OK;
@@ -180,9 +180,9 @@ void s_is_palindrom(struct s_stack_s *s_stack)
 				break;
 			}
 		if (ans == OK)
-			printf("Число в стеке - Палиндром.\n");
+			printf("\tЧисло в стеке - Палиндром.\n");
 		else
-			printf("Число в стеке - Не Палиндром.\n");
+			printf("\tЧисло в стеке - Не Палиндром.\n");
 	}
 }
 
@@ -224,7 +224,7 @@ void s_print(struct s_stack_s **headRef)
 
 int scanf_s_menu_code()
 {
-	print_menu_input_welcome();
+	print_menu_sec_input_welcome();
 	int temp_menu_code;
 	if (scanf("%d", &temp_menu_code))
 		return temp_menu_code;
