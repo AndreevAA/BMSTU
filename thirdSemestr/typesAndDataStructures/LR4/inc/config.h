@@ -16,3 +16,10 @@
 #define V_PRINT 4
 
 #define STACK_MAX_SIZE 256
+
+#define S_STACK_NULL -1
+#define S_BACK 0
+#define S_PUSH 1
+#define S_DELETE 2
+#define S_IS_PALINDROM 3
+#define S_PRINT 4

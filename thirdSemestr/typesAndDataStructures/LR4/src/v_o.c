@@ -103,7 +103,7 @@ int v_menu(struct v_stack_s *v_stack)
 
 void v_operations()
 {
-	print_s_o_welcome();
+	print_v_o_welcome();
 	struct v_stack_s v_stack; 
 	for (int i = 0; i < STACK_MAX_SIZE; i++)
 		v_stack.data[i] = 0;

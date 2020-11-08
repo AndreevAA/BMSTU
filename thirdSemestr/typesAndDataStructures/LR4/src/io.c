@@ -43,6 +43,16 @@ void print_v_o_menu()
 	printf("\t4 - Вывести\n");
 }
 
+void print_s_o_menu()
+{
+	printf("Меню: \n");
+	printf("\t0 - Назад\n");
+	printf("\t1 - Добавить символ\n");
+	printf("\t2 - Удалить символ\n");
+	printf("\t3 - Проверить на палиндром\n");
+	printf("\t4 - Вывести\n");
+}
+
 void print_stack_is_empty()
 {
 	printf("Стек пуст...\n");
