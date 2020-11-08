@@ -47,16 +47,34 @@ void v_is_palindrom(struct v_stack_s *v_stack)
 	else 
 	{
 		int ans = OK;
-		for (int i = 0; i < v_stack->size % 2; i++)
-			if (*(v_stack->data + i) != *(v_stack->data + v_stack->size - i - 1))
+		int temp_size = v_stack->size;
+		int *temp_data = malloc(sizeof(int) * temp_size);
+
+		for (int i = temp_size - 1; i >= 0; i--)
+		{
+			*(temp_data + i) = v_stack->data[i];
+			v_delete(v_stack);
+		}
+
+		for (int i = 0; i < temp_size % 2; i++)
+			if (*(temp_data + i) != *(temp_data + temp_size - i - 1))
 			{
 				ans = ERROR_STATUS;
 				break;
 			}
+
 		if (ans == OK)
 			printf("\tЧисло в стеке - Палиндром.\n");
 		else
 			printf("\tЧисло в стеке - Не Палиндром.\n");
+
+		for (int i = 0; i < temp_size; i++)
+		{
+			*(v_stack->data + v_stack->size) =  *(temp_data + i);
+			v_stack->size += 1;
+		}
+
+		free(temp_data);
 	}
 }
 
@@ -66,9 +84,26 @@ void v_print(struct v_stack_s *v_stack)
 		print_stack_is_empty();
 	else
 	{
-		for (int cur = 0; cur < v_stack->size; cur++)
-			printf("%d", *(v_stack->data + cur));
+		int temp_size = v_stack->size;
+		int *temp_data = malloc(sizeof(int) * temp_size);
+
+		for (int i = temp_size - 1; i >= 0; i--)
+		{
+			*(temp_data + i) = v_stack->data[i];
+			v_delete(v_stack);
+		}
+
+		for (int cur = 0; cur < temp_size; cur++)
+			printf("%d", *(temp_data + cur));
 		printf("\n");
+
+		for (int i = 0; i < temp_size; i++)
+		{
+			*(v_stack->data + v_stack->size) =  *(temp_data + i);
+			v_stack->size += 1;
+		}
+
+		free(temp_data);
 	}
 }
 
