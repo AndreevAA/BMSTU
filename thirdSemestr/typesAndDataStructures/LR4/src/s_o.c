@@ -89,46 +89,6 @@ void s_delete(struct s_stack_s **s_stack)
 	}
 }
 
-// int get_elem(struct s_stack_s **headRef, int elem_index)
-// {
-// 	int s_stack_size = get_s_size(*headRef);
-// 	int *temp_v = malloc(sizeof(int) * s_stack_size);
-	
-// 	int num_of_operation = 0;
-	
-// 	struct s_stack_s* current = *headRef;
-// 	while (num_of_operation != elem_index) {
-// 		*(temp_v + num_of_operation) = current->data;
-// 		current = current->next;
-// 		num_of_operation++;
-// 	}
-
-// 	return current->data;
-// }
-
-// void s_is_palindrom(struct s_stack_s *s_stack)
-// {
-// 	int temp_s_size = get_s_size(s_stack);
-// 	if (s_stack->data == S_STACK_NULL)
-// 		print_stack_is_empty();
-// 	else if (temp_s_size == 1)
-// 		printf("\tЧисло в стеке - Палиндром.\n");
-// 	else 
-// 	{
-// 		int ans = OK;
-// 		for (int i = 0; i < temp_s_size % 2; i++)
-// 			if (get_elem(&s_stack, i) != get_elem(&s_stack, temp_s_size - i - 1))
-// 			{
-// 				ans = ERROR_STATUS;
-// 				break;
-// 			}
-// 		if (ans == OK)
-// 			printf("\tЧисло в стеке - Палиндром.\n");
-// 		else
-// 			printf("\tЧисло в стеке - Не Палиндром.\n");
-// 	}
-// }
-
 void s_is_palindrom(struct s_stack_s **headRef)
 {
 	int s_stack_size = get_s_size(*headRef);
