@@ -1,11 +1,15 @@
 #include "../inc/s_o.h"
 #include "../inc/io.h"
 
-struct s_stack_s
-{
-	int data;
-	struct s_stack_s *next;
-};
+#define STACK_OVERFLOW  -100
+#define STACK_UNDERFLOW -101
+#define OUT_OF_MEMORY   -102
+
+typedef int T;
+typedef struct s_stack_s {
+    T value;
+    struct s_stack_s *next;
+} Node_t;
 
 int get_s_size(struct s_stack_s* head) 
 {
@@ -19,77 +23,21 @@ int get_s_size(struct s_stack_s* head)
     return count;
 }
 
-// int get_s_size(struct s_stack_s *s_stack)
-// {
-// 	int ans_s_size = 0;
-// 	if (s_stack->data != S_STACK_NULL && s_stack->next != NULL)
-// 	{
-// 		printf("HERE2\n");
-// 		struct s_stack_s *current = s_stack;
-
-// 		//s_stack->next = &new_s_stack;
-
-// 		while (current->next != NULL) 
-// 		{
-// 			current = current->next;
-// 			ans_s_size++;
-// 		}
-// 	}
-
-// 	printf("ans_s_size = %d\n", ans_s_size);
-
-// 	return ans_s_size;
-// }
-
-void append_node(struct s_stack_s** headRef, int num) 
-{
-   struct s_stack_s* current = *headRef;
-   struct s_stack_s* newNode;
-   newNode = malloc(sizeof(struct s_stack_s));
-   newNode->data = num;
-   newNode->next = NULL;
-   // если список пуст
-   if (current == NULL) {
-      *headRef = newNode;
-   }
-   else {
-      // иначе
-      while (current->next != NULL) {
-          current = current->next;
-      }
-      current->next = newNode;
-   }
+void push(struct s_stack_s **head, int value) {
+    struct s_stack_s *tmp = malloc(sizeof(struct s_stack_s));
+	if (tmp == NULL) {
+    	exit(STACK_OVERFLOW);
+    }
+    tmp->next = *head;
+    tmp->value = value;
+    *head = tmp;
 }
 
-// void append_node(struct s_stack_s** headRef, int data) 
-// {
-//     struct s_stack_s* newNode = malloc(sizeof(struct s_stack_s));
-//     newNode->data = data;
-//     newNode->next = *headRef;  
-//     *headRef = newNode;
-// }
-
-void s_push(struct s_stack_s *s_stack)
+void s_push(struct s_stack_s **s_stack)
 {
-	int temp_s_size = get_s_size(s_stack);
-	if (s_stack->data == S_STACK_NULL)
-	{
-		int temp_num;
-		printf("\tВведите любую цифры (Число от 0 до 9), чтобы добавить в Стек: \n");
-		if (scanf("%d", &temp_num))
-		{
-			if (-1 < temp_num && temp_num < 10)
-			{
-				s_stack->data = temp_num;
-				printf("s_stack->data = %d\n", s_stack->data);
-			}
-			else 
-			{
-				printf("\tВы ввели некорректное число...\n");
-			}
-		}
-	}
-	else if (temp_s_size == STACK_MAX_SIZE)
+	int temp_s_size = get_s_size(*s_stack);
+	
+	if (temp_s_size == STACK_MAX_SIZE)
 		print_stack_is_full();
 	else
 	{
@@ -99,125 +47,173 @@ void s_push(struct s_stack_s *s_stack)
 		{
 			printf("HERE\n");
 			if (-1 < temp_num && temp_num < 10)
-				append_node(&s_stack, temp_num);
+			{
+				push(s_stack, temp_num);
+				printf("%d\n", (*s_stack)->value);
+			}
 			else 
 				printf("\tВы ввели некорректное число...\n");
 		}
 	}
 }
 
-int pop(struct s_stack_s ** head)
-{
-  struct s_stack_s * temp = *head;
-  int data=temp->data;
-  *head = temp->next;
-  free(temp);
-  return data;
+struct s_stack_s* pop(struct s_stack_s **head) {
+    struct s_stack_s *out;
+    printf("\t%p, %d -> ", *head, (*head)->value);
+    if ((*head) == NULL) {
+        exit(STACK_UNDERFLOW);
+    }
+    
+    out = *head;
+    *head = (*head)->next;
+    if ((*head) != NULL)
+    	printf("%p, %d\n", *head, (*head)->value);
+    else
+    	printf("NULL, ND\n");
+    return out;
 }
 
-int del(struct s_stack_s ** head, int index)
+void s_delete(struct s_stack_s **s_stack)
 {
-  int data = (*head)->data;
-  if(index==0) pop(head);
-  else
-  {
-    int i;
-    struct s_stack_s * current = *head;
-    for(i=0;i<index-1;i++)
-      current=current->next;
-    pop(&(current->next));
-  }
-  return data;
-};
-
-void s_delete(struct s_stack_s *s_stack)
-{
-	int temp_s_size = get_s_size(s_stack);
-	if (s_stack->data == S_STACK_NULL)
+	int temp_s_size = get_s_size(*s_stack);
+	if ((*s_stack)->value == S_STACK_NULL)
 		print_stack_is_empty();
 	else if (temp_s_size == 1)
 	{
-		s_stack->data = S_STACK_NULL;
-		s_stack->next = NULL;
+		(*s_stack)->value = S_STACK_NULL;
+		(*s_stack)->next = NULL;
 	}
 	else
 	{
-		del(&s_stack, temp_s_size - 1);
+		pop(s_stack);
 	}
 }
 
-int get_elem(struct s_stack_s **headRef, int elem_index)
+// int get_elem(struct s_stack_s **headRef, int elem_index)
+// {
+// 	int s_stack_size = get_s_size(*headRef);
+// 	int *temp_v = malloc(sizeof(int) * s_stack_size);
+	
+// 	int num_of_operation = 0;
+	
+// 	struct s_stack_s* current = *headRef;
+// 	while (num_of_operation != elem_index) {
+// 		*(temp_v + num_of_operation) = current->data;
+// 		current = current->next;
+// 		num_of_operation++;
+// 	}
+
+// 	return current->data;
+// }
+
+// void s_is_palindrom(struct s_stack_s *s_stack)
+// {
+// 	int temp_s_size = get_s_size(s_stack);
+// 	if (s_stack->data == S_STACK_NULL)
+// 		print_stack_is_empty();
+// 	else if (temp_s_size == 1)
+// 		printf("\tЧисло в стеке - Палиндром.\n");
+// 	else 
+// 	{
+// 		int ans = OK;
+// 		for (int i = 0; i < temp_s_size % 2; i++)
+// 			if (get_elem(&s_stack, i) != get_elem(&s_stack, temp_s_size - i - 1))
+// 			{
+// 				ans = ERROR_STATUS;
+// 				break;
+// 			}
+// 		if (ans == OK)
+// 			printf("\tЧисло в стеке - Палиндром.\n");
+// 		else
+// 			printf("\tЧисло в стеке - Не Палиндром.\n");
+// 	}
+// }
+
+void s_is_palindrom(struct s_stack_s **headRef)
 {
 	int s_stack_size = get_s_size(*headRef);
-	int *temp_v = malloc(sizeof(int) * s_stack_size);
-	
-	int num_of_operation = 0;
-	
-	struct s_stack_s* current = *headRef;
-	while (num_of_operation != elem_index) {
-		*(temp_v + num_of_operation) = current->data;
-		current = current->next;
-		num_of_operation++;
-	}
-
-	return current->data;
-}
-
-void s_is_palindrom(struct s_stack_s *s_stack)
-{
-	int temp_s_size = get_s_size(s_stack);
-	if (s_stack->data == S_STACK_NULL)
+	if ((*headRef) == NULL)
 		print_stack_is_empty();
-	else if (temp_s_size == 1)
+	else if (s_stack_size == 1)
 		printf("\tЧисло в стеке - Палиндром.\n");
-	else 
+	else
 	{
+		int *temp_v = malloc(sizeof(int) * s_stack_size);
+		
+		int r_border = 0;
+		
+		printf("\n\tОсбождено и удалено:\n");
+
+		struct s_stack_s* current = *headRef;
+		while (current->next != NULL) {
+			*(temp_v + r_border) = current->value;
+			current = current->next;
+			r_border++;
+			pop(headRef);
+		}
+
+		*(temp_v + r_border) = current->value;
+		current = current->next;
+
+		pop(headRef);
+
 		int ans = OK;
-		for (int i = 0; i < temp_s_size % 2; i++)
-			if (get_elem(&s_stack, i) != get_elem(&s_stack, temp_s_size - i - 1))
+		
+		for (int i = 0; i <= s_stack_size % 2; i++)
+		{
+			if (*(temp_v + i) != *(temp_v + s_stack_size - i - 1))
 			{
 				ans = ERROR_STATUS;
 				break;
 			}
+		}
 		if (ans == OK)
-			printf("\tЧисло в стеке - Палиндром.\n");
+			printf("\n\tЧисло в стеке - Палиндром.\n");
 		else
-			printf("\tЧисло в стеке - Не Палиндром.\n");
+			printf("\n\tЧисло в стеке - Не Палиндром.\n");
+
+		for (int cur = s_stack_size - 1; cur >= 0; cur--)
+			push(headRef, *(temp_v + cur));
+
+		free(temp_v);
 	}
+
 }
 
 void s_print(struct s_stack_s **headRef)
 {
-	if ((*headRef)->data == S_STACK_NULL)
+	if ((*headRef)->value == S_STACK_NULL)
 		print_stack_is_empty();
 	else
 	{
 		int s_stack_size = get_s_size(*headRef);
 		int *temp_v = malloc(sizeof(int) * s_stack_size);
-		// int r_border = s_stack_size - 1;
-		
-		// struct s_stack_s* current = *headRef;
-		// while (current->next != NULL) {
-		// 	*(temp_v + r_border) = current->data;
-		// 	current = current->next;
-		// 	r_border--;
-		// }
 		
 		int r_border = 0;
 		
+		printf("\n\tОсбождено и удалено:\n");
+
 		struct s_stack_s* current = *headRef;
 		while (current->next != NULL) {
-			*(temp_v + r_border) = current->data;
+			*(temp_v + r_border) = current->value;
 			current = current->next;
 			r_border++;
+			pop(headRef);
 		}
 
-		*(temp_v + r_border) = current->data;
+		*(temp_v + r_border) = current->value;
 		current = current->next;
 
-		for (int cur = 0; cur < s_stack_size; cur++)
+		pop(headRef);
+
+		printf("\n\tСтек: ");
+		for (int cur = s_stack_size - 1; cur >= 0; cur--)
 			printf("%d", *(temp_v + cur));
 		printf("\n");
+
+		for (int cur = s_stack_size - 1; cur >= 0; cur--)
+			push(headRef, *(temp_v + cur));
+
 		free(temp_v);
 	}
 }
@@ -240,11 +236,11 @@ int s_menu(struct s_stack_s *s_stack)
 	else if (menu_code == S_BACK)
 		return V_BACK;
 	else if (menu_code == S_PUSH)
-		s_push(s_stack);
-	else if (menu_code == S_DELETE)
-		s_delete(s_stack);
-	else if (menu_code == S_IS_PALINDROM)
-		s_is_palindrom(s_stack);
+		s_push(&s_stack);
+	// else if (menu_code == S_DELETE)
+	// 	s_delete(s_stack);
+	// else if (menu_code == S_IS_PALINDROM)
+	// 	s_is_palindrom(s_stack);
 	else if (menu_code == S_PRINT)
 		s_print(&s_stack);
 
@@ -254,8 +250,29 @@ int s_menu(struct s_stack_s *s_stack)
 void s_operations()
 {
 	print_s_o_welcome();
-	struct s_stack_s s_stack; 
-	s_stack.data = S_STACK_NULL;
-	s_stack.next = NULL;
-	while (s_menu(&s_stack) != S_BACK);
+
+	struct s_stack_s *head = NULL;
+    struct s_stack_s *tmp;
+
+	int menu_code;
+	while (menu_code != S_BACK)
+	{
+		print_s_o_menu();
+		menu_code = scanf_s_menu_code();
+		if (menu_code == ERROR_STATUS)
+			error_input_menu();
+		else if (menu_code == S_BACK)
+		{
+			menu_code = S_BACK;
+			break;
+		}
+		else if (menu_code == S_PUSH)
+			s_push(&head);
+		else if (menu_code == S_DELETE)
+			s_delete(&head);
+		else if (menu_code == S_IS_PALINDROM)
+			s_is_palindrom(&head);
+		else if (menu_code == S_PRINT)
+			s_print(&head);
+	}
 }
