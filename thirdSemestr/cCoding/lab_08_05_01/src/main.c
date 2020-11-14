@@ -31,33 +31,9 @@ int main()
 		free_matrix(&b);
 		return ERROR_INPUT_MATRIX;
 	}
+  /// here 
+  int ro, gamma;
 
-	// printf("--->\n");
-	// printf("After input:\n\n");
-	// printf("A:\n");
-	// output_matrix(&a);
-
-	// printf("\nB:\n");
-	// output_matrix(&b);
-	// printf("<---\n");
-	
-	if (delete_min_string_or_table(&a) || delete_min_string_or_table(&b))
-	{
-		free_matrix(&a);
-		free_matrix(&b);
-		return ERROR_DELETE_MATRIX;
-	}
-
-	// printf("--->\n");
-	// printf("After delete:\n\n");
-	// printf("A:\n");
-	// output_matrix(&a);
-
-	// printf("\nB:\n");
-	// output_matrix(&b);
-	// printf("<---\n");
-
-	int ro, gamma;
 	if (!get_degrees(&ro, &gamma))
 	{
 		free_matrix(&a);
@@ -72,6 +48,32 @@ int main()
 		free_matrix(&b);
 		return ERROR_INPUT_DEGREES;
 	}
+  
+	printf("--->\n");
+	printf("After input:\n\n");
+	printf("A:\n");
+	output_matrix(&a);
+
+	printf("\nB:\n");
+	output_matrix(&b);
+	printf("<---\n");
+	
+	if (delete_min_string_or_table(&a) || delete_min_string_or_table(&b))
+	{
+		free_matrix(&a);
+		free_matrix(&b);
+		return ERROR_DELETE_MATRIX;
+	}
+
+	printf("--->\n");
+	printf("After delete:\n\n");
+	printf("A:\n");
+	output_matrix(&a);
+
+	printf("\nB:\n");
+	output_matrix(&b);
+	printf("<---\n");
+
 
 	if (a.width > b.width)
 		update_matrix(&b, a.width);
@@ -85,18 +87,27 @@ int main()
 	// 	return ERROR_NEW_SIZE;
 	// }
 
+  printf("--->\n");
+	printf("After update_matrix:\n\n");
+	printf("A:\n");
+	output_matrix(&a);
+
+	printf("\nB:\n");
+	output_matrix(&b);
+	printf("<---\n");
+
 	//printf("HERE4\n");
 	struct matrix ab;
 	if (get_multiplicated_powed_matrix(&ab, &a, &b, &ro, &gamma))
 	{
-		// printf("--->\n");
-		// printf("After pow:\n\n");
-		// printf("A:\n");
-		// output_matrix(&a);
+		printf("--->\n");
+		printf("After pow:\n\n");
+		printf("A:\n");
+		output_matrix(&a);
 
-		// printf("\nB:\n");
-		// output_matrix(&b);
-		// printf("<---\n");
+		printf("\nB:\n");
+		output_matrix(&b);
+		printf("<---\n");
 		output_matrix(&ab);	
 		free_matrix(&a);
 		free_matrix(&b);
@@ -110,3 +121,19 @@ int main()
 	free_matrix(&ab);
 	return ERROR_STATUS;
 }
+
+
+/*
+Возведение в нулевую степень не работает, она должна стать единичной.
+1 0 0
+0 1 0
+0 0 1
+x
+1 3 5
+2 4 6
+1 3 5
+=
+1 3 5
+2 4 6
+1 3 5
+*/

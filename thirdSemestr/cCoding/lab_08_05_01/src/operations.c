@@ -35,7 +35,7 @@ void update_matrix(struct matrix *i, int n_size)
 	{
 		for (int check_row_number = 0; check_row_number < i->width; check_row_number++)
 		{
-			temp.elements[check_string_number * temp.width + check_row_number] = get_mid_num(&temp, check_row_number);
+			temp.elements[check_string_number * temp.width + check_row_number] = get_mid_num(&temp, check_row_number, check_string_number);
 		}
 	}
 
@@ -76,13 +76,34 @@ void update_matrix(struct matrix *i, int n_size)
 	//output_matrix(i);
 }
 
-int get_mid_num(struct matrix *i, int row)
-{
-	double sum = 0;
-	for (int check_string_number = 0; check_string_number < i->height; check_string_number++)
-		sum += *(i->indicators[check_string_number] + row);
+//  double pow_f(double x, double n)
+//  {
+//     if (n==0)
+//         return 1;
+//     else if (n==1)
+//         return x;
+//     else if (n % 2 == 0 )
+//         return pow_f( x * x, n / 2);
+//     else
+//         return pow_f( x * x, n / 2) * x;
+//  }
 
-	return (int)(sum / (i->height - 1));
+// double power(double x, long n) {
+//     if(n == 0) return 1;
+//     if(n < 0) return power ( 1.0 / x, -n);
+//     return x * power(x, n - 1);
+//  }
+
+int get_mid_num(struct matrix *i, int row, int max_string)
+{
+	double m_su = 1.0;
+  int check_string_number = 0;
+	for (; check_string_number < max_string; check_string_number++)
+  {
+    printf("\n*(i->indicators[check_string_number] + row) = %d\n", *(i->indicators[check_string_number] + row));
+		m_su = *(i->indicators[check_string_number] + row) * m_su;
+  }
+	return (int)(pow(m_su, 1 / (double)check_string_number));
 }
 
 int get_max_num(struct matrix *i, int str)
@@ -302,7 +323,6 @@ int get_sum(struct matrix *first_matrix, struct matrix *second_matrix, int check
 	return result_sum;
 }
 
-
 int get_minimal_element(struct matrix *i, int is_vertical_matrix)
 {
 	int min_elem_str_pos = 0, minimanl_element_row_position = 0, minimanl_element = *(i->indicators[0] + 0);
@@ -345,3 +365,16 @@ void free_matrix(struct matrix *temp_matrix)
 	free(temp_matrix->indicators);
 	free(temp_matrix->elements);
 }
+
+
+/*
+
+if первый раз
+  mult_matrix(&result_matrix, *i, *i);
+второй раз
+  mult_matrix(&result_matrix, &second_matrix, *i);
+
+result 
+mult(res, a, a); // res = a^2
+a = res
+*/

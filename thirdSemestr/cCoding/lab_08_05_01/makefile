@@ -2,7 +2,7 @@ all: app.exe unit_tests.exe unit_tests_coverage.exe
 
 # APP.EXE
 app.exe : main.o io.o operations.o
-	gcc -o app.exe out/main.o out/io.o out/operations.o
+	gcc -o app.exe out/main.o out/io.o out/operations.o -lm
 
 io.o :
 	mkdir -p out

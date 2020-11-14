@@ -1,6 +1,6 @@
 #include "../inc/config.h"
 
-int get_mid_num(struct matrix *i, int row);
+int get_mid_num(struct matrix *i, int row, int max_string);
 int get_max_num(struct matrix *i, int str);
 int is_correct_new_size(struct matrix *first_matrix, struct matrix *second_matrix);
 int delete_min_string_or_table(struct matrix *i);
