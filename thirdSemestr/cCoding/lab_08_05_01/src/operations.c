@@ -217,7 +217,28 @@ int pow_matrix(struct matrix **i, int degree)
 {
 	//printf("POW{\n");
 	int operation = 0;
-	if (degree > 1)
+  if (degree == 0)
+  {
+    for (int check_string_number = 0; check_string_number < (*i)->height; check_string_number++)
+      {
+        for (int check_row_number = 0; check_row_number < (*i)->width; check_row_number++)
+        {
+          //printf("check_string_number = %d, check_row_number = %d -> ", check_string_number, check_row_number);
+          //printf("HERE1\n");
+          if (check_row_number == check_string_number)
+            *((*i)->elements + check_string_number * (*i)->width + check_row_number) = 1;
+          else
+            *((*i)->elements + check_string_number * (*i)->width + check_row_number) = 0;
+          
+          // printf("HERE2\n");
+          // //printf("Added: %d\n", *(second_matrix.indicators[check_string_number] + check_row_number));
+          // //*(second_matrix.elements + check_string_number * result_matrix.width + check_row_number) = *(result_matrix.elements + check_string_number * result_matrix.width + check_row_number);
+          // printf("OK\n");
+        }
+        //second_matrix.indicators[check_string_number] = second_matrix.elements + check_string_number * second_matrix.width;
+      }
+  }
+	else if (degree > 1)
 	{
 		struct matrix result_matrix;
 		result_matrix.height = (*i)->height;
