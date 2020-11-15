@@ -17,7 +17,7 @@ int **rand_matrix(int *row, int *col, int *count)
     read_status += scanf("%d", row);
     printf("\n   Ширина = ");
     read_status += scanf("%d", col);
-    printf("\n   Заполненность, % = ");
+    printf("\n   Заполненность = ");
     read_status += scanf("%d", &fill);
 	while (read_status != 3 || fill > 100)
 		printf("\n   Возникла ошибка при вводе. Повторите попытку...\n");
@@ -50,11 +50,20 @@ unsigned long long tick(void)
 void statistic(int **matrix, int size_rows, int size_cols, int *A, int *IA, int*JA, int count)
 {
 	unsigned long long time = tick();
+
+    clock_t start_1 = clock();
 	mult_std_matrix(matrix, size_rows, size_cols, count * 100 / size_cols / size_rows);
+    clock_t end_1 = clock();
+
 	unsigned long long second_time = tick() - time;
-    output_stand_stat(second_time, size_cols * size_rows * sizeof(int));
+    output_stand_stat((double)(end_1 - start_1) / CLOCKS_PER_SEC, size_cols * size_rows * sizeof(int));
+    //output_stand_stat(second_time, size_cols * size_rows * sizeof(int));
 	time = tick();
+
+    clock_t start_2 = clock();
 	mult_matrix(A, IA, JA, count, size_rows, count * 100 / size_cols / size_rows);
+    clock_t end_2 = clock();
 	unsigned long long first_time = tick() - time;
-    output_raz_stat(first_time, (count + count + size_rows) * sizeof(int));
+    output_raz_stat((double)(end_2 - start_2) / CLOCKS_PER_SEC, (count + count + size_rows) * sizeof(int));
+    // output_raz_stat(first_time, (count + count + size_rows) * sizeof(int));
 }

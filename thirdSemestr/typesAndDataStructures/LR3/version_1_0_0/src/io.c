@@ -278,15 +278,15 @@ void output_welcome()
     printf("\n   1 - Ручной ввод матрицы\n   2 - Чтение матрицы из файла\n   3 - Генерация матрицы\n\n   Укажите пункт меню (1-3): ");
 }
 
-void output_stand_stat(unsigned long long t, unsigned long memory)
+void output_stand_stat(double t, unsigned long memory)
 {
-    printf("   Время умножения матрицы на вектор в стандартном виде: %llu тиков\n", t);
+    printf("   Время умножения матрицы на вектор в стандартном виде: %f сек\n", t);
     printf("   Память умножения матрицы на вектор в стандартном виде: %lu байт\n", memory);
 }
 
-void output_raz_stat(unsigned long long t, unsigned long memory)
+void output_raz_stat(double t, unsigned long memory)
 {
-    printf("   Время умножения матрицы на вектор в разреженом виде: %llu тиков\n", t);
+    printf("   Время умножения матрицы на вектор в разреженом виде: %f сек\n", t);
     printf("   Память умножения матрицы на вектор в разреженом виде: %lu байт\n", memory);
 }
 

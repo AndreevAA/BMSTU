@@ -1,6 +1,6 @@
 void output_welcome();
-void output_stand_stat(unsigned long long t, unsigned long memory);
-void output_raz_stat(unsigned long long t, unsigned long memory);
+void output_stand_stat(double t, unsigned long memory);
+void output_raz_stat(double t, unsigned long memory);
 void output_sup_menu();
 
 struct ja
