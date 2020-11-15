@@ -87,7 +87,7 @@ void s_delete(struct s_stack_s **s_stack)
 	{
 		pop(s_stack);
 	}
-}
+}s
 
 void s_is_palindrom(struct s_stack_s **headRef)
 {
