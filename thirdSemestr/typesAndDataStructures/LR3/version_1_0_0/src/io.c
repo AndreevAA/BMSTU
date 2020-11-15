@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "input_output.h"
-#include "matrix.h"
-#include "menu.h"
+#include "../inc/io.h"
+#include "../inc/operations.h"
+#include "../inc/menu.h"
 #define OK 0
 #define ERROR 1
 
@@ -265,37 +265,13 @@ int * get_vector(int size, int c)
             clean_stdin();
 		}
 	}
-        /*if (count == size)
-        {
-            for (int i =0;i<size;i++)
-            {
-                printf("\nВведите %d элемент: ",i);
-                while(scanf("%d", &num) == 0)
-                {
-                    printf("\nОшибка ввода\nВведите %d элемент: ",i);
-                    clean_stdin();
-                }
-                vector[i] = num;
-            }
-        }
-        else
-        {
-            for (int i =0; i < count; i++)
-            {
-                printf("\nВведите позицию: ");
-                scanf("%d", &pos);
-                clean_stdin();
-                printf("\nВведите %d элемент: ",pos);
-                scanf("%d", &num);
-                vector[pos] = num;
-            }
-        }
-        return vector;
-    }
-    else
-        return NULL;
-	*/
+
 	for (int i = 0; i < size * count / 100; i++)
 	    vector[(size) * rand() / RAND_MAX] = rand() / 1000;
 	return vector;
+}
+
+void output_welcome()
+{
+    printf("\n1 - Ввести матрицу вручную\n2 - Считать матрицу из файла\n3 - Сгенерировать случайную матрицу\n\nПункт: ");
 }

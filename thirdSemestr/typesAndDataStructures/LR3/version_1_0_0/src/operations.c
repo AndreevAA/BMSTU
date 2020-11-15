@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "input_output.h"
-#include "matrix.h"
-#include "menu.h"
+#include "../inc/io.h"
+#include "../inc/operations.h"
+#include "../inc/menu.h"
 #define OK 0
 #define ERROR 1
 
@@ -188,18 +188,16 @@ int mult_matrix(int *A, int *IA, int*JA, int count, int size, int c)
         free(AS);
 }
 
-
-
 void statistic(int **matrix, int size_rows, int size_cols, int *A, int *IA, int*JA, int count)
 {
 	unsigned long long time = tick();
 	mult_std_matrix(matrix, size_rows, size_cols, count * 100 / size_cols / size_rows);
 	unsigned long long t2 = tick() - time;
-	printf("Время умножения матрицы на вектор в стандартном виде: %I64d тиков\n ", t2);
-	printf("Память умножения матрицы на вектор в стандартном виде: %d байт\n ", size_cols*size_rows*sizeof(int));
+	printf("Время умножения матрицы на вектор в стандартном виде: %llu тиков\n ", t2);
+	printf("Память умножения матрицы на вектор в стандартном виде: %lu байт\n ", size_cols * size_rows * sizeof(int));
 	time = tick();
 	mult_matrix(A, IA, JA, count, size_rows, count * 100 / size_cols / size_rows);
 	unsigned long long t1 = tick() - time;
-	printf("Время умножения матрицы на вектор в разреженом виде: %I64d\n", t1);
-	printf("Память умножения матрицы на вектор в стандартном виде: %d байт\n ", (count + count + size_rows) * sizeof(int));
+	printf("Время умножения матрицы на вектор в разреженом виде: %llu\n", t1);
+	printf("Память умножения матрицы на вектор в стандартном виде: %lu байт\n ", (count + count + size_rows) * sizeof(int));
 }

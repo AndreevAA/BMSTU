@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "input_output.h"
-#include "matrix.h"
-#include "menu.h"
+#include "../inc/io.h"
+#include "../inc/operations.h"
+#include "../inc/menu.h"
 #define OK 0
 #define ERROR 1
 

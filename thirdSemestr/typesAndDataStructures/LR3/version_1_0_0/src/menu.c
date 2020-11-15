@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "input_output.h"
-#include "matrix.h"
-#include "menu.h"
+#include "../inc/io.h"
+#include "../inc/operations.h"
+#include "../inc/menu.h"
 #define OK 0
 #define ERROR 1
 
 int menu_1(void)
 {
-    printf("\n1 - Ввести матрицу вручную\n2 - Считать матрицу из файла\n3 - Сгенерировать случайную матрицу\n\nПункт: ");
+    output_welcome();
     int choice;
     while (scanf("%d",&choice) != 1 || choice > 3 || choice < 1)
     {   

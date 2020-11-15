@@ -1,3 +1,5 @@
+void output_welcome();
+
 struct ja
 {
     int num;
