@@ -1,4 +1,7 @@
 void output_welcome();
+void output_stand_stat(unsigned long long t, unsigned long memory);
+void output_raz_stat(unsigned long long t, unsigned long memory);
+void output_sup_menu();
 
 struct ja
 {
@@ -25,3 +28,4 @@ void print_std_matrix(int **mtr, int size_rows, int size_cols);
 void print_matrix(int *A, int *IA, int*JA, int count, int size_cols);
 
 int * get_vector(int size, int c);
+void output_welcome_info();

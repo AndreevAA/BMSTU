@@ -3,11 +3,13 @@
 #include "../inc/io.h"
 #include "../inc/operations.h"
 #include "../inc/menu.h"
+#include "../inc/multiplication.h"
 #define OK 0
 #define ERROR 1
 
 int main(void)
 {
+    output_welcome_info();
     setbuf(stdout, NULL);
     int error = OK;
     int ** matrix;
@@ -45,13 +47,13 @@ int main(void)
         {
             case 1:
                     if (count ==  0)
-                        printf("\nВ матрице все элементы нулевые\n");
+                        printf("\n   В матрице все элементы нулевые\n");
                     else
                         error = mult_matrix(A, IA, ARRJ, count,size_rows, 0);
                     break;
             case 2:
                     if (count ==  0)
-                        printf("\nНулевая строка\n");
+                        printf("\n   Нулевая строка\n");
                     else
                         error = mult_std_matrix(matrix,size_rows, size_cols, 0);
                     break;
@@ -60,7 +62,7 @@ int main(void)
                     break;
             case 4:
                     if (count == 0)
-                        printf("\nВ матрице все элементы нулевые\n");
+                        printf("\n   В матрице все элементы нулевые\n");
                     else
                         print_matrix(A, IA, ARRJ,count,size_cols);
                     break;
@@ -70,7 +72,7 @@ int main(void)
         }
     }
     if (error)
-        printf("\nОшибка при выделении памяти\n (программа завершена)");
+        printf("\nОшибка памяти");
     free_mtr(matrix,size_rows);
     
     if (count != 0)
