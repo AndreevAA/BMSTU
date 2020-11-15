@@ -286,7 +286,7 @@ void output_stand_stat(unsigned long long t, unsigned long memory)
 
 void output_raz_stat(unsigned long long t, unsigned long memory)
 {
-    printf("   Время умножения матрицы на вектор в разреженом виде: %llu\n", t);
+    printf("   Время умножения матрицы на вектор в разреженом виде: %llu тиков\n", t);
     printf("   Память умножения матрицы на вектор в разреженом виде: %lu байт\n", memory);
 }
 

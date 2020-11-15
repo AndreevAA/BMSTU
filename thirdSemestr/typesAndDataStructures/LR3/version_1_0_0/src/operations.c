@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../inc/io.h"
 #include "../inc/operations.h"
 #include "../inc/menu.h"
@@ -9,36 +10,33 @@
 
 int **rand_matrix(int *row, int *col, int *count)
 {
+    srand(123);
 	int fill = 0, read_status = 0;
-	printf("\nВведите размер матрицы и процент заполнения.\n");
-    printf("\nrow = ");
+	printf("\n   Введите размер матрицы и процент заполнения: \n");
+    printf("\n   Высота = ");
     read_status += scanf("%d", row);
-    printf("\ncol = ");
+    printf("\n   Ширина = ");
     read_status += scanf("%d", col);
-    printf("\nfill = ");
+    printf("\n   Заполненность, % = ");
     read_status += scanf("%d", &fill);
 	while (read_status != 3 || fill > 100)
-		printf("\nнекоректный ввод , повторите\n");
+		printf("\n   Возникла ошибка при вводе. Повторите попытку...\n");
 	
-    printf("\nМатрица генерируется...\n");
+    printf("\n   Матрица генерируется...\n");
 	int **res = malloc(*row * sizeof(int*));
-    printf("int **res = malloc(*row * sizeof(int*));\n");
 	for (int i = 0; i < *row; i++)
 		res[i] = calloc(*col, sizeof(int));
-    printf("HERE1\n");
 	*count = (*row * *col * fill) / 100;
-    printf("*count = (*row * *col * fill) / 100;\n");
 	for (int j = 0; j < *count; j++)
 	{
 		int x = 0, y = 0;
 		while (res[x][y])
 		{
-    		x = (*row - 1)  * rand()/RAND_MAX;
-    		y = (*col - 1) * rand()/RAND_MAX;
+            x = (abs(rand()) % *row); 
+            y = (abs(rand()) % *col);
 		}
 		res[x][y] = rand()%1000 + 1;
 	}
-    printf("HERE2\n");
 	return res;
 }
 
