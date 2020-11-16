@@ -40,14 +40,12 @@ void insertionsort(struct films *all_films, int number_of_films, char *key_to_co
 // Модуль добавления нового фильма в массив структур
 void add_temp_film(struct films *all_films, int *number_of_films, char *temp_title, char *temp_name, char *temp_year)
 {
-	for (int i = 0; i < MAX_SIZE; i++)
-	{
-		all_films[*number_of_films].title[i] = temp_title[i];
-		all_films[*number_of_films].name[i] = temp_name[i];
-		all_films[*number_of_films].year[i] = temp_year[i];
-	}
-
-	*number_of_films += 1;
+	all_films[*number_of_films].title_size = strlen(temp_title);
+	all_films[*number_of_films].title = strdup(temp_title);
+	all_films[*number_of_films].name_size = strlen(temp_name);
+	all_films[*number_of_films].name = strdup(temp_name);
+	all_films[*number_of_films].year_size = strlen(temp_year);
+	all_films[*number_of_films].year = strdup(temp_year);
 }
 
 // Модуль поиска фильма в массиве структур 

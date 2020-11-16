@@ -20,7 +20,7 @@
 \param[in] name Имя автора фильма
 \param[in] year Дата выхода фильма
 */
-void output_data(char *title, char *name, char *year);
+void output_data(char *text, int size);
 
 /*!
 Модуль сравнения введенного KEY с существующими
@@ -35,3 +35,7 @@ int output_sorted_data(struct films *all_films, int number_of_films);
 void output_not_found();
 
 int check_data(struct films *all_films, int number_of_films);
+
+int get_size(char *filename);
+
+void free_struct(struct films *all_films, int number);

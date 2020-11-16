@@ -29,9 +29,9 @@ void input_data_transomation(char *temp_title, char *temp_name, char *temp_year)
 	delete_enter(temp_year);
 }
 
-int read_string(char *temp_string, FILE *operationfile)
+int read_string(char *temp_string, FILE *operationfile, int size)
 {
-	if (fgets(temp_string, MAX_SIZE, operationfile) != NULL)
+	if (fgets(temp_string, size, operationfile) != NULL)
 		return SUCCESS_STATUS;
 		
 	return ERROR_STATUS;
@@ -40,9 +40,9 @@ int read_string(char *temp_string, FILE *operationfile)
 int scanf_input_data(char *temp_title, char *temp_name, char *temp_year, FILE *operationfile)
 {
 	if (feof(operationfile) == 0)
-		if (read_string(temp_title, operationfile) == SUCCESS_STATUS)
-			if (read_string(temp_name, operationfile) == SUCCESS_STATUS)
-				if (read_string(temp_year, operationfile) == SUCCESS_STATUS)
+		if (read_string(temp_title, operationfile, MAX_SIZE_TITLE) == SUCCESS_STATUS)
+			if (read_string(temp_name, operationfile, MAX_SIZE_NAME) == SUCCESS_STATUS)
+				if (read_string(temp_year, operationfile, MAX_SIZE_YEAR) == SUCCESS_STATUS)
 					return SUCCESS_STATUS;
 
 	return ERROR_STATUS;
@@ -53,7 +53,7 @@ int get_number_of_films(struct films *all_films, int number_of_films)
 	int temp_number_of_films = 0;
 
 	for (int i = 0; i < number_of_films; i++)
-		if (strlen((all_films)[i].title) > 0 && strlen((all_films)[i].name) > 0 && strlen((all_films)[i].year) > 0)
+		if ((all_films)[i].title_size > 0 && (all_films)[i].name_size > 0 && (all_films)[i].year_size > 0)
 			temp_number_of_films++;
 
 	return temp_number_of_films;
@@ -121,14 +121,10 @@ int check_input_argv(int argc, char *argv[])
 int check_input_film(char *temp_title, char *temp_name, char *temp_year)
 {
 	int error_flag = SUCCESS_STATUS;
-
 	if (strlen(temp_name) > 25 || strlen(temp_title) > 25 || is_data_right(temp_year) == ERROR_STATUS || strlen(temp_name) == 0 || strlen(temp_title) == 0 || strlen(temp_year) == 0)
 		error_flag = ERROR_STATUS;
 	if (temp_title[0] == '\n' || temp_name[0] == '\n' || temp_year[0] == '\n')
 		error_flag = ERROR_STATUS;
-	if (is_only_string(temp_title) == ERROR_STATUS || is_only_string(temp_name) == ERROR_STATUS)
-		error_flag = ERROR_STATUS;
-
 	return error_flag;
 }
 

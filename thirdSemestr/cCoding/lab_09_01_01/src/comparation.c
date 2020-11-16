@@ -34,7 +34,9 @@ int strcmp_title(char *key, films *all_films, int middle_position, int *left_bor
 	if (strcmp(key, all_films[middle_position].title) == 0)
 	{
 		*search_index = middle_position;
-		output_data((all_films)[middle_position].title, (all_films)[middle_position].name, (all_films)[middle_position].year);
+		output_data((all_films)[middle_position].title, (all_films)[middle_position].title_size);
+		output_data((all_films)[middle_position].name, (all_films)[middle_position].name_size);
+		output_data((all_films)[middle_position].year, (all_films)[middle_position].year_size);
 		
 		break_status = SUCCESS_STATUS;
 	}
@@ -58,7 +60,9 @@ int strcmp_name(char *key, films *all_films, int middle_position, int *left_bord
 	if (strcmp(key, all_films[middle_position].name) == 0)
 	{
 		*search_index = middle_position;
-		output_data((all_films)[middle_position].title, (all_films)[middle_position].name, (all_films)[middle_position].year);
+		output_data((all_films)[middle_position].title, (all_films)[middle_position].title_size);
+		output_data((all_films)[middle_position].name, (all_films)[middle_position].name_size);
+		output_data((all_films)[middle_position].year, (all_films)[middle_position].year_size);
 		
 		break_status = SUCCESS_STATUS;
 	}
@@ -82,8 +86,9 @@ int strcmp_year(char *key, films *all_films, int middle_position, int *left_bord
 	if (strcmp(key, all_films[middle_position].year) == 0)
 	{
 		*search_index = middle_position;
-		output_data((all_films)[middle_position].title, (all_films)[middle_position].name, (all_films)[middle_position].year);
-		
+		output_data((all_films)[middle_position].title, (all_films)[middle_position].title_size);
+		output_data((all_films)[middle_position].name, (all_films)[middle_position].name_size);
+		output_data((all_films)[middle_position].year, (all_films)[middle_position].year_size);
 		break_status = SUCCESS_STATUS;
 	}
 
