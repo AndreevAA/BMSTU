@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #ifndef MAINH
 #define MAINH
@@ -17,7 +18,7 @@
 
 #define NUMBER_OF_PARAMS 2
 #define MIN_SIZE 1
-#define MAX_SIZE 100
+#define MAX_SIZE 1000000
 
 struct matrix
 {
@@ -25,6 +26,6 @@ struct matrix
 	int *elements;
 	int height;
 	int width;
-} matrix;
+};
 
 #endif

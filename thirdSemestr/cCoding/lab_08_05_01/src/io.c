@@ -2,7 +2,7 @@
 
 int get_matrix_size(int *height, int *width)
 {
-	return (scanf("%d", height) == 1 && scanf("%d", width));
+	return (scanf("%d", height) && scanf("%d", width));
 }
 
 int is_correct_matrix_size(int *height, int *width)
@@ -22,7 +22,12 @@ int get_matrix(struct matrix *i_matrix, int *i_height, int *i_width)
 		if (scanf("%d", &i_matrix->elements[add_position]) == 1)
 		{
 			if (add_position % i_matrix->width == 0)
-				*(i_matrix->indicators + sizeof(void *) * (add_position / i_matrix->width)) = i_matrix->elements + add_position;
+			{
+				//printf("((add_position / i_matrix->width) = %d)\n", (add_position / i_matrix->width));
+				//printf("(i_matrix->elements + add_position = %d)\n", *(i_matrix->elements + add_position));
+				i_matrix->indicators[add_position / i_matrix->width] = i_matrix->elements + add_position;
+				//printf("(%d)\n", **(i_matrix->indicators + sizeof(void *) * (add_position / i_matrix->width)));
+			}
 		}
 		else
 		{
@@ -44,6 +49,7 @@ int is_correct_degree(int *ro, int *gamma)
 
 void output_matrix(struct matrix *i)
 {
+	//printf("%d %d\n", i->height, i->width);
 	for (int check_string_number = 0; check_string_number < i->height; check_string_number++)
 	{
 		for (int check_row_number = 0; check_row_number < i->width; check_row_number++)
