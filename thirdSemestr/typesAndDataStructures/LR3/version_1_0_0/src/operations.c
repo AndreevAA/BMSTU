@@ -54,12 +54,10 @@ void statistic(int **matrix, int size_rows, int size_cols, int *A, int *IA, int*
     clock_t start_1 = clock();
 	mult_std_matrix(matrix, size_rows, size_cols, count * 100 / size_cols / size_rows);
     clock_t end_1 = clock();
-
 	unsigned long long second_time = tick() - time;
     output_stand_stat((double)(end_1 - start_1) / CLOCKS_PER_SEC, size_cols * size_rows * sizeof(int));
     //output_stand_stat(second_time, size_cols * size_rows * sizeof(int));
 	time = tick();
-
     clock_t start_2 = clock();
 	mult_matrix(A, IA, JA, count, size_rows, count * 100 / size_cols / size_rows);
     clock_t end_2 = clock();

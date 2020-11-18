@@ -10,7 +10,8 @@ int menu_1(void)
 {
     output_welcome();
     int choice;
-    while (scanf("%d",&choice) != 1 || choice > 3 || choice < 1)
+
+    while (scanf("%d",&choice) != 1 || choice > 4 || choice < 1)
     {   
         clean_stdin();
 		printf("\nПри вводе допущена ошибка. Повторите попытку...\n");

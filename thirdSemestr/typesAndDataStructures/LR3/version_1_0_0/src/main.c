@@ -4,8 +4,113 @@
 #include "../inc/operations.h"
 #include "../inc/menu.h"
 #include "../inc/multiplication.h"
+#include <time.h>
 #define OK 0
 #define ERROR 1
+
+void ch_out(int s_r)
+{
+    printf("   Размер матрицы: %d х %d\n", s_r, s_r);
+    printf("       Размер |     Размер |     Раз-ть |       Вр.Ст. |     Па.Ст. |       Вр.Ра. |     Па.H.\n");
+    for (int temp_count = 100; temp_count >= 5; temp_count-= 5)
+    {
+        int col = s_r;
+        int row = s_r;
+        int ** temp_matrix;
+        printf("   %10.0d | %10.0d | %10.1d | ", col, row, 100 - temp_count);
+
+        int **res = malloc(row * sizeof(int*));
+        for (int i = 0; i < row; i++)
+            res[i] = calloc(col, sizeof(int));
+        int count = (row * col * temp_count) / 100;
+        for (int j = 0; j < count; j++)
+        {
+            int x = 0, y = 0;
+            while (res[x][y])
+            {
+                x = (abs(rand()) % row); 
+                y = (abs(rand()) % col);
+            }
+            res[x][y] = rand()%1000 + 1;
+        }
+
+        //temp_matrix = rand_matrix(&size_cols, &size_rows, &temp_count);
+        int *A = malloc((count) * sizeof(int));
+        int *IA = malloc((count) * sizeof(int));
+        struct ja JA;
+        // error = (A == NULL) ? ERROR : OK;
+        // error = (IA == NULL) ? ERROR : OK;
+        int *ARRJ = malloc((col + 1) * sizeof(int));
+        //printf("fdsf\n");
+        
+        input_matrix(res, row, col, count, A, IA, ARRJ);
+
+        clock_t start_1 = clock();
+        mult_std_matrix(res, row, col, temp_count);
+        clock_t end_1 = clock();
+        
+        printf("%10.10f | %10.0lu | ", (double)(end_1 - start_1) / CLOCKS_PER_SEC, col * row * sizeof(int));
+        //output_stand_stat((double)(end_1 - start_1) / CLOCKS_PER_SEC, col * row * sizeof(int));
+        //output_stand_stat(second_time, size_cols * size_rows * sizeof(int));
+        
+        clock_t start_2 = clock();
+        mult_matrix(A, IA, ARRJ, count, row, temp_count);
+        clock_t end_2 = clock();
+        printf("%10.10f | %10.0lu\n", (double)(end_2 - start_2) / CLOCKS_PER_SEC, (count + count + row) * sizeof(int));
+        //output_raz_stat((double)(end_2 - start_2) / CLOCKS_PER_SEC, (count + count + row) * sizeof(int));
+        
+        //statistic(res, row, col, A, IA, ARRJ, count);
+
+    }
+
+    int temp_count = 1;
+
+    int col = s_r;
+    int row = s_r;
+    int ** temp_matrix;
+    printf("   %10.0d | %10.0d | %10.1d | ", col, row, 100 - temp_count + 1);
+
+    int **res = malloc(row * sizeof(int*));
+    for (int i = 0; i < row; i++)
+        res[i] = calloc(col, sizeof(int));
+    int count = (row * col * temp_count) / 100;
+    for (int j = 0; j < count; j++)
+    {
+        int x = 0, y = 0;
+        while (res[x][y])
+        {
+            x = (abs(rand()) % row); 
+            y = (abs(rand()) % col);
+        }
+        res[x][y] = rand()%1000 + 1;
+    }
+
+    //temp_matrix = rand_matrix(&size_cols, &size_rows, &temp_count);
+    int *A = malloc((count) * sizeof(int));
+    int *IA = malloc((count) * sizeof(int));
+    struct ja JA;
+    // error = (A == NULL) ? ERROR : OK;
+    // error = (IA == NULL) ? ERROR : OK;
+    int *ARRJ = malloc((col + 1) * sizeof(int));
+    //printf("fdsf\n");
+    
+    input_matrix(res, row, col, count, A, IA, ARRJ);
+
+    clock_t start_1 = clock();
+    mult_std_matrix(res, row, col, temp_count);
+    clock_t end_1 = clock();
+    
+    printf("%10.10f | %10.0lu | ", (double)(end_1 - start_1) / CLOCKS_PER_SEC, col * row * sizeof(int));
+    //output_stand_stat((double)(end_1 - start_1) / CLOCKS_PER_SEC, col * row * sizeof(int));
+    //output_stand_stat(second_time, size_cols * size_rows * sizeof(int));
+    
+    clock_t start_2 = clock();
+    mult_matrix(A, IA, ARRJ, count, row, temp_count);
+    clock_t end_2 = clock();
+    printf("%10.10f | %10.0lu\n", (double)(end_2 - start_2) / CLOCKS_PER_SEC, (count + count + row) * sizeof(int));
+
+    printf("\n");
+}
 
 int main(void)
 {
@@ -30,6 +135,17 @@ int main(void)
         matrix = rand_matrix(&size_cols, &size_rows, &count);
         error = (matrix == NULL) ? ERROR : OK;
     }
+    else if (choice == 4)
+    {
+        ch_out(200);
+        ch_out(300);
+        ch_out(500);
+        ch_out(800);
+        ch_out(1000);
+        ch_out(2000);
+        ch_out(3000);
+        return 0;
+    }
 	
     int *A = malloc((count) * sizeof(int));
 	int *IA = malloc((count) * sizeof(int));
@@ -49,7 +165,10 @@ int main(void)
                     if (count ==  0)
                         printf("\n   В матрице все элементы нулевые\n");
                     else
+                    {
+                        
                         error = mult_matrix(A, IA, ARRJ, count,size_rows, 0);
+                    }
                     break;
             case 2:
                     if (count ==  0)

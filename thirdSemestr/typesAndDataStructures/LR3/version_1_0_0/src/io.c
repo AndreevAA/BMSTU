@@ -255,27 +255,27 @@ int * get_vector(int size, int c)
         {
             vector[i] = 0;
         }
-		if (c)
-		{
-			count = c;
-		}
-		else
-		{
+        if (c)
+        {
+            count = c;
+        }
+        else
+        {
             printf("\n   Процент ненулевых элементов: ");
             scanf("%d", &count);
             clean_stdin();
-		}
-	}
+        }
+    }
 
-	for (int i = 0; i < size * count / 100; i++)
-	    vector[(size) * rand() / RAND_MAX] = rand() / 1000;
-	return vector;
+    for (int i = 0; i < size * count / 100; i++)
+        vector[(size) * rand() / RAND_MAX] = rand() / 1000;
+    return vector;
 }
 
 void output_welcome()
 {
     printf("\nОсновное меню программы:");
-    printf("\n   1 - Ручной ввод матрицы\n   2 - Чтение матрицы из файла\n   3 - Генерация матрицы\n\n   Укажите пункт меню (1-3): ");
+    printf("\n   1 - Ручной ввод матрицы\n   2 - Чтение матрицы из файла\n   3 - Генерация матрицы\n   4 - Вывод отчетной таблицы сравнения\n\n   Укажите пункт меню (1-4): ");
 }
 
 void output_stand_stat(double t, unsigned long memory)
