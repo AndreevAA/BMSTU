@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "input.h"
-#include "main.h"
+#include "functions.h"
 
 /*!
 Модуль сравнения введенного KEY с существующими
@@ -28,3 +28,10 @@ void output_data(char *title, char *name, char *year);
 \param[in] number_of_films Текущее количество вошедщих фильмов
 */
 int output_sorted_data(struct films *all_films, int number_of_films);
+
+/*!
+Вывод данных на экран в случае ситуации Not found
+*/
+void output_not_found();
+
+void output_comparator(struct films *all_films, int *number_of_films, char *field, char *key, int *errorflag, int reading_error, int argc);

@@ -13,8 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "main.h"
 #include "output.h"
+#include "functions.h"
 
 /*!
 Модуль сравнения введенного KEY с существующими

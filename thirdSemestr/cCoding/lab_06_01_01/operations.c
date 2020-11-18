@@ -16,7 +16,7 @@
 #include "operations.h"
 
 // Модуль сортировки вставками
-void insert_sort(struct films *all_films, int number_of_films, char *key_to_compare)
+void insertionsort(struct films *all_films, int number_of_films, char *key_to_compare)
 {
 	int location;
 	films new_element;
@@ -51,7 +51,7 @@ void add_temp_film(struct films *all_films, int *number_of_films, char *temp_tit
 }
 
 // Модуль поиска фильма в массиве структур 
-int search_field(struct films *all_films, int number_of_films, char *field, char *key)
+int search_field(struct films *all_films, int number_of_films, char *field, char *key, int *out_errorflag)
 {	
 	int errorflag = SUCCESS_STATUS;
 
@@ -80,10 +80,9 @@ int search_field(struct films *all_films, int number_of_films, char *field, char
 		}
 	}
 	
-	if (search_index == -1)
-		printf("Not found");
+	*out_errorflag = errorflag;
 
-	return errorflag;
+	return search_index;
 }
 
 // Модуль заполения структуры
