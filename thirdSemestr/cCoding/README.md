@@ -42,11 +42,17 @@ Examples of a valid program call:
 
 ## [LR7](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_07_04)
 
-
+In progress..
 
 ## [LR8](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_08_05_01)
 
-
+In progress..
 
 ## [LR9](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_09_01_01)
+
+In progress..
+
+## [LR10](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_10)
+
+In progress...
 
