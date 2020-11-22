@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "main.h"
 #include "output.h"
 #include "comparation.h"
 
@@ -23,7 +22,7 @@
 \param[in] number_of_films Текущее количество вошедщих фильмов
 \param[in] key_to_compare Содержание ключа к сравнению
 */
-void insert_sort(struct films *all_films, int number_of_films, char *key_to_compare);
+void insertionsort(struct films *all_films, int number_of_films, char *key_to_compare);
 
 /*!
 Модуль добавления нового фильма в массив структур
@@ -43,10 +42,11 @@ void add_temp_film(struct films *all_films, int *number_of_films, char *temp_tit
 \param[in] field Поле поиска
 \param[in] key Ключ поиска
 */
-int search_field(struct films *all_films, int number_of_films, char *field, char *key);
+int search_field(struct films *all_films, int number_of_films, char *field, char *key, int *errorflag);
 
 /*!
 Модуль заполения структуры
 param[in] all_films Массив структур со всеми фильмами
 */
 void fill_struct(struct films *all_films);
+
