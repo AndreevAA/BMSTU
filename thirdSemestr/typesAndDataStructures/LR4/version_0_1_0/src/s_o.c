@@ -74,6 +74,21 @@ struct s_stack_s* pop(struct s_stack_s **head) {
     return out;
 }
 
+struct s_stack_s* s_pop(struct s_stack_s **head) {
+    struct s_stack_s *out;
+    if ((*head) == NULL) {
+        exit(STACK_UNDERFLOW);
+    }
+    
+    out = *head;
+    *head = (*head)->next;
+    // if ((*head) != NULL)
+    // 	printf("%p, %d\n", *head, (*head)->value);
+    // else
+    // 	printf("NULL, ND\n");
+    return out;
+}
+
 void s_delete(struct s_stack_s **s_stack)
 {
 	int temp_s_size = get_s_size(*s_stack);
@@ -161,7 +176,7 @@ void s_print(struct s_stack_s **headRef)
 		printf("\n\tОсбождено и удалено:\n");
 
 		struct s_stack_s* current = *headRef;
-		clock_t start_1 = clock();
+		//clock_t start_1 = clock();
 		while (current->next != NULL) {
 			*(temp_v + r_border) = current->value;
 			current = current->next;
@@ -174,6 +189,19 @@ void s_print(struct s_stack_s **headRef)
 
 		struct s_stack_s **headRef1 = headRef;
 		pop(headRef);
+		
+		for (int cur = s_stack_size - 1; cur >= 0; cur--)
+			push(headRef1, *(temp_v + cur));
+
+		current = *headRef;
+		clock_t start_1 = clock();
+		while (current->next != NULL) {
+			current = current->next;
+			s_pop(headRef);
+		}
+
+		headRef1 = headRef;
+		s_pop(headRef);
 		clock_t end_1 = clock();
 
 		printf("\n\tСтек: ");

@@ -86,6 +86,28 @@ void output_v_print_info_pop_all(double time1, double time2, unsigned long memor
     printf("\tПамять: %lu байт\n", memory);
 }
 
+void v_add(int temp_size, struct v_stack_s *v_stack, int *temp_data)
+{
+	for (int i = 0; i < temp_size; i++)
+	{
+		*(v_stack->data + v_stack->size) =  *(temp_data + i);
+		v_stack->size += 1;
+	}
+}
+
+void v_del(struct v_stack_s *v_stack, int temp_size)
+{
+	for (int i = temp_size - 1; i >= 0; i--)
+	{
+		if (v_stack->size == 0)
+			print_stack_is_empty();
+		else
+		{
+			v_stack->size --;
+		}
+	}
+}
+
 void v_print(struct v_stack_s *v_stack)
 {
 	if (v_stack->size == 0)
@@ -95,12 +117,14 @@ void v_print(struct v_stack_s *v_stack)
 		int temp_size = v_stack->size;
 		int *temp_data = malloc(sizeof(int) * temp_size);
 
-		clock_t start_1 = clock();
 		for (int i = temp_size - 1; i >= 0; i--)
 		{
 			*(temp_data + i) = v_stack->data[i];
-			v_delete(v_stack);
+			//v_delete(v_stack);
 		}
+
+		clock_t start_1 = clock();
+		v_del(v_stack, temp_size);
 		clock_t end_1 = clock();
 
 		printf("\t");
@@ -109,11 +133,7 @@ void v_print(struct v_stack_s *v_stack)
 		printf("\n");
 
 		clock_t start_2 = clock();
-		for (int i = 0; i < temp_size; i++)
-		{
-			*(v_stack->data + v_stack->size) =  *(temp_data + i);
-			v_stack->size += 1;
-		}
+		v_add(temp_size, v_stack, temp_data);
 		clock_t end_2 = clock();
 
 		output_v_print_info_pop_all((double)(end_1 - start_1) / CLOCKS_PER_SEC, (double)(end_2 - start_2) / CLOCKS_PER_SEC, sizeof(int) * temp_size + sizeof(int));
