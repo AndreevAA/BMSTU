@@ -1,5 +1,7 @@
 #include "../inc/config.h"
 #include "../inc/io.h"
+#include "../inc/matrix_operations.h"
+#include "../inc/matrix_functions.h"
 #include "check_io.h"
 #include <stdio.h>
 

@@ -5,10 +5,10 @@
 int **create_int_matrix(unsigned int height, unsigned int width)
 {
 	int *val = (int*)malloc(sizeof(int) * height * width);
-    int **matrix = (int**)malloc(sizeof(int*) * height);
-    for (unsigned int cur = 0; cur < height; cur++)
-        *(matrix + cur) = val + cur * width;
-    return matrix;
+	int **matrix = (int**)malloc(sizeof(int*) * height);
+	for (unsigned int cur = 0; cur < height; cur++)
+		*(matrix + cur) = val + cur * width;
+	return matrix;
 }
 
 void al_matrix(matrix *temp_matrix, int height, int width)
@@ -64,9 +64,9 @@ int get_min_elem_row(matrix *temp_matrix)
 void del_str(matrix *temp_matrix)
 {
 	for (unsigned int cur = get_min_elem_str(temp_matrix); cur < temp_matrix->height - 1; cur++)
-        *(temp_matrix->content + cur) = *(temp_matrix->content + cur + 1);
-    //free(*(temp_matrix->content + temp_matrix->height - 1));
-    temp_matrix->height--;
+		*(temp_matrix->content + cur) = *(temp_matrix->content + cur + 1);
+	//free(*(temp_matrix->content + temp_matrix->height - 1));
+	temp_matrix->height--;
 }
 
 void del_row(matrix *temp_matrix)
@@ -128,12 +128,12 @@ void up_to_one(matrix *temp_matrix)
 {
 	for (int cur_h = 0; cur_h < temp_matrix->height; cur_h++)
 		for (int cur_w = 0; cur_w < temp_matrix->width; cur_w++)
-			{
-				if (cur_h == cur_w)
-					temp_matrix->content[cur_h][cur_w] = 1;
-				else
-					temp_matrix->content[cur_h][cur_w] = 0;
-			}
+		{
+			if (cur_h == cur_w)
+				temp_matrix->content[cur_h][cur_w] = 1;
+			else
+				temp_matrix->content[cur_h][cur_w] = 0;
+		}
 }
 
 void pow_matrix(matrix *temp_matrix, int degree)
