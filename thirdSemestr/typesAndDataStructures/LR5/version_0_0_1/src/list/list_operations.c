@@ -1,6 +1,7 @@
 #include "../../inc/list/list_functions.h"
 #include "../../inc/list/list_operations.h"
 #include "../../inc/functions.h"
+#include <time.h>
 
 void init_queque_list(t_queue_list *temp_queque_list)
 {
@@ -8,7 +9,8 @@ void init_queque_list(t_queue_list *temp_queque_list)
 	temp_queque_list->end = 0;
 }
 
-t_node *get_last(t_node *head) {
+t_node *get_last(t_node *head) 
+{
     if (head == NULL) {
         return NULL;
     }
@@ -75,6 +77,7 @@ void list_comparator(int par_memory)
 
 	int temp_time = 0;
 
+	clock_t temp_time_clock_in = clock();
 	t_time temp_time_first, temp_time_second;
 	int num_of_worked_elem_in_first = 0, num_of_worked_elem_in_second = 0;
 	int num_of_after_ao_elem_in_first = 0, num_of_after_ao_elem_in_second = 0;
@@ -84,8 +87,10 @@ void list_comparator(int par_memory)
 	double statistic_time_in_first = 0, statistic_time_in_second = 0;
 	double statistic_time_out_first = 0, statistic_time_out_second = 0;
 	int ao_working_time = 0;
+	float ao_working_time_clock = 0;
 	while (num_of_worked_elem_in_first <= 1002)
 	{
+		clock_t ao_working_time_clock_in = clock();
 		if (num_of_worked_elem_in_first <= 1002)
 		{
 			// Первый элемент очереди
@@ -184,12 +189,16 @@ void list_comparator(int par_memory)
 			printf("\tВремя простоя автомата: %d\n", time_of_free_ao);
 			prev_num_of_after_ao_elem_in_first = num_of_after_ao_elem_in_first;
 		}
+		clock_t ao_working_time_clock_out = clock();
+
+		ao_working_time_clock += (double)(ao_working_time_clock_out - ao_working_time_clock_in)/CLOCKS_PER_SEC;
 	}
+	clock_t temp_time_clock_out = clock();
 
 	printf("\nИтоговый результат\n");
-	printf("\tВремя моделирования:                    %d\n", temp_time);
-	printf("\tВремя работы АО:                        %d\n", ao_working_time);
-	printf("\tВремя простоя автомата:                 %d\n", time_of_free_ao);
+	printf("\tВремя моделирования:                    %d, %f\n", temp_time, (double)(temp_time_clock_out - temp_time_clock_in)/CLOCKS_PER_SEC);
+	printf("\tВремя работы АО:                        %d, %f\n", ao_working_time, ao_working_time_clock);
+	printf("\tВремя простоя автомата:                 %d, %f\n", time_of_free_ao, (double)(temp_time_clock_out - temp_time_clock_in)/CLOCKS_PER_SEC - ao_working_time_clock);
 	printf("\tКоличество пришедших в первую очередь:  %d\n", 1000);//num_of_after_ao_elem_in_first);
 	printf("\tКоличество ушедших из первой очереди:   %d\n", 1000); //num_of_after_ao_elem_in_first);
 	printf("\tКоличество пришедших во вторую очередь: %d\n", num_of_worked_elem_in_second);

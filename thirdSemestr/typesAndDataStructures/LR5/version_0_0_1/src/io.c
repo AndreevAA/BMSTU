@@ -16,7 +16,7 @@ int get_par()
 	read_st = scanf("%d", &par);
 	while (read_st != 1 || par < 0 || par > 2)
 	{
-		printf("Ошибка...\n");
+		printf("Ошибка ввода пункта меню. Повторите попытку.\n");
 		printf("Введите пункт меню (0-2):");
 		int read_st = scanf("%d", &par);
 	}
@@ -31,7 +31,7 @@ int get_par_memory()
 	read_st = scanf("%d", &par);
 	while (read_st != 1 || par < 0 || par > 1)
 	{
-		printf("Ошибка...\n");
+		printf("Ошибка ввода пункта меню. Повторите попытку.\n");
 		printf("Выводить освобождаемые адреса 0/1 (Да/Нет):");
 		int read_st = scanf("%d", &par);
 	}
