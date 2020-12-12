@@ -40,23 +40,23 @@ Examples of a valid program call:
 4. app.exe films.txt name "Marceau (Maupu)"
 5. app.exe movies.txt name "John Howard Carpenter"
 
-## [LR7](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_07_04)
+## [LR7](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/cCoding/lab_07_04)
 
 In progress..
 
-## [LR8](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_08_05_01)
+## [LR8](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/cCoding/lab_08_05_01)
 
 In progress..
 
-## [LR9](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_09_01_01)
+## [LR9](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/cCoding/lab_09_01_01)
 
 In progress..
 
-## [LR10](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_10)
+## [LR10](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/cCoding/lab_10)
 
 In progress...
 
-## [LR11](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_11_01_01)
+## [LR11](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/cCoding/lab_11_01_01)
 
 Implement a custom version of the snprintf function that processes the specified type specifiers. The function must be called my_snprintf. When implementing this function, it is prohibited to use any standard functions for processing strings.
 Implemented specifiers (% c,% d,% i,% x,% o,% s) and modifiers (l and h) are assigned by the teacher.
