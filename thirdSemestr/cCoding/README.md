@@ -58,6 +58,16 @@ In progress...
 
 ## [LR11](https://github.com/AndreevAA/BMSTU/tree/master/thirdSemestr/typesAndDataStructures/lab_11_01_01)
 
+Implement a custom version of the snprintf function that processes the specified type specifiers. The function must be called my_snprintf. When implementing this function, it is prohibited to use any standard functions for processing strings.
+Implemented specifiers (% c,% d,% i,% x,% o,% s) and modifiers (l and h) are assigned by the teacher.
+The source code for the lab is located in the lab_11 branch. In this branch, the lab_11 folder is created, in which the program source code is located. Implemented
+specifiers are saved in the format.txt file as the string "d hx s" (no quotation marks). To check the correctness of the solution to the problem, only modular
+tests in which you need to compare the behavior (specification) of your function and the corresponding standard.
+Function reference (eng.):
+https://pubs.opengroup.org/onlinepubs/9699919799/functions/snprintf.html
+
+---
+
 Реализовать собственную версию функции snprintf, обрабатывающую указанные спецификаторы типа. Функция должна называться my_snprintf. При реализации этой функции запрещается использовать любые стандартные функции для обработки строк.
 Реализуемые спецификаторы (%c, %d, %i, %x, %o, %s) и модификаторы (l и h) распределяются преподавателем.
 Исходный код лабораторной работы располагается в ветке lab_11. В этой ветке создается папка lab_11, в которой располагается исходный код программы. Реализованные
