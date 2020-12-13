@@ -1,7 +1,7 @@
 #ifndef BALANCE_H
 #define BALANCE_H
 
-#include "../inc/config.h"
+#include "../../inc/config.h"
 
 t_node* rotateleft(t_node* q);
 t_node* rotateright(t_node* p);

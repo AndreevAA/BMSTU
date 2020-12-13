@@ -1,7 +1,7 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
-#include "../inc/config.h"
+#include "../../inc/config.h"
 
 t_node * search_in_tree(t_node *tree, int val, int *amount, int *flag);
 t_hash *looking_in_list(t_hash *head, int searh_int, int *amount);

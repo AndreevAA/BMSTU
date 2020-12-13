@@ -1,27 +1,27 @@
 #include "../inc/config.h"
-#include "../inc/balance.h"
+#include "../inc/tree_operations/balance.h"
 #include "../inc/efficiency.h"
-#include "../inc/export.h"
-#include "../inc/hash.h"
+#include "../inc/tree_operations/export.h"
+#include "../inc/tree_operations/hash.h"
 #include "../inc/io.h"
-#include "../inc/search.h"
-#include "../inc/tree.h"
+#include "../inc/tree_operations/search.h"
+#include "../inc/tree_operations/tree.h"
 #include "../inc/menu.h"
 
 int main()
 {
-	t_node *root = NULL, *balanced_root = NULL;
-	FILE *f = get_file_data(&root);
+	t_node *tree_root = NULL, *tree_root_balanced = NULL;
+	FILE *operation_file = get_file_data(&tree_root);
     
-    if (!is_null(root))
+    if (!is_null(tree_root))
     	return file_error();
 
-    balanced_root = read_file_balanced(balanced_root, f);
+    tree_root_balanced = read_file_balanced(tree_root_balanced, operation_file);
 
-    menu(balanced_root, f, root);
+    menu(tree_root_balanced, operation_file, tree_root);
 
-    fclose(f);
-    freemem(root);
+    fclose(operation_file);
+    freemem(tree_root);
 
     return EXIT_STATUS;
 }

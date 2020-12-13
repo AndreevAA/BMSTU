@@ -1,7 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "../inc/config.h"
+#include "../../inc/config.h"
 
 t_node *create_node(int val);
 void freemem(t_node *tree);

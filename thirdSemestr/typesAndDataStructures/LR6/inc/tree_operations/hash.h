@@ -1,7 +1,7 @@
 #ifndef HASH_H
 #define HASH_H
 
-#include "../inc/config.h"
+#include "../../inc/config.h"
 
 int len_list(t_hash *head);
 int next_prime_number(int number);
