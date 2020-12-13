@@ -60,3 +60,8 @@ void output_menu()
     printf(" 0 -> Выход из программы\n");
     printf(" >  Введите номер пункта меню: ");
 }
+
+void out_input_error()
+{
+	printf("\n\nОшибка ввода. Повторите попытку.\n");	
+}

@@ -9,5 +9,6 @@ int is_null(t_node *temp_node);
 int file_error();
 
 void output_menu();
+void out_input_error();
 
 #endif //IO_H
