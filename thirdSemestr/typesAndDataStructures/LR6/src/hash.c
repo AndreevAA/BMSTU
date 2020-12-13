@@ -1,6 +1,11 @@
+#include "../inc/config.h"
+#include "../inc/balance.h"
+#include "../inc/efficiency.h"
+#include "../inc/export.h"
 #include "../inc/hash.h"
-#include "../inc/defines.h"
-#include "../inc/func.h"
+#include "../inc/io.h"
+#include "../inc/search.h"
+#include "../inc/tree.h"
 
 // Вычисление длины связного списка
 int len_list(t_hash *head)

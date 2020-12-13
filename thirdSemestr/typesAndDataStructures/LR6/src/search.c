@@ -1,4 +1,11 @@
+#include "../inc/config.h"
+#include "../inc/balance.h"
+#include "../inc/efficiency.h"
+#include "../inc/export.h"
+#include "../inc/hash.h"
+#include "../inc/io.h"
 #include "../inc/search.h"
+#include "../inc/tree.h"
 
 // Функция поиска в дереве
 t_node * search_in_tree(t_node *tree, int val, int *amount, int *flag)
