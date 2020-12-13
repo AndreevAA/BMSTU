@@ -59,9 +59,12 @@ int search_in_file(FILE *f, int val, int *amount_file)
     fseek(f, 0, SEEK_SET);
     int buff;
     while (!feof(f))
+    {
         (*amount_file)++;
         if (fscanf(f, "%d", &buff) == 1)
             if (buff == val)
                 return 1;
+    }
+    
     return -1;
 }
