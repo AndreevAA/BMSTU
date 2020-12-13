@@ -1,0 +1,15 @@
+digraph TREE {
+rankdir="UD";
+T0[label=0,shape=square,color=blue];
+L0[label=NULL,shape=square,color=blue];
+T0 -> 23 -> 64 -> 345 -> 4 -> 656 -> 6 -> 44 -> 456 -> -4 -> 524 -> 70 -> -424 -> -34 -> 10 -> L0;
+T1[label=1,shape=square,color=blue];
+L1[label=NULL,shape=square,color=blue];
+T1 -> 5 -> 3 -> 0 -> 15 -> L1;
+T2[label=2,shape=square,color=blue];
+L2[label=NULL,shape=square,color=blue];
+T2 -> 313 -> 13 -> 56 -> -31 -> -5 -> 52 -> 74324 -> 434 -> 43 -> 35 -> 123 -> -64 -> L2;
+T3[label=3,shape=square,color=blue];
+L3[label=NULL,shape=square,color=blue];
+T3 -> 1 -> 2 -> 9 -> 8 -> -3 -> -77 -> -854 -> 63 -> 65 -> 45 -> 24 -> L3;
+}

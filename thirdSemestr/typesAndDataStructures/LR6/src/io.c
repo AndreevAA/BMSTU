@@ -8,21 +8,21 @@
 #include "../inc/tree_operations/tree.h"
 
 // Функция построения обычного дерева
-t_node *read_file(FILE *f, t_node *root)
+t_node *read_file(FILE *operation_file, t_node *tree_root)
 {
-    rewind(f);
-    int val;
-    while (!feof(f))
+    rewind(operation_file);
+    int temp_input_number;
+    while (!feof(operation_file))
     {
-        if (fscanf(f, "%d", &val) == 1)
+        if (fscanf(operation_file, "%d", &temp_input_number) == 1)
         {
-            t_node *node = create_node(val);
-            root = ord_add_node(root, node);
+            t_node *node = create_node(temp_input_number);
+            tree_root = ord_add_node(tree_root, node);
         }
         else
             return NULL;
     }
-    return root;
+    return tree_root;
 }
 
 FILE *get_file_data(t_node **temp_node)

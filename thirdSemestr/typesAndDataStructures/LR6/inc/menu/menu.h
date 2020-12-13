@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
-#include "../inc/config.h"
+#include "../../inc/config.h"
 
 #define ERROR_STATUS -1
 #define SUCCESS_STATUS 0

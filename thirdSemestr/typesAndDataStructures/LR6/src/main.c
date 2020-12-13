@@ -6,7 +6,7 @@
 #include "../inc/io.h"
 #include "../inc/tree_operations/search.h"
 #include "../inc/tree_operations/tree.h"
-#include "../inc/menu.h"
+#include "../inc/menu/menu.h"
 
 int main()
 {
