@@ -10,7 +10,12 @@
 
 #define ERROR_STATUS -1
 #define SUCCESS_STATUS 0
+
+#define EXIT_STATUS -2
+
 #define FILENAME "numbers.txt"
+
+#define FILE_ERROR 1
 
 typedef struct node_table
 {
