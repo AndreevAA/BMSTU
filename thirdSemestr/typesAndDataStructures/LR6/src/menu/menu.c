@@ -1,7 +1,7 @@
 #include "../../inc/menu/menu.h"
 #include "../../inc/config.h"
 #include "../../inc/tree_operations/balance.h"
-#include "../../inc/efficiency.h"
+#include "../../inc/efficiency/efficiency.h"
 #include "../../inc/tree_operations/export.h"
 #include "../../inc/tree_operations/hash.h"
 #include "../../inc/io.h"

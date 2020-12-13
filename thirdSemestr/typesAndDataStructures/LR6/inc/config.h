@@ -28,6 +28,8 @@
 #define CHOOSE_PRINT_EFFICINCY 9
 #define CHOOSE_SEARCH_EXIT 0
 
+#define NUM_OF_TESTING_OPERATIONS_WHILE_GET_TIME 1000
+
 typedef struct node_table
 {
     int value;

@@ -1,6 +1,6 @@
 #include "../../inc/config.h"
 #include "../../inc/tree_operations/balance.h"
-#include "../../inc/efficiency.h"
+#include "../../inc/efficiency/efficiency.h"
 #include "../../inc/tree_operations/export.h"
 #include "../../inc/tree_operations/hash.h"
 #include "../../inc/io.h"
@@ -27,17 +27,11 @@ int next_prime_number(int number)
         int count_del = 0;
         number++;
         for (int i = 2; i < number - 1; i++)
-        {
             if (number % i == 0)
-            {
                 count_del++;
-            }
-        }
 
         if (count_del == 0)
-        {
             return number;
-        }
     }
 }
 
@@ -46,24 +40,18 @@ t_hash* add_end(t_hash *head, t_hash *elem)
 {
     t_hash *cur = head;
     if (!head)
-    {
         return elem;
-    }
     while (cur != NULL && len_list(cur) > 0)
     {
         if (cur->value == elem->value)
-        {
             return head;
-        }
         if (cur->next != NULL)
             cur = cur->next;
         else
             break;
     }
     if (((int) cur->value) == elem->value)
-    {
         return head;
-    }
     cur->next = elem;
     return head;
 }
@@ -136,12 +124,8 @@ t_hash **insert_in_hash_table(t_hash **table, int *len_table, t_hash *node, int 
         *len_table = new_len_table;
         len = 0;
         for (int i = 0; i < new_len_table; i++)
-        {
             if (len_list(new_table[i]) > len)
-            {
                 len = len_list(new_table[i]);
-            }
-        }
         free(table);
         table = new_table;
     }
@@ -182,9 +166,7 @@ int count_node_table(t_hash **table, int len_table)
     {
         t_hash *cur= table[i];
         for ( ; cur; cur = cur->next)
-        {
             sum += sizeof(int);
-        }
         sum += sizeof(t_hash*);
     }
     return sum;
@@ -207,9 +189,7 @@ t_hash **create_table(FILE *f, int *len_table, int *k, int max_len)
             table = insert_in_hash_table(table, len_table, node, max_len, k);
         }
         else
-        {
             break;
-        }
     }
     return table;
 }

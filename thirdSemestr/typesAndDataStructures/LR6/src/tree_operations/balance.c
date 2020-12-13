@@ -1,6 +1,6 @@
 #include "../../inc/config.h"
 #include "../../inc/tree_operations/balance.h"
-#include "../../inc/efficiency.h"
+#include "../../inc/efficiency/efficiency.h"
 #include "../../inc/tree_operations/export.h"
 #include "../../inc/tree_operations/hash.h"
 #include "../../inc/io.h"
@@ -33,17 +33,11 @@ t_node* read_file_balanced(t_node *root, FILE *f)
 int bfactor(t_node* p)
 {
     if (height(p->right) == 1 && !p->left)
-    {
         return 2;
-    }
     else if (height(p->left) == 1 && !p->right)
-    {
         return -2;
-    }
     else
-    {
         return height(p->right) - height(p->left);
-    }
 }
 
 // балансировка дерева
@@ -70,13 +64,9 @@ t_node* balance(t_node* p)
 t_node* bal_add_node(t_node *root, t_node *node)
 {
     if (root == NULL)
-    {
         return node;
-    }
     if (root->value == node->value)
-    {
         free(node);
-    }
     else if (root->value > node->value)
     {
         root->left = bal_add_node(root->left, node);
