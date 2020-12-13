@@ -8,4 +8,6 @@ FILE *get_file_data(t_node **temp_node);
 int is_null(t_node *temp_node);
 int file_error();
 
+void output_menu();
+
 #endif //IO_H
