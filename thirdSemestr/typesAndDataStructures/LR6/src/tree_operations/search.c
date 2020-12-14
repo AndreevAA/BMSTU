@@ -31,7 +31,7 @@ t_node * search_in_tree(t_node *tree, int val, int *amount, int *flag)
 // поиск в хеш таблице
 int search_in_hash(t_hash **table, int val, int table_len, int *amcount, int k)
 {
-    int index = what_index(val, table_len, k);
+    int index = val % table_len;
     t_hash *head = table[index];
     if (looking_in_list(head, val, amcount) == NULL)
         return -1;
@@ -65,6 +65,6 @@ int search_in_file(FILE *f, int val, int *amount_file)
             if (buff == val)
                 return 1;
     }
-    
+
     return -1;
 }

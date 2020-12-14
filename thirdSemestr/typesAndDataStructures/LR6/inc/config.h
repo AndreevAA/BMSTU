@@ -13,7 +13,7 @@
 
 #define EXIT_STATUS -2
 
-#define FILENAME "numbers.txt"
+#define FILENAME "test_2.txt"
 
 #define FILE_ERROR 1
 

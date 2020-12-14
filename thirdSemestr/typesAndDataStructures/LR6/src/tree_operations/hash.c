@@ -20,18 +20,61 @@ int len_list(t_hash *head)
 }
 
 // Нахождение следующего простого числа
+// int next_prime_number(int number)
+// {
+//     while (1)
+//     {
+//         int count_del = 0;
+//         number++;
+//         for (int i = 2; i < number - 1; i++)
+//             if (number % i == 0)
+//                 count_del++;
+
+//         if (count_del == 0)
+//             return number;
+//     }
+// }
+
+int is_prime(int n)
+{
+    if (n > 1)
+    {
+        for (int i = 2; i < n; i++)
+            if (n % i == 0) 
+                return 1;
+        return 0;
+    }
+    else
+        return 1;
+}
+
+int prev_prime_number(int number)
+{
+    while (1)
+    {
+        int count_del = 0;
+        number--;
+        for (int i = abs(number); i >= 1; i--)
+            if (is_prime(i) == 0)
+                return i;
+
+        // if (count_del == 0)
+        //     return abs(number);
+    }
+}
+
 int next_prime_number(int number)
 {
     while (1)
     {
         int count_del = 0;
-        number++;
-        for (int i = 2; i < number - 1; i++)
-            if (number % i == 0)
-                count_del++;
-
-        if (count_del == 0)
-            return number;
+        number--;
+        for (int i = abs(number); i >= 1; i--)
+            if (is_prime(i) == 0)
+                return i;
+            
+        // if (count_del == 0)
+        //     return abs(number);
     }
 }
 
@@ -73,16 +116,26 @@ t_hash* create_hash_node(int val)
 // Определение индекса для вставки в таблицу
 int what_index(int val, int len_table, int k)
 {
-    if (val < 0)
-        val *= -7;
-    long int buff = val * val;
-    int summ = 0;
-    while (buff > 0)
-    {
-        summ += buff % 10;
-        buff /= 10;
-    }
-    return (val * k + summ + k) % len_table;
+    // if (val < 0)
+    //     val *= -7;
+    // long int buff = val * val;
+    // int summ = 0;
+    
+    // while (buff > 0)
+    // {
+    //     summ += buff % 10;
+    //     buff /= 10;
+    // }
+
+    //printf("%d\n", next_prime_number(len_table));
+    //printf("%d, %d\n", val, val % next_prime_number(len_table));
+    //printf("%d\n", prev_prime_number(len_table));
+    return val % prev_prime_number(len_table);
+
+    // Пересматисривать количество элементов, и если я вылезаю из количества количзий, то следующее простое число
+    // Функция должна быть доатстачно быстрая для рассчета
+    // 
+    //return val % len_table;
 }
 
 // Вставка в хеш-таблицу
@@ -99,13 +152,17 @@ t_hash **insert_in_hash_table(t_hash **table, int *len_table, t_hash *node, int 
     {
         (*k)++;
         try++;
+
         if (try >= 50)
         {
             *k = 1;
             try = 0;
             new_len_table = *len_table + 1;
         }
+
+        // Если размер таблица становится больше, то ее реалочу
         new_table = calloc((size_t) new_len_table, sizeof(t_hash*));
+
 
         for (int i = 0; i < *len_table; i++)
         {
@@ -124,8 +181,10 @@ t_hash **insert_in_hash_table(t_hash **table, int *len_table, t_hash *node, int 
         *len_table = new_len_table;
         len = 0;
         for (int i = 0; i < new_len_table; i++)
+        {
             if (len_list(new_table[i]) > len)
                 len = len_list(new_table[i]);
+        }
         free(table);
         table = new_table;
     }
@@ -166,7 +225,9 @@ int count_node_table(t_hash **table, int len_table)
     {
         t_hash *cur= table[i];
         for ( ; cur; cur = cur->next)
+        {
             sum += sizeof(int);
+        }
         sum += sizeof(t_hash*);
     }
     return sum;
@@ -189,7 +250,9 @@ t_hash **create_table(FILE *f, int *len_table, int *k, int max_len)
             table = insert_in_hash_table(table, len_table, node, max_len, k);
         }
         else
+        {
             break;
+        }
     }
     return table;
 }
