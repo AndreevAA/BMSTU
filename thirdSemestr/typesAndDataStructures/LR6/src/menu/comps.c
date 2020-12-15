@@ -7,6 +7,13 @@
 #include "../../inc/tree_operations/search.h"
 #include "../../inc/tree_operations/tree.h"
 
+unsigned long int tick_c(void)
+{
+    unsigned long int d;
+    __asm__ __volatile__ ("rdtsc" : "=A" (d) );
+    return d;
+}
+
 void build_simple_tree_comp(t_node **tree_root)
 {
     FILE *out_file = fopen("output.gv", "w+");
@@ -23,7 +30,7 @@ void build_balanced_tree_comp(t_node **tree_root_balanced)
 void build_simple_ddt_comp(t_node **tree_root, int *search_int, int *flag_s, int *amount_ord)
 {
     *flag_s = 0; *amount_ord = 0;
-    printf("\n\n\n\n\n\n\n\n\n\n\nВведите число: ");
+    printf("\n\nВведите число: ");
     if (scanf("%d", search_int) != 1)
     {
     	out_incorrect_symbols();
@@ -31,7 +38,11 @@ void build_simple_ddt_comp(t_node **tree_root, int *search_int, int *flag_s, int
         sleep(1);
         return;
     }
+    clock_t t1 = tick_c();
     search_in_tree(*tree_root, *search_int, amount_ord, flag_s);
+    clock_t t2 = tick_c();
+    printf("\nВремя поиска: %llu", (unsigned long long)(t2 - t1));
+    
     if (*flag_s != 1)
     {
     	out_number_doensnt_exit();
@@ -56,7 +67,13 @@ void build_balanced_ddt_comp(t_node **tree_root_balanced, int *search_int, int *
         fseek(stdin, 0, SEEK_SET);
         return ;
     }
+
+    clock_t t1 = tick_c();
     search_in_tree(*tree_root_balanced, *search_int, amount_bal, flag_s);
+    clock_t t2 = tick_c();
+    printf("\nВремя поиска: %llu", (unsigned long long)(t2 - t1));
+    
+    
     if (*flag_s != 1)
         out_number_doensnt_exit();
     if (*flag_s == 1)
@@ -113,7 +130,13 @@ void serch_number_in_hash_table_comp(t_node **tree_root, t_hash ***hash, int *ta
             fseek(stdin, 0, SEEK_SET);
             return ;
         }
+        
+        clock_t t1 = tick_c();
         *flag_s = search_in_hash(*hash, *search_int, *table_len, amount_hash, *k);
+        clock_t t2 = tick_c();
+        
+    	printf("\nВремя поиска: %llu", (unsigned long long)(t2 - t1));
+    
         if (*flag_s != 1)
         	out_number_doensnt_exit();
         if (*flag_s == 1)
@@ -130,7 +153,12 @@ void search_number_in_op_file_comp(int *search_int, FILE *operations_file, int *
         fseek(stdin, 0, SEEK_SET);
         return ;
     }
+    
+    clock_t t1 = tick_c();
     *flag_s = search_in_file(operations_file, *search_int, amount_file);
+    clock_t t2 = tick_c();
+    printf("\nВремя поиска: %llu", (unsigned long long)(t2 - t1));
+    
     if (*flag_s != 1)
         out_number_doensnt_exit();
     if (*flag_s == 1)
