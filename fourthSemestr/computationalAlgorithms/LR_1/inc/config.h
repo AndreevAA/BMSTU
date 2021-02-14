@@ -10,6 +10,8 @@
 
 #define FILE_NAME "data/data_1.txt"
 
+#define x_middle 0.525
+
 typedef struct point point_t;
 
 struct point
