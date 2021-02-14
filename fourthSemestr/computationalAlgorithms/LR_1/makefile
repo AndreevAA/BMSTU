@@ -14,3 +14,7 @@ main.o :
 
 clear :
 	rm out/*.o 
+
+clear_all :
+	rm *.exe
+	
