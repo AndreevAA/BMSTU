@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <AnchorPane SplitPane.resizableWithParent="false">
+               <children>
+                  <Label layoutX="14.0" layoutY="40.0" text="X =" />
+                  <Label alignment="CENTER" layoutX="20.0" layoutY="288.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Добавленные точки" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" fx:id="x1" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="objectsPlacedList" layoutX="17.0" layoutY="316.0" prefHeight="146.0" prefWidth="200.0" />
+                  <Button fx:id="deleteElementButton" layoutX="16.0" layoutY="472.0" mnemonicParsing="false" onAction="#obDeleteElement" prefHeight="27.0" prefWidth="79.0" text="Удалить" />
+                  <Button fx:id="editElementButton" layoutX="130.0" layoutY="472.0" mnemonicParsing="false" onAction="#onEditElement" prefHeight="27.0" prefWidth="87.0" text="Изменить" />
+
+                  <Label fx:id="parameterErrorField" layoutX="19.0" layoutY="112.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" />
+                  <Button fx:id="createElementButton" layoutX="139.0" layoutY="133.0" mnemonicParsing="false" onAction="#onDrawElement" text="Добавить" textOverrun="CLIP" />
+
+                  <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="12.0" style="&#10;" text="Добавление точки" textAlignment="CENTER" wrapText="false" />
+                  <Label layoutX="14.0" layoutY="79.0" text="Y =" />
+                  <TextField layoutX="54.0" layoutY="35.0" fx:id="xValue" />
+                  <TextField fx:id="yValue" layoutX="54.0" layoutY="74.0" />
+                  <Button fx:id="clearAllButton" layoutX="19.0" layoutY="134.0" mnemonicParsing="false" onAction="#onClearAllButton" text="Очистить" />
+                  <Button fx:id="comeBack" layoutX="17.0" layoutY="174.0" mnemonicParsing="false" onAction="#onComeBack" prefHeight="27.0" prefWidth="200.0" text="Вернуться назад" />
+                  <Button fx:id="zoomInPictureButton" layoutX="19.0" layoutY="215.0" mnemonicParsing="false" onAction="#setZoomInPicture" prefHeight="27.0" prefWidth="87.0" text="+" />
+                  <Button fx:id="zoomOutPictureButton" layoutX="117.0" layoutY="215.0" mnemonicParsing="false" onAction="#setZoomOutPicture" prefHeight="27.0" prefWidth="100.0" text="-" />
+               </children>
+            </AnchorPane>
+            <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">
+               <content>
+                  <Canvas fx:id="graphTable" height="500.0" nodeOrientation="INHERIT" onMouseEntered="#onCreateCanvas" width="500.0" />
+               </content>
+            </ScrollPane>
+            <AnchorPane prefHeight="513.0" prefWidth="215.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Описание программы:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x11" />
+                     </font>
+                  </Label>
+                  <TextArea layoutX="14.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" text="Программа выполняет выбор&#10; из заданного множества точек&#10; на плоскости две различные &#10;точки так, чтобы количество&#10; точек, лежащих по разные &#10;стороны от прямой, &#10;проходящей через эти две, &#10;различалось наименьшим &#10;образом." />
+                  <Label layoutX="14.0" layoutY="299.0" prefHeight="17.0" prefWidth="200.0" text="Результат вычислений" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Button layoutX="8.0" layoutY="257.0" mnemonicParsing="false" onAction="#countPointsComparator" prefHeight="27.0" prefWidth="207.0" text="Вычислить точки" />
+                  <TextField fx:id="resultCounting" layoutX="14.0" layoutY="322.0" prefHeight="168.0" prefWidth="200.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" fx:id="x3" />
+               </font>
+               <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+               </textFill>
+            </Label>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
