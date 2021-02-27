@@ -42,3 +42,18 @@ void out_error()
 {
 	printf("В процессе выполнения программы произошла ошибка.\n");
 }
+
+void out_programm_end()
+{
+	printf("Programm has ended work...\n");
+}
+
+void welcome_command()
+{
+	printf("Construction and software implementation of an algorithm for polynomial interpolation of table functions.\n\n");
+}
+
+void out_table_head()
+{
+	printf("n / y(x) | P.Newton | P.Ermitta\n");
+}
