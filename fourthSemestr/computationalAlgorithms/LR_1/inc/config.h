@@ -1,24 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
+#ifndef CONFIG_H
 
-#ifndef MAINH
-#define MAINH
-
-#define ERROR_STATUS 1
+#define CONFIG_H
 
 #define SUCCESS_STATUS 0
+#define ERROR_STATUS 1
 
-#define FILE_NAME "data/data_1.txt"
+#define NUMBER_OF_VALUES 3
 
-#define x_middle 0.525
+#define INPUT_DATA_FILE "data/data_1.txt"
 
-typedef struct point point_t;
+typedef struct interpolation_operation interpolation_operation;
 
-struct point
+struct interpolation_operation
 {
-	double x;
-	double y;
-	double derivative;	
+	float y_newton_value, y_armit_value;
+	float *first_data_inequality, *second_data_inequality;
+	float *x_values, *y_values, *first_derivative_values, x;
+	int number_of_polynomal_degree, first_indicator, second_indicator, total;
 };
+
 
 #endif

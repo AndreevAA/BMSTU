@@ -1,8 +1,13 @@
 #include "../inc/config.h"
 
-int get_input_data(point_t **points, int *number_of_points);
+#ifndef _IN_OUT_H_
 
-void out_error();
-void out_programm_end();
-void welcome_command();
-void out_table_head();
+int input_data(FILE *f, interpolation_operation  *data);
+
+void output_polynom(interpolation_operation  data);
+void output_function_root(interpolation_operation  data);
+
+void get_config(interpolation_operation  *data);
+int get_opening_file_status(interpolation_operation  *data);
+
+#endif
