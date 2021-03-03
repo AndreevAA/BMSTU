@@ -118,6 +118,12 @@
                   </Label>
                   <Label layoutX="20.0" layoutY="72.0" text="Шаг перемещения" />
                   <TextField fx:id="stepInformation" layoutX="155.0" layoutY="67.0" prefHeight="27.0" prefWidth="255.0" />
+                  <Label layoutX="226.0" layoutY="361.0" text="Коэф. мас-я:">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="zoomSize" layoutX="306.0" layoutY="353.0" prefHeight="27.0" prefWidth="119.0" />
                </children>
             </AnchorPane>
          </items>

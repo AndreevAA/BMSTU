@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import sample.graphical.GraphicalObject;
 import sample.graphical.entity.GraphicalPoint;
@@ -128,7 +129,8 @@ public class Controller implements Initializable {
     @FXML
     private TextField stepInformation;
 
-
+    @FXML
+        private TextField zoomSize;
 
     @FXML
     public void onComeBack() {
@@ -168,8 +170,7 @@ public class Controller implements Initializable {
             createCopyFunction();
 
             objectList.clear();
-            objectsPlacedList.setItems(
-                    FXCollections.observableList(objectList.stream().map(Object::toString).collect(Collectors.toList())));
+
             redrawElements();
         });
     }
@@ -194,16 +195,67 @@ public class Controller implements Initializable {
         });
     }
 
+    public boolean isTempZoomSizeValid(double tempZoomSize)
+    {
+        if (tempZoomSize < 100 && tempZoomSize > 0.001)
+            return true;
+        return false;
+    }
+
     @FXML
     public void setZoomInPic()
     {
+        try {
+            double tempZoomSize = Double.parseDouble(zoomSize.getText().trim());
 
+            if (isTempZoomSizeValid(tempZoomSize) == true)
+            {
+                for (int tempCur = 0; tempCur < objectList.size(); tempCur++)
+                {
+                    double updatedGraphicalPointValueX = objectList.get(tempCur).getxValue() * tempZoomSize;
+                    objectList.get(tempCur).setxValue(updatedGraphicalPointValueX);
+
+                    double updatedGraphicalPointValueY = objectList.get(tempCur).getyValue() * tempZoomSize;
+                    objectList.get(tempCur).setyValue(updatedGraphicalPointValueY);
+                }
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе зуммации.");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе зуммации.");
+        }
     }
 
     @FXML
     public void setZoomOutPic()
     {
+        try {
+            double tempZoomSize = Double.parseDouble(zoomSize.getText().trim());
 
+            if (isTempZoomSizeValid(tempZoomSize) == true)
+            {
+                for (int tempCur = 0; tempCur < objectList.size(); tempCur++)
+                {
+                    double updatedGraphicalPointValueX = objectList.get(tempCur).getxValue() / tempZoomSize;
+                    objectList.get(tempCur).setxValue(updatedGraphicalPointValueX);
+
+                    double updatedGraphicalPointValueY = objectList.get(tempCur).getyValue() / tempZoomSize;
+                    objectList.get(tempCur).setyValue(updatedGraphicalPointValueY);
+                }
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
     }
 
     // Перемещение рисунка вверх
@@ -345,8 +397,8 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void onCreateCanvas() {
-
+    public void onCreateCanvas()
+    {
         scrollPanel.widthProperty().addListener(event -> {
             graphTable.setWidth(scrollPanel.getWidth());
             redrawElements();
@@ -367,7 +419,9 @@ public class Controller implements Initializable {
         });
     }
 
-    private void redrawElements() {
+    // Перерисовка элементов экрана
+    private void redrawElements()
+    {
         graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
         objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D(), ZOMM_COFF));
 
@@ -442,15 +496,17 @@ public class Controller implements Initializable {
 
                 for (int tempNumberOfTurnedPoint = 0; tempNumberOfTurnedPoint < objectList.size(); tempNumberOfTurnedPoint++)
                 {
-                    double updatedGraphicalPointValueX = getTempPointRotatedByX(Math.toRadians(tempAngleValue), objectList.get(tempNumberOfTurnedPoint).getxValue(), objectList.get(tempNumberOfTurnedPoint).getyValue(), getTempRootPointValueX(), getTempRootPointValueY());
-                    double updatedGraphicalPointValueY = getTempPointRotatedByY(Math.toRadians(tempAngleValue), objectList.get(tempNumberOfTurnedPoint).getxValue(), objectList.get(tempNumberOfTurnedPoint).getyValue(), getTempRootPointValueX(), getTempRootPointValueY());
+                    var rad = (Math.PI / 180) * tempAngleValue;
+
+                    double updatedGraphicalPointValueX = getTempPointRotatedByX(rad, objectList.get(tempNumberOfTurnedPoint).getxValue(), objectList.get(tempNumberOfTurnedPoint).getyValue(), getTempRootPointValueX(), getTempRootPointValueY());
+                    double updatedGraphicalPointValueY = getTempPointRotatedByY(rad, objectList.get(tempNumberOfTurnedPoint).getxValue(), objectList.get(tempNumberOfTurnedPoint).getyValue(), getTempRootPointValueX(), getTempRootPointValueY());
 
                     objectList.get(tempNumberOfTurnedPoint).setxValue(updatedGraphicalPointValueX);
                     objectList.get(tempNumberOfTurnedPoint).setxValue(updatedGraphicalPointValueY);
                 }
 
                 redrawElements();
-
+                createCopyFunction();
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -480,15 +536,16 @@ public class Controller implements Initializable {
                     int tempYDoubleValue = Integer.parseInt(line);
                     line = bufferedreader.readLine();
 
-                    System.out.println(tempXDoubleValue);
-                    System.out.println(tempYDoubleValue);
-
                     GraphicalPoint tempPoint = new GraphicalPoint(tempXDoubleValue, tempYDoubleValue);
 
                     objectList.add(tempPoint);
 
                     graphTable.getGraphicsContext2D().fillOval((tempXDoubleValue - DRAW_RADIUS / 2 + 300) / ZOMM_COFF, (tempYDoubleValue - DRAW_RADIUS / 2 + 300) / ZOMM_COFF, DRAW_RADIUS, DRAW_RADIUS);
                 }
+
+                redrawElements();
+                createCopyFunction();
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
