@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <SplitPane dividerPositions="0.18404907975460122, 0.4850715746421268" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <AnchorPane SplitPane.resizableWithParent="false">
+               <children>
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="14.0" style="&#10;" text="Описание программы:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x11" />
+                     </font>
+                  </Label>
+                  <TextArea layoutX="7.0" layoutY="37.0" prefHeight="71.0" prefWidth="200.0" text="Нарисовать исходный рисунок, затем его переместить,&#10;промасштабировать, повернуть" />
+                  <Button fx:id="turnButton" layoutX="6.0" layoutY="484.0" mnemonicParsing="false" onAction="#onTurn" prefHeight="27.0" prefWidth="201.0" text="Повернуть рисунок" />
+                  <Label layoutX="6.0" layoutY="391.0" text="X =" />
+                  <Label layoutX="6.0" layoutY="419.0" text="Y =" />
+                  <TextField fx:id="tempRootPointValueX" layoutX="40.0" layoutY="416.0" />
+                  <TextField fx:id="tempRootPointValueY" layoutX="40.0" layoutY="386.0" />
+                  <Label alignment="CENTER" layoutX="4.0" layoutY="363.0" style="&#10;" text="Параметры вращения" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x12" />
+                     </font>
+                  </Label>
+                  <Label layoutX="5.0" layoutY="449.0" text="Угол" />
+                  <TextField fx:id="angleOfRotationValue" layoutX="40.0" layoutY="445.0" />
+                  <Button fx:id="getFromFileButton" layoutX="5.0" layoutY="315.0" mnemonicParsing="false" onAction="#onGetFromFile" prefHeight="27.0" prefWidth="201.0" text="Отрисовать рисунок из файла" />
+                  <ImageView fitHeight="138.0" fitWidth="228.0" layoutX="7.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/instructionPhoto.png" />
+                     </image></ImageView>
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="129.0" prefHeight="23.0" prefWidth="200.0" style="&#10;" text="Загрузка изображения на экран:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x112" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">
+               <content>
+                  <Canvas fx:id="graphTable" height="500.0" nodeOrientation="INHERIT" onMouseEntered="#onCreateCanvas" width="500.0" />
+               </content>
+            </ScrollPane>
+            <AnchorPane prefHeight="513.0" prefWidth="233.0" SplitPane.resizableWithParent="false">
+               <children>
+
+                  <Label fx:id="parameterErrorField" layoutX="20.0" layoutY="37.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="38.0" layoutY="14.0" style="&#10;" text="Статус ошибок:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x111" />
+                     </font>
+                  </Label>
+                  <Button fx:id="clearAllButton" layoutX="226.0" layoutY="402.0" mnemonicParsing="false" onAction="#onClearAllButton" prefHeight="27.0" prefWidth="201.0" text="Очистить поле" />
+                  <Button fx:id="comeBack" layoutX="8.0" layoutY="403.0" mnemonicParsing="false" onAction="#onComeBack" prefHeight="27.0" prefWidth="200.0" text="Шаг назад" />
+                  <Button fx:id="zoomInPictureButton" layoutX="8.0" layoutY="323.0" mnemonicParsing="false" onAction="#setZoomInPicture" prefHeight="27.0" prefWidth="87.0" text="+" />
+                  <Button fx:id="zoomOutPictureButton" layoutX="106.0" layoutY="323.0" mnemonicParsing="false" onAction="#setZoomOutPicture" prefHeight="27.0" prefWidth="100.0" text="-" />
+                  <Button fx:id="bottomButton" layoutX="74.0" layoutY="223.0" mnemonicParsing="false" onAction="#onMoveCanvasDown" prefHeight="27.0" prefWidth="63.0" text="Вниз" />
+                  <Button fx:id="leftButton" layoutX="15.0" layoutY="186.0" mnemonicParsing="false" onAction="#onMoveCanvasLeft" prefHeight="27.0" prefWidth="87.0" text="Влево" />
+                  <Button fx:id="rightButton" layoutX="114.0" layoutY="186.0" mnemonicParsing="false" onAction="#onMoveCanvasRight" prefHeight="27.0" prefWidth="87.0" text="Вправо" />
+                  <Button fx:id="upButton" layoutX="74.0" layoutY="150.0" mnemonicParsing="false" onAction="#onMoveCanvasUp" prefHeight="27.0" prefWidth="63.0" text="Вверх" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="294.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Мастшаб поля" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x121" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="12.0" layoutY="430.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Данная операция хранит только один шаг." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x1211" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="121.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Перемещение поля" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1212" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="12.0" layoutY="374.0" prefHeight="23.0" prefWidth="415.0" style="&#10;" text="Операции над полем" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1213" />
+                     </font>
+                  </Label>
+                  <Button fx:id="zoomInPicButton" layoutX="228.0" layoutY="322.0" mnemonicParsing="false" onAction="#setZoomInPic" prefHeight="27.0" prefWidth="87.0" text="+" />
+                  <Button fx:id="zoomOutPicButton" layoutX="326.0" layoutY="322.0" mnemonicParsing="false" onAction="#setZoomOutPic" prefHeight="27.0" prefWidth="100.0" text="-" />
+                  <Button fx:id="bottomPicButton" layoutX="294.0" layoutY="222.0" mnemonicParsing="false" onAction="#onMovePicDown" prefHeight="27.0" prefWidth="63.0" text="Вниз" />
+                  <Button fx:id="leftPicButton" layoutX="235.0" layoutY="185.0" mnemonicParsing="false" onAction="#onMovePicLeft" prefHeight="27.0" prefWidth="87.0" text="Влево" />
+                  <Button fx:id="rightPicButton" layoutX="334.0" layoutY="185.0" mnemonicParsing="false" onAction="#onMovePicRight" prefHeight="27.0" prefWidth="87.0" text="Вправо" />
+                  <Button fx:id="upPicButton" layoutX="294.0" layoutY="149.0" mnemonicParsing="false" onAction="#onMovePicUp" prefHeight="27.0" prefWidth="63.0" text="Вверх" />
+                  <Label alignment="CENTER" layoutX="230.0" layoutY="293.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Мастшаб рисунка" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1214" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="230.0" layoutY="120.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Перемещение рисунка" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="14.0" fx:id="x12121" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="238.0" layoutY="430.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Полная очистка данных с поля." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x12111" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="72.0" text="Шаг перемещения" />
+                  <TextField fx:id="stepInformation" layoutX="155.0" layoutY="67.0" prefHeight="27.0" prefWidth="255.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" fx:id="x3" />
+               </font>
+               <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+               </textFill>
+            </Label>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
