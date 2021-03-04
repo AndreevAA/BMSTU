@@ -504,13 +504,13 @@ public class Controller implements Initializable {
         gc.setTextAlign(TextAlignment.CENTER);
 
         for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % 60) / 60; i++)
-            gc.strokeText(String.valueOf((i * 60 - 300) / ZOMM_COFF + START_CANVAS_X), i * 60, 315 - START_CANVAS_Y);
+            gc.strokeText(String.valueOf((i * 60 - 300 + START_CANVAS_X) / ZOMM_COFF), i * 60, 315 - START_CANVAS_Y);
 
         gc.setTextBaseline(VPos.CENTER);
         gc.setTextAlign(TextAlignment.LEFT);
 
         for (int i = 0; i < (scrollPanel.getHeight() - scrollPanel.getHeight() % 60) / 60 + 1; i++)
-            gc.strokeText(String.valueOf((i * 60 - 300) / ZOMM_COFF + START_CANVAS_Y), 310 - START_CANVAS_X, i * 60);
+            gc.strokeText(String.valueOf((i * 60 - 300 + START_CANVAS_Y) / ZOMM_COFF), 310 - START_CANVAS_X, i * 60);
     }
 
     // Отрисовка нулевых линий
