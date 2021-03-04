@@ -5,6 +5,8 @@
 
 #include "../inc/config.h"
 
+#include "../inc/comparators.h"
+
 int getting_file_data(FILE *operation_file, interpolation_operation **data)
 {
     (*data)->total = 0;
@@ -98,62 +100,47 @@ void output_function_root(interpolation_operation  data)
     free(data.first_derivative_values);
 }
 
-void get_config(interpolation_operation  *data)
+void update_first_indicator(interpolation_operation *data)
 {
     data->first_indicator = 0, data->second_indicator = 0;
+
     for (int i = 0; i < data->total - 1; i++)
     {
         if (data->x >= data->x_values[i] && data->x <= data->x_values[i + 1])
             data->first_indicator = i;
     }
-    int step = (data->number_of_polynomal_degree + 1) / 2;
+}
+
+int is_data_enough(interpolation_operation *data)
+{
     if (data->total < data->number_of_polynomal_degree + 1)
-    {
-        printf("Need more data.\n");
-    }
-    else if ((data->number_of_polynomal_degree + 1) % 2 == 0)
-    {
-        if (data->first_indicator - step >= 0)
-        {
-            if (data->first_indicator + step <= data->total - 1)
-            {
-                data->second_indicator = data->first_indicator + step;
-                data->first_indicator -= step - 1;
-            }
-            else
-            {
-                data->second_indicator = data->total - 1;
-                data->first_indicator = data->total - step * 2;
-            }
-        }
-        else
-        {
-            data->first_indicator = 0;
-            data->second_indicator = step * 2 - 1;
-        }
-    }
-    else
-    {
-        if (data->first_indicator - step + 1 >= 0)
-        {
-            if (data->first_indicator + step <= data->total - 1)
-            {
-                data->second_indicator = data->first_indicator + step;
-                data->first_indicator -= step;
-            }
-            else
-            {
-                data->second_indicator = data->total - 1;
-                data->first_indicator = data->total - 1 - step * 2;
-            }
-        }
-        else
-        {
-            data->first_indicator = 0;
-            data->second_indicator = step * 2;
-        }
-    }
+        return SUCCESS_STATUS;
+    return ERROR_STATUS;
+}
+
+void out_need_data()
+{
+    printf("Необходимо больше данных.\n");
+}
+
+void out_config(interpolation_operation *data)
+{
     printf("\nУстановка: %f - %f\n", data->x_values[data->first_indicator], data->x_values[data->second_indicator]);
+}
+
+void get_config(interpolation_operation  *data)
+{
+    update_first_indicator(data);
+
+    if (is_data_enough(data) == ERROR_STATUS)
+    {
+        out_need_data();
+        return ;
+    }
+
+    data_tranmission_comparator(data);
+
+    out_config(data);
 }
 
 int get_opening_file_status(interpolation_operation  *data)

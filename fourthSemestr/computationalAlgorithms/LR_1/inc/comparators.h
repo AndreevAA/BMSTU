@@ -7,5 +7,6 @@
 
 void data_transmission_comparator(interpolation_operation  *data);
 void dif_polynom_comparator(interpolation_operation  *data, int temp_monotony_status);
+void data_tranmission_comparator(interpolation_operation *data);
 
 #endif

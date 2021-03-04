@@ -12,6 +12,8 @@
 
 #include "../inc/config.h"
 
+#include "../inc/comparators.h"
+
 void data_transmission_comparator(interpolation_operation  *data)
 {
 	sort_data(data);
@@ -46,4 +48,53 @@ void dif_polynom_comparator(interpolation_operation  *data, int temp_monotony_st
     }
     else
         printf("Function is not monotonous.\n");
+}
+
+void data_tranmission_comparator(interpolation_operation *data)
+{
+    int step = (data->number_of_polynomal_degree + 1) / 2;
+
+
+    if ((data->number_of_polynomal_degree + 1) % 2 == 0)
+    {
+        if (data->first_indicator - step >= 0)
+        {
+            if (data->first_indicator + step <= data->total - 1)
+            {
+                data->second_indicator = data->first_indicator + step;
+                data->first_indicator -= step - 1;
+            }
+            else
+            {
+                data->second_indicator = data->total - 1;
+                data->first_indicator = data->total - step * 2;
+            }
+        }
+        else
+        {
+            data->first_indicator = 0;
+            data->second_indicator = step * 2 - 1;
+        }
+    }
+    else
+    {
+        if (data->first_indicator - step + 1 >= 0)
+        {
+            if (data->first_indicator + step <= data->total - 1)
+            {
+                data->second_indicator = data->first_indicator + step;
+                data->first_indicator -= step;
+            }
+            else
+            {
+                data->second_indicator = data->total - 1;
+                data->first_indicator = data->total - 1 - step * 2;
+            }
+        }
+        else
+        {
+            data->first_indicator = 0;
+            data->second_indicator = step * 2;
+        }
+    }
 }
