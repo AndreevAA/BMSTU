@@ -46,6 +46,8 @@ public class Controller implements Initializable {
     static final public int UNDER_LINE  = -1;
 
     public double ZOMM_COFF = 1.0;
+    public double START_CANVAS_X = 0;
+    public double START_CANVAS_Y = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -375,25 +377,85 @@ public class Controller implements Initializable {
     @FXML
     public void onMoveCanvasUp()
     {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
 
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_Y -= tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
     }
 
     @FXML
     public void onMoveCanvasDown()
     {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
 
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_Y += tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
     }
 
     @FXML
     public void onMoveCanvasRight()
     {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
 
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_X += tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
     }
 
     @FXML
     public void onMoveCanvasLeft()
     {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
 
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_X -= tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
     }
 
     @FXML
@@ -419,15 +481,9 @@ public class Controller implements Initializable {
         });
     }
 
-    // Перерисовка элементов экрана
-    private void redrawElements()
+    // Отрисовка линий
+    private void drawLinesCanvas(GraphicsContext gc)
     {
-        graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
-        objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D(), ZOMM_COFF));
-
-
-        GraphicsContext gc = graphTable.getGraphicsContext2D();
-
         // сетка
         gc.setLineWidth(.5);
         gc.setFontSmoothingType(null);
@@ -439,23 +495,48 @@ public class Controller implements Initializable {
 
         gc.setLineDashes(null);
         gc.setLineWidth(1);
+    }
 
+    // Отрисовка чисел
+    private void drawNumbersCanvas(GraphicsContext gc)
+    {
         // числа
         gc.setTextAlign(TextAlignment.CENTER);
 
-        for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % 60) / 60; i++) {
-            if (i == 5) continue;
-            gc.strokeText(String.valueOf((i * 60 - 300) / ZOMM_COFF), i * 60, 315);
-        }
+        for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % 60) / 60; i++)
+            gc.strokeText(String.valueOf((i * 60 - 300) / ZOMM_COFF + START_CANVAS_X), i * 60, 315 - START_CANVAS_Y);
+
         gc.setTextBaseline(VPos.CENTER);
         gc.setTextAlign(TextAlignment.LEFT);
-        for (int i = 0; i < (scrollPanel.getHeight() - scrollPanel.getHeight() % 60) / 60 + 1; i++) {
-            if (i == 5) continue;
-            gc.strokeText(String.valueOf((i * 60 - 300) / ZOMM_COFF), 310, i * 60);
-        }
 
-        gc.strokeLine(300, 0, 300, scrollPanel.getHeight());    // zero line
-        gc.strokeLine(0, 300, scrollPanel.getWidth(), 300);    // zero line
+        for (int i = 0; i < (scrollPanel.getHeight() - scrollPanel.getHeight() % 60) / 60 + 1; i++)
+            gc.strokeText(String.valueOf((i * 60 - 300) / ZOMM_COFF + START_CANVAS_Y), 310 - START_CANVAS_X, i * 60);
+    }
+
+    // Отрисовка нулевых линий
+    private void drawZeroLines(GraphicsContext gc)
+    {
+        gc.strokeLine(300 - START_CANVAS_X, 0, 300 - START_CANVAS_X, scrollPanel.getHeight());    // zero line
+        gc.strokeLine(0, 300 - START_CANVAS_Y, scrollPanel.getWidth(), 300 - START_CANVAS_Y);    // zero line
+    }
+
+    // Отрисовка сетки и чисел
+    private void drawCanvasMaterials()
+    {
+        GraphicsContext gc = graphTable.getGraphicsContext2D();
+
+        drawLinesCanvas(gc);
+        drawNumbersCanvas(gc);
+        drawZeroLines(gc);
+    }
+
+    // Перерисовка элементов экрана
+    private void redrawElements()
+    {
+        graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
+        objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D(), ZOMM_COFF, START_CANVAS_X, START_CANVAS_Y));
+
+        drawCanvasMaterials();
     }
 
     // Получение переверенутой на угол angleOfRotationValue точки по Х
@@ -498,11 +579,17 @@ public class Controller implements Initializable {
                 {
                     var rad = (Math.PI / 180) * tempAngleValue;
 
-                    double updatedGraphicalPointValueX = getTempPointRotatedByX(rad, objectList.get(tempNumberOfTurnedPoint).getxValue(), objectList.get(tempNumberOfTurnedPoint).getyValue(), getTempRootPointValueX(), getTempRootPointValueY());
-                    double updatedGraphicalPointValueY = getTempPointRotatedByY(rad, objectList.get(tempNumberOfTurnedPoint).getxValue(), objectList.get(tempNumberOfTurnedPoint).getyValue(), getTempRootPointValueX(), getTempRootPointValueY());
+                    double t_x = objectList.get(tempNumberOfTurnedPoint).getxValue();
+                    double t_y = objectList.get(tempNumberOfTurnedPoint).getyValue();
+
+                    double t0_x = getTempRootPointValueX();
+                    double t0_y = getTempRootPointValueY();
+
+                    double updatedGraphicalPointValueX = t0_x + (t_x - t0_x) * Math.cos(rad) - (t_y - t0_y) * Math.sin(rad);
+                    double updatedGraphicalPointValueY = t0_y + (t_x - t0_x) * Math.sin(rad) + (t_y - t0_y) * Math.cos(rad);
 
                     objectList.get(tempNumberOfTurnedPoint).setxValue(updatedGraphicalPointValueX);
-                    objectList.get(tempNumberOfTurnedPoint).setxValue(updatedGraphicalPointValueY);
+                    objectList.get(tempNumberOfTurnedPoint).setyValue(updatedGraphicalPointValueY);
                 }
 
                 redrawElements();

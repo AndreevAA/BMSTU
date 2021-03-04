@@ -34,10 +34,10 @@ public class GraphicalPoint extends GraphicalObject {
     }
 
 
-    public void draw(GraphicsContext context, double ZOMM_COFF) {
+    public void draw(GraphicsContext context, double ZOMM_COFF, double START_CANVAS_X, double START_CANVAS_Y) {
         super.draw(context);
 
-        context.fillOval(xValue * ZOMM_COFF + 300, yValue * ZOMM_COFF + 300, DRAW_RADIUS, DRAW_RADIUS);
+        context.fillOval(xValue * ZOMM_COFF + 300 - START_CANVAS_X, yValue * ZOMM_COFF + 300 - START_CANVAS_Y, DRAW_RADIUS, DRAW_RADIUS);
     }
 
     @Override
