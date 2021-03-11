@@ -3,51 +3,10 @@ import numpy as np
 from math import *
 
 # Получение значения обтекающей функции
-def getFunction():
+def getFunction(x, y):
 	return x ** 2 + y ** 2;
 
-# # Поиск ближайшего числа
-# def getNearestNumberComparator(data, tempNumber, tempValidator):
-# 	leftCur = 0; rightCur = len(data) - 1;
-# 	while leftCur < rightCur:
-# 		middleCur = int((leftCur + rightCur) / 2)
-# 		if (tempValidator == "x"):
-# 			if tempNumber > data[middleCur].xValue:
-# 				leftCur = middleCur + 1
-# 			else:
-# 				rightCur = middleCur
-# 		if (tempValidator == "y"):
-# 			if tempNumber > data[middleCur].yValue:
-# 				leftCur = middleCur + 1
-# 			else:
-# 				rightCur = middleCur
-# 		else:
-# 			if tempNumber > data[middleCur].zValue:
-# 				leftCur = middleCur + 1
-# 			else:
-# 				rightCur = middleCur
-# 	return rightCur
-
-# def getRecursFunction(data):
-#     temoDataLength = len(data)
-#     if temoDataLength == 1:
-#         return data[0].zValue;
-#     else:
-#         return (recurs_function(data[:-1]) - recurs_function(data[1:])) / (data[0].xValue - data[temoDataLength - 1].xValue)
-
-# # Произведение интерполяциии Ньютона
-# def getNewtonInterpolation(data, x):
-# 	tempNumberOfNearestXValue(data, x, "x");
-# 	z_x = data[0].zValue;
-# 	for i in range(1, len(data)):
-#         k = 1
-#         for j in range(i):
-#             k *= (x - data[j].xValue)
-#         dd = getRecursFunction(data[:i+1]) #x, z
-#         z_x += (k * dd)
-#     return z_x
-
-
+# Поиск ближайшего числа
 def nearest_number(lst, x):
     a = 0
     b = len(lst) - 1
@@ -78,40 +37,30 @@ def newton_interpolation(lst_x, lst_z, x):
         z_x += (k * dd)
     return z_x
 
-def create_table(data):
-	xs = [];
-	ys = [];
-	zs = [];
+def create_table(dataCompRow, data):
+	for tempCur in range(len(data)):
+		if (tempCur % globals.numberOfColls == 0):
+			dataCompRow[0].append(data[tempCur].xValue);
 
-	for tempCur in data:
-		xs.append(tempCur.xValue);
-		ys.append(tempCur.yValue);
-		zs.append(tempCur.zValue);
+		if (tempCur < globals.numberOfColls):
+			dataCompRow[1].append(data[tempCur].yValue);
 
-	return xs, ys, zs;
+		if (tempCur % globals.numberOfColls == 0 and tempCur > 0):
+			
+			dataCompRow[2].append(tempZline);
+			tempZline = [];
 
-def getComparatorStatus(data, x, y, n, m):
-    xs, ys, zs = create_table(data)
+		tempZline.append(data[tempCur].zValue);
 
-    print();
+def getComparatorStatus(dataCompRow, data, x, y, n, m):
+    create_table(dataCompRow, data)
 
-    for i in range(len(data)):
-    	print(xs[i], ys[i], zs[i]);
-
-    i_x = nearest_number(xs, x)
     i_y = nearest_number(ys, y)
-
-    lx = len(data)
-    ly = len(data)
-    
-    sample_x = [];
-    sample_y = [];
-    sample_z = [];
 
     if i_y - (m + 1) / 2 < 0:
         sample_y = ys[:int(i_y + int(ceil((m + 1) / 2)) + 1)]
         sample_z = zs[:int(i_y + int(ceil((m + 1) / 2)) + 1)]
-    elif ly < i_y + (m + 1) / 2:
+    elif len(data) < i_y + (m + 1) / 2:
         sample_y = ys[i_y - int(ceil((m + 1) / 2)):]
         sample_z = zs[i_y - int(ceil((m + 1) / 2)):]
     else:
@@ -123,12 +72,14 @@ def getComparatorStatus(data, x, y, n, m):
             sample_z = zs[i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
 
     left = 0
-    right = 0
+    right = 0	
+
+    i_x = nearest_number(xs, x)
     
     if i_x - (n + 1) / 2 < 0:
         sample_x = xs[:int(i_x + int(ceil((n + 1) / 2)) + 1)]
         right = i_x + int(ceil((n + 1) / 2) + 1)
-    elif lx < i_x + (n + 1) / 2:
+    elif len(data) < i_x + (n + 1) / 2:
         sample_x = xs[i_x - int(ceil((n + 1) / 2)):]
         left = i_x - int(ceil((n + 1) / 2))
         right = 6
@@ -141,7 +92,6 @@ def getComparatorStatus(data, x, y, n, m):
         left = i_x - int(ceil((n + 1) / 2)) - 1
         right = i_x + int(ceil((n + 1) / 2))
 
-    print(sample_z);
     for i in range(len(sample_z)):
         sample_z[i] = sample_z[i][int(left):int(right)]
 
@@ -150,6 +100,8 @@ def getComparatorStatus(data, x, y, n, m):
     for i in range(len(sample_y)):
         answ.append(newton_interpolation(sample_x, sample_z[i], x))
 
-    result = func(x, y)
+    result = getFunction(x, y)
+    
     print('Real result: {}'.format(result))
+
     return newton_interpolation(sample_y, answ, y)

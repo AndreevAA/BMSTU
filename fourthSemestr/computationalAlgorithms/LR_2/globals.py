@@ -13,6 +13,12 @@ y = 0;
 # Данные файла
 resFileInputTableData = list();
 
+# Удобное для сдвига курсоров представление данных
+dataCompRow = [[], [], []];
+
+# Количество столбцов
+numberOfColls = 5;
+
 class Point():
 	def __init__(self, xValue, yValue, zValue):
 	    self.xValue = xValue
