@@ -19,6 +19,10 @@ dataCompRow = [[], [], []];
 # Количество столбцов
 numberOfColls = 5;
 
+# Результаты вычисления
+functionValue = 0
+newtonInterpolationValue = 0
+
 class Point():
 	def __init__(self, xValue, yValue, zValue):
 	    self.xValue = xValue

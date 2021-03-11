@@ -1,4 +1,4 @@
-import globals
+import globals, input_output
 import numpy as np
 from math import *
 
@@ -37,22 +37,21 @@ def newton_interpolation(lst_x, lst_z, x):
         z_x += (k * dd)
     return z_x
 
-def create_table(dataCompRow, data):
-	tempZline = [];
-
-	for tempCur in range(len(data)):
-		if (tempCur % globals.numberOfColls == 0):
-			dataCompRow[0].append(data[tempCur].xValue);
-
-		if (tempCur < globals.numberOfColls):
-			dataCompRow[1].append(data[tempCur].yValue);
-
-		if (tempCur % globals.numberOfColls == 0 and tempCur > 0):
-			
-			dataCompRow[2].append(tempZline);
-			tempZline = [];
-
-		tempZline.append(data[tempCur].zValue);
+def getTrasmittedTable(dataCompRow, data):
+	try:
+		tempZline = [];
+		for tempCur in range(len(data)):
+			if (tempCur % globals.numberOfColls == 0):
+				dataCompRow[0].append(data[tempCur].xValue);
+			if (tempCur < globals.numberOfColls):
+				dataCompRow[1].append(data[tempCur].yValue);
+			if (tempCur % globals.numberOfColls == 0 and tempCur > 0):
+				dataCompRow[2].append(tempZline);
+				tempZline = [];
+			tempZline.append(data[tempCur].zValue);
+		return globals.SUCCESS_STATUS;
+	except:
+		return globals.ERROR_STATUS;
 
 def getMiddleCellStart(nearestList, nLevel):
 	return nearestList - int(ceil((nLevel + 1) / 2));
@@ -98,22 +97,19 @@ def setAllCurs(allSamples, dataCompRow, dataSize, x, y, nx, ny):
 	for i in range(len(allSamples[2])):
 		allSamples[2][i] = allSamples[2][i][int(left):int(right)]
 
+def getAnswerListOfNewtonInterpolations(allSamples, x):
+	aswerListOfNewtonInterpolations = list();
+	for tempCur in range(len(allSamples[1])):
+		aswerListOfNewtonInterpolations.append(newton_interpolation(allSamples[0], allSamples[2][tempCur], x))
+	return aswerListOfNewtonInterpolations;
 
-def getComparatorStatus(dataCompRow, data, x, y, nx, ny):
-    create_table(dataCompRow, data)
+def getComparatorStatus(dataCompRow, data, x, y, nx, ny, functionValue, newtonInterpolationValue):
+	try:
+	    allSamples = [[], [], []]
+	    setAllSamples(allSamples, dataCompRow, len(data), x, y, nx, ny);
+	    setAllCurs(allSamples, dataCompRow, len(data), x, y, nx, ny);
+	    globals.functionValue, globals.newtonInterpolationValue = getFunction(x, y), newton_interpolation(allSamples[1], getAnswerListOfNewtonInterpolations(allSamples, x), y);
+	    return globals.SUCCESS_STATUS;
+	except:
+		return globals.ERROR_STATUS;
 
-    allSamples = [[], [], []]
-    	
-    setAllSamples(allSamples, dataCompRow, len(data), x, y, nx, ny);
-    setAllCurs(allSamples, dataCompRow, len(data), x, y, nx, ny);
-    
-    answ = []
-
-    for i in range(len(allSamples[1])):
-        answ.append(newton_interpolation(allSamples[0], allSamples[2][i], x))
-
-    result = getFunction(x, y)
-    
-    print('Real result: {}'.format(result))
-
-    return newton_interpolation(allSamples[1], answ, y)

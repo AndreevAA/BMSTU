@@ -38,3 +38,6 @@ def getValuesOfArguements(x, y):
 	except:
 		return globals.ERROR_STATUS;
 
+# Вывод на экран результата
+def outlineInterpolationCountingResult(functionValue, newtonInterpolationValue):
+	print(str('\n\nРезультат функции: {}\nРезультат по интерполяции: {}'.format(functionValue, newtonInterpolationValue)));
