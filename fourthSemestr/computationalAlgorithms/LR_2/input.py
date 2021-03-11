@@ -16,7 +16,7 @@ def getFileInputTableData(resFileInputTableData, numberOfRows, numberOfStrings, 
 
 		for tempX in range(len(tempXValues)):
 			for tempY in range(len(tempYValues)):
-				resFileInputTableData.append(globals.Point(tempXValues[tempX], tempYValues[tempY], tempZValues[tempX][tempY]));
+				resFileInputTableData.append(globals.Point(int(tempXValues[tempX]), int(tempYValues[tempY]), int(tempZValues[tempX][tempY])));
 
 		return globals.SUCCESS_STATUS;
 	except:
@@ -25,7 +25,7 @@ def getFileInputTableData(resFileInputTableData, numberOfRows, numberOfStrings, 
 # Получение степени апроксимации
 def getLevelOfAproximation(nx, ny):
 	try:
-		nx, ny = list(map(int, input("Введите nx, ny: ").split()));
+		globals.nx, globals.ny = list(map(int, input("Введите nx, ny: ").split()));
 		return globals.SUCCESS_STATUS;
 	except:
 		return globals.ERROR_STATUS;
@@ -33,7 +33,7 @@ def getLevelOfAproximation(nx, ny):
 # Получение степени апроксимации
 def getValuesOfArguements(x, y):
 	try:
-		x, y = list(map(int, input("Введите x, y: ").split()));
+		globals.x, globals.y = list(map(int, input("Введите x, y: ").split()));
 		return globals.SUCCESS_STATUS;
 	except:
 		return globals.ERROR_STATUS;

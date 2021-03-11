@@ -1,19 +1,63 @@
 import globals
 import numpy as np
+from math import *
 
+# Получение значения обтекающей функции
 def getFunction():
 	return x ** 2 + y ** 2;
 
-def getNearestNumber(data, tempNumber):
-	leftCur = 0; rightCur = len(data) - 1
-	while leftCur < rightCur:
-		middleCur = int((leftCur + rightCur) / 2)
-		if tempNumber > data[data]:
-			leftCur = middleCur + 1
-		else:
-			rightCur = middleCur
-	return rightCur
+# # Поиск ближайшего числа
+# def getNearestNumberComparator(data, tempNumber, tempValidator):
+# 	leftCur = 0; rightCur = len(data) - 1;
+# 	while leftCur < rightCur:
+# 		middleCur = int((leftCur + rightCur) / 2)
+# 		if (tempValidator == "x"):
+# 			if tempNumber > data[middleCur].xValue:
+# 				leftCur = middleCur + 1
+# 			else:
+# 				rightCur = middleCur
+# 		if (tempValidator == "y"):
+# 			if tempNumber > data[middleCur].yValue:
+# 				leftCur = middleCur + 1
+# 			else:
+# 				rightCur = middleCur
+# 		else:
+# 			if tempNumber > data[middleCur].zValue:
+# 				leftCur = middleCur + 1
+# 			else:
+# 				rightCur = middleCur
+# 	return rightCur
 
+# def getRecursFunction(data):
+#     temoDataLength = len(data)
+#     if temoDataLength == 1:
+#         return data[0].zValue;
+#     else:
+#         return (recurs_function(data[:-1]) - recurs_function(data[1:])) / (data[0].xValue - data[temoDataLength - 1].xValue)
+
+# # Произведение интерполяциии Ньютона
+# def getNewtonInterpolation(data, x):
+# 	tempNumberOfNearestXValue(data, x, "x");
+# 	z_x = data[0].zValue;
+# 	for i in range(1, len(data)):
+#         k = 1
+#         for j in range(i):
+#             k *= (x - data[j].xValue)
+#         dd = getRecursFunction(data[:i+1]) #x, z
+#         z_x += (k * dd)
+#     return z_x
+
+
+def nearest_number(lst, x):
+    a = 0
+    b = len(lst) - 1
+    while a < b:
+        m = int((a + b) / 2)
+        if x > lst[m]:
+            a = m + 1
+        else:
+            b = m
+    return b
 
 def recurs_function(xs, ys):
     l = len(xs)
@@ -34,29 +78,36 @@ def newton_interpolation(lst_x, lst_z, x):
         z_x += (k * dd)
     return z_x
 
+def create_table(data):
+	xs = [];
+	ys = [];
+	zs = [];
 
-def start_interpolation():
-    xs, ys, zs = create_table()
+	for tempCur in data:
+		xs.append(tempCur.xValue);
+		ys.append(tempCur.yValue);
+		zs.append(tempCur.zValue);
 
-    print_table(xs, ys, zs)
+	return xs, ys, zs;
 
-    x = float(input('input x: '))
-    y = float(input('input y: '))
+def getComparatorStatus(data, x, y, n, m):
+    xs, ys, zs = create_table(data)
 
-    while (x < 0) or (x > 5) or (y < 0) or (y > 5):
-        print("Wrong borders")
-        x = float(input('input x: '))
-        y = float(input('input y: '))
-    
-    n = int(input('input xn: '))
-    m = int(input('input yn: '))
+    print();
+
+    for i in range(len(data)):
+    	print(xs[i], ys[i], zs[i]);
 
     i_x = nearest_number(xs, x)
     i_y = nearest_number(ys, y)
 
-    lx = len(xs)
-    ly = len(ys)
+    lx = len(data)
+    ly = len(data)
     
+    sample_x = [];
+    sample_y = [];
+    sample_z = [];
+
     if i_y - (m + 1) / 2 < 0:
         sample_y = ys[:int(i_y + int(ceil((m + 1) / 2)) + 1)]
         sample_z = zs[:int(i_y + int(ceil((m + 1) / 2)) + 1)]
@@ -90,6 +141,7 @@ def start_interpolation():
         left = i_x - int(ceil((n + 1) / 2)) - 1
         right = i_x + int(ceil((n + 1) / 2))
 
+    print(sample_z);
     for i in range(len(sample_z)):
         sample_z[i] = sample_z[i][int(left):int(right)]
 
@@ -101,29 +153,3 @@ def start_interpolation():
     result = func(x, y)
     print('Real result: {}'.format(result))
     return newton_interpolation(sample_y, answ, y)
-
-# Функция интерполяции
-def interpolation(data, arg_x, arg_y, pow_x, pow_y):
-    #data = (data[:,data[0,:].argsort()])[data[:, 0].argsort(), :]
-    # Проверка на необходимое кол-во узлов.
-    if pow_x + 1 > data.shape[0] - 1 or pow_y + 1 > data.shape[1] - 1:
-        print('Недостаточное кол-во узлов для интерполяции.')
-        exit(1)
-    # Исключение экстраполяции
-    if arg_x > data[len(data) - 1][0] or arg_x < data[1][0] or arg_y > data[0][len(data) - 1] or arg_y < data[0][1]:
-        print('Экстраполяция недоступна.')
-        exit(2)
-    indexes_x = find_indexes(data[1:,0], pow_x, arg_x)
-    indexes_y = find_indexes(data[0,1:], pow_y, arg_y)
-    data = np.vstack([data[0], data[indexes_x[0]:indexes_x[1]+1]])
-    data = np.column_stack((data[:, 0], data[:, indexes_y[0]:indexes_y[1] + 1]))
-    buffer = []
-    for i in range(0, len(data[:, 0]) - 1):
-        if (pow_y > 0):
-            razd_razn_founded.clear()
-            razd_razn(np.transpose(np.vstack([data[0, 1:], data[i + 1, 1:]])), 0, len(data[0]) - 2)
-        buffer.append(find_root(np.transpose(np.vstack([data[0, 1:], data[i + 1, 1:]])), arg_y))
-    if (pow_x > 0):
-        razd_razn_founded.clear()
-        razd_razn(np.column_stack((data[1:, 0], np.transpose(buffer))), 0, len(buffer) - 1)
-    return find_root(np.column_stack((data[1:, 0], np.transpose(buffer))), arg_x)

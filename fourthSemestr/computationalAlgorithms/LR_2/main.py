@@ -17,6 +17,7 @@ def main():
 	for i in range(len(globals.resFileInputTableData)):
 		print(globals.resFileInputTableData[i].xValue, globals.resFileInputTableData[i].yValue, globals.resFileInputTableData[i].zValue);
 
+	interpolation.getComparatorStatus(globals.resFileInputTableData, globals.x, globals.y, globals.nx, globals.ny);
 	return checks.outEndWorkingStatus(globals.SUCCESS_STATUS);
 
 if __name__ == '__main__':
