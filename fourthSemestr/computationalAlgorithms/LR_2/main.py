@@ -14,11 +14,8 @@ def main():
 	if (input.getValuesOfArguements(globals.x, globals.y) == globals.ERROR_STATUS):
 		return checks.outEndWorkingStatus(globals.ERROR_STATUS);
 
-	founded_root = float("%.7f" % interpolation.interpolation(globals.resFileInputTableData, globals.x, globals.y, globals.nx, globals.ny))
-	exact_root = float("%.7f" % interpolation.getFunction(globals.x, globals.y))
-
-	print("\nНайденное значение: ", founded_root)
-	print("Точное значение:    ", exact_root)
+	for i in range(len(globals.resFileInputTableData)):
+		print(globals.resFileInputTableData[i].xValue, globals.resFileInputTableData[i].yValue, globals.resFileInputTableData[i].zValue);
 
 	return checks.outEndWorkingStatus(globals.SUCCESS_STATUS);
 

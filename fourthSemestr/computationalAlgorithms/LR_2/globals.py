@@ -12,3 +12,11 @@ y = 0;
 
 # Данные файла
 resFileInputTableData = list();
+
+class Point():
+	def __init__(self, xValue, yValue, zValue):
+	    self.xValue = xValue
+	    self.yValue = yValue
+	    self.zValue = zValue
+
+
