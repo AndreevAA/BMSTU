@@ -35,10 +35,8 @@ def getTrasmittedTable(dataCompRow, data):
 	try:
 		tempZline = [];
 		for tempCur in range(len(data)):
-			if (tempCur % globals.numberOfColls == 0):
-				dataCompRow[0].append(data[tempCur].xValue);
-			if (tempCur < globals.numberOfColls):
-				dataCompRow[1].append(data[tempCur].yValue);
+			if (tempCur % globals.numberOfColls == 0): dataCompRow[0].append(data[tempCur].xValue);
+			if (tempCur < globals.numberOfColls): dataCompRow[1].append(data[tempCur].yValue);
 			if (tempCur % globals.numberOfColls == 0 and tempCur > 0):
 				dataCompRow[2].append(tempZline);
 				tempZline = [];
@@ -75,7 +73,7 @@ def setAllCurs(allSamples, dataCompRow, dataSize, x, y, nx, ny):
 	nearestXValueNumber = getNearNumbers(dataCompRow[0], x)
 	if nearestXValueNumber - (nx + 1) / 2 < 0:
 		allSamples[0] = dataCompRow[0][:int(getMiddleCellEnd(nearestXValueNumber, nx) + 1)]
-		right = getMiddleCellEnd(nearestXValueNumber, nx) + 1
+		rightCur = getMiddleCellEnd(nearestXValueNumber, nx) + 1
 	elif dataSize < nearestXValueNumber + (nx + 1) / 2:
 		allSamples[0] = dataCompRow[0][getMiddleCellStart(nearestXValueNumber, nx):]
 		leftCur, rightCur = getMiddleCellStart(nearestXValueNumber, nx), 6
@@ -87,7 +85,7 @@ def setAllCurs(allSamples, dataCompRow, dataSize, x, y, nx, ny):
 		leftCur, rightCur = getMiddleCellStart(nearestXValueNumber, nx) - 1, getMiddleCellEnd(nearestXValueNumber, nx)
 
 	for tempCur in range(len(allSamples[2])):
-		allSamples[2][tempCur] = allSamples[2][tempCur][int(lefleftCurt):int(rightCur)]
+		allSamples[2][tempCur] = allSamples[2][tempCur][int(leftCur):int(rightCur)]
 
 # Заполнение массива значениями интерполяции
 def getAnswerListOfNewtonInterpolations(allSamples, x):
