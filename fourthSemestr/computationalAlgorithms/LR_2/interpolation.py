@@ -38,6 +38,8 @@ def newton_interpolation(lst_x, lst_z, x):
     return z_x
 
 def create_table(dataCompRow, data):
+	tempZline = [];
+
 	for tempCur in range(len(data)):
 		if (tempCur % globals.numberOfColls == 0):
 			dataCompRow[0].append(data[tempCur].xValue);
@@ -52,56 +54,102 @@ def create_table(dataCompRow, data):
 
 		tempZline.append(data[tempCur].zValue);
 
-def getComparatorStatus(dataCompRow, data, x, y, n, m):
+def setSampleStart(samples, data, dataCompRow, y, m):
+	i_y = nearest_number(dataCompRow[1], y)
+
+	if i_y - (m + 1) / 2 < 0:
+		samples[1] = dataCompRow[1][:int(i_y + int(ceil((m + 1) / 2)) + 1)]
+		samples[2] = dataCompRow[2][:int(i_y + int(ceil((m + 1) / 2)) + 1)]
+	elif len(data) < i_y + (m + 1) / 2:
+	    samples[1] = dataCompRow[1][i_y - int(ceil((m + 1) / 2)):]
+	    samples[2] = dataCompRow[2][i_y - int(ceil((m + 1) / 2)):]
+	else:
+	    if m % 2 != 0:
+	        samples[1] = dataCompRow[1][i_y - int(ceil((m + 1) / 2)): i_y + int(ceil((m + 1) / 2))]
+	        samples[2] = dataCompRow[2][i_y - int(ceil((m + 1) / 2)): i_y + int(ceil((m + 1) / 2))]
+	    else:
+	        samples[1] = dataCompRow[1][i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
+	        samples[2] = dataCompRow[2][i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
+
+def setSampleCur(samples, data, dataCompRow, x, n):
+	left = 0
+	right = 0	
+
+	i_x = nearest_number(dataCompRow[0], x)
+
+	if i_x - (n + 1) / 2 < 0:
+		samples[0] = dataCompRow[0][:int(i_x + int(ceil((n + 1) / 2)) + 1)]
+		right = i_x + int(ceil((n + 1) / 2) + 1)
+	elif len(data) < i_x + (n + 1) / 2:
+		samples[0] = dataCompRow[0][i_x - int(ceil((n + 1) / 2)):]
+		left = i_x - int(ceil((n + 1) / 2))
+		right = 6
+	elif n % 2 != 0:
+		samples[0] = dataCompRow[0][i_x - int(ceil((n + 1) / 2)): i_x + int(ceil((n + 1) / 2))]
+		left = i_x - int(ceil((n + 1) / 2))
+		right = i_x + int(ceil((n + 1) / 2))
+	else:
+		samples[0] = dataCompRow[0][i_x - int(ceil((n + 1) / 2)) - 1: i_x + int(ceil((n + 1) / 2))]
+		left = i_x - int(ceil((n + 1) / 2)) - 1
+		right = i_x + int(ceil((n + 1) / 2))
+
+	for i in range(len(dataCompRow[2])):
+		dataCompRow[2][i] = dataCompRow[2][i][int(left):int(right)]
+
+def getMiddleCellStart(nearestList, nLevel):
+	return nearestList - int(ceil((nLevel + 1) / 2));
+
+def getMiddleCellEnd(nearestList, nLevel):
+	return nearestList + int(ceil((nLevel + 1) / 2));
+
+def getComparatorStatus(dataCompRow, data, x, y, nx, ny):
     create_table(dataCompRow, data)
 
-    i_y = nearest_number(ys, y)
+    allSamples = [[], [], []]
+    
+    i_y = nearest_number(dataCompRow[1], y) 
 
-    if i_y - (m + 1) / 2 < 0:
-        sample_y = ys[:int(i_y + int(ceil((m + 1) / 2)) + 1)]
-        sample_z = zs[:int(i_y + int(ceil((m + 1) / 2)) + 1)]
-    elif len(data) < i_y + (m + 1) / 2:
-        sample_y = ys[i_y - int(ceil((m + 1) / 2)):]
-        sample_z = zs[i_y - int(ceil((m + 1) / 2)):]
+    if i_y - (ny + 1) / 2 < 0:
+        allSamples[1], allSamples[2] = dataCompRow[1][:int(getMiddleCellEnd(i_y, ny) + 1)], dataCompRow[2][:int(getMiddleCellEnd(i_y, ny) + 1)]
+    elif len(data) < i_y + (ny + 1) / 2:
+        allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny):], dataCompRow[2][getMiddleCellStart(i_y, ny):]
     else:
-        if m % 2 != 0:
-            sample_y = ys[i_y - int(ceil((m + 1) / 2)): i_y + int(ceil((m + 1) / 2))]
-            sample_z = zs[i_y - int(ceil((m + 1) / 2)): i_y + int(ceil((m + 1) / 2))]
+        if ny % 2 != 0:
+            allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny): getMiddleCellEnd(i_y, ny)], dataCompRow[2][getMiddleCellStart(i_y, ny): getMiddleCellEnd(i_y, ny)]
         else:
-            sample_y = ys[i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
-            sample_z = zs[i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
+            allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny) - 1: getMiddleCellEnd(i_y, ny)], dataCompRow[2][getMiddleCellStart(i_y, ny) - 1: getMiddleCellEnd(i_y, ny)]
 
     left = 0
     right = 0	
 
-    i_x = nearest_number(xs, x)
+    i_x = nearest_number(dataCompRow[0], x)
     
-    if i_x - (n + 1) / 2 < 0:
-        sample_x = xs[:int(i_x + int(ceil((n + 1) / 2)) + 1)]
-        right = i_x + int(ceil((n + 1) / 2) + 1)
-    elif len(data) < i_x + (n + 1) / 2:
-        sample_x = xs[i_x - int(ceil((n + 1) / 2)):]
-        left = i_x - int(ceil((n + 1) / 2))
+    if i_x - (nx + 1) / 2 < 0:
+        allSamples[0] = dataCompRow[0][:int(getMiddleCellEnd(i_x, nx) + 1)]
+        right = i_x + int(ceil((nx + 1) / 2) + 1)
+    elif len(data) < i_x + (nx + 1) / 2:
+        allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx):]
+        left = getMiddleCellStart(i_x, nx)
         right = 6
-    elif n % 2 != 0:
-        sample_x = xs[i_x - int(ceil((n + 1) / 2)): i_x + int(ceil((n + 1) / 2))]
-        left = i_x - int(ceil((n + 1) / 2))
-        right = i_x + int(ceil((n + 1) / 2))
+    elif nx % 2 != 0:
+        allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx): getMiddleCellEnd(i_x, nx)]
+        left = getMiddleCellStart(i_x, nx)
+        right = getMiddleCellEnd(i_x, nx)
     else:
-        sample_x = xs[i_x - int(ceil((n + 1) / 2)) - 1: i_x + int(ceil((n + 1) / 2))]
-        left = i_x - int(ceil((n + 1) / 2)) - 1
-        right = i_x + int(ceil((n + 1) / 2))
+        allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx) - 1: getMiddleCellEnd(i_x, nx)]
+        left = getMiddleCellStart(i_x, nx) - 1
+        right = getMiddleCellEnd(i_x, nx)
 
-    for i in range(len(sample_z)):
-        sample_z[i] = sample_z[i][int(left):int(right)]
+    for i in range(len(allSamples[2])):
+        allSamples[2][i] = allSamples[2][i][int(left):int(right)]
 
     answ = []
 
-    for i in range(len(sample_y)):
-        answ.append(newton_interpolation(sample_x, sample_z[i], x))
+    for i in range(len(allSamples[1])):
+        answ.append(newton_interpolation(allSamples[0], allSamples[2][i], x))
 
     result = getFunction(x, y)
     
     print('Real result: {}'.format(result))
 
-    return newton_interpolation(sample_y, answ, y)
+    return newton_interpolation(allSamples[1], answ, y)
