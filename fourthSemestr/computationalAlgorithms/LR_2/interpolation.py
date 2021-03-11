@@ -7,16 +7,13 @@ def getFunction(x, y):
 	return x ** 2 + y ** 2;
 
 # Поиск ближайшего числа
-def nearest_number(lst, x):
-    a = 0
-    b = len(lst) - 1
-    while a < b:
-        m = int((a + b) / 2)
-        if x > lst[m]:
-            a = m + 1
-        else:
-            b = m
-    return b
+def getNearNumbers(tempInputList, x):
+    leftCur, rightCur = 0, len(tempInputList) - 1;
+    while leftCur < rightCur:
+        if tempInputList[int((leftCur + rightCur) / 2)] >= x: rightCur = int((leftCur + rightCur) / 2)
+        else: leftCur = int((leftCur + rightCur) / 2) + 1
+    return rightCur
+
 
 def recurs_function(xs, ys):
     l = len(xs)
@@ -26,15 +23,14 @@ def recurs_function(xs, ys):
         return (recurs_function(xs[:-1], ys[:-1]) - recurs_function(xs[1:], ys[1:])) / (xs[0] - xs[l - 1])
 
 
-def newton_interpolation(lst_x, lst_z, x):
-    i = nearest_number(lst_x, x)
-    z_x = lst_z[0]
-    for i in range(1, len(lst_x)):
+def getNumberByNewtonInterpolationInSamples(tempInputListX, tempInputListZ, x):
+    z_x = tempInputListZ[0]
+    for i in range(1, len(tempInputListX)):
         k = 1
         for j in range(i):
-            k *= (x - lst_x[j])
-        dd = recurs_function(lst_x[:i+1], lst_z[:i+1])
-        z_x += (k * dd)
+            k *= (x - tempInputListX[j])
+        dd = recurs_function(tempInputListX[:i+1], tempInputListZ[:i+1])
+        z_x += (k * recurs_function(tempInputListX[:i+1], tempInputListZ[:i+1]))
     return z_x
 
 def getTrasmittedTable(dataCompRow, data):
@@ -60,7 +56,7 @@ def getMiddleCellEnd(nearestList, nLevel):
 	return nearestList + int(ceil((nLevel + 1) / 2));
 
 def setAllSamples(allSamples, dataCompRow, dataSize, x, y, nx, ny):
-	i_y = nearest_number(dataCompRow[1], y) 
+	i_y = getNearNumbers(dataCompRow[1], y) 
 
 	if i_y - (ny + 1) / 2 < 0:
 		allSamples[1], allSamples[2] = dataCompRow[1][:int(getMiddleCellEnd(i_y, ny) + 1)], dataCompRow[2][:int(getMiddleCellEnd(i_y, ny) + 1)]
@@ -76,7 +72,7 @@ def setAllCurs(allSamples, dataCompRow, dataSize, x, y, nx, ny):
 	left = 0
 	right = 0	
 
-	i_x = nearest_number(dataCompRow[0], x)
+	i_x = getNearNumbers(dataCompRow[0], x)
 
 	if i_x - (nx + 1) / 2 < 0:
 		allSamples[0] = dataCompRow[0][:int(getMiddleCellEnd(i_x, nx) + 1)]
@@ -100,7 +96,7 @@ def setAllCurs(allSamples, dataCompRow, dataSize, x, y, nx, ny):
 def getAnswerListOfNewtonInterpolations(allSamples, x):
 	aswerListOfNewtonInterpolations = list();
 	for tempCur in range(len(allSamples[1])):
-		aswerListOfNewtonInterpolations.append(newton_interpolation(allSamples[0], allSamples[2][tempCur], x))
+		aswerListOfNewtonInterpolations.append(getNumberByNewtonInterpolationInSamples(allSamples[0], allSamples[2][tempCur], x))
 	return aswerListOfNewtonInterpolations;
 
 def getComparatorStatus(dataCompRow, data, x, y, nx, ny, functionValue, newtonInterpolationValue):
@@ -108,7 +104,7 @@ def getComparatorStatus(dataCompRow, data, x, y, nx, ny, functionValue, newtonIn
 	    allSamples = [[], [], []]
 	    setAllSamples(allSamples, dataCompRow, len(data), x, y, nx, ny);
 	    setAllCurs(allSamples, dataCompRow, len(data), x, y, nx, ny);
-	    globals.functionValue, globals.newtonInterpolationValue = getFunction(x, y), newton_interpolation(allSamples[1], getAnswerListOfNewtonInterpolations(allSamples, x), y);
+	    globals.functionValue, globals.newtonInterpolationValue = getFunction(x, y), getNumberByNewtonInterpolationInSamples(allSamples[1], getAnswerListOfNewtonInterpolations(allSamples, x), y);
 	    return globals.SUCCESS_STATUS;
 	except:
 		return globals.ERROR_STATUS;
