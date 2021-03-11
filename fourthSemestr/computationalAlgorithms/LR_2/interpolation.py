@@ -54,48 +54,6 @@ def create_table(dataCompRow, data):
 
 		tempZline.append(data[tempCur].zValue);
 
-def setSampleStart(samples, data, dataCompRow, y, m):
-	i_y = nearest_number(dataCompRow[1], y)
-
-	if i_y - (m + 1) / 2 < 0:
-		samples[1] = dataCompRow[1][:int(i_y + int(ceil((m + 1) / 2)) + 1)]
-		samples[2] = dataCompRow[2][:int(i_y + int(ceil((m + 1) / 2)) + 1)]
-	elif len(data) < i_y + (m + 1) / 2:
-	    samples[1] = dataCompRow[1][i_y - int(ceil((m + 1) / 2)):]
-	    samples[2] = dataCompRow[2][i_y - int(ceil((m + 1) / 2)):]
-	else:
-	    if m % 2 != 0:
-	        samples[1] = dataCompRow[1][i_y - int(ceil((m + 1) / 2)): i_y + int(ceil((m + 1) / 2))]
-	        samples[2] = dataCompRow[2][i_y - int(ceil((m + 1) / 2)): i_y + int(ceil((m + 1) / 2))]
-	    else:
-	        samples[1] = dataCompRow[1][i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
-	        samples[2] = dataCompRow[2][i_y - int(ceil((m + 1) / 2)) - 1: i_y + int(ceil((m + 1) / 2))]
-
-def setSampleCur(samples, data, dataCompRow, x, n):
-	left = 0
-	right = 0	
-
-	i_x = nearest_number(dataCompRow[0], x)
-
-	if i_x - (n + 1) / 2 < 0:
-		samples[0] = dataCompRow[0][:int(i_x + int(ceil((n + 1) / 2)) + 1)]
-		right = i_x + int(ceil((n + 1) / 2) + 1)
-	elif len(data) < i_x + (n + 1) / 2:
-		samples[0] = dataCompRow[0][i_x - int(ceil((n + 1) / 2)):]
-		left = i_x - int(ceil((n + 1) / 2))
-		right = 6
-	elif n % 2 != 0:
-		samples[0] = dataCompRow[0][i_x - int(ceil((n + 1) / 2)): i_x + int(ceil((n + 1) / 2))]
-		left = i_x - int(ceil((n + 1) / 2))
-		right = i_x + int(ceil((n + 1) / 2))
-	else:
-		samples[0] = dataCompRow[0][i_x - int(ceil((n + 1) / 2)) - 1: i_x + int(ceil((n + 1) / 2))]
-		left = i_x - int(ceil((n + 1) / 2)) - 1
-		right = i_x + int(ceil((n + 1) / 2))
-
-	for i in range(len(dataCompRow[2])):
-		dataCompRow[2][i] = dataCompRow[2][i][int(left):int(right)]
-
 def getMiddleCellStart(nearestList, nLevel):
 	return nearestList - int(ceil((nLevel + 1) / 2));
 
