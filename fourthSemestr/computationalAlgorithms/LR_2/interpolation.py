@@ -102,47 +102,53 @@ def getMiddleCellStart(nearestList, nLevel):
 def getMiddleCellEnd(nearestList, nLevel):
 	return nearestList + int(ceil((nLevel + 1) / 2));
 
+def setAllSamples(allSamples, dataCompRow, dataSize, x, y, nx, ny):
+	i_y = nearest_number(dataCompRow[1], y) 
+
+	if i_y - (ny + 1) / 2 < 0:
+		allSamples[1], allSamples[2] = dataCompRow[1][:int(getMiddleCellEnd(i_y, ny) + 1)], dataCompRow[2][:int(getMiddleCellEnd(i_y, ny) + 1)]
+	elif dataSize < i_y + (ny + 1) / 2:
+		allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny):], dataCompRow[2][getMiddleCellStart(i_y, ny):]
+	else:
+		if ny % 2 != 0:
+			allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny): getMiddleCellEnd(i_y, ny)], dataCompRow[2][getMiddleCellStart(i_y, ny): getMiddleCellEnd(i_y, ny)]
+		else:
+			allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny) - 1: getMiddleCellEnd(i_y, ny)], dataCompRow[2][getMiddleCellStart(i_y, ny) - 1: getMiddleCellEnd(i_y, ny)]
+
+def setAllCurs(allSamples, dataCompRow, dataSize, x, y, nx, ny):
+	left = 0
+	right = 0	
+
+	i_x = nearest_number(dataCompRow[0], x)
+
+	if i_x - (nx + 1) / 2 < 0:
+		allSamples[0] = dataCompRow[0][:int(getMiddleCellEnd(i_x, nx) + 1)]
+		right = getMiddleCellEnd(i_x, nx) + 1
+	elif dataSize < i_x + (nx + 1) / 2:
+		allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx):]
+		left = getMiddleCellStart(i_x, nx)
+		right = 6
+	elif nx % 2 != 0:
+		allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx): getMiddleCellEnd(i_x, nx)]
+		left = getMiddleCellStart(i_x, nx)
+		right = getMiddleCellEnd(i_x, nx)
+	else:
+		allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx) - 1: getMiddleCellEnd(i_x, nx)]
+		left = getMiddleCellStart(i_x, nx) - 1
+		right = getMiddleCellEnd(i_x, nx)
+
+	for i in range(len(allSamples[2])):
+		allSamples[2][i] = allSamples[2][i][int(left):int(right)]
+
+
 def getComparatorStatus(dataCompRow, data, x, y, nx, ny):
     create_table(dataCompRow, data)
 
     allSamples = [[], [], []]
+    	
+    setAllSamples(allSamples, dataCompRow, len(data), x, y, nx, ny);
+    setAllCurs(allSamples, dataCompRow, len(data), x, y, nx, ny);
     
-    i_y = nearest_number(dataCompRow[1], y) 
-
-    if i_y - (ny + 1) / 2 < 0:
-        allSamples[1], allSamples[2] = dataCompRow[1][:int(getMiddleCellEnd(i_y, ny) + 1)], dataCompRow[2][:int(getMiddleCellEnd(i_y, ny) + 1)]
-    elif len(data) < i_y + (ny + 1) / 2:
-        allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny):], dataCompRow[2][getMiddleCellStart(i_y, ny):]
-    else:
-        if ny % 2 != 0:
-            allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny): getMiddleCellEnd(i_y, ny)], dataCompRow[2][getMiddleCellStart(i_y, ny): getMiddleCellEnd(i_y, ny)]
-        else:
-            allSamples[1], allSamples[2] = dataCompRow[1][getMiddleCellStart(i_y, ny) - 1: getMiddleCellEnd(i_y, ny)], dataCompRow[2][getMiddleCellStart(i_y, ny) - 1: getMiddleCellEnd(i_y, ny)]
-
-    left = 0
-    right = 0	
-
-    i_x = nearest_number(dataCompRow[0], x)
-    
-    if i_x - (nx + 1) / 2 < 0:
-        allSamples[0] = dataCompRow[0][:int(getMiddleCellEnd(i_x, nx) + 1)]
-        right = i_x + int(ceil((nx + 1) / 2) + 1)
-    elif len(data) < i_x + (nx + 1) / 2:
-        allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx):]
-        left = getMiddleCellStart(i_x, nx)
-        right = 6
-    elif nx % 2 != 0:
-        allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx): getMiddleCellEnd(i_x, nx)]
-        left = getMiddleCellStart(i_x, nx)
-        right = getMiddleCellEnd(i_x, nx)
-    else:
-        allSamples[0] = dataCompRow[0][getMiddleCellStart(i_x, nx) - 1: getMiddleCellEnd(i_x, nx)]
-        left = getMiddleCellStart(i_x, nx) - 1
-        right = getMiddleCellEnd(i_x, nx)
-
-    for i in range(len(allSamples[2])):
-        allSamples[2][i] = allSamples[2][i][int(left):int(right)]
-
     answ = []
 
     for i in range(len(allSamples[1])):
