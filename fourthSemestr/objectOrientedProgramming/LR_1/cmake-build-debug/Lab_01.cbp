@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Lab_01"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lab_01">
+				<Option output="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Lab_01" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/flame/Documents/study/OOP-master/Lab_01/."/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/../../../../include/c++/10.2.0"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/../../../../include/c++/10.2.0/x86_64-unknown-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/../../../../include/c++/10.2.0/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 Lab_01"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lab_01/fast">
+				<Option output="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Lab_01" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/flame/Documents/study/OOP-master/Lab_01/."/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/../../../../include/c++/10.2.0"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/../../../../include/c++/10.2.0/x86_64-unknown-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/../../../../include/c++/10.2.0/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 Lab_01/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/cdio.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/cdio.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/defines.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/draw.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/draw.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/main.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/mainwindow.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/mainwindow.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/object.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/object.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/operations.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/operations.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/task_manager.cpp">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/task_manager.h">
+			<Option target="Lab_01"/>
+		</Unit>
+		<Unit filename="/home/flame/Documents/study/OOP-master/Lab_01/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,20 @@
+/app/extra/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets: -G "CodeBlocks - Unix Makefiles" /home/flame/Documents/study/OOP-master/Lab_01
+CMake Error at CMakeLists.txt:8 (find_package):
+  By not providing "FindQt5Widgets.cmake" in CMAKE_MODULE_PATH this project
+  has asked CMake to find a package configuration file provided by
+  "Qt5Widgets", but CMake did not find one.
+
+  Could not find a package configuration file provided by "Qt5Widgets" with
+  any of the following names:
+
+    Qt5WidgetsConfig.cmake
+    qt5widgets-config.cmake
+
+  Add the installation prefix of "Qt5Widgets" to CMAKE_PREFIX_PATH or set
+  "Qt5Widgets_DIR" to a directory containing one of the above files.  If
+  "Qt5Widgets" provides a separate development package or SDK, be sure it has
+  been installed.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/flame/Documents/study/OOP-master/Lab_01/cmake-build-debug/CMakeFiles/CMakeOutput.log".
