@@ -27,7 +27,6 @@ OUTPUT:
 	    RET
 ;---------------------	
 START:
-	    .386
 	    PUSH DS
 	    MOV AX, DATASG		; загрузка в AX адреса сегмента данных
 	    MOV DS, AX			; установка DS
