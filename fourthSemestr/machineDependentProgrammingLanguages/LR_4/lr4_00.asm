@@ -1,17 +1,15 @@
-EXTRN OUTPUT: far
-
 StkSeg SEGMENT PARA STACK 'STACK'
 		DB 200h DUP (?)
 StkSeg ENDS
 ;
 ;---------------------
-DATASG1 SEGMENT PARA PUBLIC 'DATASG' 
+DATASG SEGMENT PARA
 	    MAX_LEN = 10 		; установил максимальный размер введенной строки
 	    STRING DB MAX_LEN, MAX_LEN DUP('$') ; Передал строке максимальный размер ввода и указал последний символ строки
-DATASG1 ENDS
+DATASG ENDS
 ;---------------------
-Code1 SEGMENT PARA PUBLIC 'Code' 
-   		ASSUME DS:DATASG1, CS:Code1, ES:Code1
+Code SEGMENT PARA
+   		ASSUME DS:DATASG, CS:Code, ES:Code
 ;---------------------
 INPUT:
 		LEA DX, STRING
@@ -20,11 +18,17 @@ INPUT:
 
 	    RET
 ;---------------------
-PUBLIC STRING
-;---------------------
+OUTPUT: 
+		MOV STRING+1, 0AH
+	    LEA DX, STRING+1
+	    MOV AH, 9
+	    INT 21H
+
+	    RET
+;---------------------	
 START:
 	    PUSH DS
-	    MOV AX, DATASG1		; загрузка в AX адреса сегмента данных
+	    MOV AX, DATASG		; загрузка в AX адреса сегмента данных
 	    MOV DS, AX			; установка DS
 	    MOV ES, AX			; установка ES
 	    XOR AX, AX
@@ -33,11 +37,10 @@ START:
 	    CALL INPUT
 
 	    ;Вывод на экран
-	    jmp OUTPUT
+	    CALL OUTPUT
 
 	    ;Завершение программы
 	    MOV AX, 4C00h		; AH=4Ch завершение процесса
 	    INT 21H				; вызов функции DOS
-;---------------------
-Code1 	ENDS
+Code 	ENDS
 		END START
