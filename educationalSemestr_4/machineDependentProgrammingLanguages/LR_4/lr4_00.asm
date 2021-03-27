@@ -19,12 +19,19 @@ INPUT:
 	    RET
 ;---------------------
 OUTPUT: 
-		MOV STRING+1, 0AH
-	    LEA DX, STRING+1
-	    MOV AH, 9
-	    INT 21H
-
-	    RET
+		mov AX,DATASG
+		mov DS,AX
+		mov DX,OFFSET STRING
+		
+		mov AH,9
+		int 21h
+			
+		mov AH,7
+		INT 21h
+		mov AH,4Ch
+		int 21h
+		
+		RET 
 ;---------------------	
 START:
 	    PUSH DS

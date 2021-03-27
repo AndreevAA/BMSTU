@@ -6,13 +6,19 @@ Code1 SEGMENT PARA PUBLIC 'Code'
    		ASSUME CS:Code1, ES:Code1
 ;---------------------
 OUTPUT: 
-		.386
-		MOV STRING+1, 0AH
-	    LEA DX, STRING+1
-	    MOV AH, 9
-	    INT 21H
+		mov AH,9
+		int 21h
+		
+		DB   13
+		DB   10
 
-	    RET
+		mov AH,7
+		INT 21h
+		
+		mov AH,4Ch
+		int 21h
+
+		RET
 ;---------------------    
 Code1 	ENDS
 		END
