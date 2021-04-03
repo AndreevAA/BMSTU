@@ -1,42 +1,46 @@
 EXTRN OUTPUT: far
+PUBLIC STRING
 
 StkSeg SEGMENT PARA STACK 'STACK'
-		DB 200h DUP (?)
+		DB 100h DUP (?)
 StkSeg ENDS
 ;
 ;---------------------
 DATASG1 SEGMENT PARA PUBLIC 'DATASG' 
-		DB   13
-		DB   10
-	    MAX_LEN = 10 		; установил максимальный размер введенной строки
-	    STRING DB MAX_LEN, MAX_LEN DUP('$') ; Передал строке максимальный размер ввода и указал последний символ строки
+	    STRING DB 10, 10 DUP('$') ; Передал строке максимальный размер ввода и указал последний символ строки
 DATASG1 ENDS
 ;---------------------
 Code1 SEGMENT PARA PUBLIC 'Code' 
    		ASSUME DS:DATASG1, CS:Code1, ES:Code1
 ;---------------------
+CRLF:
+	mov ah, 02h
+	mov al, 13
+	int 21h
+	mov al, 10
+	int 21h
+	ret
+;---------------------
 INPUT:
-		MOV AX, DATASG1		; загрузка в AX адреса сегмента данных
-	    MOV DS, AX			; установка DS
+		MOV AX, DATASG1			; загрузка в AX адреса сегмента данных
+	    MOV DS, AX				; установка DS
 
-		LEA DX, STRING
-	    MOV AH, 10
-	    mov DX, OFFSET STRING
+	    MOV AH, 10				; Чтение строки
+	    
+	    mov DX, OFFSET STRING 	; DX на смещение
 
 	    INT 21H
 
 	    RET
 ;---------------------
-PUBLIC STRING
-;---------------------
 START:	
 	    ;Ввод данных
 	    CALL INPUT
 
-	    mov DX,OFFSET STRING
-
 	    ;Вывод на экран
-	    jmp OUTPUT
+	    CALL OUTPUT
+
+	    ;call CRLF
 
 	    ;Завершение программы
 	    ;MOV AX, 4Ch		; AH=4Ch завершение процесса

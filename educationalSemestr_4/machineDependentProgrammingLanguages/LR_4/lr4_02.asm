@@ -1,5 +1,5 @@
 PUBLIC OUTPUT
-EXTRN STRING: word
+EXTRN STRING: far
 
 ;---------------------
 Code1 SEGMENT PARA PUBLIC 'Code' 
@@ -8,12 +8,6 @@ Code1 SEGMENT PARA PUBLIC 'Code'
 OUTPUT: 
 		mov AH,9
 		int 21h
-		
-		DB   13
-		DB   10
-
-		mov AH,7
-		INT 21h
 		
 		mov AH,4Ch
 		int 21h
