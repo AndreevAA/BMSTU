@@ -11,3 +11,7 @@ def inputTemparatedX():
 def inputDataComparator():
     return inputTemparatedX(), uploadData("input.txt");
     
+def outputResults(founded_root, exact_root):
+	print("\nНайденное значение: ", founded_root)
+	print("Точное значение:    ", exact_root)
+	print("Относительная ошибка: %.2f" % abs(abs(exact_root - founded_root) / exact_root * 100), '%')
