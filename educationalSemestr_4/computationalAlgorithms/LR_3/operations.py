@@ -14,8 +14,6 @@ def interpolation(table, x):
         print('Недостаточное кол-во узлов для интерполяции.')
         exit(1)
 
-    print(x, table)
-
     # Исключение экстраполяции
     if x > table[n - 1][0] or x < table[0][0]:
         print('Экстраполяция недоступна.')
