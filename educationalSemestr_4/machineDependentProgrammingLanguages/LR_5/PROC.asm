@@ -18,7 +18,7 @@ REPLACE:
     MOV MIN, DH                     ; Замена минимального числао текущим числом матрицы
     MOV AX, SI                      ; Ставка в AX номера элемента
     DIV MATRIX_WIDTH                ; Получение номера столбца матрицы делением AX на MATRIX_WIDTH в AH 
-    MOV IND, AL                     ; Запись номера стобца в ROW из остатка в AH
+    ;MOV IND, AL                     ; Запись номера стобца в ROW из остатка в AH
     MOV ROW, AH                     ; Запись номера стобца в ROW из остатка в AH
 
     JMP BACK
@@ -40,14 +40,13 @@ FIND_MIN:
     RET
 ;---------------------
 DELETE_NUMBER:
-    MOV DL, MAT[SI]
-    INC DI
-
+    INC SI
     JMP S_BACK
 ;---------------------
 DELETE:
 
     SHIFT:
+
         DIV MATRIX_WIDTH
 
         CMP ROW, AH 
@@ -56,7 +55,10 @@ DELETE:
 
         S_BACK:
 
-        INC SI
+        MOV DL, MAT[SI]
+
+        INC DL
+        INC AX
         LOOP SHIFT
 
     DEC MATRIX_WIDTH

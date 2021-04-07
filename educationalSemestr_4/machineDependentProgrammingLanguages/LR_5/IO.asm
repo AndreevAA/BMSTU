@@ -51,7 +51,7 @@ READ_SIZE ENDP
 READ_MAT PROC NEAR
     MOV CH, 0
     MOV DH, MATRIX_HEIGHT       
-    MOV SI, 0                   ; Указатель номера строки в матрице
+    MOV SI, 0                   ; Указатель номера элемента в матрице
 
     READ:
         CALL NEW_LINE           ; Перевод строки
@@ -62,8 +62,8 @@ READ_MAT PROC NEAR
             MOV AH, 1           ; Чтение символа из строки
             INT 21H 
 
-            MOV MAT[SI], AL     ; Запись на SI-строку 
-            INC SI              ; Увеличение указателя строки в матрице
+            MOV MAT[SI], AL     ; Запись на SI-элемента 
+            INC SI              ; Увеличение указателя элемента в матрице
 
             CALL PRINT_SPACE    ; Вывод перевода курсора (пробела)
             LOOP READ_ROW
