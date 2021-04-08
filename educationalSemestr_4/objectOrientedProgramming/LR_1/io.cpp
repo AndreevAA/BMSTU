@@ -101,20 +101,10 @@ void close_file(FILE **operation_file)
         fclose(*operation_file);
 }
 
-// Статус загрузки файла
-int load_file_figure(object_t &object, request &lf)
+// Чтение объекта из файла 
+int read_object(object_t &temp_object, FILE *operation_file)
 {
-    FILE *operation_file = NULL;
-    object_t temp_object = initialize_object();
-
-    int temp_error_status = SUCCES_STATUS;
-
-    // Непосредственное открытие файла и чтение
-    temp_error_status = open_file(&operation_file, lf.file_name);
-
-    // Чтение количества
-    if (temp_error_status == SUCCES_STATUS)
-        temp_error_status = read_points_and_links_num(temp_object.number_of_points, temp_object.number_of_links, operation_file);
+    int temp_error_status = read_points_and_links_num(temp_object.number_of_points, temp_object.number_of_links, operation_file);
 
     // Чтение точек
     if (temp_error_status == SUCCES_STATUS)
@@ -127,13 +117,34 @@ int load_file_figure(object_t &object, request &lf)
 
         if (temp_error_status != SUCCES_STATUS)
             free_points(temp_object.points);
-        else
-            object = temp_object;
     }
+
+    return temp_error_status;
+}
+
+// Статус загрузки файла
+int load_file_figure(object_t &object, request &lf)
+{
+    FILE *operation_file = NULL;
+    object_t temp_object = initialize_object();
+
+    int temp_error_status = SUCCES_STATUS;
+
+    // Непосредственное открытие файла и чтение
+    temp_error_status = open_file(&operation_file, lf.file_name);
+
+    // Чтение объекта из файла
+    if (temp_error_status == SUCCES_STATUS)
+        temp_error_status = read_object(temp_object, operation_file);
+
+    // Проверка после чтения
+    if (temp_error_status == SUCCES_STATUS)
+        object = temp_object;
+    else
+        free_object(temp_object);
 
     // Закрытие файла
     close_file(&operation_file);
 
     return temp_error_status;
 }
-
