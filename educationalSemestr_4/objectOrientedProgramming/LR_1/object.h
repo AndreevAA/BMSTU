@@ -26,10 +26,15 @@ struct object_t
     link_t *links;
 };
 
+
+void free_points(point_t *points);
+
+void free_links(link_t *links);
+
 object_t initialize_object();
 
-int get_object_verification_status(const object_t &object);
-void free_object_comparator(object_t& object);
+int check_object(const object_t &object);
+void free_object(object_t& object);
 
 
 #endif // OBJECT_H

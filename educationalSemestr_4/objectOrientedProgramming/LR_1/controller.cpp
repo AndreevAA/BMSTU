@@ -1,8 +1,9 @@
 #include "controller.h"
 #include "config.h"
 #include "io.h"
-#include "canvas.h"
+#include "canvas_operations.h"
 
+// Основной контроллер
 int controller(request temp_request)
 {
     int  temp_error_status = SUCCES_STATUS;
@@ -14,7 +15,7 @@ int controller(request temp_request)
         case INITIALIZING:
             break;
         case UPLOADING_FILE:
-            temp_error_status = get_model_loading_status(object, temp_request);
+            temp_error_status = load_file_figure(object, temp_request);
             break;
         case DRAWING_PICTURE:
             temp_error_status = draw_object(object, temp_request);
@@ -29,7 +30,7 @@ int controller(request temp_request)
             temp_error_status = rotate_object(object, temp_request);
             break;
         case EXIT:
-            free_object_comparator(object);
+            free_object(object);
             break;
         default:
             temp_error_status = ERROR_STATUS_TO_DO;

@@ -11,6 +11,6 @@ struct load_file
     const char* file_name;
 };
 
-int get_model_loading_status(object_t &object, const struct load_file &lf);
+int load_file_figure(object_t &object, const struct load_file &lf);
 
 #endif // CDIO_H

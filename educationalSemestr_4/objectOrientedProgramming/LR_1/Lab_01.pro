@@ -16,24 +16,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    canvas.cpp \
+    canvas_operations.cpp \
     controller.cpp \
     io.cpp \
     main.cpp \
     mainwindow.cpp \
     object.cpp \
     operations.cpp \
-    valueschecker.cpp
+    values_checker.cpp
 
 HEADERS += \
-    canvas.h \
+    canvas_operations.h \
     config.h \
     controller.h \
     io.h \
     mainwindow.h \
     object.h \
     operations.h \
-    valueschecker.h
+    values_checker.h
 
 FORMS += \
     mainwindow.ui

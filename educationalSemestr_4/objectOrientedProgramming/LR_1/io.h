@@ -17,6 +17,6 @@ struct uploaded_file_st
     const char* file_name;
 };
 
-int get_model_loading_status(object_t &object, request &lf);
+int load_file_figure(object_t &object, request &lf);
 
 #endif // IO_H

@@ -235,6 +235,7 @@ void MainWindow::show_message(const int &err)
                 msgBox.setText("Неизвестная ошибка.");
                 break;
         }
+        
         msgBox.exec();
     }
 }

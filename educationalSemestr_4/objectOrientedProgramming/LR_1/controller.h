@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include "object.h"
-#include "canvas.h"
+#include "canvas_operations.h"
 #include "operations.h"
 
 enum controller_status
@@ -23,8 +23,6 @@ struct request
     float scale_kx, scale_ky, scale_kz, scale_xm, scale_ym, scale_zm;
 
     float move_dx, move_dy, move_dz;
-
-    //float trig_cos_x, trig_cos_y, trig_cos_z, trig_sin_x, trig_sin_y, trig_sin_z;
 
     int rotate_dgx, rotate_dgy, rotate_dgz;
     float rotate_xc, rotate_yc, rotate_zc;
