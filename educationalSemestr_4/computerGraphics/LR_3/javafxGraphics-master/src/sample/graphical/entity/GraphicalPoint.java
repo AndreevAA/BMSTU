@@ -1,85 +1,76 @@
 package sample.graphical.entity;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
+import javafx.scene.canvas.GraphicsContext;
 import lombok.Builder;
-import lombok.Data;
 import sample.graphical.GraphicalObject;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-@Data
 @Builder
 public class GraphicalPoint extends GraphicalObject {
-    private static final double DRAW_RADIUS = 5.0D;
+    public static final double DRAW_RADIUS = 10.0D;
 
-    private int x;
-    private int y;
+    private double xValue;
+    private double yValue;
 
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-//        System.out.println("x " + (x < canvas.getWidth() / 2 ? -1 : 1));
-//        System.out.println("y " + (y < canvas.getHeight() / 2 ? -1 : 1));
-        canvas.getGraphicsContext2D().fillOval((x * (canvas.getScaleZ())/* * (x < canvas.getWidth() / 2 ? -1 : 1))*/ - DRAW_RADIUS / 2),
-                (canvas.getHeight() - y * (canvas.getScaleZ())/* * (y < canvas.getHeight() / 2 ? -1 : 1))*/ - DRAW_RADIUS / 2),
-                DRAW_RADIUS, DRAW_RADIUS);
+
+    public GraphicalPoint(double xValue, double yValue) {
+        this.xValue = xValue;
+        this.yValue = yValue;
     }
 
-    public static ObservableList<String> parametersToObservableList() {
-        return FXCollections.observableArrayList(
-                Arrays.stream(GraphicalPoint.class.getDeclaredFields())
-                        .filter(field -> !field.getName().equals("DRAW_RADIUS"))
-                        .map(field -> field.getName() + " =")
-                        .collect(Collectors.toList()));
+    public double getxValue() {
+        return xValue;
+    }
+
+    public void setxValue(double xValue) {
+        this.xValue = xValue;
+    }
+
+    public double getyValue() {
+        return yValue;
+    }
+
+    public void setyValue(double yValue) {
+        this.yValue = yValue;
+    }
+
+
+    public void draw(GraphicsContext context) {
+        super.draw(context);
+
+        context.fillOval(xValue, yValue, DRAW_RADIUS, DRAW_RADIUS);
     }
 
     @Override
     public boolean validate() {
-        return x > 0 && y > 0;
-    }
-
-    @Override
-    public int getMaxXCoordinate() {
-        return x;
-    }
-
-    @Override
-    public int getMaxYCoordinate() {
-        return y;
+        return xValue > 0 && yValue > 0;
     }
 
     @Override
     public String toString() {
-        return "Point{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
-
-    @Override
-    public GraphicalPoint clone() {
-        return GraphicalPoint.builder()
-                .x(this.x)
-                .y(this.y)
-                .build();
+        return "Точка, " +
+                "x=" + xValue +
+                ", y=" + yValue;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GraphicalPoint point = (GraphicalPoint) o;
-        return x == point.x &&
-                y == point.y;
+
+        GraphicalPoint that = (GraphicalPoint) o;
+
+        if (Double.compare(that.xValue, xValue) != 0) return false;
+        return Double.compare(that.yValue, yValue) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(xValue);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(yValue);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

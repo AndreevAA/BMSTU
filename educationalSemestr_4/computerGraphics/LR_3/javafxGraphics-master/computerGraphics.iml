@@ -9,5 +9,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.projectlombok:lombok:1.18.10" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="sources" level="project" />
+    <orderEntry type="library" name="batik:batik-bridge:1.7" level="project" />
+    <orderEntry type="library" name="batik:batik-dom:1.7" level="project" />
+    <orderEntry type="library" name="batik:batik-util:1.7" level="project" />
+    <orderEntry type="library" name="batik:batik-svg-dom:1.7" level="project" />
+    <orderEntry type="library" name="batik:batik-anim:1.7" level="project" />
+    <orderEntry type="library" name="xml-apis:xml-apis:2.0.2" level="project" />
+    <orderEntry type="library" name="batik:batik:1.5" level="project" />
+    <orderEntry type="library" name="org.apache.commons:commons-lang3:3.3.2" level="project" />
+    <orderEntry type="library" name="org.apache.commons:commons-lang3:3.11" level="project" />
   </component>
 </module>

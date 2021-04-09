@@ -3,97 +3,92 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.util.Pair;
-import lombok.SneakyThrows;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.util.Builder;
 import sample.graphical.GraphicalObject;
-import sample.graphical.algorithm.QuickHull;
-import sample.graphical.entity.GraphicalCircle;
-import sample.graphical.entity.GraphicalLine;
-import sample.graphical.entity.GraphicalLineSection;
-import sample.graphical.entity.GraphicalPoint;
+import sample.graphical.entity.*;
 
+import javax.imageio.ImageIO;
+import javax.sound.sampled.Line;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
-import java.util.function.Supplier;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Controller implements Initializable {
 
-    private Map<String, ObservableList<String>> objectsFields;
-    private Map<String, GraphicalObject> objectNamesToClassReference;
-    private GraphicalObject currentObject;
-    private List<GraphicalObject> objectList;
-    private ParameterEditAction parameterEditAction = new ParameterEditAction();
+    private static final double DRAW_RADIUS = 10.0D;
 
-    private boolean inited = false;
+    Map<String, ObservableList<String>> objectsFields;
+    Map<String, GraphicalObject> objectNamesToClassReference;
 
-    private static final int GRID_INTERVALS = 10;
+    List<GraphicalObject> objectList;
+    List<GraphicalObject> copyObjectList;
+
+
+    static final public int NEEDED_NUMBER_OF_POINTS_FOR_COUNTING = 2;
+    static final public int OVER_LINE = 1;
+    static final public int ON_LINE = 0;
+    static final public int UNDER_LINE  = -1;
+
+    public double ZOMM_COFF = 1.0;
+    public double START_CANVAS_X = 0;
+    public double START_CANVAS_Y = 0;
+
+    @FXML
+    private ChoiceBox algType = new ChoiceBox();
+
+    @FXML
+    private ChoiceBox colorType = new ChoiceBox();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         objectsFields = new HashMap<>();
         objectsFields.put("Point", GraphicalPoint.parametersToObservableList());
-        objectsFields.put("Line", GraphicalLine.parametersToObservableList());
-        objectsFields.put("Line(section)", GraphicalLineSection.parametersToObservableList());
-        objectsFields.put("Circle", GraphicalCircle.parametersToObservableList());
 
         objectNamesToClassReference = new HashMap<>();
         objectNamesToClassReference.put("Point", GraphicalPoint.builder().build());
-        objectNamesToClassReference.put("Line", GraphicalLine.builder().build());
-        objectNamesToClassReference.put("Line(section)", GraphicalLineSection.builder().build());
-        objectNamesToClassReference.put("Circle", GraphicalCircle.builder().build());
 
         objectList = new ArrayList<>();
+        copyObjectList = new ArrayList<>();
 
-        System.out.println(fitAllObjectsButton == null);
+        algType.getItems().addAll("Алгоритм, использующий библиотечную функцию", "Алгоритм цифрового дифференциального анализатора",
+                "Алгоритм Брезенхема с действительными данными", "Алгоритм Брезенхема с целочисленными данными", "Алгоритм Брезенхема с устранением ступенчатости",
+                "Алгоритм Ву");
+
+        colorType.getItems().addAll("Черный", "Красный", "Зеленый", "Серый", "Желтый", "Синий");
     }
-
-    @FXML
-    private Button highlightElementButton;
-
-    @FXML
-    private Button deleteElementButton;
-
-    @FXML
-    private Button editElementButton;
-
-    @FXML
-    private Button createElementButton;
-
-    @FXML
-    private Button setParameterValueButton;
-
-    @FXML
-    private Button fitAllObjectsButton;
-
-    @FXML
-    private Button applyNewScaleButton;
 
     @FXML
     private Label parameterErrorField;
 
     @FXML
-    private Label fixInErrorTextHolder;
-
-    @FXML
-    private Label executionErrorsLabel;
-
-    @FXML
     private TextField parameterValueInput;
-
-    @FXML
-    private TextField scaleValueInput;
 
     @FXML
     private ListView<String> objectsPlacedList;
@@ -110,292 +105,424 @@ public class Controller implements Initializable {
     @FXML
     private ScrollPane scrollPanel;
 
+    // Кнопка очистки канваса от всех данных
     @FXML
-    public void onCreateCanvas() {
+    private Button clearAllButton;
+
+    // Кнопка вернуться назад
+    @FXML
+    private Button comeBack;
+
+    // Данные о координатах, вокруг которых вращать
+    @FXML
+    private TextField tempRootPointValueX;
+
+    @FXML
+    private TextField tempRootPointValueY;
+
+    @FXML
+    private Button graphButton;
+
+    @FXML
+    private Button timeButton;
+
+    @FXML
+    private TextField stepInformation;
+
+    public TextField tempRootPointValueX1, tempRootPointValueY1, tempRootPointValueX2, tempRootPointValueY2;
+
+
+    @FXML
+    public void onComeBack() {
+        comeBack.setOnAction(actionEvent -> {
+            getCopyFunction();
+            objectsPlacedList.setItems(
+                    FXCollections.observableList(objectList.stream().map(Object::toString).collect(Collectors.toList())));
+            redrawElements();
+        });
+    }
+
+    // Копия создания дублежа
+    @FXML
+    public void createCopyFunction() {
+        // Очистка массива дубляжей
+        copyObjectList.clear();
+
+        // Добавление всех элементов
+        for (int tempNumOfObject = 0; tempNumOfObject < objectList.size(); tempNumOfObject++)
+            copyObjectList.add(objectList.get(tempNumOfObject));
+    }
+
+    // Получение дублирующий копии в оригинал
+    @FXML
+    public void getCopyFunction() {
+        // Очистка массива дубляжей
+        objectList.clear();
+
+        // Добавление всех элементов
+        for (int tempNumOfObject = 0; tempNumOfObject < copyObjectList.size(); tempNumOfObject++)
+            objectList.add(copyObjectList.get(tempNumOfObject));
+    }
+
+    @FXML
+    public void onClearAllButton() {
+        clearAllButton.setOnAction(event -> {
+            createCopyFunction();
+
+            objectList.clear();
+
+            redrawElements();
+        });
+    }
+
+
+
+    public boolean isStepValid(double tempStep)
+    {
+        if (tempStep > 0)
+            return true;
+        return false;
+    }
+
+    @FXML
+    public void onMoveCanvasUp()
+    {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
+
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_Y -= tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
+    }
+
+    @FXML
+    public void onMoveCanvasDown()
+    {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
+
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_Y += tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
+    }
+
+    @FXML
+    public void onMoveCanvasRight()
+    {
+        try {
+            double tempStep = Double.parseDouble(stepInformation.getText().trim());
+
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_X += tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
+    }
+
+    @FXML
+    public void onMoveCanvasLeft()
+    {
+        try {
+            double tempStep = Integer.parseInt(stepInformation.getText().trim());
+
+            if (isStepValid(tempStep) == true)
+            {
+                START_CANVAS_X -= tempStep;
+
+                redrawElements();
+            }
+            else
+                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
+        }
+    }
+
+    @FXML
+    public void onCreateCanvas()
+    {
         scrollPanel.widthProperty().addListener(event -> {
             graphTable.setWidth(scrollPanel.getWidth());
             redrawElements();
         });
+
         scrollPanel.heightProperty().addListener(event -> {
             graphTable.setHeight(scrollPanel.getHeight());
             redrawElements();
         });
+    }
 
-        if (!inited) {
-            graphTable.getGraphicsContext2D().setFont(new Font(Font.getDefault().getName(), 10));
+    // Отрисовка линий
+    private void drawLinesCanvas(GraphicsContext gc)
+    {
+        // сетка
+        gc.setLineWidth(.5);
+        gc.setFontSmoothingType(null);
+        gc.setLineDashes(5, 2);
+        for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % (60 * ZOMM_COFF)) / 60 / ZOMM_COFF; i++) {
+            gc.strokeLine(i * 60 * ZOMM_COFF, 0, i * 60 * ZOMM_COFF, scrollPanel.getHeight());
+            gc.strokeLine(0, i * 60 * ZOMM_COFF, scrollPanel.getWidth(), i * 60 * ZOMM_COFF);
+        }
 
-            redrawElements();
-            graphTable.setOnMouseClicked(event -> {
-                GraphicalObject object = GraphicalPoint.builder()
-                        .x((int) (event.getX() / (graphTable.getScaleZ())))
-                        .y((int) ((graphTable.getHeight() - event.getY()) / (graphTable.getScaleZ())))
-                        .build();
+        gc.setLineDashes(null);
+        gc.setLineWidth(1);
+    }
 
-                if (objectList.stream().anyMatch(o -> o.equals(object))) {
-                    executionErrorsLabel.setText("Object with these params already exists");
-                } else {
-                    objectList.add(object);
-                    objectsPlacedList.getItems().add(object.toString());
+    // Отрисовка чисел
+    private void drawNumbersCanvas(GraphicsContext gc)
+    {
+        // числа
+        gc.setTextAlign(TextAlignment.CENTER);
 
-                    object.draw(graphTable);
-                }
-            });
-            inited = true;
+        for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % 60) / 60; i++)
+            gc.strokeText(String.valueOf((i * 60 - 300 + START_CANVAS_X) / ZOMM_COFF), i * 60, 315 - START_CANVAS_Y);
+
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setTextAlign(TextAlignment.LEFT);
+
+        for (int i = 0; i < (scrollPanel.getHeight() - scrollPanel.getHeight() % 60) / 60 + 1; i++)
+            gc.strokeText(String.valueOf((i * 60 - 300 + START_CANVAS_Y) / ZOMM_COFF), 310 - START_CANVAS_X, i * 60);
+    }
+
+    // Отрисовка нулевых линий
+    private void drawZeroLines(GraphicsContext gc)
+    {
+        gc.strokeLine(300 - START_CANVAS_X, 0, 300 - START_CANVAS_X, scrollPanel.getHeight());    // zero line
+        gc.strokeLine(0, 300 - START_CANVAS_Y, scrollPanel.getWidth(), 300 - START_CANVAS_Y);    // zero line
+    }
+
+    // Отрисовка сетки и чисел
+    private void drawCanvasMaterials()
+    {
+        GraphicsContext gc = graphTable.getGraphicsContext2D();
+
+        //drawLinesCanvas(gc);
+        //drawNumbersCanvas(gc);
+        //drawZeroLines(gc);
+    }
+
+    // Перерисовка элементов экрана
+    private void redrawElements()
+    {
+        System.out.println("Элементы перерисованы!");
+
+        graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
+        objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
+
+        drawCanvasMaterials();
+    }
+
+    @FXML
+    double getTempRootPointValueX()
+    {
+        return Double.parseDouble(tempRootPointValueX.getText().trim());
+    }
+
+    @FXML
+    double getTempRootPointValueY()
+    {
+        return Double.parseDouble(tempRootPointValueY.getText().trim());
+    }
+
+
+    private void setStandartFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor){
+        GraphicalLine line =  new GraphicalLine(firstX, firstY, secondX, secondY, lineColor);
+        line.draw(graphTable.getGraphicsContext2D());
+        objectList.add(line);
+        redrawElements();
+    }
+
+    private void setDigitAnalizatorFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor){
+        GraphicalDigitalAnalizerLinePixel graphicalDigitalAnalizerLinePixel = new GraphicalDigitalAnalizerLinePixel(firstX, firstY, secondX, secondY, lineColor);
+        objectList.add(graphicalDigitalAnalizerLinePixel);
+        redrawElements();
+    }
+
+    private void setBrezDoubleFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    {
+        BrezDoubleFunctionLinePixel brezDoubleFunctionLinePixel = new BrezDoubleFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
+        objectList.add(brezDoubleFunctionLinePixel);
+        redrawElements();
+    }
+
+    private void setBrezIntegerFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    {
+        BrezIntegerFunctionLinePixel brezIntegerFunctionLinePixel = new BrezIntegerFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
+        objectList.add(brezIntegerFunctionLinePixel);
+        redrawElements();
+    }
+
+    private void setBrezStupFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    {
+        BrezStupFunctionLinePixel brezStupFunctionLinePixel = new BrezStupFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
+        objectList.add(brezStupFunctionLinePixel);
+        redrawElements();
+    }
+
+    private void setVuFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    {
+        VuFunctionLinePixel vuFunctionLinePixel = new VuFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
+        objectList.add(vuFunctionLinePixel);
+        redrawElements();
+    }
+
+    Color getColor(String tempColorStatus)
+    {
+        if (tempColorStatus == "Красный")
+            return Color.RED;
+        else if (tempColorStatus == "Зеленый")
+            return Color.GREEN;
+        else if (tempColorStatus == "Серый")
+            return Color.GREY;
+        else if (tempColorStatus == "Синий")
+            return Color.BLUE;
+        else if (tempColorStatus == "Желтый")
+            return Color.YELLOW;
+        else
+            return Color.BLACK;
+    }
+
+    private void graphComparator() {
+        if (algType.getValue() != null && colorType.getValue() != null)
+        {
+            String tempAlgStatus = algType.getValue().toString();
+            Color lineColor = getColor(colorType.getValue().toString());
+
+            int firstX = (Integer.parseInt(tempRootPointValueX1.getText())), firstY =(Integer.parseInt(tempRootPointValueY1.getText()));
+            int secondX = (Integer.parseInt(tempRootPointValueX2.getText())), secondY = (Integer.parseInt(tempRootPointValueY2.getText()));
+
+            if (tempAlgStatus == "Алгоритм, использующий библиотечную функцию")
+                setStandartFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+            else if (tempAlgStatus == "Алгоритм цифрового дифференциального анализатора")
+                setDigitAnalizatorFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+            else if (tempAlgStatus == "Алгоритм Брезенхема с действительными данными")
+                setBrezDoubleFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+            else if (tempAlgStatus == "Алгоритм Брезенхема с целочисленными данными")
+                setBrezIntegerFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+            else if (tempAlgStatus == "Алгоритм Брезенхема с устранением ступенчатости")
+                setBrezStupFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+            else if (tempAlgStatus == "Алгоритм Ву")
+                setVuFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+
+            System.out.print(tempAlgStatus);
         }
     }
 
-
     @FXML
-    public void onObjectsToPlaceListReload() {
-        objectsToPlaceList.setItems(FXCollections.observableArrayList(objectsFields.keySet()));
-        objectsToPlaceList.getSelectionModel().selectedItemProperty()
-                .addListener((observableValue, oldValue, newValue) -> {
-                    objectsParametersList.setItems(objectsFields.get(observableValue.getValue()));
-                });
-    }
+    public void onGraph() {
+        graphButton.setOnAction(actionEvent -> {
 
-    @FXML
-    public void onObjectToPlaceSelected() {
-        createElementButton.setText("Create");
-        createElementButton.setOnAction(anotherEvent -> onDrawElement());
-        currentObject = objectNamesToClassReference.get(objectsToPlaceList.getSelectionModel().getSelectedItem());
-    }
-
-    @FXML
-    public void onParameterSelected() {
-        objectsParametersList.getSelectionModel().selectedItemProperty()
-                .addListener((observableValue, oldValue, newValue) -> {
-                    parameterValueInput.setPromptText("Value of " + observableValue.getValue());
-                    parameterValueInput.setOnAction(parameterEditAction);
-                    setParameterValueButton.setOnAction(parameterEditAction);
-                });
-    }
-
-    @FXML
-    public void onHighlightElement() {
-        graphTable.getGraphicsContext2D().setFill(Color.RED);
-        objectList.get(objectsPlacedList.getSelectionModel().getSelectedIndex()).draw(graphTable);
-        graphTable.getGraphicsContext2D().setFill(Color.BLACK);
-    }
-
-    @FXML
-    public void onExecuteGoal() {
-        List<GraphicalPoint> points = objectList.stream()
-                .filter(o -> o instanceof GraphicalPoint)
-                .map(o -> (GraphicalPoint) o)
-                .collect(Collectors.toList());
-
-        if (points.size() < 6) {
-            executionErrorsLabel.setText("Not enough points for drawing two hulls. Need at least 6, got " + points.size());
-        } else {
-            executionErrorsLabel.setText("");
-            for (GraphicalPoint point1 : points)
-                for (GraphicalPoint point2 : points)
-                    if (!point1.equals(point2)) {
-                        Supplier<Stream<Pair<GraphicalPoint, Integer>>> resultsSupplier = () -> points.stream()
-                                .filter(obj -> !obj.equals(point1) && !obj.equals(point2))
-                                .map(obj -> new Pair<>(obj, (obj.getX() - point1.getX()) * (point2.getY() - point1.getY())
-                                        - (obj.getY() - point1.getY()) * (point2.getX() - point1.getX())));
-
-                        long belowZero = resultsSupplier.get().filter(o -> o.getValue() < 0).count();
-                        if (resultsSupplier.get().anyMatch(o -> o.getValue().equals(0))) {
-                            continue; // нахрена это нужно?
-                        } else if (resultsSupplier.get().count() % 2 == 0 && belowZero == resultsSupplier.get().count() - belowZero) {
-                            resizeElements();
-                            drawHullsOnFound(point1, point2, resultsSupplier);
-
-                            return;
-                        } else if (resultsSupplier.get().count() % 2 == 1 && Math.abs(2 * belowZero - resultsSupplier.get().count()) == 1) {
-                            resizeElements();
-                            drawHullsOnFound(point1, point2, resultsSupplier);
-
-                            return;
-                        }
-                    }
-        }
-
-    }
-
-    @FXML
-    public void onEditElement() {
-        currentObject = objectList.get(objectsPlacedList.getSelectionModel().getSelectedIndex());
-        List<String> stringList = new ArrayList<>();
-        Arrays.stream(currentObject.getClass().getDeclaredFields())
-                .forEach(field -> {
-                    try {
-                        field.setAccessible(true);
-                        stringList.add(field.getName() + " = " + field.get(currentObject));
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                });
-        objectsParametersList.setItems(FXCollections.observableList(stringList));
-
-        createElementButton.setText("Edit");
-        createElementButton.setOnAction(event -> {
-            if (objectList.stream().filter(o -> o.equals(currentObject)).count() > 1) {
-                parameterErrorField.setText("Another object with same params already exists");
-            } else {
-                objectsPlacedList.getItems().set(objectsPlacedList.getSelectionModel().getSelectedIndex(), currentObject.toString());
-                objectsParametersList.setItems(FXCollections.emptyObservableList());
-                createElementButton.setText("Create");
-                createElementButton.setOnAction(anotherEvent -> onDrawElement());
-
-                redrawElements();
+            try {
+                graphComparator();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                parameterErrorField.setText("Допущена ошибка.");
             }
         });
     }
 
-    @FXML
-    public void obDeleteElement() {
-        objectList.remove(objectsPlacedList.getSelectionModel().getSelectedIndex());
-        objectsPlacedList.setItems(
-                FXCollections.observableList(objectList.stream().map(Object::toString).collect(Collectors.toList())));
-
-        redrawElements();
-    }
-
-    @FXML
-    public void onDeleteAllElements() {
-        objectList.clear();
-        objectsPlacedList.getItems().clear();
-
-        redrawElements();
-    }
-
-    @SneakyThrows
-    @FXML
-    public void onDrawElement() {
-        if (currentObject.validate()) {
-            if (objectList.stream().anyMatch(o -> o.equals(currentObject))) {
-                parameterErrorField.setText("Object with these params already exists");
-            } else {
-                objectList.add(currentObject.clone());
-                objectsPlacedList.getItems().add(currentObject.toString());
-
-                currentObject.draw(graphTable);
-                currentObject = objectNamesToClassReference.get(objectsToPlaceList.getSelectionModel().getSelectedItem());
-            }
-        } else {
-            parameterErrorField.setText("Errors in parameters` values, check if they are above zero");
+    private long getTimeOfWorkingFunctionDrawingLine(int startCoordinate, int endCoordinate, int stepOfCountingCoordinates, int typeOfAlg)
+    {
+        long startTime = System.nanoTime();
+        if (typeOfAlg == 0) {
+            GraphicalLine line = new GraphicalLine(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
         }
-    }
-
-    @FXML
-    private void resizeElements() {
-        double resizeScaleX = objectList.stream().mapToDouble(GraphicalObject::getMaxXCoordinate).max().orElse(0);
-        double resizeScaleY = objectList.stream().mapToDouble(GraphicalObject::getMaxYCoordinate).max().orElse(0);
-        if (resizeScaleX * resizeScaleY == 0) {
-            fixInErrorTextHolder.setText("Nothing to fit in");
-        } else {
-            System.out.println("//>> Math.max(resizeScaleX, resizeScaleY) = " + Math.max(resizeScaleX, resizeScaleY));
-            System.out.println("//>> Math.min(graphTable.getScaleX(), graphTable.getScaleY()) = " + Math.min(graphTable.getHeight(), graphTable.getWidth()));
-            double newScale = Math.min(graphTable.getHeight(), graphTable.getWidth()) / Math.max(resizeScaleX, resizeScaleY);
-            System.out.println("//> " + newScale);
-            fixInErrorTextHolder.setText("Fitted in [~" + new DecimalFormat("#.##").format(newScale) + "]");
-            rescale(newScale);
+        else if (typeOfAlg == 1) {
+            GraphicalDigitalAnalizerLinePixel graphicalDigitalAnalizerLinePixel = new GraphicalDigitalAnalizerLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
         }
-    }
-
-    @FXML
-    private void applyNewScale() {
-        try {
-            double newScale = Double.parseDouble(scaleValueInput.getText());
-            rescale(newScale);
-        } catch (Exception e) {
-            fixInErrorTextHolder.setText(e.getMessage());
+        else if (typeOfAlg == 2){
+            BrezDoubleFunctionLinePixel brezDoubleFunctionLinePixel = new BrezDoubleFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
         }
+        else if (typeOfAlg == 3){
+            BrezIntegerFunctionLinePixel brezIntegerFunctionLinePixel = new BrezIntegerFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
+        }
+        else if (typeOfAlg == 4){
+            BrezStupFunctionLinePixel brezStupFunctionLinePixel = new BrezStupFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
+        }
+        else if (typeOfAlg == 5){
+            VuFunctionLinePixel vuFunctionLinePixel = new VuFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
+        }
+        long endTime = System.nanoTime();
+        return endTime - startTime;
     }
 
     @FXML
-    private void onShowAbout() {
+    private void onShowHistogramStats(long startStandartFunctionLineTime, long graphicalDigitalAnalizerLinePixelFunctionLineTime, long brezDoubleFunctionLinePixelFunctionLineTime,
+                                      long brezIntegerFunctionLinePixel, long brezStupFunctionLinePixel, long vuFunctionLinePixel) {
+        final BarChart<Number, String> barChart =
+                new BarChart<>(new NumberAxis(), new CategoryAxis());
+        barChart.setCategoryGap(0);
+        barChart.setBarGap(0);
+
+        XYChart.Series<Number, String> series = new XYChart.Series<>();
+        series.setName("Сравнение времени работы алгоритмов");
+
+        series.getData().add(new XYChart.Data<>(startStandartFunctionLineTime, "Алгоритм, использующий библиотечную функцию"));
+        series.getData().add(new XYChart.Data<>(graphicalDigitalAnalizerLinePixelFunctionLineTime, "Алгоритм цифрового дифференциального анализатора"));
+        series.getData().add(new XYChart.Data<>(brezDoubleFunctionLinePixelFunctionLineTime, "Алгоритм Брезенхема с действительными данными"));
+        series.getData().add(new XYChart.Data<>(brezIntegerFunctionLinePixel, "Алгоритм Брезенхема с целочисленными данными"));
+        series.getData().add(new XYChart.Data<>(brezStupFunctionLinePixel, "Алгоритм Брезенхема с устранением ступенчатости"));
+        series.getData().add(new XYChart.Data<>(vuFunctionLinePixel, "Алгоритм Ву"));
+
+        barChart.getData().add(series);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(barChart);
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About");
-        alert.setHeaderText("Piece of software");
-        alert.setContentText("Simple program to create two hulls\nthat do not intersect. " +
-                "\nPoints can be placed with Create-Edit\nmenu and mouse left-click.");
+        alert.setTitle("Сравнение времени работы алгоритмов");
+        alert.setHeaderText(null);
+        alert.setGraphic(vBox);
 
         alert.showAndWait();
     }
 
+    @FXML
+    private void getTime()
+    {
+        int startCoordinate = 0, endCoordinate = 1000, stepOfCountingCoordinates = 100;
 
-    private void rescale(double newScale) {
-        graphTable.setScaleZ(newScale);
-        scaleValueInput.setPromptText("Scale: " + newScale);
-        redrawElements();
+        timeButton.setOnAction(actionEvent -> {
+            long startStandartFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 0);
+            long graphicalDigitalAnalizerLinePixelFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 1);
+            long brezDoubleFunctionLinePixelFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 2);
+            long brezIntegerFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 3);
+            long brezStupFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 4);
+            long vuFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 5);
+
+            onShowHistogramStats(startStandartFunctionLineTime, graphicalDigitalAnalizerLinePixelFunctionLineTime, brezDoubleFunctionLinePixelFunctionLineTime,
+                    brezIntegerFunctionLinePixel, brezStupFunctionLinePixel, vuFunctionLinePixel);
+        });
     }
-
-    private class ParameterEditAction implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent event) {
-            Arrays.stream(currentObject.getClass().getDeclaredFields())
-                    .filter(field -> objectsParametersList.getSelectionModel().getSelectedItem().startsWith(field.getName()))
-                    .forEach(field -> {
-                        try {
-                            field.setAccessible(true);
-                            field.set(currentObject, Integer.parseInt(parameterValueInput.getText().trim()));
-                            objectsParametersList.getItems()
-                                    .set(objectsParametersList.getSelectionModel().getSelectedIndex(),
-                                            field.getName() + " = " + parameterValueInput.getText());
-                            parameterErrorField.setText("");
-                        } catch (Exception e) {
-                            parameterErrorField.setText("Invalid value of " + field.getName() + ": " + e.getMessage());
-                        }
-                    });
-        }
-    }
-
-    private void redrawElements() {
-        graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
-
-        double lineParameter = GRID_INTERVALS * graphTable.getScaleZ();
-
-        int counter = 0;
-
-        graphTable.getGraphicsContext2D().setStroke(Color.DARKGRAY);
-        for (double i = 0; i < graphTable.getWidth(); i += lineParameter) {
-            graphTable.getGraphicsContext2D().strokeLine(i, 0, i, graphTable.getHeight());
-//            graphTable.getGraphicsContext2D().strokeText(String.valueOf(counter), i, graphTable.getHeight());
-//            counter += 10;
-        }
-
-        graphTable.getGraphicsContext2D().setStroke(Color.DARKGRAY);
-        for (double i = graphTable.getHeight(); i > 0; i -= lineParameter) {
-            graphTable.getGraphicsContext2D().strokeLine(0, i, graphTable.getWidth(), i);
-            graphTable.getGraphicsContext2D().strokeText(String.valueOf(counter), 0, i);
-            counter += 10;
-        }
-
-        objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable));
-        objectList.forEach(System.out::println);
-
-    }
-
-    private void drawHullsOnFound(GraphicalPoint point1, GraphicalPoint point2, Supplier<Stream<Pair<GraphicalPoint, Integer>>> resultsSupplier) {
-                redrawElements();
-        drawHull(resultsSupplier.get()
-                .filter(o -> o.getValue() < 0)
-                .map(Pair::getKey)
-                .collect(Collectors.toList()), point1);
-        drawHull(resultsSupplier.get()
-                .filter(o -> o.getValue() > 0)
-                .map(Pair::getKey)
-                .collect(Collectors.toList()), point2);
-    }
-
-    private void drawHull(List<GraphicalPoint> points, GraphicalPoint additionalPoint) {
-        points.add(additionalPoint);
-        QuickHull quickHull = new QuickHull(points.toArray(new GraphicalPoint[0]));
-        graphTable.getGraphicsContext2D().beginPath();
-        quickHull.getHullPointsAsVector().forEach(o ->
-                graphTable.getGraphicsContext2D().lineTo(o.getX() * graphTable.getScaleZ(),
-                        graphTable.getHeight() - o.getY() * graphTable.getScaleZ()));
-
-        graphTable.getGraphicsContext2D().closePath();
-//        graphTable.getGraphicsContext2D().setFill(Color.GRAY);
-//        graphTable.getGraphicsContext2D().setStroke(Color.DARKGRAY);
-        graphTable.getGraphicsContext2D().stroke();
-    }
-
-
 }

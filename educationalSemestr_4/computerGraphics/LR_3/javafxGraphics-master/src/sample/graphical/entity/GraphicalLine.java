@@ -2,22 +2,32 @@ package sample.graphical.entity;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import sample.graphical.GraphicalObject;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Data
-@Builder
 public class GraphicalLine extends GraphicalObject {
     private int startX;
     private int startY;
     private int endX;
     private int endY;
+    Color lineColor;
+
+    public GraphicalLine(int setStartX, int setStartY, int setEndX, int setEndY, Color lineColor) {
+        this.startX = setStartX;
+        this.startY = setStartY;
+        this.endX = setEndX;
+        this.endY = setEndY;
+        this.lineColor = lineColor;
+    }
 
     public static ObservableList<String> parametersToObservableList() {
         return FXCollections.observableArrayList(
@@ -27,11 +37,12 @@ public class GraphicalLine extends GraphicalObject {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        canvas.getGraphicsContext2D().strokeLine(startX * canvas.getScaleZ(),
-                canvas.getHeight() - startY * canvas.getScaleZ(),
-                endX * canvas.getScaleZ(),
-                canvas.getHeight() - endY * canvas.getScaleZ());
+    public void draw(GraphicsContext context) {
+
+        context.setStroke(Color.RED);
+        context.strokeLine(startX, startY, endX, endY);
+        System.out.println("Линия добавлена!" + startX + " | " + startY + " | " + endX + " | " + endY);
+        System.out.println();
     }
 
     @Override
@@ -42,16 +53,6 @@ public class GraphicalLine extends GraphicalObject {
     }
 
     @Override
-    public int getMaxXCoordinate() {
-        return Math.max(startX, endX);
-    }
-
-    @Override
-    public int getMaxYCoordinate() {
-        return Math.max(startY, endY);
-    }
-
-    @Override
     public String toString() {
         return "Line{" +
                 "startX=" + startX +
@@ -59,31 +60,5 @@ public class GraphicalLine extends GraphicalObject {
                 ", endX=" + endX +
                 ", endY=" + endY +
                 '}';
-    }
-
-    @Override
-    public GraphicalObject clone() {
-        return GraphicalLine.builder()
-                .startX(this.startX)
-                .startY(this.startY)
-                .endX(this.endX)
-                .endY(this.endY)
-                .build();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GraphicalLine that = (GraphicalLine) o;
-        return startX == that.startX &&
-                startY == that.startY &&
-                endX == that.endX &&
-                endY == that.endY;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(startX, startY, endX, endY);
     }
 }
