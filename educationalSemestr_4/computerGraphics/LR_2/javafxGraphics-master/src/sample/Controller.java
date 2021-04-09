@@ -118,6 +118,9 @@ public class Controller implements Initializable {
     @FXML
     private TextField angleOfRotationValue;
 
+    @FXML
+    private TextField zoomSizeY;
+
     // Данные о координатах, вокруг которых вращать
     @FXML
     private TextField tempRootPointValueX;
@@ -209,15 +212,19 @@ public class Controller implements Initializable {
     {
         try {
             double tempZoomSize = Double.parseDouble(zoomSize.getText().trim());
+            double tempZoomSizeY = Double.parseDouble(zoomSizeY.getText().trim());
 
             if (isTempZoomSizeValid(tempZoomSize) == true)
             {
                 for (int tempCur = 0; tempCur < objectList.size(); tempCur++)
                 {
-                    double updatedGraphicalPointValueX = objectList.get(tempCur).getxValue() * tempZoomSize;
+                    double x_m= getTempRootPointValueX();
+                    double y_m = getTempRootPointValueY();
+
+                    double updatedGraphicalPointValueX = objectList.get(tempCur).getxValue() * tempZoomSize + (1 - tempZoomSize) * x_m;
                     objectList.get(tempCur).setxValue(updatedGraphicalPointValueX);
 
-                    double updatedGraphicalPointValueY = objectList.get(tempCur).getyValue() * tempZoomSize;
+                    double updatedGraphicalPointValueY = objectList.get(tempCur).getyValue() * tempZoomSizeY + (1 - tempZoomSizeY) * y_m;
                     objectList.get(tempCur).setyValue(updatedGraphicalPointValueY);
                 }
 
@@ -237,15 +244,19 @@ public class Controller implements Initializable {
     {
         try {
             double tempZoomSize = Double.parseDouble(zoomSize.getText().trim());
+            double tempZoomSizeY = Double.parseDouble(zoomSizeY.getText().trim());
 
             if (isTempZoomSizeValid(tempZoomSize) == true)
             {
                 for (int tempCur = 0; tempCur < objectList.size(); tempCur++)
                 {
-                    double updatedGraphicalPointValueX = objectList.get(tempCur).getxValue() / tempZoomSize;
+                    double x_m= getTempRootPointValueX();
+                    double y_m = getTempRootPointValueY();
+
+                    double updatedGraphicalPointValueX = objectList.get(tempCur).getxValue() / tempZoomSize + (1 - tempZoomSize) / x_m;
                     objectList.get(tempCur).setxValue(updatedGraphicalPointValueX);
 
-                    double updatedGraphicalPointValueY = objectList.get(tempCur).getyValue() / tempZoomSize;
+                    double updatedGraphicalPointValueY = objectList.get(tempCur).getyValue() / tempZoomSizeY + (1 - tempZoomSizeY) / y_m;
                     objectList.get(tempCur).setyValue(updatedGraphicalPointValueY);
                 }
 

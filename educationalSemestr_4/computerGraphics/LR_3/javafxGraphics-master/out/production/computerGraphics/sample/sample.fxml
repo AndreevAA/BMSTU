@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <MenuBar VBox.vgrow="NEVER">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem mnemonicParsing="false" text="Open…" />
+                  <Menu mnemonicParsing="false" text="Open Recent" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Save As…" />
+                  <MenuItem mnemonicParsing="false" text="Revert" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Preferences…" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Quit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Undo" />
+                  <MenuItem mnemonicParsing="false" text="Redo" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Cut" />
+                  <MenuItem mnemonicParsing="false" text="Copy" />
+                  <MenuItem mnemonicParsing="false" text="Paste" />
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Select All" />
+                  <MenuItem mnemonicParsing="false" text="Unselect All" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem fx:id="aboutHelpButton" mnemonicParsing="false" onAction="#onShowAbout" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <AnchorPane SplitPane.resizableWithParent="false">
+               <children>
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Shit list" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1" />
+                     </font>
+                     <textFill>
+                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                     </textFill>
+                  </Label>
+                  <ListView fx:id="objectsPlacedList" layoutX="11.0" layoutY="42.0" prefHeight="146.0" prefWidth="200.0" />
+                  <Button fx:id="deleteElementButton" layoutX="10.0" layoutY="198.0" mnemonicParsing="false" onAction="#obDeleteElement" prefHeight="26.0" prefWidth="62.0" text="Delete" />
+                  <Button fx:id="editElementButton" layoutX="95.0" layoutY="231.0" mnemonicParsing="false" onAction="#onEditElement" prefHeight="26.0" prefWidth="60.0" text="Edit" />
+                  <Button fx:id="highlightElementButton" layoutX="78.0" layoutY="198.0" mnemonicParsing="false" onAction="#onHighlightElement" text="Highlight" />
+                  <Button fx:id="fitAllObjectsButton" layoutX="14.0" layoutY="472.0" mnemonicParsing="false" onAction="#resizeElements" text="Fit all" />
+                  <Label fx:id="fixInErrorTextHolder" layoutX="77.0" layoutY="477.0" prefHeight="16.0" prefWidth="144.0" />
+                  <Button fx:id="applyNewScaleButton" layoutX="12.0" layoutY="435.0" mnemonicParsing="false" onAction="#applyNewScale" text="Set scale" />
+                  <TextField fx:id="scaleValueInput" layoutX="93.0" layoutY="434.0" onAction="#applyNewScale" prefHeight="27.0" prefWidth="60.0" promptText="Scale" text="1.0" />
+                  <Button fx:id="executeGoalButton" layoutX="11.0" layoutY="264.0" mnemonicParsing="false" onAction="#onExecuteGoal" prefHeight="26.0" prefWidth="144.0" text="Execute Goal" />
+                  <Button fx:id="deleteAllElementsButton" layoutX="10.0" layoutY="231.0" mnemonicParsing="false" onAction="#onDeleteAllElements" text="Delete all" />
+                  <Label fx:id="executionErrorsLabel" layoutX="14.0" layoutY="301.0" prefHeight="104.0" prefWidth="193.0" textFill="RED" wrapText="true" />
+               </children>
+            </AnchorPane>
+            <ScrollPane fx:id="scrollPanel" hbarPolicy="NEVER" prefHeight="-1.0" prefWidth="-1.0" vbarPolicy="NEVER">
+               <content>
+                  <Canvas fx:id="graphTable" height="500.0" nodeOrientation="INHERIT" onMouseEntered="#onCreateCanvas" width="500.0" />
+               </content>
+            </ScrollPane>
+            <AnchorPane prefHeight="513.0" prefWidth="215.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Elements to add" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                  <ListView fx:id="objectsToPlaceList" layoutX="10.0" layoutY="44.0" onMouseClicked="#onObjectToPlaceSelected" onMouseEntered="#onObjectsToPlaceListReload" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="objectsParametersList" layoutX="10.0" layoutY="253.0" onContextMenuRequested="#onParameterSelected" onEditStart="#onParameterSelected" onMouseEntered="#onParameterSelected" prefHeight="155.0" prefWidth="200.0" />
+                  <Label fx:id="parameterErrorField" layoutX="10.0" layoutY="408.0" prefHeight="43.0" prefWidth="200.0" textFill="RED" wrapText="true" />
+                  <Button fx:id="createElementButton" layoutX="57.0" layoutY="486.0" mnemonicParsing="false" onAction="#onDrawElement" text="Create" />
+                  <TextField fx:id="parameterValueInput" layoutX="10.0" layoutY="451.0" prefHeight="26.0" prefWidth="200.0" promptText="Value" />
+                  <Button fx:id="setParameterValueButton" layoutX="10.0" layoutY="486.0" mnemonicParsing="false" text="Set" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" fx:id="x3" />
+               </font>
+               <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+               </textFill>
+            </Label>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
