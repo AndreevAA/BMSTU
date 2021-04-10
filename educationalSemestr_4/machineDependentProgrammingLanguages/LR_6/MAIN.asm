@@ -1,3 +1,5 @@
+; Андреев А А знаковое в 2 с/с беззнаковое в 8 с/с знаковое в 16 с/с
+
 EXTRN READ_NUM:NEAR
 EXTRN PRINT_UO:NEAR
 EXTRN PRINT_SH:NEAR
@@ -18,9 +20,9 @@ STKS ENDS
 DATAS SEGMENT PARA PUBLIC 'DATA'
     
     ; Массив меню команд
-    MENU DB "1. INPUT SIGNED BINARY.", 10, 13
-        DB "2. PRINT UNSIGNED OCT.", 10, 13
-        DB "3. PRINT SIGNED HEX.", 10, 13
+    MENU DB "1. INPUT BINARY WITH SIGN.", 10, 13
+        DB "2. OUTPUT UNSIGNED OCT.", 10, 13
+        DB "3. OUTPUT SIGNED HEX.", 10, 13
         DB "4. EXIT.", 10, 13
         DB "CHOOSE OPERATION: $"
 
@@ -35,7 +37,7 @@ DATAS SEGMENT PARA PUBLIC 'DATA'
     UOVALUE DB 5 DUP ("0"), "$"
     SHVALUE DB 4 DUP ("0"), "$"                     
 
-    HEXTABLE DB "0123456789ABCDEF"                  ; 2-е выводимое число, знаковое 16 с/c
+    HEXTABLE DB "0123456789ABCDEF"                  ; 2-е выводимое число, для знаковое 16 с/c
 DATAS ENDS
 ;---------------------
 CODES SEGMENT PARA PUBLIC 'CODE'
@@ -52,7 +54,7 @@ MAIN:
     MOV FUNC[6], EXIT
     
     ; Вывод списка команд меню построчно
-    MENU:
+    MENU_SHOW:
 
         ; Вывод текущих команд массива
         MOV AH, 9                                   
@@ -76,7 +78,7 @@ MAIN:
         CALL FUNC[BX]
         CALL NEW_LINE
 
-    JMP MENU
+    JMP MENU_SHOW
 ;---------------------
 EXIT PROC NEAR
     MOV AX, 4C00H

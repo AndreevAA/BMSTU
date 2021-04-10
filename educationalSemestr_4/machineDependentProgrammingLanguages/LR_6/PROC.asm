@@ -16,10 +16,8 @@ TO_HEX PROC NEAR
     MOV AL, SBHVALUE                        ; Запись в AL считанного слова
 
     ; Логически сдвигаю битами - заполняю нулями
-    SHR AL, 1
-    SHR AL, 1
-    SHR AL, 1
-    SHR AL, 1
+    MOV CL, 4
+    SHR AL, CL
 
     XLAT                                    ; Используя индекс из регистра AL, выбирает элемент из таблицы, расположенной в памяти по адресу DS:(E)BX, и помещает его в AL;
 
@@ -33,10 +31,7 @@ TO_HEX PROC NEAR
     MOV AL, SBLVALUE
     
     ; Логически сдвигаю битами - заполняю нулями
-    SHR AL, 1
-    SHR AL, 1
-    SHR AL, 1
-    SHR AL, 1
+    SHR AL, CL
 
     XLAT
 
@@ -52,29 +47,32 @@ TO_HEX PROC NEAR
 TO_HEX ENDP
 ;---------------------
 TO_OCT PROC NEAR
-    CMP SIGN, "-"
-
-    JE REVERSE
 
     CALL FILL_OCT
     RET
-    
+
     REVERSE:
-        NOT SBLVALUE
-        NOT SBHVALUE
-        ADD SBLVALUE, 1
+        NEG SBLVALUE
+
         CMP SBLVALUE, 00000000B
+
         JE F
+
         CALL FILL_OCT
+
         SUB SBLVALUE, 1
         NOT SBLVALUE
         NOT SBHVALUE
+
         RET
+
         F:
             ADD SBHVALUE, 1
             CALL FILL_OCT
+
             SUB SBLVALUE, 1
             SUB SBHVALUE, 1
+
             NOT SBLVALUE
             NOT SBHVALUE
     RET
@@ -88,11 +86,13 @@ FILL_OCT PROC NEAR
     SHR AL, 1
     SHR AL, 1
     ADD AL, "0"
+
     MOV UOVALUE[0], AL
     MOV AL, SBHVALUE
     AND AL, 00001110B
     SHR AL, 1
     ADD AL, "0"
+
     MOV UOVALUE[1], AL
     MOV AL, SBHVALUE
     AND AL, 00000001B
@@ -105,6 +105,7 @@ FILL_OCT PROC NEAR
     ROL AL, 1
     ADD AL, DL
     ADD AL, "0"
+
     MOV UOVALUE[2], AL
     MOV AL, SBLVALUE
     AND AL, 00111000B
@@ -112,6 +113,7 @@ FILL_OCT PROC NEAR
     SHR AL, 1
     SHR AL, 1
     ADD AL, "0"
+
     MOV UOVALUE[3], AL
     MOV AL, SBLVALUE
     AND AL, 00000111B
