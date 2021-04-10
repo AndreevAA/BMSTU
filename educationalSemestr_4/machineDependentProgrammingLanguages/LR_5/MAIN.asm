@@ -1,4 +1,4 @@
-; Задача: Удалить столбец цифровой матрицы с наименьшим элементом
+; Задача: Удалить строку цифровой матрицы с наименьшим элементом
 ;---------------------
 EXTRN READ_SIZE:NEAR
 EXTRN READ_MAT:NEAR
@@ -28,7 +28,7 @@ MAIN:
     CALL DEL_ROW					; Удаление строки
     CALL PRINT_MAT					; Вывод матрицы
 
-    MOV AX, 4C00H
+    MOV AH, 4Ch
     INT 21H
 CODES ENDS
 END MAIN
