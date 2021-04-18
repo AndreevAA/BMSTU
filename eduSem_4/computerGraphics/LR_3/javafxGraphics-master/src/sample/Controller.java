@@ -40,9 +40,14 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.lang.StrictMath.*;
+
+import static java.lang.StrictMath.cos;
+import static java.lang.StrictMath.sin;
+
 public class Controller implements Initializable {
 
-    private static final double DRAW_RADIUS = 10.0D;
+    private final double DRAW_RADIUS = 10.0D;
 
     Map<String, ObservableList<String>> objectsFields;
     Map<String, GraphicalObject> objectNamesToClassReference;
@@ -51,10 +56,10 @@ public class Controller implements Initializable {
     List<GraphicalObject> copyObjectList;
 
 
-    static final public int NEEDED_NUMBER_OF_POINTS_FOR_COUNTING = 2;
-    static final public int OVER_LINE = 1;
-    static final public int ON_LINE = 0;
-    static final public int UNDER_LINE  = -1;
+    final public int NEEDED_NUMBER_OF_POINTS_FOR_COUNTING = 2;
+    final public int OVER_LINE = 1;
+    final public int ON_LINE = 0;
+    final public int UNDER_LINE  = -1;
 
     public double ZOMM_COFF = 1.0;
     public double START_CANVAS_X = 0;
@@ -105,6 +110,9 @@ public class Controller implements Initializable {
     @FXML
     private ScrollPane scrollPanel;
 
+    @FXML
+    private Button spectrButton;
+
     // Кнопка очистки канваса от всех данных
     @FXML
     private Button clearAllButton;
@@ -116,6 +124,12 @@ public class Controller implements Initializable {
     // Данные о координатах, вокруг которых вращать
     @FXML
     private TextField tempRootPointValueX;
+
+    @FXML
+    private TextField numberSpectr;
+
+    @FXML
+    private TextField radiousSpectr;
 
     @FXML
     private TextField tempRootPointValueY;
@@ -325,16 +339,11 @@ public class Controller implements Initializable {
     private void drawCanvasMaterials()
     {
         GraphicsContext gc = graphTable.getGraphicsContext2D();
-
-        //drawLinesCanvas(gc);
-        //drawNumbersCanvas(gc);
-        //drawZeroLines(gc);
     }
 
     // Перерисовка элементов экрана
     private void redrawElements()
     {
-        System.out.println("Элементы перерисованы!");
 
         graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
         objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
@@ -355,41 +364,41 @@ public class Controller implements Initializable {
     }
 
 
-    private void setStandartFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor){
+    private void setStandartFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor){
         GraphicalLine line =  new GraphicalLine(firstX, firstY, secondX, secondY, lineColor);
         line.draw(graphTable.getGraphicsContext2D());
         objectList.add(line);
         redrawElements();
     }
 
-    private void setDigitAnalizatorFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor){
+    private void setDigitAnalizatorFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor){
         GraphicalDigitalAnalizerLinePixel graphicalDigitalAnalizerLinePixel = new GraphicalDigitalAnalizerLinePixel(firstX, firstY, secondX, secondY, lineColor);
         objectList.add(graphicalDigitalAnalizerLinePixel);
         redrawElements();
     }
 
-    private void setBrezDoubleFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    private void setBrezDoubleFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
     {
         BrezDoubleFunctionLinePixel brezDoubleFunctionLinePixel = new BrezDoubleFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
         objectList.add(brezDoubleFunctionLinePixel);
         redrawElements();
     }
 
-    private void setBrezIntegerFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    private void setBrezIntegerFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
     {
         BrezIntegerFunctionLinePixel brezIntegerFunctionLinePixel = new BrezIntegerFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
         objectList.add(brezIntegerFunctionLinePixel);
         redrawElements();
     }
 
-    private void setBrezStupFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    private void setBrezStupFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
     {
         BrezStupFunctionLinePixel brezStupFunctionLinePixel = new BrezStupFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
         objectList.add(brezStupFunctionLinePixel);
         redrawElements();
     }
 
-    private void setVuFunctionLine(int firstX, int firstY, int secondX, int secondY, Color lineColor)
+    private void setVuFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
     {
         VuFunctionLinePixel vuFunctionLinePixel = new VuFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
         objectList.add(vuFunctionLinePixel);
@@ -412,29 +421,25 @@ public class Controller implements Initializable {
             return Color.BLACK;
     }
 
-    private void graphComparator() {
+    public void graphComparator(double firstX, double firstY, double secondX, double secondY) {
         if (algType.getValue() != null && colorType.getValue() != null)
         {
             String tempAlgStatus = algType.getValue().toString();
-            Color lineColor = getColor(colorType.getValue().toString());
-
-            int firstX = (Integer.parseInt(tempRootPointValueX1.getText())), firstY =(Integer.parseInt(tempRootPointValueY1.getText()));
-            int secondX = (Integer.parseInt(tempRootPointValueX2.getText())), secondY = (Integer.parseInt(tempRootPointValueY2.getText()));
 
             if (tempAlgStatus == "Алгоритм, использующий библиотечную функцию")
-                setStandartFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+                setStandartFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
             else if (tempAlgStatus == "Алгоритм цифрового дифференциального анализатора")
-                setDigitAnalizatorFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+                setDigitAnalizatorFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
             else if (tempAlgStatus == "Алгоритм Брезенхема с действительными данными")
-                setBrezDoubleFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+                setBrezDoubleFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
             else if (tempAlgStatus == "Алгоритм Брезенхема с целочисленными данными")
-                setBrezIntegerFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+                setBrezIntegerFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
             else if (tempAlgStatus == "Алгоритм Брезенхема с устранением ступенчатости")
-                setBrezStupFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+                setBrezStupFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
             else if (tempAlgStatus == "Алгоритм Ву")
-                setVuFunctionLine(firstX, firstY, secondX, secondY, lineColor);
+                setVuFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
 
-            System.out.print(tempAlgStatus);
+            redrawElements();
         }
     }
 
@@ -443,7 +448,10 @@ public class Controller implements Initializable {
         graphButton.setOnAction(actionEvent -> {
 
             try {
-                graphComparator();
+                int firstX = (Integer.parseInt(tempRootPointValueX1.getText())), firstY =(Integer.parseInt(tempRootPointValueY1.getText()));
+                int secondX = (Integer.parseInt(tempRootPointValueX2.getText())), secondY = (Integer.parseInt(tempRootPointValueY2.getText()));
+
+                graphComparator(firstX, firstY, secondX, secondY);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -514,6 +522,8 @@ public class Controller implements Initializable {
         int startCoordinate = 0, endCoordinate = 1000, stepOfCountingCoordinates = 100;
 
         timeButton.setOnAction(actionEvent -> {
+
+            // Вычисление времени работы
             long startStandartFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 0);
             long graphicalDigitalAnalizerLinePixelFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 1);
             long brezDoubleFunctionLinePixelFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 2);
@@ -521,8 +531,49 @@ public class Controller implements Initializable {
             long brezStupFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 4);
             long vuFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 5);
 
+            // Показ диаграммы на экран
             onShowHistogramStats(startStandartFunctionLineTime, graphicalDigitalAnalizerLinePixelFunctionLineTime, brezDoubleFunctionLinePixelFunctionLineTime,
                     brezIntegerFunctionLinePixel, brezStupFunctionLinePixel, vuFunctionLinePixel);
         });
+    }
+
+    private double[] rotateLine(double startCoordinateX, double startCoordinateY, double endCoordinateX, double endCoordinateY, double degreeOfRotation, double spectrRadious)
+    {
+
+        // Высисление поворота координат
+        double rotatedEndCoordinateX = startCoordinateX + (((endCoordinateX - startCoordinateX) * cos(degreeOfRotation) - (endCoordinateY - startCoordinateY) * sin(degreeOfRotation)));
+        double rotatedEndCoordinateY = startCoordinateY + (((endCoordinateX - startCoordinateX) * sin(degreeOfRotation)) + (endCoordinateY - startCoordinateY) * cos(degreeOfRotation));
+
+        return new double[] {rotatedEndCoordinateX, rotatedEndCoordinateY};
+    }
+
+    @FXML
+    private void onSpectr()
+    {
+        try {
+            spectrButton.setOnAction(actionEvent -> {
+
+                int numberOfLines = Integer.parseInt(numberSpectr.getText()), spectrRadious = Integer.parseInt(radiousSpectr.getText());
+
+                double firstX = 500, firstY = 500;
+                double secondX = 600, secondY = 600;
+
+                double tempStep = 360.0 / (double) numberOfLines;
+
+                for (int tempNumberOfLine = 0; tempNumberOfLine < numberOfLines; tempNumberOfLine++)
+                {
+                    double tempDegree = tempStep * (double) tempNumberOfLine;
+                    double tempData[] = rotateLine(firstX, firstY, secondX, secondY, Math.toRadians(tempDegree), spectrRadious);
+                    System.out.println(tempNumberOfLine + " " + tempDegree);
+
+                    graphComparator(firstX, firstY, tempData[0], tempData[1]);
+                    graphComparator(tempData[0], tempData[1],  firstX,  firstY);
+                }
+            });
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            parameterErrorField.setText("Допущена ошибка.");
+        }
     }
 }

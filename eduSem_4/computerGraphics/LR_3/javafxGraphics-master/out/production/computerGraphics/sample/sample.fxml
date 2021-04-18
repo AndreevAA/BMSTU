@@ -1,104 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <MenuBar VBox.vgrow="NEVER">
-         <menus>
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Open…" />
-                  <Menu mnemonicParsing="false" text="Open Recent" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Close" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save As…" />
-                  <MenuItem mnemonicParsing="false" text="Revert" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Preferences…" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Quit" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Undo" />
-                  <MenuItem mnemonicParsing="false" text="Redo" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Cut" />
-                  <MenuItem mnemonicParsing="false" text="Copy" />
-                  <MenuItem mnemonicParsing="false" text="Paste" />
-                  <MenuItem mnemonicParsing="false" text="Delete" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Select All" />
-                  <MenuItem mnemonicParsing="false" text="Unselect All" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-               <items>
-                  <MenuItem fx:id="aboutHelpButton" mnemonicParsing="false" onAction="#onShowAbout" text="About" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <SplitPane dividerPositions="0.18404907975460122, 0.4850715746421268" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <items>
             <AnchorPane SplitPane.resizableWithParent="false">
                <children>
-                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Shit list" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="14.0" style="&#10;" text="Описание программы:" textAlignment="CENTER" wrapText="false">
                      <font>
-                        <Font size="18.0" fx:id="x1" />
+                        <Font size="18.0" fx:id="x11" />
                      </font>
-                     <textFill>
-                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-                     </textFill>
                   </Label>
-                  <ListView fx:id="objectsPlacedList" layoutX="11.0" layoutY="42.0" prefHeight="146.0" prefWidth="200.0" />
-                  <Button fx:id="deleteElementButton" layoutX="10.0" layoutY="198.0" mnemonicParsing="false" onAction="#obDeleteElement" prefHeight="26.0" prefWidth="62.0" text="Delete" />
-                  <Button fx:id="editElementButton" layoutX="95.0" layoutY="231.0" mnemonicParsing="false" onAction="#onEditElement" prefHeight="26.0" prefWidth="60.0" text="Edit" />
-                  <Button fx:id="highlightElementButton" layoutX="78.0" layoutY="198.0" mnemonicParsing="false" onAction="#onHighlightElement" text="Highlight" />
-                  <Button fx:id="fitAllObjectsButton" layoutX="14.0" layoutY="472.0" mnemonicParsing="false" onAction="#resizeElements" text="Fit all" />
-                  <Label fx:id="fixInErrorTextHolder" layoutX="77.0" layoutY="477.0" prefHeight="16.0" prefWidth="144.0" />
-                  <Button fx:id="applyNewScaleButton" layoutX="12.0" layoutY="435.0" mnemonicParsing="false" onAction="#applyNewScale" text="Set scale" />
-                  <TextField fx:id="scaleValueInput" layoutX="93.0" layoutY="434.0" onAction="#applyNewScale" prefHeight="27.0" prefWidth="60.0" promptText="Scale" text="1.0" />
-                  <Button fx:id="executeGoalButton" layoutX="11.0" layoutY="264.0" mnemonicParsing="false" onAction="#onExecuteGoal" prefHeight="26.0" prefWidth="144.0" text="Execute Goal" />
-                  <Button fx:id="deleteAllElementsButton" layoutX="10.0" layoutY="231.0" mnemonicParsing="false" onAction="#onDeleteAllElements" text="Delete all" />
-                  <Label fx:id="executionErrorsLabel" layoutX="14.0" layoutY="301.0" prefHeight="104.0" prefWidth="193.0" textFill="RED" wrapText="true" />
+                  <TextArea layoutX="7.0" layoutY="37.0" prefHeight="71.0" prefWidth="200.0" text="Нарисовать исходный рисунок, затем его переместить,&#10;промасштабировать, повернуть" />
+                  <Button fx:id="graphButton" layoutX="3.0" layoutY="369.0" mnemonicParsing="false" onAction="#onGraph" prefHeight="27.0" prefWidth="201.0" text="Построить прямую" />
+                  <Label layoutX="5.0" layoutY="136.0" text="X1 =" />
+                  <Label layoutX="5.0" layoutY="164.0" text="Y1 =" />
+                  <TextField fx:id="tempRootPointValueY1" layoutX="39.0" layoutY="161.0" />
+                  <TextField fx:id="tempRootPointValueX1" layoutX="39.0" layoutY="131.0" />
+                  <Label alignment="CENTER" layoutX="3.0" layoutY="108.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Координаты прямой" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x12" />
+                     </font>
+                  </Label>
+                  <Label layoutX="5.0" layoutY="196.0" text="X2 =" />
+                  <Label layoutX="5.0" layoutY="224.0" text="Y2 =" />
+                  <TextField fx:id="tempRootPointValueY2" layoutX="39.0" layoutY="221.0" />
+                  <TextField fx:id="tempRootPointValueX2" layoutX="39.0" layoutY="191.0" />
+                  <Label alignment="CENTER" layoutX="8.0" layoutY="257.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор алгоритма" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x122" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="algType" layoutX="3.0" layoutY="280.0" prefHeight="27.0" prefWidth="201.0" />
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="307.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1221" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="colorType" layoutX="2.0" layoutY="330.0" prefHeight="27.0" prefWidth="201.0" />
+                  <Button fx:id="timeButton" layoutX="5.0" layoutY="413.0" mnemonicParsing="false" onAction="#getTime" prefHeight="27.0" prefWidth="201.0" text="Сравнить время работы" />
+                  <Button fx:id="spectrButton" layoutX="5.0" layoutY="514.0" mnemonicParsing="false" onAction="#onSpectr" prefHeight="27.0" prefWidth="201.0" text="Спектр" />
+                  <Label layoutX="8.0" layoutY="454.0" text="R =" />
+                  <TextField fx:id="radiousSpectr" layoutX="42.0" layoutY="451.0" />
+                  <Label layoutX="7.0" layoutY="481.0" text="N =" />
+                  <TextField fx:id="numberSpectr" layoutX="41.0" layoutY="481.0" />
                </children>
             </AnchorPane>
-            <ScrollPane fx:id="scrollPanel" hbarPolicy="NEVER" prefHeight="-1.0" prefWidth="-1.0" vbarPolicy="NEVER">
+            <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">
                <content>
                   <Canvas fx:id="graphTable" height="500.0" nodeOrientation="INHERIT" onMouseEntered="#onCreateCanvas" width="500.0" />
                </content>
             </ScrollPane>
-            <AnchorPane prefHeight="513.0" prefWidth="215.0" SplitPane.resizableWithParent="false">
+            <AnchorPane prefHeight="513.0" prefWidth="233.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Elements to add" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <ListView fx:id="objectsToPlaceList" layoutX="10.0" layoutY="44.0" onMouseClicked="#onObjectToPlaceSelected" onMouseEntered="#onObjectsToPlaceListReload" prefHeight="200.0" prefWidth="200.0" />
-                  <ListView fx:id="objectsParametersList" layoutX="10.0" layoutY="253.0" onContextMenuRequested="#onParameterSelected" onEditStart="#onParameterSelected" onMouseEntered="#onParameterSelected" prefHeight="155.0" prefWidth="200.0" />
-                  <Label fx:id="parameterErrorField" layoutX="10.0" layoutY="408.0" prefHeight="43.0" prefWidth="200.0" textFill="RED" wrapText="true" />
-                  <Button fx:id="createElementButton" layoutX="57.0" layoutY="486.0" mnemonicParsing="false" onAction="#onDrawElement" text="Create" />
-                  <TextField fx:id="parameterValueInput" layoutX="10.0" layoutY="451.0" prefHeight="26.0" prefWidth="200.0" promptText="Value" />
-                  <Button fx:id="setParameterValueButton" layoutX="10.0" layoutY="486.0" mnemonicParsing="false" text="Set" />
+
+                  <Label fx:id="parameterErrorField" layoutX="20.0" layoutY="37.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="38.0" layoutY="14.0" style="&#10;" text="Статус ошибок:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x111" />
+                     </font>
+                  </Label>
+                  <Button fx:id="clearAllButton" layoutX="226.0" layoutY="428.0" mnemonicParsing="false" onAction="#onClearAllButton" prefHeight="27.0" prefWidth="201.0" text="Очистить поле" />
+                  <Button fx:id="comeBack" layoutX="8.0" layoutY="429.0" mnemonicParsing="false" onAction="#onComeBack" prefHeight="27.0" prefWidth="200.0" text="Шаг назад" />
+                  <Button fx:id="bottomButton" layoutX="74.0" layoutY="223.0" mnemonicParsing="false" onAction="#onMoveCanvasDown" prefHeight="27.0" prefWidth="63.0" text="Вниз" />
+                  <Button fx:id="leftButton" layoutX="15.0" layoutY="186.0" mnemonicParsing="false" onAction="#onMoveCanvasLeft" prefHeight="27.0" prefWidth="87.0" text="Влево" />
+                  <Button fx:id="rightButton" layoutX="114.0" layoutY="186.0" mnemonicParsing="false" onAction="#onMoveCanvasRight" prefHeight="27.0" prefWidth="87.0" text="Вправо" />
+                  <Button fx:id="upButton" layoutX="74.0" layoutY="150.0" mnemonicParsing="false" onAction="#onMoveCanvasUp" prefHeight="27.0" prefWidth="63.0" text="Вверх" />
+                  <Label alignment="CENTER" layoutX="12.0" layoutY="456.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Данная операция хранит только один шаг." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x1211" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="121.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Перемещение поля" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1212" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="12.0" layoutY="400.0" prefHeight="23.0" prefWidth="415.0" style="&#10;" text="Операции над полем" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1213" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="238.0" layoutY="456.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Полная очистка данных с поля." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x12111" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="72.0" text="Шаг перемещения" />
+                  <TextField fx:id="stepInformation" layoutX="155.0" layoutY="67.0" prefHeight="27.0" prefWidth="255.0" />
                </children>
             </AnchorPane>
          </items>

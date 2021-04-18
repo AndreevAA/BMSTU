@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import sample.graphical.GraphicalObject;
 
 import java.util.Arrays;
@@ -15,13 +12,13 @@ import java.util.stream.Collectors;
 
 @Data
 public class GraphicalLine extends GraphicalObject {
-    private int startX;
-    private int startY;
-    private int endX;
-    private int endY;
+    private double startX;
+    private double startY;
+    private double endX;
+    private double endY;
     Color lineColor;
 
-    public GraphicalLine(int setStartX, int setStartY, int setEndX, int setEndY, Color lineColor) {
+    public GraphicalLine(double setStartX, double setStartY, double setEndX, double setEndY, Color lineColor) {
         this.startX = setStartX;
         this.startY = setStartY;
         this.endX = setEndX;
@@ -38,11 +35,8 @@ public class GraphicalLine extends GraphicalObject {
 
     @Override
     public void draw(GraphicsContext context) {
-
-        context.setStroke(Color.RED);
+        context.setStroke(lineColor);
         context.strokeLine(startX, startY, endX, endY);
-        System.out.println("Линия добавлена!" + startX + " | " + startY + " | " + endX + " | " + endY);
-        System.out.println();
     }
 
     @Override

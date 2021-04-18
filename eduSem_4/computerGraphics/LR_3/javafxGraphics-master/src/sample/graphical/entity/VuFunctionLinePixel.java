@@ -6,11 +6,11 @@ package sample.graphical.entity;
 
 public class VuFunctionLinePixel extends GraphicalObject {
 
-    int firstX, secondX;
-    int firstY, secondY;
+    double firstX, secondX;
+    double firstY, secondY;
     Color lineColor;
 
-    public VuFunctionLinePixel(int firstX, int firstY, int secondX, int secondY, Color lineColor) {
+    public VuFunctionLinePixel(double firstX, double firstY, double secondX, double secondY, Color lineColor) {
         this.firstX = firstX;
         this.firstY = firstY;
         this.secondX = secondX;

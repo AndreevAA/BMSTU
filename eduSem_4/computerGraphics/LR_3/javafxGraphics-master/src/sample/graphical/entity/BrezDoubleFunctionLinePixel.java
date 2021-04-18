@@ -6,11 +6,11 @@ import sample.graphical.GraphicalObject;
 
 public class BrezDoubleFunctionLinePixel extends GraphicalObject {
 
-    int firstX, secondX;
-    int firstY, secondY;
+    double firstX, secondX;
+    double firstY, secondY;
     Color lineColor;
 
-    public BrezDoubleFunctionLinePixel(int firstX, int firstY, int secondX, int secondY, Color lineColor) {
+    public BrezDoubleFunctionLinePixel(double firstX, double firstY, double secondX, double secondY, Color lineColor) {
         this.firstX = firstX;
         this.firstY = firstY;
         this.secondX = secondX;

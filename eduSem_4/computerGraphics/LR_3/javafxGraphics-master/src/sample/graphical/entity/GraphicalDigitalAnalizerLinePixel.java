@@ -6,11 +6,11 @@ import sample.graphical.GraphicalObject;
 
 public class GraphicalDigitalAnalizerLinePixel extends GraphicalObject {
 
-    int firstX, secondX;
-    int firstY, secondY;
+    double firstX, secondX;
+    double firstY, secondY;
     Color lineColor;
 
-    public GraphicalDigitalAnalizerLinePixel(int firstX, int firstY, int secondX, int secondY, Color lineColor) {
+    public GraphicalDigitalAnalizerLinePixel(double firstX, double firstY, double secondX, double secondY, Color lineColor) {
         this.firstX = firstX;
         this.firstY = firstY;
         this.secondX = secondX;

@@ -6,11 +6,11 @@ package sample.graphical.entity;
 
 public class BrezStupFunctionLinePixel extends GraphicalObject {
 
-    int firstX, secondX;
-    int firstY, secondY;
+    double firstX, secondX;
+    double firstY, secondY;
     Color lineColor;
 
-    public BrezStupFunctionLinePixel(int firstX, int firstY, int secondX, int secondY, Color lineColor) {
+    public BrezStupFunctionLinePixel(double firstX, double firstY, double secondX, double secondY, Color lineColor) {
         this.firstX = firstX;
         this.firstY = firstY;
         this.secondX = secondX;
