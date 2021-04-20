@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <SplitPane dividerPositions="0.18404907975460122, 0.4850715746421268" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <AnchorPane prefHeight="541.0" prefWidth="102.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Button fx:id="graphCircleButton" layoutX="2.0" layoutY="225.0" mnemonicParsing="false" onAction="#onGraph" prefHeight="27.0" prefWidth="201.0" text="Построить окружность" />
+                  <Label layoutX="5.0" layoutY="85.0" text="X =" />
+                  <Label layoutX="5.0" layoutY="113.0" text="Y =" />
+                  <TextField fx:id="circleCenterY" layoutX="39.0" layoutY="110.0" />
+                  <TextField fx:id="circleCenterX" layoutX="39.0" layoutY="80.0" />
+                  <Label alignment="CENTER" layoutX="3.0" layoutY="57.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Задание окружности" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x12" />
+                     </font>
+                  </Label>
+                  <Label layoutX="5.0" layoutY="145.0" text="R =" />
+                  <TextField fx:id="circleRadious" layoutX="39.0" layoutY="140.0" />
+                  <Label alignment="CENTER" layoutX="6.0" layoutY="169.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1221" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="colorCircleType" layoutX="1.0" layoutY="192.0" prefHeight="27.0" prefWidth="201.0" />
+                  <Button fx:id="timeCircleButton" layoutX="2.0" layoutY="258.0" mnemonicParsing="false" onAction="#getTime" prefHeight="27.0" prefWidth="201.0" text="Сравнить время работы" />
+                  <Button fx:id="spectrCircleButton" layoutX="2.0" layoutY="359.0" mnemonicParsing="false" onAction="#onSpectr" prefHeight="27.0" prefWidth="201.0" text="Спектр" />
+                  <Label layoutX="5.0" layoutY="301.0" text="R_delta =" />
+                  <TextField fx:id="radiousDeltaSpectrCircle" layoutX="66.0" layoutY="296.0" prefHeight="27.0" prefWidth="140.0" />
+                  <Label layoutX="7.0" layoutY="329.0" text="N =" />
+                  <TextField fx:id="numberOfSpectrCircle" layoutX="65.0" layoutY="326.0" prefHeight="27.0" prefWidth="140.0" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="5.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор алгоритма" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x122" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="algCircleType" layoutX="5.0" layoutY="28.0" prefHeight="27.0" prefWidth="201.0" />
+               </children>
+            </AnchorPane>
+            <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">
+               <content>
+                  <Canvas fx:id="graphTable" height="500.0" nodeOrientation="INHERIT" onMouseEntered="#onCreateCanvas" width="500.0" />
+               </content>
+            </ScrollPane>
+            <AnchorPane prefHeight="578.0" prefWidth="0.0" SplitPane.resizableWithParent="false">
+               <children>
+
+                  <Label fx:id="parameterErrorField" layoutX="155.0" layoutY="9.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="8.0" style="&#10;" text="Статус ошибок:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x111" />
+                     </font>
+                  </Label>
+                  <Button fx:id="clearAllButton" layoutX="11.0" layoutY="534.0" mnemonicParsing="false" onAction="#onClearAllButton" prefHeight="27.0" prefWidth="201.0" text="Очистить поле" />
+                  <Button fx:id="comeBack" layoutX="11.0" layoutY="495.0" mnemonicParsing="false" onAction="#onComeBack" prefHeight="27.0" prefWidth="200.0" text="Шаг назад" />
+                  <Label alignment="CENTER" layoutX="15.0" layoutY="517.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Данная операция хранит только один шаг." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x1211" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="470.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Операции" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1213" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="15.0" layoutY="555.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Полная очистка данных с поля." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x12111" />
+                     </font>
+                  </Label>
+                  <Button fx:id="graphOvalButton" layoutX="13.0" layoutY="313.0" mnemonicParsing="false" onAction="#onGraph" prefHeight="27.0" prefWidth="201.0" text="Построить элипс" />
+                  <Label layoutX="12.0" layoutY="120.0" text="X =" />
+                  <Label layoutX="12.0" layoutY="148.0" text="Y =" />
+                  <TextField fx:id="ovalCenterY" layoutX="46.0" layoutY="145.0" />
+                  <TextField fx:id="ovalCenterX" layoutX="46.0" layoutY="115.0" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="89.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Задание элипса" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x121" />
+                     </font>
+                  </Label>
+                  <Label layoutX="12.0" layoutY="178.0" text="A =" />
+                  <TextField fx:id="ovalLeftRadious" layoutX="46.0" layoutY="175.0" />
+                  <Label alignment="CENTER" layoutX="12.0" layoutY="257.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x12211" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="colorOvalType" layoutX="12.0" layoutY="283.0" prefHeight="27.0" prefWidth="201.0" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="37.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор алгоритма" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1222" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="algOvalType" layoutX="12.0" layoutY="60.0" prefHeight="27.0" prefWidth="201.0" />
+                  <Label layoutX="12.0" layoutY="208.0" text="B =" />
+                  <TextField fx:id="ovalTopRadious" layoutX="46.0" layoutY="205.0" />
+                  <Button fx:id="timeOvalButton" layoutX="13.0" layoutY="343.0" mnemonicParsing="false" onAction="#getTime" prefHeight="27.0" prefWidth="201.0" text="Сравнить время работы" />
+                  <Button fx:id="spectrOvalButton" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" onAction="#onSpectr" prefHeight="27.0" prefWidth="201.0" text="Спектр" />
+                  <Label layoutX="13.0" layoutY="377.0" text="R =" />
+                  <TextField fx:id="radiousDeltaSpectrOval" layoutX="47.0" layoutY="374.0" />
+                  <Label layoutX="12.0" layoutY="404.0" text="N =" />
+                  <TextField fx:id="numberOfSpectrOval" layoutX="46.0" layoutY="404.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" fx:id="x3" />
+               </font>
+               <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+               </textFill>
+            </Label>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
