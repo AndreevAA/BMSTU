@@ -1,7 +1,4 @@
-# Object-Oriented-Programming
-     2nd course, 4th semester
-
-    Bauman Moscow State Technical University
+# ООП
 
 | Номер Лабораторной Работы  |     Этап выполенния     |      Задание     |
 | ------------- |:-------------:|:-------------:|
