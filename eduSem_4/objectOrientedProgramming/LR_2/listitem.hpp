@@ -1,28 +1,6 @@
 #ifndef LISTITEM_H
 #define LISTITEM_H
 #include "_listitem.h"
-//#define DEBUG
-
-template <typename C>
-listItem<C>::listItem()
-{
-    this->next = nullptr;
-}
-
-template <typename C>
-listItem<C>::listItem(C data)
-{
-    this->data = data;
-    this->next = nullptr;
-}
-
-template<typename C>
-listItem<C>::listItem(listItem<C> &elem)
-{
-    this->data = elem.data;
-    this->next = elem.next;
-}
-
 
 template <typename C>
 listItem<C>::~listItem()
@@ -33,31 +11,58 @@ listItem<C>::~listItem()
     this->next = nullptr;
 }
 
+// Старт списка
+template <typename C>
+listItem<C>::listItem()
+{
+    this->next = nullptr;
+}
+
+// Добавление элемента в список, который никуда не указывает
+template <typename C>
+listItem<C>::listItem(C data)
+{
+    this->data = data;
+    this->next = nullptr;
+}
+
+// Добавление элемента, который куда-то уже указывает
+template<typename C>
+listItem<C>::listItem(listItem<C> &elem)
+{
+    this->data = elem.data;
+    this->next = elem.next;
+}
+
+// Установка указания на ненулевой элемент
 template <typename C>
 void listItem<C>::set_next(listItem<C> &elem)
 {
     this->next = &elem;
 }
 
+// Установка указания на нулевой элемент
 template <typename C>
 void listItem<C>::destroy_next()
 {
     this->next = nullptr;
 }
 
-
+// Получение значения элемента списка
 template <typename C>
 C listItem<C>::get_data() const
 {
     return this->data;
 }
 
+// Установка значения элемента списка
 template <typename C>
 void listItem<C>::set(C data)
 {
     this->data = data;
 }
 
+// Вставка элемента в начало списка
 template <typename C>
 list<C>& listItem<C>::operator +(list<C>& l)
 {
@@ -66,6 +71,7 @@ list<C>& listItem<C>::operator +(list<C>& l)
 
 }
 
+// Сверка значений элементов ==
 template <typename C>
 bool listItem<C>::operator ==(const listItem<C>& elem) const
 {
@@ -75,6 +81,7 @@ bool listItem<C>::operator ==(const listItem<C>& elem) const
         return false;
 }
 
+// Сверка значений элементов >= 
 template <typename C>
 bool listItem<C>::operator >=(const listItem<C>& elem) const
 {
@@ -84,6 +91,7 @@ bool listItem<C>::operator >=(const listItem<C>& elem) const
         return false;
 }
 
+// Сверка значений элементов <=
 template <typename C>
 bool listItem<C>::operator <=(const listItem<C>& elem) const
 {
@@ -93,6 +101,7 @@ bool listItem<C>::operator <=(const listItem<C>& elem) const
         return false;
 }
 
+// Сверка значений элементов != 
 template <typename C>
 bool listItem<C>::operator !=(const listItem<C>& elem) const
 {
@@ -102,6 +111,7 @@ bool listItem<C>::operator !=(const listItem<C>& elem) const
         return false;
 }
 
+// Сверка значений элементов >
 template <typename C>
 bool listItem<C>::operator >(const listItem<C>& elem) const
 {
@@ -111,6 +121,7 @@ bool listItem<C>::operator >(const listItem<C>& elem) const
         return false;
 }
 
+// Сверка значений элементов <
 template <typename C>
 bool listItem<C>::operator <(const listItem<C>& elem) const
 {
@@ -125,10 +136,12 @@ std::ostream& operator<<(std::ostream& os, listItem<C>& elem)
 {
     os << "listItem with data: " << elem.get_data() << "\n";
     os << "Next item at "<< elem.get_next();
+
     if (elem.get_next() != nullptr)
         os << " with data: "<< elem.get_next()->get_data() << "\n";
     else
         os << "\n";
+    
     return os;
 }
 

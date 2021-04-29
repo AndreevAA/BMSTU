@@ -17,6 +17,7 @@ template <typename C>
 class list : public baseContainer
 {
 public:
+    
     //Constructors
     list();
     explicit list(const list<C> &l);
@@ -45,7 +46,7 @@ public:
     //Methods
     size_t size() const;
     virtual void clear();
-    virtual bool is_empty() const;//не переопределять
+    virtual bool is_empty() const;
     virtual size_t length() const;
 
     iterator_list<C>& begin();

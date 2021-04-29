@@ -2,16 +2,6 @@
 #define _ERRORS_H
 #include <exception>
 
-class baseError : public std::exception
-{
-public:
-    virtual const char* what() const throw()
-    {
-        return "Some error was catched";
-    }
-
-};
-
 class memError : public baseError
 {
     const char* what()  const throw()
@@ -28,16 +18,6 @@ class rangeError : public baseError
     }
 };
 
-class cmpIterError : public baseError
-{
-public:
-
-    const char* what()  const throw()
-    {
-        return "Comparing iterators with different sources";
-    }
-};
-
 class emptyError : public baseError
 {
 public:
@@ -48,5 +28,24 @@ public:
     }
 };
 
+class baseError : public std::exception
+{
+public:
+    virtual const char* what() const throw()
+    {
+        return "Some error was catched";
+    }
+
+};
+
+class cmpIterError : public baseError
+{
+public:
+
+    const char* what()  const throw()
+    {
+        return "Comparing iterators with different sources";
+    }
+};
 
 #endif // _ERRORS_H

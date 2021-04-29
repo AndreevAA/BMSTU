@@ -9,6 +9,7 @@ template <typename  C> class list;
 template <typename C> class iterator_list;
 
 template <typename C>
+
 class listItem
 {
 private:
