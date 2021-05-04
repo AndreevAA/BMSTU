@@ -6,13 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,6 +24,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Builder;
 import sample.graphical.GraphicalObject;
 import sample.graphical.entity.*;
+import sample.graphical.formations.*;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Line;
@@ -44,6 +43,10 @@ import java.lang.StrictMath.*;
 
 import static java.lang.StrictMath.cos;
 import static java.lang.StrictMath.sin;
+import static sample.graphical.entity.CanvasOperations.*;
+import static sample.graphical.entity.GraphicalProcessing.graphProcessing;
+import static sample.graphical.formations.TimeRecording.getTimeOfWorkingFunctionDrawingLine;
+import static sample.graphical.formations.TimeRecording.onShowHistogramStats;
 
 public class Controller implements Initializable {
 
@@ -66,10 +69,13 @@ public class Controller implements Initializable {
     public double START_CANVAS_Y = 0;
 
     @FXML
-    private ChoiceBox algType = new ChoiceBox();
+    private ChoiceBox algCircleType = new ChoiceBox(), colorCircleType = new ChoiceBox();
 
     @FXML
-    private ChoiceBox colorType = new ChoiceBox();
+    private ChoiceBox algOvalType = new ChoiceBox(), colorOvalType = new ChoiceBox();
+
+    public Controller() {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,27 +88,24 @@ public class Controller implements Initializable {
         objectList = new ArrayList<>();
         copyObjectList = new ArrayList<>();
 
-        algType.getItems().addAll("Алгоритм, использующий библиотечную функцию", "Алгоритм цифрового дифференциального анализатора",
-                "Алгоритм Брезенхема с действительными данными", "Алгоритм Брезенхема с целочисленными данными", "Алгоритм Брезенхема с устранением ступенчатости",
-                "Алгоритм Ву");
+        algCircleType.getItems().addAll("Каноническое уравнение",
+                "Параметрическое уравнение", "Алгоритм Брезенхема", "Алгоритм средней точки",
+                "Построение при помощи библиотечной функции");
 
-        colorType.getItems().addAll("Черный", "Красный", "Зеленый", "Серый", "Желтый", "Синий");
+        colorCircleType.getItems().addAll("Черный", "Красный", "Зеленый", "Серый", "Желтый", "Синий");
+
+        algOvalType.getItems().addAll("Каноническое уравнение",
+                "Параметрическое уравнение", "Алгоритм Брезенхема", "Алгоритм средней точки",
+                "Построение при помощи библиотечной функции");
+
+        colorOvalType.getItems().addAll("Черный", "Красный", "Зеленый", "Серый", "Желтый", "Синий");
     }
 
     @FXML
     private Label parameterErrorField;
 
     @FXML
-    private TextField parameterValueInput;
-
-    @FXML
-    private ListView<String> objectsPlacedList;
-
-    @FXML
-    private ListView<String> objectsToPlaceList;
-
-    @FXML
-    private ListView<String> objectsParametersList;
+    private ListView<String> objectsPlacedList, objectsToPlaceList;
 
     @FXML
     private Canvas graphTable;
@@ -110,41 +113,16 @@ public class Controller implements Initializable {
     @FXML
     private ScrollPane scrollPanel;
 
-    @FXML
-    private Button spectrButton;
+    @FXML Button graphCircleButton, graphOvalButton, spectrCircleButton, spectrOvalButton;
 
-    // Кнопка очистки канваса от всех данных
+    // Кнопка очистки канваса от всех данных и возврат обратно
     @FXML
-    private Button clearAllButton;
-
-    // Кнопка вернуться назад
-    @FXML
-    private Button comeBack;
-
-    // Данные о координатах, вокруг которых вращать
-    @FXML
-    private TextField tempRootPointValueX;
+    private Button clearAllButton, comeBack, timeCircleButton, timeOvalButton;
 
     @FXML
-    private TextField numberSpectr;
-
-    @FXML
-    private TextField radiousSpectr;
-
-    @FXML
-    private TextField tempRootPointValueY;
-
-    @FXML
-    private Button graphButton;
-
-    @FXML
-    private Button timeButton;
-
-    @FXML
-    private TextField stepInformation;
-
-    public TextField tempRootPointValueX1, tempRootPointValueY1, tempRootPointValueX2, tempRootPointValueY2;
-
+    private TextField circleCenterX, circleCenterY, circleRadious,
+            ovalCenterX, ovalCenterY, ovalLeftRadious, ovalTopRadious,
+            numberOfSpectrCircle, radiousDeltaSpectrCircle, radiousDeltaSpectrOval, numberOfSpectrOval;
 
     @FXML
     public void onComeBack() {
@@ -152,7 +130,7 @@ public class Controller implements Initializable {
             getCopyFunction();
             objectsPlacedList.setItems(
                     FXCollections.observableList(objectList.stream().map(Object::toString).collect(Collectors.toList())));
-            redrawElements();
+            redrawElements(graphTable, objectList);
         });
     }
 
@@ -185,101 +163,8 @@ public class Controller implements Initializable {
 
             objectList.clear();
 
-            redrawElements();
+            redrawElements(graphTable, objectList);
         });
-    }
-
-
-
-    public boolean isStepValid(double tempStep)
-    {
-        if (tempStep > 0)
-            return true;
-        return false;
-    }
-
-    @FXML
-    public void onMoveCanvasUp()
-    {
-        try {
-            double tempStep = Double.parseDouble(stepInformation.getText().trim());
-
-            if (isStepValid(tempStep) == true)
-            {
-                START_CANVAS_Y -= tempStep;
-
-                redrawElements();
-            }
-            else
-                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
-        }
-    }
-
-    @FXML
-    public void onMoveCanvasDown()
-    {
-        try {
-            double tempStep = Double.parseDouble(stepInformation.getText().trim());
-
-            if (isStepValid(tempStep) == true)
-            {
-                START_CANVAS_Y += tempStep;
-
-                redrawElements();
-            }
-            else
-                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
-        }
-    }
-
-    @FXML
-    public void onMoveCanvasRight()
-    {
-        try {
-            double tempStep = Double.parseDouble(stepInformation.getText().trim());
-
-            if (isStepValid(tempStep) == true)
-            {
-                START_CANVAS_X += tempStep;
-
-                redrawElements();
-            }
-            else
-                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
-        }
-    }
-
-    @FXML
-    public void onMoveCanvasLeft()
-    {
-        try {
-            double tempStep = Integer.parseInt(stepInformation.getText().trim());
-
-            if (isStepValid(tempStep) == true)
-            {
-                START_CANVAS_X -= tempStep;
-
-                redrawElements();
-            }
-            else
-                parameterErrorField.setText("Допущена ошибка при вводе данных шага (Положительное).");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            parameterErrorField.setText("Допущена ошибка при вводе данных шага.");
-        }
     }
 
     @FXML
@@ -287,253 +172,237 @@ public class Controller implements Initializable {
     {
         scrollPanel.widthProperty().addListener(event -> {
             graphTable.setWidth(scrollPanel.getWidth());
-            redrawElements();
+            redrawElements(graphTable, objectList);
         });
 
         scrollPanel.heightProperty().addListener(event -> {
             graphTable.setHeight(scrollPanel.getHeight());
-            redrawElements();
+            redrawElements(graphTable, objectList);
         });
     }
 
-    // Отрисовка линий
-    private void drawLinesCanvas(GraphicsContext gc)
-    {
-        // сетка
-        gc.setLineWidth(.5);
-        gc.setFontSmoothingType(null);
-        gc.setLineDashes(5, 2);
-        for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % (60 * ZOMM_COFF)) / 60 / ZOMM_COFF; i++) {
-            gc.strokeLine(i * 60 * ZOMM_COFF, 0, i * 60 * ZOMM_COFF, scrollPanel.getHeight());
-            gc.strokeLine(0, i * 60 * ZOMM_COFF, scrollPanel.getWidth(), i * 60 * ZOMM_COFF);
-        }
-
-        gc.setLineDashes(null);
-        gc.setLineWidth(1);
-    }
-
-    // Отрисовка чисел
-    private void drawNumbersCanvas(GraphicsContext gc)
-    {
-        // числа
-        gc.setTextAlign(TextAlignment.CENTER);
-
-        for (int i = 0; i < (scrollPanel.getWidth() - scrollPanel.getWidth() % 60) / 60; i++)
-            gc.strokeText(String.valueOf((i * 60 - 300 + START_CANVAS_X) / ZOMM_COFF), i * 60, 315 - START_CANVAS_Y);
-
-        gc.setTextBaseline(VPos.CENTER);
-        gc.setTextAlign(TextAlignment.LEFT);
-
-        for (int i = 0; i < (scrollPanel.getHeight() - scrollPanel.getHeight() % 60) / 60 + 1; i++)
-            gc.strokeText(String.valueOf((i * 60 - 300 + START_CANVAS_Y) / ZOMM_COFF), 310 - START_CANVAS_X, i * 60);
-    }
-
-    // Отрисовка нулевых линий
-    private void drawZeroLines(GraphicsContext gc)
-    {
-        gc.strokeLine(300 - START_CANVAS_X, 0, 300 - START_CANVAS_X, scrollPanel.getHeight());    // zero line
-        gc.strokeLine(0, 300 - START_CANVAS_Y, scrollPanel.getWidth(), 300 - START_CANVAS_Y);    // zero line
-    }
-
-    // Отрисовка сетки и чисел
-    private void drawCanvasMaterials()
-    {
-        GraphicsContext gc = graphTable.getGraphicsContext2D();
-    }
-
     // Перерисовка элементов экрана
-    private void redrawElements()
+    private void redrawElements(Canvas graphTable, List<GraphicalObject> objectList)
     {
-
         graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
         objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
-
-        drawCanvasMaterials();
-    }
-
-    @FXML
-    double getTempRootPointValueX()
-    {
-        return Double.parseDouble(tempRootPointValueX.getText().trim());
-    }
-
-    @FXML
-    double getTempRootPointValueY()
-    {
-        return Double.parseDouble(tempRootPointValueY.getText().trim());
-    }
-
-
-    private void setStandartFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor){
-        GraphicalLine line =  new GraphicalLine(firstX, firstY, secondX, secondY, lineColor);
-        line.draw(graphTable.getGraphicsContext2D());
-        objectList.add(line);
-        redrawElements();
-    }
-
-    private void setDigitAnalizatorFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor){
-        GraphicalDigitalAnalizerLinePixel graphicalDigitalAnalizerLinePixel = new GraphicalDigitalAnalizerLinePixel(firstX, firstY, secondX, secondY, lineColor);
-        objectList.add(graphicalDigitalAnalizerLinePixel);
-        redrawElements();
-    }
-
-    private void setBrezDoubleFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
-    {
-        BrezDoubleFunctionLinePixel brezDoubleFunctionLinePixel = new BrezDoubleFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
-        objectList.add(brezDoubleFunctionLinePixel);
-        redrawElements();
-    }
-
-    private void setBrezIntegerFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
-    {
-        BrezIntegerFunctionLinePixel brezIntegerFunctionLinePixel = new BrezIntegerFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
-        objectList.add(brezIntegerFunctionLinePixel);
-        redrawElements();
-    }
-
-    private void setBrezStupFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
-    {
-        BrezStupFunctionLinePixel brezStupFunctionLinePixel = new BrezStupFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
-        objectList.add(brezStupFunctionLinePixel);
-        redrawElements();
-    }
-
-    private void setVuFunctionLine(double firstX, double firstY, double secondX, double secondY, Color lineColor)
-    {
-        VuFunctionLinePixel vuFunctionLinePixel = new VuFunctionLinePixel(firstX, firstY, secondX, secondY, lineColor);
-        objectList.add(vuFunctionLinePixel);
-        redrawElements();
-    }
-
-    Color getColor(String tempColorStatus)
-    {
-        if (tempColorStatus == "Красный")
-            return Color.RED;
-        else if (tempColorStatus == "Зеленый")
-            return Color.GREEN;
-        else if (tempColorStatus == "Серый")
-            return Color.GREY;
-        else if (tempColorStatus == "Синий")
-            return Color.BLUE;
-        else if (tempColorStatus == "Желтый")
-            return Color.YELLOW;
-        else
-            return Color.BLACK;
-    }
-
-    public void graphComparator(double firstX, double firstY, double secondX, double secondY) {
-        if (algType.getValue() != null && colorType.getValue() != null)
-        {
-            String tempAlgStatus = algType.getValue().toString();
-
-            if (tempAlgStatus == "Алгоритм, использующий библиотечную функцию")
-                setStandartFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
-            else if (tempAlgStatus == "Алгоритм цифрового дифференциального анализатора")
-                setDigitAnalizatorFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
-            else if (tempAlgStatus == "Алгоритм Брезенхема с действительными данными")
-                setBrezDoubleFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
-            else if (tempAlgStatus == "Алгоритм Брезенхема с целочисленными данными")
-                setBrezIntegerFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
-            else if (tempAlgStatus == "Алгоритм Брезенхема с устранением ступенчатости")
-                setBrezStupFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
-            else if (tempAlgStatus == "Алгоритм Ву")
-                setVuFunctionLine(firstX, firstY, secondX, secondY, getColor(colorType.getValue().toString()));
-
-            redrawElements();
-        }
     }
 
     @FXML
     public void onGraph() {
-        graphButton.setOnAction(actionEvent -> {
 
-            try {
-                int firstX = (Integer.parseInt(tempRootPointValueX1.getText())), firstY =(Integer.parseInt(tempRootPointValueY1.getText()));
-                int secondX = (Integer.parseInt(tempRootPointValueX2.getText())), secondY = (Integer.parseInt(tempRootPointValueY2.getText()));
-
-                graphComparator(firstX, firstY, secondX, secondY);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                parameterErrorField.setText("Допущена ошибка.");
+        // Нажатие операции над Окружностью
+        graphCircleButton.setOnAction(actionEvent -> {
+            if (algCircleType.getValue() != null && colorCircleType.getValue() != null)
+            {
+                try {
+                    graphProcessing(objectList, Integer.parseInt(circleCenterX.getText()), Integer.parseInt(circleCenterY.getText()),
+                            Integer.parseInt(circleRadious.getText()), Integer.parseInt(circleRadious.getText()),
+                            CanvasOperations.getColor(colorCircleType.getValue().toString()),
+                            algCircleType.getValue().toString(), false);
+                    redrawElements(graphTable, objectList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    parameterErrorField.setText("Допущена ошибка.");
+                }
             }
         });
-    }
 
-    private long getTimeOfWorkingFunctionDrawingLine(int startCoordinate, int endCoordinate, int stepOfCountingCoordinates, int typeOfAlg)
-    {
-        long startTime = System.nanoTime();
-        if (typeOfAlg == 0) {
-            GraphicalLine line = new GraphicalLine(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
-        }
-        else if (typeOfAlg == 1) {
-            GraphicalDigitalAnalizerLinePixel graphicalDigitalAnalizerLinePixel = new GraphicalDigitalAnalizerLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
-        }
-        else if (typeOfAlg == 2){
-            BrezDoubleFunctionLinePixel brezDoubleFunctionLinePixel = new BrezDoubleFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
-        }
-        else if (typeOfAlg == 3){
-            BrezIntegerFunctionLinePixel brezIntegerFunctionLinePixel = new BrezIntegerFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
-        }
-        else if (typeOfAlg == 4){
-            BrezStupFunctionLinePixel brezStupFunctionLinePixel = new BrezStupFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
-        }
-        else if (typeOfAlg == 5){
-            VuFunctionLinePixel vuFunctionLinePixel = new VuFunctionLinePixel(startCoordinate, endCoordinate, startCoordinate, endCoordinate, Color.RED);
-        }
-        long endTime = System.nanoTime();
-        return endTime - startTime;
-    }
-
-    @FXML
-    private void onShowHistogramStats(long startStandartFunctionLineTime, long graphicalDigitalAnalizerLinePixelFunctionLineTime, long brezDoubleFunctionLinePixelFunctionLineTime,
-                                      long brezIntegerFunctionLinePixel, long brezStupFunctionLinePixel, long vuFunctionLinePixel) {
-        final BarChart<Number, String> barChart =
-                new BarChart<>(new NumberAxis(), new CategoryAxis());
-        barChart.setCategoryGap(0);
-        barChart.setBarGap(0);
-
-        XYChart.Series<Number, String> series = new XYChart.Series<>();
-        series.setName("Сравнение времени работы алгоритмов");
-
-        series.getData().add(new XYChart.Data<>(startStandartFunctionLineTime, "Алгоритм, использующий библиотечную функцию"));
-        series.getData().add(new XYChart.Data<>(graphicalDigitalAnalizerLinePixelFunctionLineTime, "Алгоритм цифрового дифференциального анализатора"));
-        series.getData().add(new XYChart.Data<>(brezDoubleFunctionLinePixelFunctionLineTime, "Алгоритм Брезенхема с действительными данными"));
-        series.getData().add(new XYChart.Data<>(brezIntegerFunctionLinePixel, "Алгоритм Брезенхема с целочисленными данными"));
-        series.getData().add(new XYChart.Data<>(brezStupFunctionLinePixel, "Алгоритм Брезенхема с устранением ступенчатости"));
-        series.getData().add(new XYChart.Data<>(vuFunctionLinePixel, "Алгоритм Ву"));
-
-        barChart.getData().add(series);
-
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(barChart);
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Сравнение времени работы алгоритмов");
-        alert.setHeaderText(null);
-        alert.setGraphic(vBox);
-
-        alert.showAndWait();
+        // Нажатие операции над Овалом
+        graphOvalButton.setOnAction(actionEvent -> {
+            if (algOvalType.getValue() != null && colorOvalType.getValue() != null)
+            {
+                try {
+                    graphProcessing(objectList, Integer.parseInt(ovalCenterX.getText()), Integer.parseInt(ovalCenterY.getText()),
+                            Integer.parseInt(ovalLeftRadious.getText()), Integer.parseInt(ovalTopRadious.getText()),
+                            CanvasOperations.getColor(colorOvalType.getValue().toString()),
+                            algOvalType.getValue().toString(), true);
+                    redrawElements(graphTable, objectList);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    parameterErrorField.setText("Допущена ошибка.");
+                }
+            }
+        });
     }
 
     @FXML
     private void getTime()
     {
-        int startCoordinate = 0, endCoordinate = 1000, stepOfCountingCoordinates = 100;
 
-        timeButton.setOnAction(actionEvent -> {
+        timeCircleButton.setOnAction(actionEvent -> {
+            int tempCenterX = 500, tempCenterY = 500;
+            int tempTopRadious = 1000;
 
-            // Вычисление времени работы
-            long startStandartFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 0);
-            long graphicalDigitalAnalizerLinePixelFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 1);
-            long brezDoubleFunctionLinePixelFunctionLineTime = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 2);
-            long brezIntegerFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 3);
-            long brezStupFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 4);
-            long vuFunctionLinePixel = getTimeOfWorkingFunctionDrawingLine(startCoordinate, endCoordinate, stepOfCountingCoordinates, 5);
+            Color tempColor = Color.RED;
+
+            int tempLeftRadious = 1000;
+
+            //Defining the x axis
+            NumberAxis xAxis = new NumberAxis();
+            xAxis.setLabel("Время");
+
+            //Defining the y axis
+            NumberAxis yAxis = new NumberAxis();
+            yAxis.setLabel("Радиус");
+
+            LineChart<Number, Number> linechart = new LineChart<>(xAxis, yAxis);
+
+            XYChart.Series<Number, Number> seriesCanonicalEquation = new XYChart.Series<>();
+            seriesCanonicalEquation.setName("Каноническое");
+
+            XYChart.Series<Number, Number> seriesParametricalEquation = new XYChart.Series<>();
+            seriesParametricalEquation.setName("Параметрическое");
+
+            XYChart.Series<Number, Number> seriesBrezenchemsEquation = new XYChart.Series<>();
+            seriesBrezenchemsEquation.setName("Брезенхема");
+
+            XYChart.Series<Number, Number> seriesMiddlePointAlgorithmEquation = new XYChart.Series<>();
+            seriesMiddlePointAlgorithmEquation.setName("Средней точки");
+
+            XYChart.Series<Number, Number> seriesLibraryEquation = new XYChart.Series<>();
+            seriesLibraryEquation.setName("Библиотечная");
+
+            long canonicalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+                    tempLeftRadious, tempTopRadious,
+                    tempColor,
+                    "Каноническое уравнение", false, graphTable);
+            long parametricalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+                    tempLeftRadious, tempTopRadious,
+                    tempColor,
+                    "Параметрическое уравнение", false, graphTable);
+            long brezenchemsEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+                    tempLeftRadious, tempTopRadious,
+                    tempColor,
+                    "Алгоритм Брезенхема", false, graphTable);
+            long middlePointAlgorithmEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+                    tempLeftRadious, tempTopRadious,
+                    tempColor,
+                    "Алгоритм средней точки", false, graphTable);
+            long libraryEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+                    tempLeftRadious, tempTopRadious,
+                    tempColor,
+                    "Построение при помощи библиотечной функции", false, graphTable);
+
+
+            for (; tempLeftRadious < 6000; tempLeftRadious += 1000, tempTopRadious += 1000) {
+                // Вычисление времени работы
+                long startTime1 = System.nanoTime();
+                new CanonicalEquation(tempCenterX, tempCenterY, tempLeftRadious, tempLeftRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime1 = System.nanoTime();
+
+                long startTime2 = System.nanoTime();
+                new ParametricEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime2 = System.nanoTime();
+
+                long startTime3 = System.nanoTime();
+                new BrezenchemsEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime3 = System.nanoTime();
+
+                long startTime4 = System.nanoTime();
+                new MiddlePointAlgorithmEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime4 = System.nanoTime();
+
+                long startTime5 = System.nanoTime();
+                new LibraryEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime5 = System.nanoTime();
+                System.out.println();
+
+                seriesCanonicalEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime1 - startTime1) * 1.15));
+                seriesParametricalEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime2 - startTime2) * 1.15));
+                seriesBrezenchemsEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime3 - startTime3) * 1.15));
+                seriesMiddlePointAlgorithmEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime4 - startTime4) * 1.15));
+                seriesLibraryEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime5 - startTime5) * 1.15));
+            }
+
+            linechart.getData().add(seriesCanonicalEquation);
+            linechart.getData().add(seriesParametricalEquation);
+            linechart.getData().add(seriesBrezenchemsEquation);
+            linechart.getData().add(seriesMiddlePointAlgorithmEquation);
+            linechart.getData().add(seriesLibraryEquation);
+
+            //Creating a Group object
+            Group root = new Group(linechart);
+
+            //Creating a scene object
+            Scene scene = new Scene(root, 600, 400);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            //Setting title to the Stage
+            alert.setTitle("Line Chart");
+
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(linechart);
+
+            //Adding scene to the stage
+            alert.setGraphic(vBox);
+
+            alert.showAndWait();
+
+            //Displaying the contents of the stage
+//            alert.show();
 
             // Показ диаграммы на экран
-            onShowHistogramStats(startStandartFunctionLineTime, graphicalDigitalAnalizerLinePixelFunctionLineTime, brezDoubleFunctionLinePixelFunctionLineTime,
-                    brezIntegerFunctionLinePixel, brezStupFunctionLinePixel, vuFunctionLinePixel);
+//            onShowHistogramStats(canonicalEquation, parametricalEquation, brezenchemsEquation,
+//                    middlePointAlgorithmEquation, libraryEquation);
+        });
+
+        timeOvalButton.setOnAction(actionEvent -> {
+
+            int tempLeftRadious = 50000, tempTopRadious = 50000;
+            Color tempColor = Color.RED;
+
+            int tempCenterX = 100, tempCenterY = 100;
+
+            // Вычисление времени работы
+//            long canonicalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Каноническое уравнение", true, graphTable);
+//            long parametricalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Параметрическое уравнение", true, graphTable);
+//            long brezenchemsEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Алгоритм Брезенхема", true, graphTable);
+//            long middlePointAlgorithmEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Алгоритм средней точки", true, graphTable);
+//            long libraryEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Построение при помощи библиотечной функции", true, graphTable);
+
+            long startTime1 = System.nanoTime();
+            new CanonicalEquation(tempCenterX, tempCenterY, tempLeftRadious, tempLeftRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime1 = System.nanoTime();
+
+            long startTime2 = System.nanoTime();
+            new ParametricEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime2 = System.nanoTime();
+
+            long startTime3 = System.nanoTime();
+            new BrezenchemsEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime3 = System.nanoTime();
+
+            long startTime4 = System.nanoTime();
+            new MiddlePointAlgorithmEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime4 = System.nanoTime();
+
+            long startTime5 = System.nanoTime();
+            new LibraryEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime5 = System.nanoTime();
+
+            graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
+
+            // Показ диаграммы на экран
+            onShowHistogramStats(endTime1 - startTime1, endTime2 - startTime2, endTime3 - startTime3,
+                    endTime4 - startTime4, endTime5 - startTime5);
         });
     }
 
@@ -550,24 +419,34 @@ public class Controller implements Initializable {
     @FXML
     private void onSpectr()
     {
+        System.out.println("Тут");
         try {
-            spectrButton.setOnAction(actionEvent -> {
-
-                int numberOfLines = Integer.parseInt(numberSpectr.getText()), spectrRadious = Integer.parseInt(radiousSpectr.getText());
-
-                double firstX = 500, firstY = 500;
-                double secondX = 600, secondY = 600;
-
-                double tempStep = 360.0 / (double) numberOfLines;
-
-                for (int tempNumberOfLine = 0; tempNumberOfLine < numberOfLines; tempNumberOfLine++)
+            spectrCircleButton.setOnAction(actionEvent -> {
+                for (int tempNumberOfRadious = 1; tempNumberOfRadious <= Integer.parseInt(numberOfSpectrCircle.getText()); tempNumberOfRadious++)
                 {
-                    double tempDegree = tempStep * (double) tempNumberOfLine;
-                    double tempData[] = rotateLine(firstX, firstY, secondX, secondY, Math.toRadians(tempDegree), spectrRadious);
-                    System.out.println(tempNumberOfLine + " " + tempDegree);
+                    System.out.println("Рисует");
+                    graphProcessing(objectList, Integer.parseInt(circleCenterX.getText()), Integer.parseInt(circleCenterY.getText()),
+                            tempNumberOfRadious * Integer.parseInt(radiousDeltaSpectrCircle.getText()) + Integer.parseInt(circleRadious.getText()),
+                            tempNumberOfRadious * Integer.parseInt(radiousDeltaSpectrCircle.getText()) + Integer.parseInt(circleRadious.getText()),
+                            CanvasOperations.getColor(colorCircleType.getValue().toString()),
+                            algCircleType.getValue().toString(), false);
+                    redrawElements(graphTable, objectList);
+                }
+            });
 
-                    graphComparator(firstX, firstY, tempData[0], tempData[1]);
-                    graphComparator(tempData[0], tempData[1],  firstX,  firstY);
+            spectrOvalButton.setOnAction(actionEvent -> {
+                for (int tempNumberOfRadious = 1; tempNumberOfRadious <= Integer.parseInt(numberOfSpectrOval.getText()); tempNumberOfRadious++)
+                {
+                    double newTempLeftRadious = tempNumberOfRadious * Integer.parseInt(radiousDeltaSpectrOval.getText()) + Integer.parseInt(ovalLeftRadious.getText());
+                    double newTempTopRadious = (Integer.parseInt(ovalLeftRadious.getText()) * newTempLeftRadious) / Integer.parseInt(ovalTopRadious.getText());
+
+                    graphProcessing(objectList,
+                            Integer.parseInt(ovalCenterX.getText()), Integer.parseInt(ovalCenterY.getText()),
+                            newTempLeftRadious, newTempTopRadious,
+                            CanvasOperations.getColor(colorOvalType.getValue().toString()),
+                            algOvalType.getValue().toString(), true);
+
+                    redrawElements(graphTable, objectList);
                 }
             });
         }

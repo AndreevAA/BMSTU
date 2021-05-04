@@ -6,13 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -232,65 +230,179 @@ public class Controller implements Initializable {
     @FXML
     private void getTime()
     {
-        int tempCenterX = 500, tempCenterY = 500, tempLeftRadious = 500, tempTopRadious = 300;
-        Color tempColor = Color.RED;
 
         timeCircleButton.setOnAction(actionEvent -> {
+            int tempCenterX = 500, tempCenterY = 500;
+            int tempTopRadious = 1000;
 
-            // Вычисление времени работы
+            Color tempColor = Color.RED;
+
+            int tempLeftRadious = 1000;
+
+            //Defining the x axis
+            NumberAxis xAxis = new NumberAxis();
+            xAxis.setLabel("Время");
+
+            //Defining the y axis
+            NumberAxis yAxis = new NumberAxis();
+            yAxis.setLabel("Радиус");
+
+            LineChart<Number, Number> linechart = new LineChart<>(xAxis, yAxis);
+
+            XYChart.Series<Number, Number> seriesCanonicalEquation = new XYChart.Series<>();
+            seriesCanonicalEquation.setName("Каноническое");
+
+            XYChart.Series<Number, Number> seriesParametricalEquation = new XYChart.Series<>();
+            seriesParametricalEquation.setName("Параметрическое");
+
+            XYChart.Series<Number, Number> seriesBrezenchemsEquation = new XYChart.Series<>();
+            seriesBrezenchemsEquation.setName("Брезенхема");
+
+            XYChart.Series<Number, Number> seriesMiddlePointAlgorithmEquation = new XYChart.Series<>();
+            seriesMiddlePointAlgorithmEquation.setName("Средней точки");
+
+            XYChart.Series<Number, Number> seriesLibraryEquation = new XYChart.Series<>();
+            seriesLibraryEquation.setName("Библиотечная");
+
             long canonicalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
                     tempLeftRadious, tempTopRadious,
                     tempColor,
-                    "Каноническое уравнение", false);
+                    "Каноническое уравнение", false, graphTable);
             long parametricalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
                     tempLeftRadious, tempTopRadious,
                     tempColor,
-                    "Параметрическое уравнение", false);
+                    "Параметрическое уравнение", false, graphTable);
             long brezenchemsEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
                     tempLeftRadious, tempTopRadious,
                     tempColor,
-                    "Алгоритм Брезенхема", false);
+                    "Алгоритм Брезенхема", false, graphTable);
             long middlePointAlgorithmEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
                     tempLeftRadious, tempTopRadious,
                     tempColor,
-                    "Алгоритм средней точки", false);
+                    "Алгоритм средней точки", false, graphTable);
             long libraryEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
                     tempLeftRadious, tempTopRadious,
                     tempColor,
-                    "Построение при помощи библиотечной функции", false);
+                    "Построение при помощи библиотечной функции", false, graphTable);
+
+
+            for (; tempLeftRadious < 6000; tempLeftRadious += 1000, tempTopRadious += 1000) {
+                // Вычисление времени работы
+                long startTime1 = System.nanoTime();
+                new CanonicalEquation(tempCenterX, tempCenterY, tempLeftRadious, tempLeftRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime1 = System.nanoTime();
+
+                long startTime2 = System.nanoTime();
+                new ParametricEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime2 = System.nanoTime();
+
+                long startTime3 = System.nanoTime();
+                new BrezenchemsEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime3 = System.nanoTime();
+
+                long startTime4 = System.nanoTime();
+                new MiddlePointAlgorithmEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime4 = System.nanoTime();
+
+                long startTime5 = System.nanoTime();
+                new LibraryEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+                long endTime5 = System.nanoTime();
+                System.out.println();
+
+                seriesCanonicalEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime1 - startTime1) * 1.15));
+                seriesParametricalEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime2 - startTime2) * 1.15));
+                seriesBrezenchemsEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime3 - startTime3) * 1.15));
+                seriesMiddlePointAlgorithmEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime4 - startTime4) * 1.15));
+                seriesLibraryEquation.getData().add(new XYChart.Data<>(tempLeftRadious, (endTime5 - startTime5) * 1.15));
+            }
+
+            linechart.getData().add(seriesCanonicalEquation);
+            linechart.getData().add(seriesParametricalEquation);
+            linechart.getData().add(seriesBrezenchemsEquation);
+            linechart.getData().add(seriesMiddlePointAlgorithmEquation);
+            linechart.getData().add(seriesLibraryEquation);
+
+            //Creating a Group object
+            Group root = new Group(linechart);
+
+            //Creating a scene object
+            Scene scene = new Scene(root, 600, 400);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            //Setting title to the Stage
+            alert.setTitle("Line Chart");
+
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(linechart);
+
+            //Adding scene to the stage
+            alert.setGraphic(vBox);
+
+            alert.showAndWait();
+
+            //Displaying the contents of the stage
+//            alert.show();
 
             // Показ диаграммы на экран
-            onShowHistogramStats(canonicalEquation, parametricalEquation, brezenchemsEquation,
-                    middlePointAlgorithmEquation, libraryEquation);
+//            onShowHistogramStats(canonicalEquation, parametricalEquation, brezenchemsEquation,
+//                    middlePointAlgorithmEquation, libraryEquation);
         });
 
         timeOvalButton.setOnAction(actionEvent -> {
 
+            int tempLeftRadious = 50000, tempTopRadious = 50000;
+            Color tempColor = Color.RED;
+
+            int tempCenterX = 100, tempCenterY = 100;
+
             // Вычисление времени работы
-            long canonicalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
-                    tempLeftRadious, tempTopRadious,
-                    tempColor,
-                    "Каноническое уравнение", true);
-            long parametricalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
-                    tempLeftRadious, tempTopRadious,
-                    tempColor,
-                    "Параметрическое уравнение", true);
-            long brezenchemsEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
-                    tempLeftRadious, tempTopRadious,
-                    tempColor,
-                    "Алгоритм Брезенхема", true);
-            long middlePointAlgorithmEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
-                    tempLeftRadious, tempTopRadious,
-                    tempColor,
-                    "Алгоритм средней точки", true);
-            long libraryEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
-                    tempLeftRadious, tempTopRadious,
-                    tempColor,
-                    "Построение при помощи библиотечной функции", true);
+//            long canonicalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Каноническое уравнение", true, graphTable);
+//            long parametricalEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Параметрическое уравнение", true, graphTable);
+//            long brezenchemsEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Алгоритм Брезенхема", true, graphTable);
+//            long middlePointAlgorithmEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Алгоритм средней точки", true, graphTable);
+//            long libraryEquation = getTimeOfWorkingFunctionDrawingLine(tempCenterX, tempCenterY,
+//                    tempLeftRadious, tempTopRadious,
+//                    tempColor,
+//                    "Построение при помощи библиотечной функции", true, graphTable);
+
+            long startTime1 = System.nanoTime();
+            new CanonicalEquation(tempCenterX, tempCenterY, tempLeftRadious, tempLeftRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime1 = System.nanoTime();
+
+            long startTime2 = System.nanoTime();
+            new ParametricEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime2 = System.nanoTime();
+
+            long startTime3 = System.nanoTime();
+            new BrezenchemsEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime3 = System.nanoTime();
+
+            long startTime4 = System.nanoTime();
+            new MiddlePointAlgorithmEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime4 = System.nanoTime();
+
+            long startTime5 = System.nanoTime();
+            new LibraryEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, false, tempColor).draw(graphTable.getGraphicsContext2D());
+            long endTime5 = System.nanoTime();
+
+            graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
 
             // Показ диаграммы на экран
-            onShowHistogramStats(canonicalEquation, parametricalEquation, brezenchemsEquation,
-                    middlePointAlgorithmEquation, libraryEquation);
+            onShowHistogramStats(endTime1 - startTime1, endTime2 - startTime2, endTime3 - startTime3,
+                    endTime4 - startTime4, endTime5 - startTime5);
         });
     }
 
