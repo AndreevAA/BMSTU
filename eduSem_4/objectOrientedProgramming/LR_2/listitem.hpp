@@ -11,6 +11,12 @@ listItem<C>::~listItem()
     this->next = nullptr;
 }
 
+template<typename C>
+listItem<C>::isEmpty() 
+{
+    return this->m_size == 0;
+}
+
 // Старт списка
 template <typename C>
 listItem<C>::listItem()

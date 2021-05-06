@@ -107,11 +107,7 @@ template <typename C>
 iterator_list<C>& iterator_list<C>::operator +=(size_t n)
 {
     while(n--)
-    {
-        //if(!this->inRange())
-            //throw rangeError();
         this->_current = this->_current->next;
-    }
 
     return *this;
 }

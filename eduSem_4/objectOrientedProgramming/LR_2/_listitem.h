@@ -10,6 +10,7 @@ template <typename C> class iterator_list;
 
 template <typename C>
 
+// Умный указатель
 class listItem
 {
 private:
@@ -21,6 +22,8 @@ public:
     listItem(C data);
     explicit listItem(listItem<C>& elem);
     ~listItem();
+
+    bool isEmpty() override;
 
     void set_next(listItem<C>& elem);
     void destroy_next();

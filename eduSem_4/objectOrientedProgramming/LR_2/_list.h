@@ -10,22 +10,28 @@
 
 template <typename C> class iterator_list;
 template <typename C> class const_iterator_list;
-template <typename  C> class listItem;
+template <typename C> class listItem;
 
+// No excpet, если метод не отрабатывает
+// Передавать объекты по ссылке, не по знаачению
+
+// Групповые методы по смыслу 
 
 template <typename C>
 class list : public baseContainer
 {
-public:
-    
+public: 
+
     //Constructors
     list();
     explicit list(const list<C> &l);
     list(list<C> &&l);
-    list(C* mass, int n);
+    list(C* mass, int n); // const добавить к C
     list(C data, size_t n = 1);
-    explicit list(iterator_list<C>& first, iterator_list<C>& last);
+    list(iterator_list<C>& first, iterator_list<C>& last);
 
+    // При взятии из йконтейнера любого типа список, не привязываться к его типу, только на начало и конец
+    // Нельяза создать const список, можно взять initialize_list()... или ptr(..., n)
 
     //Destructor
     virtual ~list();
@@ -49,6 +55,7 @@ public:
     virtual bool is_empty() const;
     virtual size_t length() const;
 
+    // В const списке fore Each уже использовать нельзя, надо исправить
     iterator_list<C>& begin();
     iterator_list<C>& end();
     const_iterator_list<C>& begin() const;
@@ -57,29 +64,34 @@ public:
     list<C>& append(const list<C>& l);
     list<C>& append(const C data);
 
+    // Все insert на push методы, push в голову, push в конец и тд.
 
     list<C>& insert_front(const list<C>& l);
     list<C>& insert_front(const C data);
 
+    // Из любого блока нужно иметь возможность вставить элемент
     list<C>& insert_after(iterator_list<C>& iter, const C data);
     list<C>& insert_after(iterator_list<C>& iter, const list<C>& after);
 
     list<C>& insert_before(iterator_list<C>& iter, const C data);
     list<C>& insert_before(iterator_list<C>& iter, const list<C>& before);
 
-    list<C>& insert_before(const_iterator_list<C>& iter, const C data);
-    list<C>& insert_before(const_iterator_list<C>& iter, const list<C>& before);
+    // list<C>& insert_before(const_iterator_list<C>& iter, const C data);
+    // list<C>& insert_before(const_iterator_list<C>& iter, const list<C>& before);
 
     int compare(const list<C>& l);
 
     listItem<C>* find(const C data) const;
 
-    void sort(bool increase=true);
+    void sort(bool increase=true); // Убрать
     void reverse();
     C* to_array() const;
 
-    list<C>& reset(iterator_list<C>& iter, const C data);
+    // reset -> remove
+    list<C>& reset(iterator_list<C>& iter, const C data); // НЕ Привязываться к контейнеру, не зашивать в контейнер сортировку 
     listItem<C> *del(iterator_list<C>& iter);
+
+    // remove (begin, end, number)
 
     friend class iterator_list<C>;
     friend class const_iterator_list<C>;

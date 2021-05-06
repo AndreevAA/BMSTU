@@ -9,5 +9,6 @@ public:
     virtual size_t length() const   = 0;
 };
 
+// Здесь должен лежать вирт. деструктур
 
 #endif // BASE_H

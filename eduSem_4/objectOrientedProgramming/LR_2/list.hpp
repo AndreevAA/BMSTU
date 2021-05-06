@@ -596,7 +596,7 @@ list<C>& list<C>::insert_before(listItem<C>& before, const C data)
 {
     listItem<C>* cur = this->head;
     listItem<C>* tmp = nullptr;
-    while (cur && /*cur->get_data() != before.get_data()*/ cur->next != before.next)
+    while (cur && cur->next != before.next)
     {
         tmp = cur;
         cur = cur->get_next();
@@ -617,8 +617,6 @@ list<C>& list<C>::insert_before(listItem<C>& before, const C data)
         this->insert_front(data);
         return *this;
     }
-
-
 }
 
 template <typename C>
