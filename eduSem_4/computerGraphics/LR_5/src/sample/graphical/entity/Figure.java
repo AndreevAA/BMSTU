@@ -1,11 +1,13 @@
 package sample.graphical.entity;
 
+import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import sample.graphical.GraphicalObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static sample.graphical.entity.GraphicalProcessing.colorField;
 
@@ -17,6 +19,8 @@ public class Figure extends GraphicalObject {
         int borderPosition = getBorderPosition(pointList);
 
         System.out.println("borderPosition = " + borderPosition);
+
+        Timeline timer;
 
         for (int pointNumber = 0; pointNumber < pointList.size(); pointNumber++)
         {
@@ -36,6 +40,9 @@ public class Figure extends GraphicalObject {
                 colorField(pixelList, graphTable, firstPoint, secondPoint, borderPosition, tempColor);
             else
                 colorField(pixelList, graphTable, secondPoint, firstPoint, borderPosition, tempColor);
+
+            TimeUnit.SECONDS.sleep(1);
+            graphTable.getGraphicsContext2D();
         }
     }
 
