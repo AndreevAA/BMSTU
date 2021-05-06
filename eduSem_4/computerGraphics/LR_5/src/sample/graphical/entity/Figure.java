@@ -39,6 +39,17 @@ public class Figure extends GraphicalObject {
         }
     }
 
+    // Закрашивание всех фигур
+    static public void fillAllFigures(Canvas graphTable, List<List <GraphicalPoint>> allFigures, List <ColoredPixel> pixelList, Color colorToFillFigure){
+        for (int numberOfFigure = 0; numberOfFigure < allFigures.size(); numberOfFigure++) {
+            try {
+                fillFigure(pixelList, graphTable, allFigures.get(numberOfFigure), colorToFillFigure);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // Получение позиции границы
     public static int getBorderPosition(List<GraphicalPoint> pointList){
         double minPosition = 10000, maxPosition = -10000;

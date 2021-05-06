@@ -51,6 +51,9 @@ public class Controller implements Initializable {
     @FXML
     private ChoiceBox timeDelayType = new ChoiceBox(), colorFillingType = new ChoiceBox();
 
+    @FXML
+    private Label parameterErrorField, workingTime;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         objectsFields = new HashMap<>();
@@ -99,6 +102,7 @@ public class Controller implements Initializable {
 
             objectList.clear();
             tempFigure.clear();
+            allFigures.clear();
             pixelList.clear();
 
             redrawElements(graphTable, objectList);
@@ -140,22 +144,24 @@ public class Controller implements Initializable {
                objectList = addLine(graphTable, objectList, tempFigure.get(0).xValue, tempFigure.get(0).yValue, tempFigure.get(tempFigure.size() - 1).xValue, tempFigure.get(tempFigure.size() - 1).yValue, Color.BLACK);
                tempFigure = addFigure(allFigures, tempFigure);
            }
+           else
+               parameterErrorField.setText("Введите 3 и более точек!");
         });
     }
 
     @FXML
     public void onFill() {
-
-        // Нажатие клавиши Закрасить
         fillButton.setOnAction(actionEvent -> {
-            if (isAllFiguresAvailiableToBeFilles(allFigures))
-                for (int numberOfFigure = 0; numberOfFigure < allFigures.size(); numberOfFigure++) {
-                    try {
-                        fillFigure(pixelList, graphTable, allFigures.get(numberOfFigure), CanvasOperations.getColor(colorFillingType.getValue().toString()));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            if (isAllFiguresAvailiableToBeFilles(allFigures)) {
+
+                long startTime = System.nanoTime();
+                fillAllFigures(graphTable, allFigures, pixelList, CanvasOperations.getColor(colorFillingType.getValue().toString()));
+                long endTime = System.nanoTime();
+
+                workingTime.setText(Long.toString((endTime - startTime) / 100000000));
+            }
+            else
+                parameterErrorField.setText("Должна быть как минимум одна замкнутая фигура!");
         });
     }
 }
