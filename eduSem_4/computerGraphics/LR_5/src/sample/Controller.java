@@ -2,70 +2,36 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Builder;
 import sample.graphical.GraphicalObject;
 import sample.graphical.entity.*;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.Line;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import java.lang.StrictMath.*;
-
-import static java.lang.StrictMath.*;
 import static sample.graphical.entity.CanvasOperations.*;
 import static sample.graphical.entity.Figure.*;
-import static sample.graphical.entity.GraphicalProcessing.*;
 
 public class Controller implements Initializable {
 
     Map<String, ObservableList<String>> objectsFields;
     Map<String, GraphicalObject> objectNamesToClassReference;
 
-    List<GraphicalObject> objectList;
+    List<GraphicalObject> objectList, copyObjectList;
 
     List<GraphicalPoint> tempFigure;
 
     List<List<GraphicalPoint>> allFigures;
 
     List<ColoredPixel> pixelList;
-
-    List<GraphicalObject> copyObjectList;
 
     @FXML
     private ListView<String> objectsPlacedList;
@@ -79,11 +45,9 @@ public class Controller implements Initializable {
     @FXML
     private ScrollPane scrollPanel;
 
-    // Кнопка очистки канваса от всех данных и возврат обратно
     @FXML
     private Button clearAllButton, comeBack, fillButton;
 
-    // Выпадающие списки
     @FXML
     private ChoiceBox timeDelayType = new ChoiceBox(), colorFillingType = new ChoiceBox();
 
@@ -110,9 +74,11 @@ public class Controller implements Initializable {
         // Массив копий
         copyObjectList = new ArrayList<>();
 
+        // Установка вариаций отрисовки
         timeDelayType.getItems().addAll("С задержкой",
                 "Без задержки");
 
+        // Устновка вариаций цвета
         colorFillingType.getItems().addAll("Черный", "Красный", "Зеленый", "Серый", "Желтый", "Синий");
     }
 
@@ -142,8 +108,10 @@ public class Controller implements Initializable {
     @FXML
     public void onCreateCanvas()
     {
+        // Установка параметров скролла
         setScrollPanelProperties(scrollPanel, graphTable, objectList);
 
+        // Чтение кликов мыши
         graphTable.setOnMouseClicked(event -> {
             double xMouseClickedPos = event.getX(), yMouseClickedPos = event.getY();
 
