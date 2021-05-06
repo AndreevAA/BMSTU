@@ -1,67 +1,128 @@
 package sample.graphical.entity;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import sample.graphical.GraphicalObject;
-import sample.graphical.formations.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.StrictMath.ceil;
+import static java.lang.StrictMath.floor;
+import static sample.graphical.entity.Pixel.getPixelInPixelListPosition;
 
 public class GraphicalProcessing extends GraphicalObject
 {
 
-    public static List<GraphicalObject> graphProcessing(List<GraphicalObject> objectList, double tempCenterX, double tempCenterY, double tempLeftRadious, double tempTopRadious, Color tempColor, String tempAlgStatus, boolean isOval)
-    {
-        if (tempAlgStatus == "Каноническое уравнение")
-            objectList = setCanonicalEquation(objectList, tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        else if (tempAlgStatus == "Параметрическое уравнение")
-            objectList = setParametricEquation(objectList, tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        else if (tempAlgStatus == "Алгоритм Брезенхема")
-            objectList = setBrezenchemsEquation(objectList, tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        else if (tempAlgStatus == "Алгоритм средней точки")
-            objectList = setMiddlePointAlgorithmEquation(objectList, tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        else if (tempAlgStatus == "Построение при помощи библиотечной функции")
-            objectList = setLibraryEquation(objectList, tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
 
-        return objectList;
+    // Закрашивание области между двумя точками
+    public static List <ColoredPixel> colorField(List <ColoredPixel> pixelList, Canvas graphTable, GraphicalPoint firstPoint, GraphicalPoint secondPoint, int borderPosition, Color endColor)
+    {
+//        SnapshotParameters SP = new SnapshotParameters();
+//        WritableImage WI = new WritableImage(1, 1);
+//        PixelReader PR = WI.getPixelReader();
+//
+//        Color backgroundColor = getColor(graphTable, 10, 10, WI, SP, PR);
+
+        int yStep = 1;
+
+        if (firstPoint.yValue > secondPoint.yValue)
+            yStep = -1;
+
+        for (int pixelNumberY = (int) ceil(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) floor(secondPoint.yValue); pixelNumberY += yStep){
+
+            int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
+                    ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
+
+            for (; pixelNumberX <= borderPosition; pixelNumberX++) {
+                int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, pixelNumberY);
+
+                if (pixelInPixelListPosition == -1) {
+                    pixelList.add(new ColoredPixel(pixelNumberX, pixelNumberY, endColor));
+                    graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                }
+                else {
+                    if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244,244,244)){
+                        pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                    }
+                    else{
+                        pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244,244,244);
+                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, Color.rgb(244,244,244));
+                    }
+                }
+
+//                SP = new SnapshotParameters();
+//                WI = new WritableImage(1, 1);
+//                PR = WI.getPixelReader();
+//
+//                Color tempPixelColor = getColor(graphTable, pixelNumberX, pixelNumberY, WI, SP, PR), finalColor;
+//
+//                if (tempPixelColor == endColor)
+//                    finalColor = backgroundColor;
+//                else
+//                    finalColor = endColor;
+//
+//                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, finalColor);
+            }
+        }
+
+        for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) floor(secondPoint.yValue); pixelNumberY += yStep){
+
+            int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
+                    ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
+
+            for (; pixelNumberX > borderPosition; pixelNumberX--) {
+
+//                SP = new SnapshotParameters();
+//                WI = new WritableImage(1, 1);
+//                PR = WI.getPixelReader();
+//
+//                Color tempPixelColor = getColor(graphTable, pixelNumberX, pixelNumberY, WI, SP, PR), finalColor;
+//
+//                if (tempPixelColor == endColor)
+//                    finalColor = backgroundColor;
+//                else
+//                    finalColor = endColor;
+//
+//                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, finalColor);
+
+                int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, pixelNumberY);
+
+                if (pixelInPixelListPosition == -1) {
+                    pixelList.add(new ColoredPixel(pixelNumberX, pixelNumberY, endColor));
+                    graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                }
+                else {
+                    if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244,244,244)){
+                        pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                    }
+                    else{
+                        pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244,244,244);
+                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, Color.rgb(244,244,244));
+                    }
+                }
+            }
+        }
+
+        return pixelList;
     }
 
-    public static List<GraphicalObject> setMiddlePointAlgorithmEquation(List<GraphicalObject> objectList, double tempCenterX, double tempCenterY, double tempLeftRadious, double tempTopRadious, boolean isOval, Color tempColor)
+    public static Color getColor(Node n, double x, double y, WritableImage WI, SnapshotParameters SP, PixelReader PR)
     {
-        MiddlePointAlgorithmEquation middlePointAlgorithmEquation = new MiddlePointAlgorithmEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        objectList.add(middlePointAlgorithmEquation);
-
-        return objectList;
+        synchronized (WI)
+        {
+            Rectangle2D r = new Rectangle2D(x, y, 1, 1);
+            SP.setViewport(r);
+            n.snapshot(SP, WI);
+            return PR.getColor(0, 0);
+        }
     }
 
-    public static List<GraphicalObject>  setCanonicalEquation(List<GraphicalObject> objectList, double tempCenterX, double tempCenterY, double tempLeftRadious, double tempTopRadious, boolean isOval, Color tempColor)
-    {
-        CanonicalEquation canonicalEquation = new CanonicalEquation(tempCenterX, tempCenterY, tempLeftRadious, tempLeftRadious, isOval, tempColor);
-        objectList.add(canonicalEquation);
-
-        return objectList;
-    }
-
-    public static List<GraphicalObject> setParametricEquation(List<GraphicalObject> objectList, double tempCenterX, double tempCenterY, double tempLeftRadious, double tempTopRadious, boolean isOval, Color tempColor)
-    {
-        ParametricEquation parametricEquation = new ParametricEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        objectList.add(parametricEquation);
-
-        return objectList;
-    }
-
-    public static List<GraphicalObject> setLibraryEquation(List<GraphicalObject> objectList, double tempCenterX, double tempCenterY, double tempLeftRadious, double tempTopRadious, boolean isOval, Color tempColor)
-    {
-        LibraryEquation libraryEquation = new LibraryEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        objectList.add(libraryEquation);
-
-        return objectList;
-    }
-
-    public static List<GraphicalObject> setBrezenchemsEquation(List<GraphicalObject> objectList, double tempCenterX, double tempCenterY, double tempLeftRadious, double tempTopRadious, boolean isOval, Color tempColor)
-    {
-        BrezenchemsEquation brezenchemsEquation = new BrezenchemsEquation(tempCenterX, tempCenterY, tempLeftRadious, tempTopRadious, isOval, tempColor);
-        objectList.add(brezenchemsEquation);
-
-        return objectList;
-    }
 }
