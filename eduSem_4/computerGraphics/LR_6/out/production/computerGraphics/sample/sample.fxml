@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <SplitPane dividerPositions="0.18404907975460122" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <AnchorPane prefHeight="541.0" prefWidth="102.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Button fx:id="fillButton" layoutX="2.0" layoutY="279.0" mnemonicParsing="false" onAction="#onFill" prefHeight="27.0" prefWidth="201.0" text="Заполнить" />
+                  <Label alignment="CENTER" layoutX="6.0" layoutY="169.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1221" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="colorFillingType" layoutX="1.0" layoutY="192.0" prefHeight="27.0" prefWidth="201.0" />
+                  <Label alignment="CENTER" layoutY="119.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Тип замера" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1222" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="timeDelayType" layoutX="2.0" layoutY="142.0" prefHeight="27.0" prefWidth="201.0" />
+
+                  <Label fx:id="parameterErrorField" layoutX="7.0" layoutY="438.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="33.0" layoutY="415.0" style="&#10;" text="Статус ошибок:" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x111" />
+                     </font>
+                  </Label>
+                  <Button fx:id="clearAllButton" layoutX="3.0" layoutY="524.0" mnemonicParsing="false" onAction="#onClearAllButton" prefHeight="27.0" prefWidth="201.0" text="Очистить поле" />
+                  <Button fx:id="comeBack" layoutX="3.0" layoutY="485.0" mnemonicParsing="false" onAction="#onComeBack" prefHeight="27.0" prefWidth="200.0" text="Шаг назад" />
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="507.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Данная операция хранит только один шаг." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x1211" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="-1.0" layoutY="460.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Операции" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1213" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="545.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Полная очистка данных с поля." textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="8.0" fx:id="x12111" />
+                     </font>
+                  </Label>
+                  <Label fx:id="workingTime" layoutX="10.0" layoutY="365.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="36.0" layoutY="342.0" style="&#10;" text="Время работы" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x1111" />
+                     </font>
+                  </Label>
+                  <Button fx:id="addFigureButton" layoutX="3.0" layoutY="243.0" mnemonicParsing="false" onAction="#onAddFigure" prefHeight="27.0" prefWidth="201.0" text="Замкнуть" />
+               </children>
+            </AnchorPane>
+            <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">
+               <content>
+                  <Canvas fx:id="graphTable" height="500.0" nodeOrientation="INHERIT" onMouseEntered="#onCreateCanvas" width="500.0" />
+               </content>
+            </ScrollPane>
+         </items>
+      </SplitPane>
+      <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" fx:id="x3" />
+               </font>
+               <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+               </textFill>
+            </Label>
+            <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
