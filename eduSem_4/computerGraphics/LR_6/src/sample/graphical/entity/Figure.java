@@ -51,6 +51,8 @@ public class Figure extends GraphicalObject {
     static int getWayOfMoving(List<ColoredPixel> pixelList, ColoredPixel runningPixel) {
         int leftColoredPixel = 0, rightColoredPixel = 0, topColoredPixel = 0, bottomColoredPixel = 0;
 
+        System.out.println("PixelList.size() = " + pixelList.size());
+
         for (int numberOfCheckedPixel = 0; numberOfCheckedPixel < pixelList.size(); numberOfCheckedPixel++) {
             ColoredPixel tempCheckingPixel = pixelList.get(numberOfCheckedPixel);
 
@@ -82,6 +84,8 @@ public class Figure extends GraphicalObject {
             if (leftColoredPixel + rightColoredPixel + topColoredPixel + bottomColoredPixel == 4)
                 return -1;
         }
+
+        System.out.println(leftColoredPixel + ", " + rightColoredPixel + ", " + topColoredPixel + ", " + bottomColoredPixel);
 
         // Завтравливание вверх - 4
         if (leftColoredPixel == 1 && bottomColoredPixel == 1 && rightColoredPixel == 1)
@@ -130,6 +134,9 @@ public class Figure extends GraphicalObject {
         if (bottomColoredPixel == 1)
             return 2;
 
+//        if (leftColoredPixel + rightColoredPixel + topColoredPixel + bottomColoredPixel == 4)
+//            return -1;
+
         return -1;
     }
 
@@ -138,7 +145,12 @@ public class Figure extends GraphicalObject {
 
         int wayOfMoving = getWayOfMoving(pixelList, runningPixel);
 
+        System.out.println("wayOfMoving = " + wayOfMoving);
+
         while (wayOfMoving != -1) {
+
+            System.out.println("wayOfMoving = " + wayOfMoving);
+            pixelList.add(runningPixel);
 
             // Перемещение влево
             if (wayOfMoving == 1)
@@ -150,11 +162,11 @@ public class Figure extends GraphicalObject {
 
             // Перемещение вниз
             if (wayOfMoving == 3)
-                runningPixel.coordinateY -= 1;
+                runningPixel.coordinateY += 1;
 
             // Перемещение вверх
             if (wayOfMoving == 4)
-                runningPixel.coordinateX += 1;
+                runningPixel.coordinateX -= 1;
 
             // Закращивания писклея на экране
             graphTable.getGraphicsContext2D().getPixelWriter().setColor((int) runningPixel.coordinateX,
@@ -167,6 +179,8 @@ public class Figure extends GraphicalObject {
             // Получение направления перемещения
             wayOfMoving = getWayOfMoving(pixelList, runningPixel);
         }
+
+        System.out.println("wayOfMoving = " + wayOfMoving);
 
         return pixelList;
     }
