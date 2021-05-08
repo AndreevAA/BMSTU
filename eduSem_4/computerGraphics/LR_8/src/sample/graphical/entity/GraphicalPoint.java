@@ -1,0 +1,81 @@
+package sample.graphical.entity;
+
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import lombok.Builder;
+import sample.graphical.GraphicalObject;
+
+@Builder
+public class GraphicalPoint extends GraphicalObject {
+    public static final double DRAW_RADIUS = 5;
+
+    public double xValue;
+    public double yValue;
+
+    Color tempColor;
+
+    public GraphicalPoint(double xValue, double yValue, Color tempColor) {
+        this.xValue = xValue;
+        this.yValue = yValue;
+        this.tempColor = tempColor;
+    }
+
+    public double getxValue() {
+        return xValue;
+    }
+
+    public void setxValue(double xValue) {
+        this.xValue = xValue;
+    }
+
+    public double getyValue() {
+        return yValue;
+    }
+
+    public void setyValue(double yValue) {
+        this.yValue = yValue;
+    }
+
+
+    public void draw(GraphicsContext context) {
+        super.draw(context);
+
+        context.setStroke(tempColor);
+
+        context.fillOval(xValue - DRAW_RADIUS, yValue - DRAW_RADIUS, DRAW_RADIUS * 2, DRAW_RADIUS * 2);
+    }
+
+    @Override
+    public boolean validate() {
+        return xValue > 0 && yValue > 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Точка, " +
+                "x=" + xValue +
+                ", y=" + yValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GraphicalPoint that = (GraphicalPoint) o;
+
+        if (Double.compare(that.xValue, xValue) != 0) return false;
+        return Double.compare(that.yValue, yValue) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(xValue);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(yValue);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+}
