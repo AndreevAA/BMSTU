@@ -137,7 +137,7 @@ public class Controller implements Initializable {
             GraphicalPoint tempPoint = new GraphicalPoint(xMouseClickedPos, yMouseClickedPos, Color.BLACK);
 
             // Добавление точки и прямой на рисуок
-            objectList = addLineWithPointToObjects(xMouseClickedPos, yMouseClickedPos,
+            objectList = addLineWithPointToObjects(
                     objectList, tempFigure, tempPoint, mainRectangle);
 
             // Добавление точки к текущей фигуре
