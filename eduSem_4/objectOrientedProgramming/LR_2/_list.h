@@ -24,7 +24,6 @@ public:
     list(std::initializer_list<T> nodes);
 
     list(const std::iterator<std::input_iterator_tag, T> &begin, const std::iterator<std::input_iterator_tag, T> &end);
-    //list(const std::iterator<std::output_iterator_tag, T> &begin, const std::iterator<std::output_iterator_tag, T> &end);
 
     ~list() = default;
 
