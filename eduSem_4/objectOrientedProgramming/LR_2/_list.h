@@ -5,123 +5,79 @@
 #include "_errors.h"
 #include "_iteratorlist.h"
 #include "_listitem.h"
-#include  "base.hpp"
+#include  "base_container.h"
 
 
-template <typename C> class iterator_list;
-template <typename C> class const_iterator_list;
-template <typename C> class listItem;
-
-// No excpet, если метод не отрабатывает
-// Передавать объекты по ссылке, не по знаачению
-
-// Групповые методы по смыслу 
-
-template <typename C>
-class list : public baseContainer
+template <typename T>
+class list : public base_container
 {
-public: 
-
-    //Constructors
+public:
     list();
-    explicit list(const list<C> &l);
-    list(list<C> &&l);
-    list(C* mass, int n); // const добавить к C
-    list(C data, size_t n = 1);
-    list(iterator_list<C>& first, iterator_list<C>& last);
 
-    // При взятии из йконтейнера любого типа список, не привязываться к его типу, только на начало и конец
-    // Нельяза создать const список, можно взять initialize_list()... или ptr(..., n)
+    list(list<T> &list);
+    list<T> &operator = (const list<T> &list);
 
-    //Destructor
-    virtual ~list();
+    list(list<T> &&list);
+    list<T> &operator = (const list<T> &&list);
 
-    //Overload
-    list<C>& operator =(const list<C>& l);
-    list<C>& operator =(list<C> &&l);
+    list(T *const array, const int &size);
+    list(std::initializer_list<T> nodes);
 
-    list<C>& operator +=(const list<C> &l);
-    list<C>& operator +=(const C data);
+    list(const std::iterator<std::input_iterator_tag, T> &begin, const std::iterator<std::input_iterator_tag, T> &end);
 
-    list<C>& operator +(const list<C>& l);
-    list<C>& operator +(const C data);
+    ~list() = default;
 
-    bool operator ==(const list<C> &l) const;
-    bool operator !=(const list<C>& l) const;
-
-    //Methods
-    size_t size() const;
-    virtual void clear();
     virtual bool is_empty() const;
-    virtual size_t length() const;
+    virtual void clear();
 
-    // В const списке fore Each уже использовать нельзя, надо исправить
-    iterator_list<C>& begin();
-    iterator_list<C>& end();
-    const_iterator_list<C>& begin() const;
-    const_iterator_list<C>& end() const;
+    list_iterator<T> push_front(const T &data);
+    list_iterator<T> push_front(const list<T> &list);
 
-    list<C>& append(const list<C>& l);
-    list<C>& append(const C data);
+    list_iterator<T> insert(const list_iterator<T> &iterator, const T &data);
+    list_iterator<T> insert(const list_iterator<T> &iterator, const list<T> &list);
+    list_iterator<T> insert(const const_list_iterator<T> &iterator, const T &data);
+    list_iterator<T> insert(const const_list_iterator<T> &iterator, const list<T> &list);
 
-    // Все insert на push методы, push в голову, push в конец и тд.
+    list_iterator<T> push_back(const T &data);
+    list_iterator<T> push_back(const list<T> &list);
 
-    list<C>& insert_front(const list<C>& l);
-    list<C>& insert_front(const C data);
+    T pop_front();
+    T pop_back();
+    T remove(const list_iterator<T> &iterator);
 
-    // Из любого блока нужно иметь возможность вставить элемент
-    list<C>& insert_after(iterator_list<C>& iter, const C data);
-    list<C>& insert_after(iterator_list<C>& iter, const list<C>& after);
-
-    list<C>& insert_before(iterator_list<C>& iter, const C data);
-    list<C>& insert_before(iterator_list<C>& iter, const list<C>& before);
-
-    // list<C>& insert_before(const_iterator_list<C>& iter, const C data);
-    // list<C>& insert_before(const_iterator_list<C>& iter, const list<C>& before);
-
-    int compare(const list<C>& l);
-
-    listItem<C>* find(const C data) const;
-
-    void sort(bool increase=true); // Убрать
     void reverse();
-    C* to_array() const;
 
-    // reset -> remove
-    list<C>& reset(iterator_list<C>& iter, const C data); // НЕ Привязываться к контейнеру, не зашивать в контейнер сортировку 
-    listItem<C> *del(iterator_list<C>& iter);
+    list<T> &merge(const list<T> &list);
+    list<T> &merge(const T &data);
 
-    // remove (begin, end, number)
+    list<T> &operator += (const list<T> &list);
+    list<T> &operator += (const T &data);
 
-    friend class iterator_list<C>;
-    friend class const_iterator_list<C>;
+    list<T> &operator + (const list<T> &list);
+    list<T> &operator + (const T &data);
+
+    bool operator == (const list<T> &list) const;
+    bool operator != (const list<T> &list) const;
+
+    list_iterator<T> begin();
+    const_list_iterator<T> cbegin() const;
+
+    list_iterator<T> end();
+    const_list_iterator<T> cend() const;
 
 protected:
-
-    list<C>& operator +=(const listItem<C>& data);
-    list<C>& operator +(const listItem<C>& data);
-
-    list<C> &append(listItem<C> &elem);
-    list<C>& insert_front(listItem<C>& elem);
-
-    list<C>& insert_after(listItem<C>& elem, listItem<C>& after);
-    list<C>& insert_after(listItem<C>& elem, const C data);
-    list<C>& insert_after(listItem<C>& elem, list<C>& after);
-
-    list<C>& insert_before(listItem<C>& elem, listItem<C>& before);
-    list<C>& insert_before(listItem<C>& elem, const C data);
-    list<C>& insert_before(listItem<C>& elem, list<C>& before);
-
-    listItem<C> *find(const listItem<C>& elem) const;
-    list<C>& reset(listItem<C>& elem, listItem<C>& temp);
-    listItem<C> *del(const listItem<C>& elem);
-
-    list<C>& reset(listItem<C>& elem,C data);
+    std::shared_ptr<list_node<T>> get_head();
+    std::shared_ptr<list_node<T>> get_tail();
+    list_iterator<T> push_back(const std::shared_ptr<list_node<T>> &node);
+    list_iterator<T> push_front(const std::shared_ptr<list_node<T>> &node);
 
 private:
-    listItem<C>* head;
-    listItem<C>* tail;
+    size_t size;
+    std::shared_ptr<list_node<T>> head;
+    std::shared_ptr<list_node<T>> tail;
 };
 
+#include "list.hpp"
 
-#endif // _LIST_H
+#endif
+

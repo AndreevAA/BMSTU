@@ -20,7 +20,6 @@
          <items>
             <AnchorPane prefHeight="541.0" prefWidth="102.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Button fx:id="fillButton" layoutX="2.0" layoutY="279.0" mnemonicParsing="false" onAction="#onFill" prefHeight="27.0" prefWidth="201.0" text="Заполнить" />
                   <Label alignment="CENTER" layoutX="6.0" layoutY="169.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x1221" />
@@ -57,13 +56,6 @@
                         <Font size="8.0" fx:id="x12111" />
                      </font>
                   </Label>
-                  <Label fx:id="workingTime" layoutX="10.0" layoutY="365.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
-                  <Label alignment="CENTER" layoutX="36.0" layoutY="342.0" style="&#10;" text="Время работы" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x1111" />
-                     </font>
-                  </Label>
-                  <Button fx:id="addFigureButton" layoutX="3.0" layoutY="243.0" mnemonicParsing="false" onAction="#onAddFigure" prefHeight="27.0" prefWidth="201.0" text="Замкнуть" />
                </children>
             </AnchorPane>
             <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">

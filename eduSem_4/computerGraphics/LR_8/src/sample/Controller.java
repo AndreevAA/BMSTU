@@ -7,11 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import sample.graphical.GraphicalObject;
+import sample.graphical.elements.RectangleCutter;
 import sample.graphical.entity.*;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -32,6 +35,8 @@ public class Controller implements Initializable {
     List<List<GraphicalPoint>> allFigures;
 
     List<ColoredPixel> pixelList;
+
+    RectangleCutter mainRectangle;
 
     @FXML
     private ListView<String> objectsPlacedList;
@@ -77,6 +82,14 @@ public class Controller implements Initializable {
         // Массив копий
         copyObjectList = new ArrayList<>();
 
+        // Инициализация каттера
+        mainRectangle = new RectangleCutter(100, 100,
+                500, 500,
+                Color.RED);
+
+        // Отрисовка каттера
+        objectList = addRectangleCutter(objectList, mainRectangle);
+
         // Установка вариаций отрисовки
         timeDelayType.getItems().addAll("С задержкой",
                 "Без задержки");
@@ -117,19 +130,22 @@ public class Controller implements Initializable {
 
         // Чтение кликов мыши
         graphTable.setOnMouseClicked(event -> {
+
             double xMouseClickedPos = event.getX(), yMouseClickedPos = event.getY();
 
             // Отрисовка поставленной точки
             GraphicalPoint tempPoint = new GraphicalPoint(xMouseClickedPos, yMouseClickedPos, Color.BLACK);
 
             // Добавление точки и прямой на рисуок
-            objectList = addLineWithPointToObjects(xMouseClickedPos, yMouseClickedPos,
-                    objectList, tempFigure, tempPoint);
+            objectList = addLineWithPointToObjects(
+                    objectList, tempFigure, tempPoint, mainRectangle);
 
             // Добавление точки к текущей фигуре
             tempFigure.add(tempPoint);
 
-            //createCopyFunction();
+            // Отрезок нарисован
+            if (tempFigure.size() == 2)
+                tempFigure.clear();
 
             redrawElements(graphTable, objectList);
         });

@@ -8,8 +8,8 @@
 | [LR_4](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_4) | ✅ | Реализация алгоритмов построения окружности, исследование и сравнение визуальных и временных характеристик алгоритмов|
 | [LR_5](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_5) | 🔄 | Реализация и исследование  одного из алгоритмов (по заданию преподавателя)  растрового заполнения области |
 | [LR_6](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_6) | 🔄 | Реализация заполения пространства с затравкой |
-| [LR_7](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_7) | 🔄 | Реализация отсекателя |
-| [LR_8](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_8) | 🔄 | Реализация отсекателя |
+| [LR_7](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_7) | 🔄 | Реализация отсекателя прямоугольника |
+| [LR_8](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerGraphics/LR_8) | 🔄 | Реализация отсекателя многоугольника |
 | LR_9 |  ||
 | Exam |||
 

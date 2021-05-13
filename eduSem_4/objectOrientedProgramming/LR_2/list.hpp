@@ -3,1041 +3,605 @@
 #include "_list.h"
 #include <stdlib.h>
 #include <assert.h>
-//#include <iostream>
-//#define DEBUG
 
-namespace compfunc {
-
-//функция для сортировки по возрастанию
 template <typename T>
-int comp_inc (const void * a, const void * b)
+list<T>::list()
 {
-  return ( *(T*)a - *(T*)b );
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
 }
 
-//функция для сортировки по убыванию
 template <typename T>
-int comp_dec (const void * a, const void * b)
+list<T>::list(list<T> &&list)
 {
-  return ( *(T*)b - *(T*)a );
-}
-}
-
-template <typename C>
-list<C>::list()
-{
-     this->head = nullptr;
-     this->tail = nullptr;
+    this->size = list.size;
+    this->head = list.head;
+    this->tail = list.tail;
 }
 
-template <typename C>
-list<C>::list(const list<C> &l)
+template <typename T>
+list<T>::list(list<T> &list)
 {
-    if(!l.head)
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
+
+    for (auto node: list)
+    {
+        std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+        try
+        {
+            temp_node = std::shared_ptr<list_node<T>>(new list_node<T>);
+        } catch (std::bad_alloc &error) {
+            auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            throw memory_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+        }
+
+        temp_node->set(node.get());
+        this->push_back(temp_node);
+    }
+}
+
+template <typename T>
+list<T>::list(T *const array, const int &size)
+{
+    if (!array)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw pointer_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    if (size <= 0)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw size_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
+
+    for (int i = 0; i < size; i++)
+    {
+        this->push_back(*(array + i));
+    }
+}
+
+template <typename T>
+list<T>::list(std::initializer_list<T> nodes)
+{
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
+
+    for (auto node: nodes)
+    {
+        this->push_back(node);
+    }
+}
+
+
+template <typename T>
+list<T>::list(const std::iterator<std::input_iterator_tag, T> &begin, const std::iterator<std::input_iterator_tag, T> &end)
+{
+    if (begin.is_invalid() || end.is_invalid())
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
+
+    for (auto current = begin; current != end + 1; current++)
+    {
+        this->push_back((*current));
+    }
+}
+
+template <typename T>
+bool list<T>::is_empty(void) const
+{
+    return 0 == this->size;
+}
+
+template <typename T>
+void list<T>::clear(void)
+{
+    while (this->size)
+    {
+        this->pop_front();
+    }
+}
+
+template <typename T>
+list_iterator<T> list<T>::push_front(const T &data)
+{
+    std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+    try
+    {
+        temp_node = std::shared_ptr<list_node<T>>(new list_node<T>);
+    } catch (std::bad_alloc &error) {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw memory_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    temp_node->set(data);
+    return this->push_front(temp_node);
+}
+
+template <typename T>
+list_iterator<T> list<T>::push_front(const std::shared_ptr<list_node<T>> &node)
+{
+    if (!node)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw pointer_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    node->set_next(this->head);
+    this->head = node;
+
+    if (!this->size)
+    {
+        this->tail = this->head;
+    }
+
+    this->size++;
+
+    list_iterator<T> iterator(node);
+    return iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::push_front(const list<T> &list)
+{
+    list_iterator<T> iterator;
+
+    for (int i = 0; i < list.size; i++)
+    {
+        iterator = this->insert(this->begin() + i, (*(list.cbegin() + i)).get());
+    }
+
+    return iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const T &data)
+{
+    if (iterator.is_invalid())
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+    try
+    {
+        temp_node = std::shared_ptr<list_node<T>>(new list_node<T>);
+    } catch (std::bad_alloc &error) {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw memory_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    temp_node->set(data);
+
+    if (iterator == this->begin())
+    {
+        return push_front(temp_node);
+    }
+    else if (iterator == this->end())
+    {
+        return this->push_back(temp_node);
+    }
+
+    list_iterator<T> temp_iterator = this->begin();
+    for (; temp_iterator + 1 != iterator; temp_iterator++);
+
+    temp_node->set_next(temp_iterator->get_next());
+    temp_iterator->set_next(temp_node);
+    this->size++;
+
+    list_iterator<T> insert_iterator(temp_node);
+    return insert_iterator;
+}
+
+
+template <typename T>
+list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const list<T> &list)
+{
+    if (iterator.is_invalid())
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    list_iterator<T> insert_iterator;
+
+    for (int i = 0; i < list.size; i++)
+    {
+        insert_iterator = insert(iterator, (*(list.cbegin() + i)).get());
+    }
+
+    return insert_iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::insert(const const_list_iterator<T> &iterator, const T &data)
+{
+    if (iterator.is_invalid())
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+    try
+    {
+        temp_node = std::shared_ptr<list_node<T>>(new list_node<T>);
+    } catch (std::bad_alloc &error) {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw memory_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    temp_node->set(data);
+
+    if (iterator == this->cbegin())
+    {
+        return push_front(temp_node);
+    }
+    else if (iterator == this->cend())
+    {
+        return this->push_back(temp_node);
+    }
+
+    list_iterator<T> temp_iterator = this->begin();
+    for (; temp_iterator + 1 != iterator; temp_iterator++);
+
+    temp_node->set_next(temp_iterator->get_next());
+    temp_iterator->set_next(temp_node);
+    this->size++;
+
+    list_iterator<T> insert_iterator(temp_node);
+    return insert_iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::insert(const const_list_iterator<T> &iterator, const list<T> &list)
+{
+    if (iterator.is_invalid())
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    list_iterator<T> insert_iterator;
+
+    for (int i = 0; i < list.size; i++)
+    {
+        insert_iterator = insert(iterator, (*(list.cbegin() + i)).get());
+    }
+
+    return insert_iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::push_back(const list<T> &list)
+{
+    for (auto current = list.cbegin(); current != list.cend(); current++)
+    {
+        this->push_back((*current).get());
+    }
+
+    list_iterator<T> iterator(this->tail);
+    return iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::push_back(const T &data)
+{
+    std::shared_ptr<list_node<T>> node = nullptr;
+
+    try
+    {
+        node = std::shared_ptr<list_node<T>>(new list_node<T>);
+    } catch (std::bad_alloc &error) {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw memory_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    node->set(data);
+    return this->push_back(node);
+}
+
+template <typename T>
+list_iterator<T> list<T>::push_back(const std::shared_ptr<list_node<T>> &node)
+{
+    if (!node)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw pointer_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+    try
+    {
+        temp_node = std::shared_ptr<list_node<T>>(new list_node<T>);
+    } catch (std::bad_alloc &error) {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw memory_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    temp_node->set(node->get());
+
+    if (!this->size)
+    {
+        this->head = temp_node;
+        this->tail = temp_node;
+    }
+    else
+    {
+        this->tail->set_next(temp_node);
+        this->tail = temp_node;
+    }
+
+    this->size++;
+
+    list_iterator<T> iterator(this->tail);
+    return iterator;
+}
+
+template <typename T>
+T list<T>::pop_front(void)
+{
+    if (!this->size)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw empty_list(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    T data = this->head->get();
+
+    if (this->size == 1)
     {
         this->head = nullptr;
         this->tail = nullptr;
     }
     else
     {
-        listItem<C>* cur;
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        head->set(l.head->get_data());
-        this->head = head;
-        listItem<C>* tmp = head;
-        cur = l.head->next;
-
-        for(; cur; cur = cur->next)
-        {
-            listItem<C>* item = new listItem<C>;
-            if(!item)
-                throw memError();
-            tmp->set_next(*item);
-            item->set(cur->get_data());
-            this->tail = item;
-            tmp = tmp->next;
-        }
+        this->head = this->head->get_next();
     }
 
+    this->size--;
 
+    return data;
 }
 
-template <typename C>
-list<C>::list(list<C> &&l)
+template <typename T>
+T list<T>::pop_back(void)
 {
-    this->head = l.head;
-    this->tail = l.tail;
-}
+    if (!this->size)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw empty_list(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
 
+    T data = this->tail->get();
 
-template <typename C>
-list<C>::list(C *mass, int n)
-{
-    assert(n >= 0);
-    if(mass == nullptr || n == 0)
+    if (this->size == 1)
+    {
         this->head = nullptr;
+        this->tail = nullptr;
+    }
     else
     {
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        this->head = head;
-        this->head->set(mass[0]);
-        listItem<C>* cur = head;
+        std::shared_ptr<list_node<T>> temp_node = this->head;
+        for (; temp_node->get_next() != this->tail; temp_node = temp_node->get_next());
 
-        for(int i = 1; i < n; i++)
-        {
-            listItem<C>* item = new listItem<C>;
-            if(!item)
-                throw memError();
-
-            item->set(mass[i]);
-            cur->set_next(*item);
-            cur = item;
-        }
-        this->tail = cur;
+        temp_node->set_null();
+        this->tail = temp_node;
+        this->tail->set_null();
     }
 
+    this->size--;
+
+    return data;
 }
 
-template <typename C>
-list<C>::list(C data, size_t n)
+template <typename T>
+T list<T>::remove(const list_iterator<T> &iterator)
 {
-    assert(n >= 0);
-    if(n == 0)
-        this->head = nullptr;
-    else
+    if (iterator.is_invalid())
     {
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        head->set(data);
-        this->head = head;
-        listItem<C>* cur = head;
-        for(size_t i = 0; i < n - 1; i++)
-        {
-            listItem<C>* item = new listItem<C>;
-            if(!item)
-                throw memError();
-            item->set(data);
-            cur->set_next(*item);
-            cur = item;
-        }
-        this->tail = cur;
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
     }
-}
 
-template <typename C>
-list<C>::list(iterator_list<C> &first, iterator_list<C> & last)
-{
-    if(!first.inRange() || !last.inRange())
-        throw rangeError();
-
-    iterator_list<C> f(first);
-    listItem<C>* head = new listItem<C>;
-    if(!head)
-        throw memError();
-    head->set(f.current());
-    this->head = head;
-    f++;
-    listItem<C>* cur = head;
-
-    for(;f != last; f++)
+    if (!this->size)
     {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        item->set(f.current());
-        cur->set_next(*item);
-        cur = item;
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw empty_list(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
     }
-    this->tail = cur;
+
+    if (iterator == this->begin())
+    {
+        return pop_front();
+    }
+
+    list_iterator<T> temp_iterator = this->begin();
+    for (; temp_iterator + 1 != iterator; temp_iterator++);
+
+    T data = temp_iterator->get();
+    temp_iterator->set_next(temp_iterator->get_next()->get_next());
+    this->size--;
+
+    return data;
 }
 
-template <typename C>
-list<C>::~list()
+template <typename T>
+list<T> &list<T>::merge(const list<T> &list)
 {
+    this->push_back(list);
+    return *this;
+}
 
-#ifdef DEBUG
-    std::cout << "Деструктор класса List!\n";
-#endif
-    if(this->head)
+template <typename T>
+list<T> &list<T>::merge(const T &data)
+{
+    this->push_back(data);
+    return *this;
+}
+
+template <typename T>
+void list<T>::reverse(void)
+{
+    std::shared_ptr<list_node<T>> current(this->head);
+    std::shared_ptr<list_node<T>> next(nullptr);
+    std::shared_ptr<list_node<T>> prev(nullptr);
+
+    while (current)
     {
-        listItem<C>* next;
-        for(; this->head; this->head = next)
-        {
-            next = this->head->next;
-            delete this->head;
+        next = current->get_next();
+        current->set_next(prev);
+        prev = current;
+        current = next;
+    }
 
+    prev = this->head;
+    this->head = this->tail;
+    this->tail = prev;
+    this->tail->set_null();
+}
+
+template <typename T>
+bool list<T>::operator == (const list<T> &list) const
+{
+    auto fst = this->cbegin();
+    auto snd = list.cbegin();
+
+    for (; fst != this->cend() && snd != list.cend(); ++fst, ++snd)
+    {
+        if (fst->get() != snd->get())
+        {
+            return false;
         }
     }
 
+    return this->size == list.size;
+}
+
+template <typename T>
+bool list<T>::operator != (const list<T> &list) const
+{
+    return !(*this == list);
+}
+
+
+template <typename T>
+list<T> &list<T>::operator = (const list<T> &list)
+{
+    clear();
+
+    this->size = 0;
     this->head = nullptr;
     this->tail = nullptr;
-}
 
-template <typename C>
-list<C>& list<C>::operator =(const list<C>& l)
-{
-    if(this->length() <= l.length())
-    {
-        listItem<C>* curl = l.head;
-        listItem<C>* curt = this->head;
-        for(; curt; curt = curt->next)
-        {
-            curt->set(curl->get_data());
-            curl = curl->next;
-        }
-
-    }
-    else
-    {
-        listItem<C>* curl = l.head;
-        listItem<C>* curt = this->head;
-        for(; curt; curt = curt->next)
-        {
-
-            if(curl)
-            {
-                curt->set(curl->get_data());
-                this->tail = curl;
-                curl = curl->next;
-            }
-            else
-            {
-                this->del(*curt);
-            }
-        }
-
-    }
-
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::operator =(list<C> &&l)
-{
-    this->head = l.head;
-    this->tail = l.tail;
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::operator +=(const list<C>& l)
-{
-    this->append(l);
-    return *this;
-
-}
-
-template <typename C>
-list<C> &list<C>::operator +=(const listItem<C> &data)
-{
-    this->append(data);
+    push_back(list);
     return *this;
 }
 
-template <typename C>
-list<C> &list<C>::operator +=(const C data)
+template <typename T>
+list<T> &list<T>::operator = (const list<T> &&list)
 {
-    this->append(data);
+    this->size = list.size;
+    this->head = list.head;
+    this->tail = list.tail;
+}
+
+template <typename T>
+list<T> &list<T>::operator += (const list<T> &list)
+{
+    this->push_back(list);
     return *this;
 }
 
-
-template <typename C>
-list<C>& list<C>::operator +(const list<C>& l)
+template <typename T>
+list<T> &list<T>::operator += (const T &data)
 {
-    this->append(l);
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::operator +(const listItem<C>& data)
-{
-    this->append(data);
-    return *this;
-
-}
-
-template <typename C>
-list<C> &list<C>::operator +(const C data)
-{
-    this->append(data);
+    this->push_back(data);
     return *this;
 }
 
-
-template <typename C>
-bool list<C>::operator ==(const list<C>& l) const
+template <typename T>
+list<T> &list<T>::operator + (const list<T> &list)
 {
-    listItem<C>* curt = this->head;
-    listItem<C>* curl = l.head;
-    while (curt && curl && curt->data == curl->data)
-    {
-        curt = curt->next;
-        curl = curl->next;
-    }
-
-    if(curt == nullptr && curl == nullptr)
-        return true;
-    else
-        return false;
-
-}
-
-
-template <typename C>
-bool list<C>::operator !=(const list<C>& l) const
-{
-    return !(*this == l);
-
-}
-
-
-template <typename C>
-size_t list<C>::size() const
-{
-    return (this->length() * sizeof(listItem<C>));
-}
-
-template <typename C>
-void list<C>::clear()
-{
-    listItem<C>* cur = this->head;
-    for(; cur; cur = cur->next)
-    {
-        cur->set(0);
-    }
-
-}
-
-template <typename C>
-bool list<C>::is_empty() const
-{
-    return (this->head == nullptr);
-}
-
-template <typename C>
-size_t list<C>::length() const
-{
-    listItem<C>* cur = this->head;
-    size_t s = 0;
-    for(; cur; cur = cur->next)
-    {
-        s++;
-    }
-
-    return s;
-}
-
-
-template <typename C>
-iterator_list<C>& list<C>::begin()
-{
-    iterator_list<C> it(*this);
-    it.first();
-
-    return it;
-
-}
-
-template <typename C>
-iterator_list<C>& list<C>::end()
-{
-    iterator_list<C> it(*this);
-    it.last();
-
-
-    return it;
-
-}
-
-template <typename C>
-const_iterator_list<C>& list<C>::begin() const
-{
-    const_iterator_list<C> it(*this);
-    it.first();
-
-    return it;
-
-}
-
-template <typename C>
-const_iterator_list<C>& list<C>::end() const
-{
-    const_iterator_list<C> it(*this);
-    it.last();
-
-
-    return it;
-
-}
-
-template <typename C>
-list<C>& list<C>::append(const list<C>& l)
-{
-    if(!this->head)
-    {
-        *this = l;
-        return *this;
-    }
-
-    listItem<C>* tmp = l.head;
-    for(;tmp;tmp = tmp->next)
-    {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        item->set(tmp->get_data());
-        this->append(*item);
-    }
-
+    this->push_back(list);
     return *this;
 }
 
-template <typename C>
-list<C>& list<C>::append(const C data)
+template <typename T>
+list<T> &list<T>::operator + (const T &data)
 {
-    listItem<C>* n = new listItem<C>;
-    if(!n)
-        throw memError();
-    n->set(data);
-    this->append(*n);
-    return *this;
-
-}
-
-
-template <typename C>
-list<C>& list<C>::append(listItem<C>& elem)
-{
-    if(!this->head)
-    {
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        head->data = elem.data;
-        this->head = head;
-        this->tail = head;
-        return *this;
-    }
-
-    listItem<C>* cur = this->tail;
-    listItem<C>* new_item = new listItem<C>;
-    if(!new_item)
-        throw memError();
-    new_item->data = elem.data;
-    cur->set_next(*new_item);
-    this->tail = new_item;
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_front(const list<C>& l)
-{
-    if(!l.head)
-        return *this;
-
-    if(!this->head)
-    {
-        this->append(l);
-        return *this;
-    }
-    listItem<C>* cur;
-    listItem<C>* head = new listItem<C>;
-    if(!head)
-        throw memError();
-    head->set(l.head->get_data());
-
-    listItem<C>* tmp = head;
-    cur = l.head->next;
-
-    for(; cur; cur = cur->next)
-    {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        tmp->set_next(*item);
-        item->set(cur->get_data());
-        item->set_next(*this->head);
-        tmp = tmp->next;
-    }
-
-    this->head = head;
-    return *this;
-
-
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_front(const C data)
-{
-    listItem<C>* new_head = new listItem<C>;
-    if(!new_head)
-        throw memError();
-    new_head->set(data);
-    this->insert_front(*new_head);
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_front(listItem<C>& elem)
-{
-    if(!this->head)
-    {
-        this->append(elem);
-        return *this;
-    }
-
-    listItem<C>* new_head = new listItem<C>;
-    if(!new_head)
-        throw memError();
-    new_head->set(elem.data);
-    new_head->set_next(*this->head);
-    this->head = new_head;
-    return *this;
-
-}
-
-
-template <typename C>
-int list<C>::compare(const list<C>& l)
-{
-    if (*this == l)
-        return 0;
-    else
-    {
-        if(this->length() > l.length())
-            return 1;
-        else
-            return -1;
-    }
-
-}
-
-template <typename C>
-list<C> &list<C>::insert_after(listItem<C>& after, const C data)
-{
-    listItem<C>* f = this->find(after);
-    listItem<C>* tmp = f->get_next();
-    listItem<C>* item = new listItem<C>;
-    if(!item)
-        throw memError();
-    item->set(data);
-    f->set_next(*item);
-    item->set_next(*tmp);
-    if(f == this->tail)
-        this->tail = item;
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_after(listItem<C>& after, list<C>&  l)
-{
-    listItem<C>* f = this->find(after);
-    listItem<C>* buf = f->get_next();
-    listItem<C>* cur;
-    listItem<C>* head = new listItem<C>;
-    if(!head)
-        throw memError();
-    head->set(l.head->get_data());
-
-    listItem<C>* tmp = head;
-    cur = l.head->get_next();
-
-    for(; cur; cur = cur->get_next())
-    {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        tmp->set_next(*item);
-        item->set(cur->get_data());
-        item->set_next(*buf);
-        if(f == this->tail)
-            this->tail = item;
-        tmp = tmp->get_next();
-    }
-    f->set_next(*head);
-
-    return *this;
-
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_after(listItem<C>& after, listItem<C>& elem)
-{
-    listItem<C>* f = this->find(after);
-    listItem<C>* tmp = f->next;
-    listItem<C>* item = new listItem<C>;
-    if(!item)
-        throw memError();
-    item->set(elem.get_data());
-    f->set_next(*item);
-    item->set_next(*tmp);
-    if(f == this->tail)
-        this->tail = item;
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_before(listItem<C>& before, const C data)
-{
-    listItem<C>* cur = this->head;
-    listItem<C>* tmp = nullptr;
-    while (cur && cur->next != before.next)
-    {
-        tmp = cur;
-        cur = cur->get_next();
-    }
-
-    if (tmp != nullptr)
-    {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        item->set(data);
-        tmp->set_next(*item);
-        item->set_next(*cur);
-        return *this;
-    }
-    else
-    {
-        this->insert_front(data);
-        return *this;
-    }
-}
-
-template <typename C>
-list<C>& list<C>::insert_before(listItem<C>& before, list<C>& l)
-{
-    listItem<C>* cur = this->head;
-    listItem<C>* tmp = nullptr;
-    while (cur && /*cur->get_data()!= before.get_data()*/ cur->next != before.next)
-    {
-        tmp = cur;
-        cur = cur->get_next();
-    }
-
-    if (tmp != nullptr)
-    {
-        listItem<C>* curr;
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        head->set(l.head->get_data());
-
-        listItem<C>* buf = head;
-        curr = l.head->get_next();
-
-        for(; curr; curr = curr->get_next())
-        {
-            listItem<C>* item = new listItem<C>;
-            if(!item)
-                throw memError();
-            buf->set_next(*item);
-            item->set(curr->get_data());
-            item->set_next(*cur);
-            buf = buf->get_next();
-        }
-
-        tmp->set_next(*head);
-        return *this;
-
-    }
-    else
-    {
-        this->insert_front(l);
-        return *this;
-    }
-
-}
-
-
-template <typename C>
-list<C> &list<C>::insert_after(iterator_list<C>& iter, const C data)
-{
-    listItem<C>* f = this->find(*iter);
-    listItem<C>* item = new listItem<C>;
-    if(!item)
-        throw memError();
-    item->set(data);
-    this->insert_after(*f, *item);
+    this->push_back(data);
     return *this;
 }
 
-
-template <typename C>
-list<C> &list<C>::insert_after(iterator_list<C>& iter, const list<C> &l)
+template<typename T_>
+std::ostream &operator << (std::ostream &os, const list<T_> &list)
 {
-    listItem<C>* f = this->find(*iter);
-    listItem<C>* buf = f->next;
-    listItem<C>* cur;
-    listItem<C>* head = new listItem<C>;
-    if(!head)
-        throw memError();
-    head->set(l.head->get_data());
-
-    listItem<C>* tmp = head;
-    cur = l.head->next;
-
-    for(; cur; cur = cur->next)
+    for (auto iterator = list.cbegin(); iterator != list.cend(); iterator++)
     {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        tmp->set_next(*item);
-        item->set(cur->get_data());
-        item->set_next(*buf);
-        if(f == this->tail)
-            this->tail = item;
-        tmp = tmp->next;
-    }
-    f->set_next(*head);
-
-    return *this;
-}
-
-
-template <typename C>
-list<C>& list<C>::insert_before(listItem<C>& before, listItem<C>& elem)
-{
-    listItem<C>* cur = this->head;
-    listItem<C>* tmp = nullptr;
-    while (cur && /*cur->get_data() != before.get_data() && */cur->next != before.next)
-    {
-        tmp = cur;
-        cur = cur->next;
+        os << (*iterator).get() << " ";
     }
 
-    if (tmp != nullptr)
-    {
-        listItem<C>* item = new listItem<C>;
-        if(!item)
-            throw memError();
-        item->set(elem.get_data());
-        tmp->set_next(*item);
-        item->set_next(*cur);
-        return *this;
-    }
-    else
-    {
-        this->insert_front(elem);
-        return *this;
-    }
-}
-
-template <typename C>
-list<C>& list<C>::insert_before(iterator_list<C>& iter, const C data)
-{
-    listItem<C>* before = &(*iter);
-    listItem<C>* item = new listItem<C>;
-    if(!item)
-        throw memError();
-    item->set(data);
-    this->insert_before(*before, *item);
-    return *this;
-}
-
-template <typename C>
-list<C>& list<C>::insert_before(const_iterator_list<C>& iter, const C data)
-{
-    listItem<C>* before = &(*iter);
-    listItem<C>* item = new listItem<C>;
-    if(!item)
-        throw memError();
-    item->set(data);
-    this->insert_before(*before, *item);
-    return *this;
-}
-
-template <typename C>
-list<C>& list<C>::insert_before(iterator_list<C>& iter, const list<C>& l)
-{
-    listItem<C>* cur = this->head;
-    listItem<C>* before = &(*iter);
-    listItem<C>* tmp = nullptr;
-    while (cur && /*cur->get_data()!= before->get_data()*/ cur->next != before->next)
-    {
-        tmp = cur;
-        cur = cur->next;
-    }
-
-    if (tmp != nullptr)
-    {
-        listItem<C>* curr;
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        head->set(l.head->get_data());
-
-        listItem<C>* buf = head;
-        curr = l.head->next;
-
-        for(; curr; curr = curr->next)
-        {
-            listItem<C>* item = new listItem<C>;
-            if(!item)
-                throw memError();
-            buf->set_next(*item);
-            item->set(curr->get_data());
-            item->set_next(*cur);
-            buf = buf->next;
-        }
-
-        tmp->set_next(*head);
-        return *this;
-
-    }
-    else
-    {
-        this->insert_front(l);
-        return *this;
-    }
-
-}
-
-template <typename C>
-list<C>& list<C>::insert_before(const_iterator_list<C>& iter, const list<C>& l)
-{
-    listItem<C>* cur = this->head;
-    listItem<C>* before = &(*iter);
-    listItem<C>* tmp = nullptr;
-    while (cur && /*cur->get_data()!= before->get_data()*/ cur->next != before->next)
-    {
-        tmp = cur;
-        cur = cur->next;
-    }
-
-    if (tmp != nullptr)
-    {
-        listItem<C>* curr;
-        listItem<C>* head = new listItem<C>;
-        if(!head)
-            throw memError();
-        head->set(l.head->get_data());
-
-        listItem<C>* buf = head;
-        curr = l.head->next;
-
-        for(; curr; curr = curr->next)
-        {
-            listItem<C>* item = new listItem<C>;
-            if(!item)
-                throw memError();
-            buf->set_next(*item);
-            item->set(curr->get_data());
-            item->set_next(*cur);
-            buf = buf->next;
-        }
-
-        tmp->set_next(*head);
-        return *this;
-
-    }
-    else
-    {
-        this->insert_front(l);
-        return *this;
-    }
-
-}
-
-template <typename C>
-listItem<C>* list<C>::find(const listItem<C> &elem) const
-{
-    if(!this->head)
-        throw emptyError();
-    listItem<C>* cur = this->head;
-    while (cur && cur->get_data()!= elem.get_data())
-        cur = cur->next;
-
-    return cur;
-
-}
-
-template <typename C>
-listItem<C> *list<C>::find(const C data) const
-{
-    if(!this->head)
-        throw emptyError();
-    listItem<C>* cur = this->head;
-    while (cur && cur->get_data() != data)
-        cur = cur->get_next();
-
-    return cur;
-
-}
-
-
-template <typename C>
-void list<C>::sort(bool increase)
-{
-    C* arr = this->to_array();
-    if(increase)
-        qsort(arr, this->length(), sizeof(C), compfunc::comp_inc<C>);
-    else
-        qsort(arr, this->length(), sizeof(C), compfunc::comp_dec<C>);
-
-    listItem<C>* tmp = this->head;
-    size_t i = 0;
-    for(; tmp ; tmp = tmp->next)
-    {
-        tmp->set(arr[i]);
-        this->tail = tmp;
-        i++;
-    }
-
-    delete [] arr;
-
-}
-
-template <typename C>
-void list<C>::reverse()
-{
-    if(this->length() < 3)
-       throw rangeError();
-    this->tail = this->head;
-    listItem<C>* one = this->head;
-    listItem<C>* two = one->next;
-    listItem<C>* three = two->next;
-    do
-    {
-        two->set_next(*one);
-        one = two;
-        two = three;
-        if (three)
-        {
-            three = three->next;
-        }
-    }
-    while(three != nullptr);
-    two->set_next(*one);
-    this->head->destroy_next();
-    this->head = two;
-
-}
-
-template <typename C>
-C* list<C>::to_array() const
-{
-     C* arr = new C[this->length()];
-     if(!arr)
-         throw memError();
-     listItem<C>* tmp = this->head;
-     for(size_t i  = 0;  i < this->length(); i++)
-     {
-         arr[i] = tmp->get_data();
-         tmp = tmp->next;
-     }
-
-     return arr;
-}
-
-template <typename C>
-list<C>& list<C>::reset(listItem<C>& elem,C data)
-{
-    listItem<C>* f = this->find(elem);
-    f->set(data);
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::reset(listItem<C>& elem, listItem<C>& temp)
-{
-    listItem<C>* f = this->find(elem);
-    f->set(temp.get_data());
-    return *this;
-
-}
-
-template <typename C>
-list<C>& list<C>::reset(iterator_list<C>& iter,C data)
-{
-    listItem<C>* f = this->find(*iter);
-    f->set(data);
-    return *this;
-}
-
-template <typename C>
-listItem<C>* list<C>::del(const listItem<C> &elem)
-{
-    if(!this->head)
-        throw emptyError();
-    listItem<C>* f = this->find(elem);
-
-
-    listItem<C>* cur = this->head;
-    if(cur->get_data() == elem.get_data())
-    {
-        this->head = this->head->next;
-        return cur;
-    }
-    for(;cur && cur->next != f; cur = cur->next);
-    if(cur == nullptr)
-        return nullptr;
-    cur->set_next(*f->next);
-
-    if(f == this->tail)
-    {
-        listItem<C>* tmp = this->head;
-        for(; tmp->next; tmp = tmp->next);
-        this->tail = tmp;
-    }
-    return f;
-
-}
-
-template <typename C>
-listItem<C>* list<C>::del(iterator_list<C>& iter)
-{
-    if(!this->head)
-        throw emptyError();
-    if(!*iter == this->tail)
-        throw rangeError();
-
-    listItem<C>* f = this->find(*iter);
-
-    f = f->get_next();
-
-    this->del(f);
-
-    return f;
-
-}
-
-
-template <typename C>
-std::ostream& operator<<(std::ostream& os, list<C>& l)
- {
-    os << "List: ";
-    iterator_list<C> i(l);
-    if (!i.inRange())
-    {
-        os << "empty";
-        return os;
-    }
-    for (i.first(); i.inRange(); i++)
-    {
-        os << i.current() << " ";
-
-    }
-    os << "\n";
     return os;
+}
 
- }
+template <typename T>
+list_iterator<T> list<T>::begin(void)
+{
+    list_iterator<T> iterator(this->head);
+    return iterator;
+}
 
+template <typename T>
+const_list_iterator<T> list<T>::cbegin(void) const
+{
+    const_list_iterator<T> iterator(this->head);
+    return iterator;
+}
+
+template <typename T>
+list_iterator<T> list<T>::end(void)
+{
+    list_iterator<T> iterator(this->tail);
+    return ++iterator;
+}
+
+template <typename T>
+const_list_iterator<T> list<T>::cend(void) const
+{
+    const_list_iterator<T> iterator(this->tail);
+    return ++iterator;
+}
+
+template <typename T>
+std::shared_ptr<list_node<T>> list<T>::get_head(void)
+{
+    return this->head;
+}
+
+template <typename T>
+std::shared_ptr<list_node<T>> list<T>::get_tail(void)
+{
+    return this->tail;
+}
 
 #endif // LIST_H

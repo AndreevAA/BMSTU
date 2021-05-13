@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -20,19 +19,6 @@
          <items>
             <AnchorPane prefHeight="541.0" prefWidth="102.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Button fx:id="fillButton" layoutX="2.0" layoutY="279.0" mnemonicParsing="false" onAction="#onFill" prefHeight="27.0" prefWidth="201.0" text="Заполнить" />
-                  <Label alignment="CENTER" layoutX="6.0" layoutY="169.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x1221" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="colorFillingType" layoutX="1.0" layoutY="192.0" prefHeight="27.0" prefWidth="201.0" />
-                  <Label alignment="CENTER" layoutY="119.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Тип замера" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x1222" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="timeDelayType" layoutX="2.0" layoutY="142.0" prefHeight="27.0" prefWidth="201.0" />
 
                   <Label fx:id="parameterErrorField" layoutX="7.0" layoutY="438.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
                   <Label alignment="CENTER" layoutX="33.0" layoutY="415.0" style="&#10;" text="Статус ошибок:" textAlignment="CENTER" wrapText="false">
@@ -57,13 +43,6 @@
                         <Font size="8.0" fx:id="x12111" />
                      </font>
                   </Label>
-                  <Label fx:id="workingTime" layoutX="10.0" layoutY="365.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
-                  <Label alignment="CENTER" layoutX="36.0" layoutY="342.0" style="&#10;" text="Время работы" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x1111" />
-                     </font>
-                  </Label>
-                  <Button fx:id="addFigureButton" layoutX="3.0" layoutY="243.0" mnemonicParsing="false" onAction="#onAddFigure" prefHeight="27.0" prefWidth="201.0" text="Замкнуть" />
                </children>
             </AnchorPane>
             <ScrollPane fx:id="scrollPanel" prefHeight="-1.0" prefWidth="-1.0">
