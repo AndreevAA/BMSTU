@@ -180,6 +180,13 @@ bool iterator_list<C>::operator >= (const iterator_list<C>& it) const
 //––––––––––––––––––––––––––––––––––––––––
 
 template <typename C>
+const_iterator_list<C>::~const_iterator_list()
+{
+    this->_list = nullptr;
+    this->_current = nullptr;
+}
+
+template <typename C>
 const_iterator_list<C>::const_iterator_list(const list<C>& l)
 {
     this->_list = &l;
@@ -193,13 +200,16 @@ const_iterator_list<C>::const_iterator_list(const const_iterator_list<C>& it)
     this->_current = it._current;
 }
 
-template <typename C>
-const_iterator_list<C>::~const_iterator_list()
-{
-    this->_list = nullptr;
-    this->_current = nullptr;
-}
+//––––––––––––––––––––––––––––––––––––––––
 
+template <typename C>
+void const_iterator_list<C>::next()
+{
+    if(!this->inRange())
+       throw rangeError();
+
+    this->_current = this->_current->get_next();
+}
 
 template <typename C>
 void const_iterator_list<C>::first()
@@ -214,15 +224,6 @@ void const_iterator_list<C>::last()
         throw emptyError();
 
     this->_current = this->_list->get_tail();
-}
-
-template <typename C>
-void const_iterator_list<C>::next()
-{
-    if(!this->inRange())
-       throw rangeError();
-
-    this->_current = this->_current->get_next();
 }
 
 template <typename C>
