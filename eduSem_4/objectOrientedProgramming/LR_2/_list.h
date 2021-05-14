@@ -14,16 +14,17 @@ class list : public base_container
 public:
     list();
 
-    list(list<T> &list);
-    list<T> &operator = (const list<T> &list);
+    list(const list<T> &list);
+    list<T> &operator = (list<T> &list);
 
-    list(list<T> &&list);
-    list<T> &operator = (const list<T> &&list);
+    list(const list<T> &&list);
+    list<T> &operator = (list<T> &&list);
 
-    list(T *const array, const int &size);
+    list(const T * array, const int &size);
     list(std::initializer_list<T> nodes);
 
-    list(const std::iterator<std::input_iterator_tag, T> &begin, const std::iterator<std::input_iterator_tag, T> &end);
+    list(const std::iterator<std::input_iterator_tag, T> &begin, 
+        const std::iterator<std::input_iterator_tag, T> &end);
 
     ~list() = default;
 
@@ -68,11 +69,13 @@ public:
 protected:
     std::shared_ptr<list_node<T>> get_head();
     std::shared_ptr<list_node<T>> get_tail();
+
     list_iterator<T> push_back(const std::shared_ptr<list_node<T>> &node);
     list_iterator<T> push_front(const std::shared_ptr<list_node<T>> &node);
 
 private:
     size_t size;
+
     std::shared_ptr<list_node<T>> head;
     std::shared_ptr<list_node<T>> tail;
 };

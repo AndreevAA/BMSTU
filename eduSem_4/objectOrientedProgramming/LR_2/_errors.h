@@ -2,22 +2,6 @@
 #define _ERRORS_H
 #include <exception>
 
-class memError : public baseError
-{
-    const char* what()  const throw()
-    {
-        return "A memory allocation error";
-    }
-};
-
-class rangeError : public baseError
-{
-    const char* what()  const throw()
-    {
-        return "List is out of range";
-    }
-};
-
 class emptyError : public baseError
 {
 public:
@@ -25,6 +9,24 @@ public:
     const char* what()  const throw()
     {
         return "Attempt to work with empty list or empty element";
+    }
+};
+
+class cmpIterError : public baseError
+{
+public:
+
+    const char* what()  const throw()
+    {
+        return "Comparing iterators with different sources";
+    }
+};
+
+class rangeError : public baseError
+{
+    const char* what()  const throw()
+    {
+        return "Out of range";
     }
 };
 
@@ -38,13 +40,11 @@ public:
 
 };
 
-class cmpIterError : public baseError
+class memError : public baseError
 {
-public:
-
     const char* what()  const throw()
     {
-        return "Comparing iterators with different sources";
+        return "A memory allocation error";
     }
 };
 
