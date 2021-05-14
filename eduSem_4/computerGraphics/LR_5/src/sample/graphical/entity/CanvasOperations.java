@@ -16,11 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CanvasOperations extends GraphicalObject
-{
+public class CanvasOperations extends GraphicalObject {
     // Преобразование значение цвета
-    public static Color getColor(String tempColorStatus)
-    {
+    public static Color getColor(String tempColorStatus) {
         if (tempColorStatus == "Красный")
             return Color.RED;
         else if (tempColorStatus == "Зеленый")
@@ -36,7 +34,7 @@ public class CanvasOperations extends GraphicalObject
     }
 
     // Установка параметров для скролла панели
-    static public void setScrollPanelProperties(ScrollPane scrollPanel, Canvas graphTable, List <GraphicalObject> objectList) {
+    static public void setScrollPanelProperties(ScrollPane scrollPanel, Canvas graphTable, List<GraphicalObject> objectList) {
         scrollPanel.widthProperty().addListener(event -> {
             graphTable.setWidth(scrollPanel.getWidth());
             redrawElements(graphTable, objectList);
@@ -49,14 +47,12 @@ public class CanvasOperations extends GraphicalObject
     }
 
     // Перерисовка элементов экрана
-    static public void redrawElements(Canvas graphTable, List<GraphicalObject> objectList)
-    {
+    static public void redrawElements(Canvas graphTable, List<GraphicalObject> objectList) {
         graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
         objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
     }
 
-    public static void redrawElementsPix(Canvas graphTable, List<GraphicalObject> objectList, List<ColoredPixel> pixelList)
-    {
+    public static void redrawElementsPix(Canvas graphTable, List<GraphicalObject> objectList, List<ColoredPixel> pixelList) {
         pixelList.forEach(ColoredPixel -> ColoredPixel.draw(graphTable.getGraphicsContext2D()));
         //graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
         //pixelList.forEach(ColoredPixel -> ColoredPixel.draw(graphTable.getGraphicsContext2D()));
@@ -65,8 +61,7 @@ public class CanvasOperations extends GraphicalObject
 
 
     // Отрисовка линии
-    static public List <GraphicalObject> addLine(Canvas graphTable, List <GraphicalObject> objectList, double firstX, double firstY, double secondX, double secondY, Color tempСolor)
-    {
+    static public List<GraphicalObject> addLine(Canvas graphTable, List<GraphicalObject> objectList, double firstX, double firstY, double secondX, double secondY, Color tempСolor) {
         // Добавление линии
         objectList.add(new GraphicalLine(firstX, firstY, secondX, secondY, tempСolor));
 
@@ -77,14 +72,14 @@ public class CanvasOperations extends GraphicalObject
 
 
     // Верификация на возможность добавления линии
-    static public boolean isTempFigureAvaliableToAddLine(List <GraphicalPoint> tempFigure){
+    static public boolean isTempFigureAvaliableToAddLine(List<GraphicalPoint> tempFigure) {
         if (tempFigure.size() != 0)
             return true;
         return false;
     }
 
     // Устноавка точки и прямой на рисунок
-    static public List <GraphicalObject> addLineWithPointToObjects(double xMouseClickedPos, double yMouseClickedPos, List <GraphicalObject> objectList, List <GraphicalPoint> tempFigure, GraphicalPoint tempPoint){
+    static public List<GraphicalObject> addLineWithPointToObjects(double xMouseClickedPos, double yMouseClickedPos, List<GraphicalObject> objectList, List<GraphicalPoint> tempFigure, GraphicalPoint tempPoint) {
         // Добавление точки
         objectList.add(tempPoint);
 
@@ -98,7 +93,7 @@ public class CanvasOperations extends GraphicalObject
 
     // Копия создания дублежа
     @FXML
-    static public List <GraphicalObject> createCopyFunction(List <GraphicalObject> objectList, List <GraphicalObject> copyObjectList) {
+    static public List<GraphicalObject> createCopyFunction(List<GraphicalObject> objectList, List<GraphicalObject> copyObjectList) {
         // Очистка массива дубляжей
         copyObjectList.clear();
 
@@ -111,7 +106,7 @@ public class CanvasOperations extends GraphicalObject
 
     // Получение дублирующий копии в оригинал
     @FXML
-    static public List <GraphicalObject> getCopyFunction(List <GraphicalObject> objectList, List <GraphicalObject> copyObjectList) {
+    static public List<GraphicalObject> getCopyFunction(List<GraphicalObject> objectList, List<GraphicalObject> copyObjectList) {
         // Очистка массива дубляжей
         objectList.clear();
 

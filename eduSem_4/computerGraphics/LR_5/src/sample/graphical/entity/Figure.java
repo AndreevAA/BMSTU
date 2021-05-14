@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static sample.graphical.entity.GraphicalProcessing.colorField;
 
 public class Figure extends GraphicalObject {
 
@@ -34,10 +33,12 @@ public class Figure extends GraphicalObject {
             else
                 secondPoint = pointList.get(pointNumber + 1);
 
+            GraphicalProcessing processing = new GraphicalProcessing();
+
             if (firstPoint.xValue < secondPoint.xValue)
-                colorField(objectList, pixelList, graphTable, firstPoint, secondPoint, borderPosition, tempColor, timeDelayStatus);
+                processing.colorField(objectList, pixelList, graphTable, firstPoint, secondPoint, borderPosition, tempColor, timeDelayStatus);
             else
-                colorField(objectList, pixelList, graphTable, secondPoint, firstPoint, borderPosition, tempColor, timeDelayStatus);
+                processing.colorField(objectList, pixelList, graphTable, secondPoint, firstPoint, borderPosition, tempColor, timeDelayStatus);
         }
     }
 

@@ -117,7 +117,7 @@ public class Controller implements Initializable {
 
         // Чтение кликов мыши
         graphTable.setOnMouseClicked(event -> {
-            double xMouseClickedPos = event.getX(), yMouseClickedPos = event.getY();
+            int xMouseClickedPos = (int) event.getX(), yMouseClickedPos = (int) event.getY();
 
             // Отрисовка поставленной точки
             GraphicalPoint tempPoint = new GraphicalPoint(xMouseClickedPos, yMouseClickedPos, Color.BLACK);
@@ -154,11 +154,15 @@ public class Controller implements Initializable {
         fillButton.setOnAction(actionEvent -> {
             if (isAllFiguresAvailiableToBeFilles(allFigures)) {
 
+                redrawElements(graphTable, objectList);
+
                 long startTime = System.nanoTime();
                 fillAllFigures(objectList, graphTable, allFigures, pixelList, CanvasOperations.getColor(colorFillingType.getValue().toString()), CanvasOperations.getTimeDelayStatus(timeDelayType.getValue().toString()));
                 long endTime = System.nanoTime();
 
                 workingTime.setText(Long.toString((endTime - startTime) / 100000000));
+
+                objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
             }
             else
                 parameterErrorField.setText("Должна быть как минимум одна замкнутая фигура!");

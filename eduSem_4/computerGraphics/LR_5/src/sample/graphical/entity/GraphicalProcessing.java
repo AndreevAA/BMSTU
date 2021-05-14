@@ -1,5 +1,6 @@
 package sample.graphical.entity;
 
+import javafx.animation.PauseTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -9,11 +10,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+import lombok.SneakyThrows;
 import sample.graphical.GraphicalObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.round;
 import static java.lang.StrictMath.ceil;
 import static java.lang.StrictMath.floor;
 import static sample.graphical.entity.CanvasOperations.redrawElements;
@@ -36,94 +40,140 @@ public class GraphicalProcessing extends GraphicalObject
         if (firstPoint.yValue > secondPoint.yValue)
             yStep = -1;
 
-        for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) ceil(secondPoint.yValue); pixelNumberY += yStep){
+        for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) secondPoint.yValue; pixelNumberY += yStep){
+            if (timeDelayStatus) {
+                int finalPixelNumberY = pixelNumberY;
+                int finalYStep = yStep;
+                new Thread() {
+                    @SneakyThrows
+                    @Override
+                    public synchronized void start() {
+                        super.start();
+                        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+                        pause.setOnFinished((v) -> {
+                            if ((int) secondPoint.yValue - (int) firstPoint.yValue != 0) {
+                                int pixelNumberX = ((finalPixelNumberY - (int) firstPoint.yValue) *
+                                        ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
 
-            //Group root = new Group();
+                                for (; pixelNumberX <= borderPosition; pixelNumberX++) {
+                                    int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, finalPixelNumberY);
 
-            if ((int) secondPoint.yValue - (int) firstPoint.yValue != 0) {
-                int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
-                        ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
+                                    if (pixelInPixelListPosition == -1) {
+                                        pixelList.add(new ColoredPixel(pixelNumberX, finalPixelNumberY, endColor));
+                                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY, endColor);
+                                        //graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY + 1, endColor);
+                                    } else {
+                                        if (pixelList.get(pixelInPixelListPosition).tempColor.equals(Color.rgb(244, 244, 244))) {
+                                            pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                                            graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY, endColor);
+                                            //graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY + 1, endColor);
+                                        } else if (finalPixelNumberY != (int) secondPoint.yValue && (finalPixelNumberY != ((int) secondPoint.yValue + 1))){
+                                            pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244, 244, 244);
+                                            graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY, Color.rgb(244, 244, 244));
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                        Thread.sleep(20);
+                        pause.play();
+                    }
+                }.start();
+            }
+            else {
+                if ((int) secondPoint.yValue - (int) firstPoint.yValue != 0) {
+                    int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
+                            ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
 
-                for (; pixelNumberX <= borderPosition; pixelNumberX++) {
-                    int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, pixelNumberY);
+                    for (; pixelNumberX <= borderPosition; pixelNumberX++) {
+                        int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, pixelNumberY);
 
-                    if (pixelInPixelListPosition == -1) {
-                        pixelList.add(new ColoredPixel(pixelNumberX, pixelNumberY, endColor));
-                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
-                    } else {
-                        if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244, 244, 244)) {
-                            pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                        if (pixelInPixelListPosition == -1) {
+                            pixelList.add(new ColoredPixel(pixelNumberX, pixelNumberY, endColor));
                             graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
-                        } else {
-                            pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244, 244, 244);
-                            graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, Color.rgb(244, 244, 244));
+                        }
+                        else {
+                            if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244,244,244)){
+                                pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                            }
+                            else if (pixelNumberY != (int) secondPoint.yValue && (pixelNumberY != ((int) secondPoint.yValue + yStep))){
+                                pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244,244,244);
+                                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, Color.rgb(244,244,244));
+                            }
                         }
                     }
                 }
             }
-
-//                SP = new SnapshotParameters();
-//                WI = new WritableImage(1, 1);
-//                PR = WI.getPixelReader();
-//
-//                Color tempPixelColor = getColor(graphTable, pixelNumberX, pixelNumberY, WI, SP, PR), finalColor;
-//
-//                if (tempPixelColor == endColor)
-//                    finalColor = backgroundColor;
-//                else
-//                    finalColor = endColor;
-//
-//                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, finalColor);
-
-//            Thread.sleep(100, 0);
-            //redrawElementsPix(graphTable, objectList, pixelList);
-//            objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
         }
 
-        for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) floor(secondPoint.yValue); pixelNumberY += yStep){
+        for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) secondPoint.yValue; pixelNumberY += yStep){
+            if (timeDelayStatus) {
+                int finalPixelNumberY = pixelNumberY;
+                int finalYStep1 = yStep;
+                new Thread() {
+                    @SneakyThrows
+                    @Override
+                    public synchronized void start() {
+                        super.start();
+                        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+                        pause.setOnFinished((v) -> {
+                            if ((int) secondPoint.yValue - (int) firstPoint.yValue != 0) {
+                                int pixelNumberX = ((finalPixelNumberY - (int) firstPoint.yValue) *
+                                        ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
 
-            if ((int) secondPoint.yValue - (int) firstPoint.yValue != 0) {
-                int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
-                        ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
+                                for (; pixelNumberX > borderPosition; pixelNumberX--) {
 
-                for (; pixelNumberX > borderPosition; pixelNumberX--) {
+                                    int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, finalPixelNumberY);
 
-//                SP = new SnapshotParameters();
-//                WI = new WritableImage(1, 1);
-//                PR = WI.getPixelReader();
-//
-//                Color tempPixelColor = getColor(graphTable, pixelNumberX, pixelNumberY, WI, SP, PR), finalColor;
-//
-//                if (tempPixelColor == endColor)
-//                    finalColor = backgroundColor;
-//                else
-//                    finalColor = endColor;
-//
-//                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, finalColor);
-
-                    int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, pixelNumberY);
-
-                    if (pixelInPixelListPosition == -1) {
-                        pixelList.add(new ColoredPixel(pixelNumberX, pixelNumberY, endColor));
-                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                                    if (pixelInPixelListPosition == -1) {
+                                        pixelList.add(new ColoredPixel(pixelNumberX, finalPixelNumberY, endColor));
+                                        graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY, endColor);
+                                    }
+                                    else {
+                                        if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244,244,244)){
+                                            pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                                            graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY, endColor);
+                                        }
+                                        else if (finalPixelNumberY != (int) secondPoint.yValue && (finalPixelNumberY != ((int) secondPoint.yValue + finalYStep1))){
+                                            pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244,244,244);
+                                            graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, finalPixelNumberY, Color.rgb(244,244,244));
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                        Thread.sleep(20);
+                        pause.play();
                     }
-                    else {
-                        if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244,244,244)){
-                            pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                }.start();
+            }
+            else {
+                if ((int) secondPoint.yValue - (int) firstPoint.yValue != 0) {
+                    int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
+                            ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
+
+                    for (; pixelNumberX > borderPosition; pixelNumberX--) {
+
+                        int pixelInPixelListPosition = getPixelInPixelListPosition(pixelList, pixelNumberX, pixelNumberY);
+
+                        if (pixelInPixelListPosition == -1) {
+                            pixelList.add(new ColoredPixel(pixelNumberX, pixelNumberY, endColor));
                             graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
                         }
-                        else{
-                            pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244,244,244);
-                            graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, Color.rgb(244,244,244));
+                        else {
+                            if (pixelList.get(pixelInPixelListPosition).tempColor == Color.rgb(244,244,244)){
+                                pixelList.get(pixelInPixelListPosition).tempColor = endColor;
+                                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, endColor);
+                            }
+                            else if (pixelNumberY != (int) secondPoint.yValue && (pixelNumberY != ((int) secondPoint.yValue + yStep))){
+                                pixelList.get(pixelInPixelListPosition).tempColor = Color.rgb(244,244,244);
+                                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, Color.rgb(244,244,244));
+                            }
                         }
                     }
                 }
             }
-
-//            Thread.sleep(10, 0);
-//            redrawElementsPix(graphTable, objectList, pixelList);
-            //objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
-            //graphTable.getGraphicsContext2D();
         }
 
         return pixelList;
