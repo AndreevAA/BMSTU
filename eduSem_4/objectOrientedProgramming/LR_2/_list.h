@@ -1,86 +1,126 @@
-#ifndef _LIST_H
-#define _LIST_H
-#include <cstddef>
+#ifndef LIST_H
+#define LIST_H
+
+
 #include <iostream>
-#include "_errors.h"
-#include "_iteratorlist.h"
-#include "_listitem.h"
-#include  "base_container.h"
+#include "node.h"
+#include "iterator.h"
+#include "const_iterator.h"
+#include "base_list.hpp"
+using namespace std;
 
 
 template <typename T>
-class list : public base_container
+class List: public BaseList
 {
 public:
-    list();
+    List() noexcept;
+    explicit List(List<T> &list);
+    List(List<T> &&list) noexcept;
 
-    list(const list<T> &list);
-    list<T> &operator = (list<T> &list);
+    List(const T *array, const int size);
+    List(initializer_list<T> nodes);
 
-    list(const list<T> &&list);
-    list<T> &operator = (list<T> &&list);
+    template <typename Iterator>
+    List(const Iterator &begin, const Iterator &end);
 
-    list(const T * array, const int &size);
-    list(std::initializer_list<T> nodes);
+    ListIterator<T> begin();
+    ListIterator<T> end();
+    const ListIterator<T> begin() const; // add
+    const ListIterator<T> end() const; // add
 
-    list(const std::iterator<std::input_iterator_tag, T> &begin, 
-        const std::iterator<std::input_iterator_tag, T> &end);
+    ConstListIterator<T> cbegin() const;
+    ConstListIterator<T> cend() const;
 
-    ~list() = default;
+    ListIterator<T> add_back(const T &data);
+    ListIterator<T> add_back(const List<T> &list);
+    ListIterator<T> add_back(initializer_list<T> &nodes);
 
-    virtual bool is_empty() const;
-    virtual void clear();
+    ListIterator<T> add_back(const ListIterator<T> &begin, const ListIterator<T> &end);
+    ListIterator<T> add_back(const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
+    ListIterator<T> add_back(const ListIterator<T> &begin, const int n);
+    ListIterator<T> add_back(const ConstListIterator<T> &begin, const int n);
 
-    list_iterator<T> push_front(const T &data);
-    list_iterator<T> push_front(const list<T> &list);
+    ListIterator<T> add_front(const T &data);
+    ListIterator<T> add_front(const List<T> &list);
+    ListIterator<T> add_front(initializer_list<T> &nodes);
 
-    list_iterator<T> insert(const list_iterator<T> &iterator, const T &data);
-    list_iterator<T> insert(const list_iterator<T> &iterator, const list<T> &list);
-    list_iterator<T> insert(const const_list_iterator<T> &iterator, const T &data);
-    list_iterator<T> insert(const const_list_iterator<T> &iterator, const list<T> &list);
+    ListIterator<T> add_front(const ListIterator<T> &begin, const ListIterator<T> &end);
+    ListIterator<T> add_front(const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
+    ListIterator<T> add_front(const ListIterator<T> &begin, const int n);
+    ListIterator<T> add_front(const ConstListIterator<T> &begin, const int n);
 
-    list_iterator<T> push_back(const T &data);
-    list_iterator<T> push_back(const list<T> &list);
+    // T delete_back();
+    T delete_front();
 
-    T pop_front();
-    T pop_back();
-    T remove(const list_iterator<T> &iterator);
+    T remove(const ListIterator<T> &iterator);
+    void remove(const ListIterator<T> &begin, const ListIterator<T> &end); // add
+    void remove(const ListIterator<T> &begin, const int n); // add
+    // T del(const size_t &index);
+    // T remove(const T &data);
+
+    ListIterator<T> insert(const ListIterator<T> &iterator, const T &data);
+    ListIterator<T> insert(const ConstListIterator<T> &iterator, const T &data);
+    ListIterator<T> insert(const ListIterator<T> &iterator, const List<T> &list);
+    ListIterator<T> insert(const ConstListIterator<T> &iterator, const List<T> &list);
+
+    ListIterator<T> insert(const ListIterator<T> &iterator, const ListIterator<T> &begin, const ListIterator<T> &end);
+    ListIterator<T> insert(const ConstListIterator<T> &iterator, const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
+    ListIterator<T> insert(const ListIterator<T> &iterator, const ListIterator<T> &begin, const int n);
+    ListIterator<T> insert(const ConstListIterator<T> &iterator, const ConstListIterator<T> &begin, const int n);
+
+    ListIterator<T> insert(const ListIterator<T> &iterator, initializer_list<T> nodes);
+    ListIterator<T> insert(const ConstListIterator<T> &iterator, initializer_list<T> nodes);
+
+    /*
+    ListIterator<T> insert(const size_t &index, const T &data);
+    ListIterator<T> insert(const size_t &index, const List<T> &list);
+    ListIterator<T> insert(const size_t &index, const ListIterator<T> &begin, const ListIterator<T> &end);
+    ListIterator<T> insert(const size_t &index, const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
+    ListIterator<T> insert(const size_t &index, initializer_list<T> nodes);
+    */
 
     void reverse();
+    List<T> &merge(const List<T> &list);
+    List<T> &merge(const T &data);
+    List<T> &merge(initializer_list<T> nodes);
 
-    list<T> &merge(const list<T> &list);
-    list<T> &merge(const T &data);
+    List<T> &operator = (const List<T> &list);
+    List<T> &operator = (const List<T> &&list);
+    List<T> &operator + (const List<T> &list);
+    List<T> &operator + (const T &data);
+    List<T> &operator += (const List<T> &list);
+    List<T> &operator += (const T &data);
 
-    list<T> &operator += (const list<T> &list);
-    list<T> &operator += (const T &data);
+    // T& operator [](size_t index);
+    // const T& operator [](size_t index) const;
 
-    list<T> &operator + (const list<T> &list);
-    list<T> &operator + (const T &data);
+    bool equal(const List<T> &list) const;
+    bool not_equal(const List<T> &list) const;
+    bool operator == (const List<T> &list) const;
+    bool operator != (const List<T> &list) const;
 
-    bool operator == (const list<T> &list) const;
-    bool operator != (const list<T> &list) const;
+    bool is_correct() const;
+    bool is_empty() const;
 
-    list_iterator<T> begin();
-    const_list_iterator<T> cbegin() const;
+    virtual int get_size() const;
+    virtual operator bool() const;
+    virtual void clear();
 
-    list_iterator<T> end();
-    const_list_iterator<T> cend() const;
+    ~List() = default;
 
 protected:
-    std::shared_ptr<list_node<T>> get_head();
-    std::shared_ptr<list_node<T>> get_tail();
-
-    list_iterator<T> push_back(const std::shared_ptr<list_node<T>> &node);
-    list_iterator<T> push_front(const std::shared_ptr<list_node<T>> &node);
+    shared_ptr<ListNode<T>> get_head();
+    shared_ptr<ListNode<T>> get_tail();
+    ListIterator<T> add_back(const shared_ptr<ListNode<T>> &node);
+    ListIterator<T> add_front(const shared_ptr<ListNode<T>> &node);
 
 private:
-    size_t size;
+    int size;
+    shared_ptr<ListNode<T>> head;
+    shared_ptr<ListNode<T>> tail;
 
-    std::shared_ptr<list_node<T>> head;
-    std::shared_ptr<list_node<T>> tail;
 };
 
-#include "list.hpp"
 
 #endif
-
