@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
@@ -110,5 +111,12 @@ public class CanvasOperations extends GraphicalObject
             objectList.add(copyObjectList.get(tempNumOfObject));
 
         return objectList;
+    }
+
+    // Статус задержки
+    public static boolean getTimeDelayStatus(String timeDelayStatus) {
+        if (timeDelayStatus == "С задержкой")
+            return true;
+        return false;
     }
 }

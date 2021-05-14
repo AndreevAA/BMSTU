@@ -155,7 +155,7 @@ public class Controller implements Initializable {
             if (isAllFiguresAvailiableToBeFilles(allFigures)) {
 
                 long startTime = System.nanoTime();
-                fillAllFigures(graphTable, allFigures, pixelList, CanvasOperations.getColor(colorFillingType.getValue().toString()));
+                fillAllFigures(graphTable, allFigures, pixelList, CanvasOperations.getColor(colorFillingType.getValue().toString()), CanvasOperations.getTimeDelayStatus(timeDelayType.getValue().toString()));
                 long endTime = System.nanoTime();
 
                 workingTime.setText(Long.toString((endTime - startTime) / 100000000));

@@ -21,8 +21,7 @@ public class GraphicalProcessing extends GraphicalObject
 
 
     // Закрашивание области между двумя точками
-    public static List <ColoredPixel> colorField(List <ColoredPixel> pixelList, Canvas graphTable, GraphicalPoint firstPoint, GraphicalPoint secondPoint, int borderPosition, Color endColor)
-    {
+    public static List <ColoredPixel> colorField(List <ColoredPixel> pixelList, Canvas graphTable, GraphicalPoint firstPoint, GraphicalPoint secondPoint, int borderPosition, Color endColor, boolean timeDelayStatus) throws InterruptedException {
 //        SnapshotParameters SP = new SnapshotParameters();
 //        WritableImage WI = new WritableImage(1, 1);
 //        PixelReader PR = WI.getPixelReader();
@@ -34,7 +33,7 @@ public class GraphicalProcessing extends GraphicalObject
         if (firstPoint.yValue > secondPoint.yValue)
             yStep = -1;
 
-        for (int pixelNumberY = (int) ceil(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) floor(secondPoint.yValue); pixelNumberY += yStep){
+        for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) ceil(secondPoint.yValue); pixelNumberY += yStep){
 
             int pixelNumberX = ((pixelNumberY - (int) firstPoint.yValue) *
                     ((int) secondPoint.xValue - (int) firstPoint.xValue) / ((int) secondPoint.yValue - (int) firstPoint.yValue) + (int) firstPoint.xValue);
@@ -70,6 +69,9 @@ public class GraphicalProcessing extends GraphicalObject
 //
 //                graphTable.getGraphicsContext2D().getPixelWriter().setColor(pixelNumberX, pixelNumberY, finalColor);
             }
+
+            Thread.sleep(10, 0);
+            graphTable.getGraphicsContext2D();
         }
 
         for (int pixelNumberY = (int) floor(firstPoint.yValue); yStep * pixelNumberY <= yStep * (int) floor(secondPoint.yValue); pixelNumberY += yStep){
@@ -109,6 +111,9 @@ public class GraphicalProcessing extends GraphicalObject
                     }
                 }
             }
+
+            Thread.sleep(10, 0);
+            graphTable.getGraphicsContext2D();
         }
 
         return pixelList;
