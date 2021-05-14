@@ -55,6 +55,15 @@ public class CanvasOperations extends GraphicalObject
         objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
     }
 
+    public static void redrawElementsPix(Canvas graphTable, List<GraphicalObject> objectList, List<ColoredPixel> pixelList)
+    {
+        pixelList.forEach(ColoredPixel -> ColoredPixel.draw(graphTable.getGraphicsContext2D()));
+        //graphTable.getGraphicsContext2D().clearRect(0, 0, graphTable.getWidth(), graphTable.getHeight());
+        //pixelList.forEach(ColoredPixel -> ColoredPixel.draw(graphTable.getGraphicsContext2D()));
+        objectList.forEach(graphicalObject -> graphicalObject.draw(graphTable.getGraphicsContext2D()));
+    }
+
+
     // Отрисовка линии
     static public List <GraphicalObject> addLine(Canvas graphTable, List <GraphicalObject> objectList, double firstX, double firstY, double secondX, double secondY, Color tempСolor)
     {

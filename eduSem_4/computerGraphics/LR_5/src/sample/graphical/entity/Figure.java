@@ -14,7 +14,7 @@ import static sample.graphical.entity.GraphicalProcessing.colorField;
 public class Figure extends GraphicalObject {
 
     // Заполнение многоугольника
-    public static void fillFigure(List <ColoredPixel> pixelList, Canvas graphTable, List<GraphicalPoint> pointList, Color tempColor, boolean timeDelayStatus) throws InterruptedException {
+    public static void fillFigure(List<GraphicalObject> objectList, List <ColoredPixel> pixelList, Canvas graphTable, List<GraphicalPoint> pointList, Color tempColor, boolean timeDelayStatus) throws InterruptedException {
 
         int borderPosition = getBorderPosition(pointList);
 
@@ -35,17 +35,17 @@ public class Figure extends GraphicalObject {
                 secondPoint = pointList.get(pointNumber + 1);
 
             if (firstPoint.xValue < secondPoint.xValue)
-                colorField(pixelList, graphTable, firstPoint, secondPoint, borderPosition, tempColor, timeDelayStatus);
+                colorField(objectList, pixelList, graphTable, firstPoint, secondPoint, borderPosition, tempColor, timeDelayStatus);
             else
-                colorField(pixelList, graphTable, secondPoint, firstPoint, borderPosition, tempColor, timeDelayStatus);
+                colorField(objectList, pixelList, graphTable, secondPoint, firstPoint, borderPosition, tempColor, timeDelayStatus);
         }
     }
 
     // Закрашивание всех фигур
-    static public void fillAllFigures(Canvas graphTable, List<List <GraphicalPoint>> allFigures, List <ColoredPixel> pixelList, Color colorToFillFigure, boolean timeDelayStatus){
+    static public void fillAllFigures(List<GraphicalObject> objectList, Canvas graphTable, List<List <GraphicalPoint>> allFigures, List <ColoredPixel> pixelList, Color colorToFillFigure, boolean timeDelayStatus){
         for (int numberOfFigure = 0; numberOfFigure < allFigures.size(); numberOfFigure++) {
             try {
-                fillFigure(pixelList, graphTable, allFigures.get(numberOfFigure), colorToFillFigure, timeDelayStatus);
+                fillFigure(objectList, pixelList, graphTable, allFigures.get(numberOfFigure), colorToFillFigure, timeDelayStatus);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

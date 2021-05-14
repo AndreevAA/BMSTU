@@ -1,5 +1,6 @@
 package sample.graphical.entity;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class ColoredPixel {
@@ -13,5 +14,9 @@ public class ColoredPixel {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
         this.tempColor = tempColor;
+    }
+
+    public void draw(GraphicsContext context) {
+//        throw new ExecutionControl.NotImplementedException("Not implemented");
     }
 }

@@ -21,7 +21,7 @@ public class Main extends Application {
         Parent content = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene scene = new Scene(content, -1, -1);
 
-        stage.setTitle("LR_3, Andreev A.A.");
+        stage.setTitle("LR_5, Andreev A.A.");
         stage.setScene(scene);
         stage.sizeToScene();
         stage.setResizable(true);
