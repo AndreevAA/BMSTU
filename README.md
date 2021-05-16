@@ -26,7 +26,7 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
         <td>Status</td>
     </tr>
     <tr>
-        <td rowspan="6">[eduSem_4](https://github.com/andreevaa/bmstu/tree/master/edusem_4/)</td>
+        <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
         <td>lr_1</td>
         <td>✅</td>
     </tr>
