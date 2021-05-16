@@ -26,7 +26,7 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
         <td>Status</td>
     </tr>
     <tr>
-        <td rowspan="10"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
+        <td rowspan="50"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
         <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms">computationalalgorithms</a></td>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_1">LR_1</a></td>
         <td>✅</td>
