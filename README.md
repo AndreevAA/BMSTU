@@ -18,6 +18,39 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
     - [physicsData](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_3/physicsData)
     - [typesAndDataStructures](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_3/typesAndDataStructures)
 - [eduSem_4](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4)
+<table>
+    <tr>
+        <td>subject</td>
+        <td>lr</td>
+        <td>date</td>
+    </tr>
+    <tr>
+        <td rowspan="6">[computationalalgorithms](https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms)</td>
+        <td>lr_1</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>lr_2</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>lr_3</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>lr_4</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>lr_5</td>
+        <td>🔄</td>
+    </tr>
+    <tr>
+        <td>lr_6</td>
+        <td>🔄</td>
+    </tr>
+</table>
+
     - [computationalAlgorithms](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms)
         - [LR_1](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_1) ✅
         - [LR_2](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_2) ✅
