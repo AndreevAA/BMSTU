@@ -52,6 +52,11 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
         <td>🔄</td>
     </tr>
     <tr>
+        <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture">computerArchitecture</a></td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_1">LR_1</a></td>
+        <td>✅</td>
+    </tr>
+    <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_2">LR_2</a></td>
         <td>✅</td>
     </tr>
