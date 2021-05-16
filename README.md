@@ -28,27 +28,27 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
     <tr>
         <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
         <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms">computationalalgorithms </a></td>
-        <td>lr_1</td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_1">LR_1</a></td>
         <td>✅</td>
     </tr>
     <tr>
-        <td>lr_2</td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_2">LR_2</a></td>
         <td>✅</td>
     </tr>
     <tr>
-        <td>lr_3</td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_3">LR_3</a></td>
         <td>✅</td>
     </tr>
     <tr>
-        <td>lr_4</td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_4">LR_4</a></td>
         <td>✅</td>
     </tr>
     <tr>
-        <td>lr_5</td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_5">LR_5</a></td>
         <td>🔄</td>
     </tr>
     <tr>
-        <td>lr_6</td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_6">LR_6</a></td>
         <td>🔄</td>
     </tr>
 </table>
