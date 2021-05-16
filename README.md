@@ -51,15 +51,28 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_6">LR_6</a></td>
         <td>🔄</td>
     </tr>
+
+    <tr>
+        <td rowspan="4"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
+        <td rowspan="4"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture">computationalalgorithms </a></td>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_1">LR_1</a></td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_2">LR_2</a></td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_3">LR_3</a></td>
+        <td>🔄</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_4">LR_4</a></td>
+        <td>🔄</td>
+    </tr>
+    
 </table>
 
-    - [computationalAlgorithms](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms)
-        - [LR_1](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_1) ✅
-        - [LR_2](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_2) ✅
-        - [LR_3](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_3) ✅
-        - [LR_4](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_4) ✅
-        - [LR_5](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_5) 🔄
-        - [LR_6](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computationalAlgorithms/LR_6) 🔄
     - [computerArchitecture](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerArchitecture)
         - [LR_1](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerArchitecture/LR_1) ✅
         - [LR_2](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/computerArchitecture/LR_2) ✅
