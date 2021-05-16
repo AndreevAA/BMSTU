@@ -26,7 +26,7 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
         <td>Status</td>
     </tr>
     <tr>
-        <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
+        <td rowspan="10"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
         <td rowspan="6"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms">computationalalgorithms </a></td>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_1">LR_1</a></td>
         <td>✅</td>
@@ -50,13 +50,6 @@ This [repository](https://github.com/AndreevAA/BMSTU) contains all materials and
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computationalalgorithms/LR_6">LR_6</a></td>
         <td>🔄</td>
-    </tr>
-
-    <tr>
-        <td rowspan="4"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/">eduSem_4</a></td>
-        <td rowspan="4"><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture">computationalalgorithms </a></td>
-        <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_1">LR_1</a></td>
-        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/computerArchitecture/LR_2">LR_2</a></td>
