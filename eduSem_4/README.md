@@ -94,7 +94,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/logicsAndTheoryOfAlgorithms/DZ2">DZ2</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td rowspan="10"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages">machineDependentProgrammingLanguages</a></td>
