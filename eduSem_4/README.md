@@ -119,7 +119,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_6">LR_6</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_7">LR_7</a></td>
@@ -127,7 +127,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_8">LR_8</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_9">LR_9</a></td>
@@ -144,19 +144,19 @@
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_2">LR_2</a></td>
-        <td>✅</td>
+        <td>🔄</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_3">LR_3</a></td>
-        <td>✅</td>
+        <td>🔄</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_4">LR_4</a></td>
-        <td>✅</td>
+        <td>🔄</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_5">LR_5</a></td>
-        <td>✅</td>
+        <td>🔄</td>
     </tr>
     <tr>
         <td><a href="https://github.com/andreevaa/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_6">Exam</a></td>
