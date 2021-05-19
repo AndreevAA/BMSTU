@@ -27,11 +27,11 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computationalalgorithms/LR_5">LR_5</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computationalalgorithms/LR_6">LR_6</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td rowspan="4"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerArchitecture">computerArchitecture</a></td>
