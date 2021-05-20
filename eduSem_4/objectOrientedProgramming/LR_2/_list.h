@@ -50,14 +50,18 @@ public:
     ListIterator<T> add_front(const ListIterator<T> &begin, const int n);
     ListIterator<T> add_front(const ConstListIterator<T> &begin, const int n);
 
-    // T delete_back();
+    List<T> &operator = (const List<T> &list);
+    List<T> &operator = (const List<T> &&list);
+    List<T> &operator + (const List<T> &list);
+    List<T> &operator + (const T &data);
+    List<T> &operator += (const List<T> &list);
+    List<T> &operator += (const T &data);
+
     T delete_front();
 
     T remove(const ListIterator<T> &iterator);
     void remove(const ListIterator<T> &begin, const ListIterator<T> &end); // add
     void remove(const ListIterator<T> &begin, const int n); // add
-    // T del(const size_t &index);
-    // T remove(const T &data);
 
     ListIterator<T> insert(const ListIterator<T> &iterator, const T &data);
     ListIterator<T> insert(const ConstListIterator<T> &iterator, const T &data);
@@ -72,28 +76,10 @@ public:
     ListIterator<T> insert(const ListIterator<T> &iterator, initializer_list<T> nodes);
     ListIterator<T> insert(const ConstListIterator<T> &iterator, initializer_list<T> nodes);
 
-    /*
-    ListIterator<T> insert(const size_t &index, const T &data);
-    ListIterator<T> insert(const size_t &index, const List<T> &list);
-    ListIterator<T> insert(const size_t &index, const ListIterator<T> &begin, const ListIterator<T> &end);
-    ListIterator<T> insert(const size_t &index, const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
-    ListIterator<T> insert(const size_t &index, initializer_list<T> nodes);
-    */
-
     void reverse();
     List<T> &merge(const List<T> &list);
     List<T> &merge(const T &data);
     List<T> &merge(initializer_list<T> nodes);
-
-    List<T> &operator = (const List<T> &list);
-    List<T> &operator = (const List<T> &&list);
-    List<T> &operator + (const List<T> &list);
-    List<T> &operator + (const T &data);
-    List<T> &operator += (const List<T> &list);
-    List<T> &operator += (const T &data);
-
-    // T& operator [](size_t index);
-    // const T& operator [](size_t index) const;
 
     bool equal(const List<T> &list) const;
     bool not_equal(const List<T> &list) const;
