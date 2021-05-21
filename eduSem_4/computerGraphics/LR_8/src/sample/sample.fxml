@@ -20,18 +20,12 @@
          <items>
             <AnchorPane prefHeight="541.0" prefWidth="102.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Label alignment="CENTER" layoutX="6.0" layoutY="169.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Выбор цвета" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x1221" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="colorFillingType" layoutX="1.0" layoutY="192.0" prefHeight="27.0" prefWidth="201.0" />
-                  <Label alignment="CENTER" layoutY="119.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Тип замера" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutY="119.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Тип операции" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x1222" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="timeDelayType" layoutX="2.0" layoutY="142.0" prefHeight="27.0" prefWidth="201.0" />
+                  <ChoiceBox fx:id="operationType" layoutX="2.0" layoutY="142.0" prefHeight="27.0" prefWidth="201.0" />
 
                   <Label fx:id="parameterErrorField" layoutX="7.0" layoutY="438.0" prefHeight="21.0" prefWidth="193.0" text="Ошибки" textAlignment="CENTER" />
                   <Label alignment="CENTER" layoutX="33.0" layoutY="415.0" style="&#10;" text="Статус ошибок:" textAlignment="CENTER" wrapText="false">
@@ -40,12 +34,7 @@
                      </font>
                   </Label>
                   <Button fx:id="clearAllButton" layoutX="3.0" layoutY="524.0" mnemonicParsing="false" onAction="#onClearAllButton" prefHeight="27.0" prefWidth="201.0" text="Очистить поле" />
-                  <Button fx:id="comeBack" layoutX="3.0" layoutY="485.0" mnemonicParsing="false" onAction="#onComeBack" prefHeight="27.0" prefWidth="200.0" text="Шаг назад" />
-                  <Label alignment="CENTER" layoutX="7.0" layoutY="507.0" prefHeight="23.0" prefWidth="193.0" style="&#10;" text="Данная операция хранит только один шаг." textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="8.0" fx:id="x1211" />
-                     </font>
-                  </Label>
+                  <Button fx:id="inputFigureButton" layoutX="3.0" layoutY="485.0" mnemonicParsing="false" onAction="#onInputFigure" prefHeight="27.0" prefWidth="200.0" text="Ввести фигуру" />
                   <Label alignment="CENTER" layoutX="-1.0" layoutY="460.0" prefHeight="23.0" prefWidth="201.0" style="&#10;" text="Операции" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x1213" />
