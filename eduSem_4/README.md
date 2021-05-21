@@ -73,7 +73,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_6">LR_6</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_7">LR_7</a></td>
@@ -81,7 +81,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_8">LR_8</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_9">LR_9</a></td>
