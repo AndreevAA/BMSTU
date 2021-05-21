@@ -91,15 +91,21 @@ const C iterator_list<C>::current()
     return this->_current->get_data();
 }
 
-template <typename C>
-listItem<C> &iterator_list<C>::operator *()
+
+// Обязательное наличие пробрасований ошибок
+template <typename C> const C &iterator_list<Type>::operator*() const 
 {
+    if (_current == nullptr)
+        throw emptyError();
+
     return *this->_current;
 }
 
-template <typename C>
-listItem<C>* iterator_list<C>::operator ->()
+template <typename C> const C *iterator_list<Type>::operator->() const ()
 {
+    if (_current == nullptr)
+        throw  emptyError();
+
     return this->_current;
 }
 

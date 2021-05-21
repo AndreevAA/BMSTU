@@ -77,7 +77,12 @@ class const_iterator_list : public iteratorBase< listItem<C> >
         const C& current() const;
 
         const listItem<C>& operator *();
-        const listItem<C>* operator ->();
+
+        C &operator*();
+        const C &operator*() const;
+
+        C *operator->();
+        const C *operator->() const;
 
         bool operator != (const const_iterator_list<C>& it) const;
         bool operator == (const const_iterator_list<C>& it) const;
