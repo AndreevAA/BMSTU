@@ -1,3 +1,3 @@
 #pragma once
 
-void print_64_bit_measures();
+void out_64_bit_dimension();

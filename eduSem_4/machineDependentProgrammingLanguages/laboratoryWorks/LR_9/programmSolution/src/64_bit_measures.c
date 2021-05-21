@@ -47,7 +47,7 @@ void get_64_bit_prod_asm(double a, double b, size_t count)
 }
 #endif
 
-void print_64_bit_measures()
+void out_64_bit_dimension()
 {
     printf("double type size: %zu bites\n", sizeof(double) * CHAR_BIT);
 
