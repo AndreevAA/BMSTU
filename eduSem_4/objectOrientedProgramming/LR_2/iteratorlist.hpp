@@ -97,11 +97,23 @@ listItem<C> &iterator_list<C>::operator *()
     return *this->_current;
 }
 
-template <typename C>
-listItem<C>* iterator_list<C>::operator ->()
+// template <typename C>
+// listItem<C>* iterator_list<C>::operator ->()
+// {
+//     return this->_current;
+// }
+
+template <typename C> C *iterator_list<C>::operator->() 
 {
-    return this->_current;
+  return this->_current;
 }
+
+template <typename C> const C *iterator_list<C>::operator->() const 
+{
+  return this->_current;
+}
+
+
 
 template <typename C>
 iterator_list<C>& iterator_list<C>::operator +=(size_t n)
