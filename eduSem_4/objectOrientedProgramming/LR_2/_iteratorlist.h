@@ -64,7 +64,7 @@ template <class C>
 class const_iterator_list : public iteratorBase< listItem<C> >
 {
     private:
-        std::weak_ptr <C> _list;
+        std::weak_ptr <C>* _list;
     public:
         const_iterator_list(const list<C>& l);
         const_iterator_list(const const_iterator_list<C>& it);
@@ -76,8 +76,7 @@ class const_iterator_list : public iteratorBase< listItem<C> >
         bool inRange();
         const C& current() const;
 
-        // const listItem<C>& operator *();
-        // const listItem<C>* operator ->();
+        const listItem<C>& operator *();
 
         C &operator*();
         const C &operator*() const;
