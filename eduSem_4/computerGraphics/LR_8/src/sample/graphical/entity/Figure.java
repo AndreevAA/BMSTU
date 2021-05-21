@@ -228,7 +228,7 @@ public class Figure extends GraphicalObject {
     }
 
     // Закрашивание всех фигур
-    static public void fillAllFigures(Canvas graphTable, List<List <GraphicalPoint>> allFigures, List <ColoredPixel> pixelList, Color colorToFillFigure){
+    static public void fillAllFigures(List <GraphicalPoint> inputFigure, Canvas graphTable, List<List <GraphicalPoint>> allFigures, List <ColoredPixel> pixelList, Color colorToFillFigure){
         for (int numberOfFigure = 0; numberOfFigure < allFigures.size(); numberOfFigure++) {
             try {
                 fillFigure(pixelList, graphTable, allFigures.get(numberOfFigure), colorToFillFigure);

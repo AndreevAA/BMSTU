@@ -12,6 +12,7 @@ import sample.graphical.GraphicalObject;
 import sample.graphical.elements.RectangleCutter;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -88,8 +89,7 @@ public class CanvasOperations extends GraphicalObject
 
     // Проверка пересечения отрезков
     static public boolean isRectangleCrossedByLine(GraphicalPoint firstPoint, GraphicalPoint secondPoint,
-                                                   GraphicalPoint thirdPoint, GraphicalPoint fourthPoint,
-                                                   boolean isHorizontal) {
+                                                   GraphicalPoint thirdPoint, GraphicalPoint fourthPoint) {
 
         double x1 = firstPoint.xValue, y1 = firstPoint.yValue,
                 x2 = secondPoint.xValue, y2 = secondPoint.yValue;
@@ -123,7 +123,7 @@ public class CanvasOperations extends GraphicalObject
     }
 
     static public GraphicalPoint getRectangleCrossedByLine(GraphicalPoint firstPoint, GraphicalPoint secondPoint,
-                                                           GraphicalPoint thirdPoint, GraphicalPoint fourthPoint, boolean isHorizontal) {
+                                                           GraphicalPoint thirdPoint, GraphicalPoint fourthPoint) {
 
         double x1 = firstPoint.xValue, y1 = firstPoint.yValue,
                 x2 = secondPoint.xValue, y2 = secondPoint.yValue;
@@ -131,20 +131,31 @@ public class CanvasOperations extends GraphicalObject
         double x3 = thirdPoint.xValue, y3 = thirdPoint.yValue,
                 x4 = fourthPoint.xValue, y4 = fourthPoint.yValue;
 
-        double k = (y2 - y1) / (x2 - x1);
+        double k1 = (y2 - y1) / (x2 - x1);
+        double k2 = (y4 - y3) / (x4 - x3);
 
-        double b = y2 - k * x2;
+        double b1 = y2 - k1 * x2;
+        double b2 = y4 - k2 * x4;
 
-        if (isHorizontal) {
-            System.out.println("isHorizontal, x = " + (y3 - b) / k + ", y = " + y3);
-            return (new GraphicalPoint((y3 - b) / k, y3, Color.BLACK));
-        }
-        System.out.println("NOT Horizontal, x = " + x3 + ", y = " + k * x3 + b);
-        return (new GraphicalPoint(x3, k * x3 + b, Color.BLACK));
+        double intersectionX = (b2 - b1) / (k1 - k2);
+        double intersectionY = k1 * intersectionX + b1;
+
+        return new GraphicalPoint(intersectionX, intersectionY, Color.BLACK);
+
+//        double k = (y2 - y1) / (x2 - x1);
+//
+//        double b = y2 - k * x2;
+//
+//        if (isHorizontal) {
+//            System.out.println("isHorizontal, x = " + (y3 - b) / k + ", y = " + y3);
+//            return (new GraphicalPoint((y3 - b) / k, y3, Color.BLACK));
+//        }
+//        System.out.println("NOT Horizontal, x = " + x3 + ", y = " + k * x3 + b);
+//        return (new GraphicalPoint(x3, k * x3 + b, Color.BLACK));
     }
 
     // Устноавка точки и прямой на рисунок
-    static public List <GraphicalObject> addLineWithPointToObjects(List <GraphicalObject> objectList, List <GraphicalPoint> tempFigure, GraphicalPoint tempPoint, RectangleCutter mainRectangle){
+    static public List <GraphicalObject> addLineWithPointToObjects(List <GraphicalPoint> inputFigure, List <GraphicalObject> objectList, List <GraphicalPoint> tempFigure, GraphicalPoint tempPoint, RectangleCutter mainRectangle){
         // Добавление точки
         objectList.add(tempPoint);
 
@@ -158,60 +169,101 @@ public class CanvasOperations extends GraphicalObject
             objectList.add(new GraphicalLine(previousPoint.xValue, previousPoint.yValue,
                     tempPoint.xValue, tempPoint.yValue, Color.BLACK));
 
-            // Точки пересения прямой и прямоугольника
-            GraphicalPoint firstPointOfCrossing = null, secondPointOfCrossing = null;
+            // Существует многоугольник
+            if (inputFigure.size() != 0) {
 
-            // Статус пересечения
-            boolean isFirstPointOfCrossingUsed = false, isSecondPointOfCrossingUsed = false;
+                System.out.println("inputFigure.size() != 0, " + inputFigure.size());
 
-            // Вершины многоугольника
-            GraphicalPoint leftBottomPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX, mainRectangle.startPointCoordinateY, mainRectangle.color),
-                    leftTopPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX, mainRectangle.startPointCoordinateY + mainRectangle.heightSide, mainRectangle.color),
-                    rightBottomPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX + mainRectangle.widthSide, mainRectangle.startPointCoordinateY, mainRectangle.color),
-                    rightTopPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX + mainRectangle.widthSide, mainRectangle.startPointCoordinateY + mainRectangle.heightSide, mainRectangle.color);
+                // Массив точек пересения граней с отсекателем
+                List <GraphicalPoint> intersectionPoints;
+                intersectionPoints = new ArrayList<>();
 
-            if (isRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, leftTopPoint, false)) {
-                firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, leftTopPoint, false);
-                isFirstPointOfCrossingUsed = true;
-            }
+                // Стартовая и конечная точка
+                GraphicalPoint startSidePoint, endSidePoint;
 
-            if (isRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, rightBottomPoint, true)) {
-                if (!isFirstPointOfCrossingUsed) {
-                    firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, rightBottomPoint, true);
-                    isFirstPointOfCrossingUsed = true;
+                // Просмотр всех граней
+                for (int numberOfPoint = 0; numberOfPoint < inputFigure.size() - 1; numberOfPoint++) {
+                    System.out.println("Просмотрено: " + numberOfPoint);
+
+                    startSidePoint = new GraphicalPoint(inputFigure.get(numberOfPoint).xValue, inputFigure.get(numberOfPoint).yValue, Color.BLACK);
+                    endSidePoint = new GraphicalPoint(inputFigure.get(numberOfPoint + 1).xValue, inputFigure.get(numberOfPoint + 1).yValue, Color.BLACK);
+
+                    // Найдено пересечение грани многоугольника и отсекателя
+                    if (isRectangleCrossedByLine(tempPoint, previousPoint, startSidePoint, endSidePoint)) {
+                        intersectionPoints.add(getRectangleCrossedByLine(tempPoint, previousPoint, startSidePoint, endSidePoint));
+                    }
                 }
-                else if (!isSecondPointOfCrossingUsed){
-                    secondPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, rightBottomPoint, true);
-                    isSecondPointOfCrossingUsed = true;
-                }
-            }
 
-            if (isRectangleCrossedByLine(previousPoint, tempPoint, leftTopPoint, rightTopPoint,true)) {
-                if (!isFirstPointOfCrossingUsed) {
-                    firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftTopPoint, rightTopPoint, true);
-                    isFirstPointOfCrossingUsed = true;
-                }
-                else if (!isSecondPointOfCrossingUsed) {
-                    secondPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftTopPoint, rightTopPoint, true);
-                    isSecondPointOfCrossingUsed = true;
-                }
-            }
+                startSidePoint = new GraphicalPoint(inputFigure.get(inputFigure.size() - 1).xValue, inputFigure.get(inputFigure.size() - 1).yValue, Color.BLACK);
+                endSidePoint = new GraphicalPoint(inputFigure.get(0).xValue, inputFigure.get(0).yValue, Color.BLACK);
 
-            if (isRectangleCrossedByLine(previousPoint, tempPoint, rightTopPoint, rightBottomPoint, false)) {
-                if (!isFirstPointOfCrossingUsed) {
-                    firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, rightBottomPoint, rightTopPoint, false);
-                    isFirstPointOfCrossingUsed = true;
+                // Найдено пересечение грани многоугольника и отсекателя
+                if (isRectangleCrossedByLine(tempPoint, previousPoint, startSidePoint, endSidePoint)) {
+                    intersectionPoints.add(getRectangleCrossedByLine(tempPoint, previousPoint, startSidePoint, endSidePoint));
                 }
-                else if (!isSecondPointOfCrossingUsed){
-                    secondPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, rightBottomPoint, rightTopPoint, false);
-                    isSecondPointOfCrossingUsed = true;
+
+                if (intersectionPoints.size() > 1) {
+                    System.out.println("intersectionPoints.size() > 1");
+                    objectList.add(new GraphicalLine(intersectionPoints.get(0).xValue, intersectionPoints.get(0).yValue, intersectionPoints.get(intersectionPoints.size() - 1).xValue, intersectionPoints.get(intersectionPoints.size() - 1).yValue
+                            , Color.BLUE));
                 }
             }
-
-            // Добавление отрезка
-            if (isFirstPointOfCrossingUsed && isSecondPointOfCrossingUsed)
-                objectList.add(new GraphicalLine(secondPointOfCrossing.xValue, secondPointOfCrossing.yValue, firstPointOfCrossing.xValue, firstPointOfCrossing.yValue
-                    , Color.BLUE));
+//
+//            List <GraphicalPoint>
+//            // Точки пересения прямой и прямоугольника
+//            GraphicalPoint firstPointOfCrossing = null, secondPointOfCrossing = null;
+//
+//            // Статус пересечения
+//            boolean isFirstPointOfCrossingUsed = false, isSecondPointOfCrossingUsed = false;
+//
+//            // Вершины многоугольника
+//            GraphicalPoint leftBottomPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX, mainRectangle.startPointCoordinateY, mainRectangle.color),
+//                    leftTopPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX, mainRectangle.startPointCoordinateY + mainRectangle.heightSide, mainRectangle.color),
+//                    rightBottomPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX + mainRectangle.widthSide, mainRectangle.startPointCoordinateY, mainRectangle.color),
+//                    rightTopPoint = new GraphicalPoint(mainRectangle.startPointCoordinateX + mainRectangle.widthSide, mainRectangle.startPointCoordinateY + mainRectangle.heightSide, mainRectangle.color);
+//
+//            if (isRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, leftTopPoint, false)) {
+//                firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, leftTopPoint, false);
+//                isFirstPointOfCrossingUsed = true;
+//            }
+//
+//            if (isRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, rightBottomPoint, true)) {
+//                if (!isFirstPointOfCrossingUsed) {
+//                    firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, rightBottomPoint, true);
+//                    isFirstPointOfCrossingUsed = true;
+//                }
+//                else if (!isSecondPointOfCrossingUsed){
+//                    secondPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftBottomPoint, rightBottomPoint, true);
+//                    isSecondPointOfCrossingUsed = true;
+//                }
+//            }
+//
+//            if (isRectangleCrossedByLine(previousPoint, tempPoint, leftTopPoint, rightTopPoint,true)) {
+//                if (!isFirstPointOfCrossingUsed) {
+//                    firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftTopPoint, rightTopPoint, true);
+//                    isFirstPointOfCrossingUsed = true;
+//                }
+//                else if (!isSecondPointOfCrossingUsed) {
+//                    secondPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, leftTopPoint, rightTopPoint, true);
+//                    isSecondPointOfCrossingUsed = true;
+//                }
+//            }
+//
+//            if (isRectangleCrossedByLine(previousPoint, tempPoint, rightTopPoint, rightBottomPoint, false)) {
+//                if (!isFirstPointOfCrossingUsed) {
+//                    firstPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, rightBottomPoint, rightTopPoint, false);
+//                    isFirstPointOfCrossingUsed = true;
+//                }
+//                else if (!isSecondPointOfCrossingUsed){
+//                    secondPointOfCrossing = getRectangleCrossedByLine(previousPoint, tempPoint, rightBottomPoint, rightTopPoint, false);
+//                    isSecondPointOfCrossingUsed = true;
+//                }
+//            }
+//
+//            // Добавление отрезка
+//            if (isFirstPointOfCrossingUsed && isSecondPointOfCrossingUsed)
+//                objectList.add(new GraphicalLine(secondPointOfCrossing.xValue, secondPointOfCrossing.yValue, firstPointOfCrossing.xValue, firstPointOfCrossing.yValue
+//                    , Color.BLUE));
 
         }
 

@@ -14,7 +14,6 @@ import sample.graphical.GraphicalObject;
 import sample.graphical.elements.RectangleCutter;
 import sample.graphical.entity.*;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -31,6 +30,7 @@ public class Controller implements Initializable {
     List<GraphicalObject> objectList, copyObjectList;
 
     List<GraphicalPoint> tempFigure;
+    List<GraphicalPoint> inputFigure;
 
     List<List<GraphicalPoint>> allFigures;
 
@@ -51,10 +51,12 @@ public class Controller implements Initializable {
     private ScrollPane scrollPanel;
 
     @FXML
-    private Button clearAllButton, comeBack, fillButton;
+    private Button clearAllButton, inputFigureButton, fillButton;
 
     @FXML
-    private ChoiceBox timeDelayType = new ChoiceBox(), colorFillingType = new ChoiceBox();
+    private ChoiceBox<String> operationType = new ChoiceBox<String>();
+    @FXML
+    private ChoiceBox colorFillingType = new ChoiceBox();
 
     @FXML
     private Label parameterErrorField, workingTime;
@@ -70,6 +72,9 @@ public class Controller implements Initializable {
         // Массив сущностей
         objectList = new ArrayList<>();
 
+        // Многоугольник
+        inputFigure = new ArrayList<>();
+
         // Массив точек текущей фигуры
         tempFigure = new ArrayList<>();
 
@@ -82,36 +87,14 @@ public class Controller implements Initializable {
         // Массив копий
         copyObjectList = new ArrayList<>();
 
-        // Инициализация каттера
-        mainRectangle = new RectangleCutter(100, 100,
-                500, 500,
-                Color.RED);
-
-        // Отрисовка каттера
-        objectList = addRectangleCutter(objectList, mainRectangle);
-
         // Установка вариаций отрисовки
-        timeDelayType.getItems().addAll("С задержкой",
-                "Без задержки");
-
-        // Устновка вариаций цвета
-        colorFillingType.getItems().addAll("Черный", "Красный", "Зеленый", "Серый", "Желтый", "Синий");
-    }
-
-    @FXML
-    public void onComeBack() {
-        comeBack.setOnAction(actionEvent -> {
-//            objectList = getCopyFunction(objectList, copyObjectList);
-            objectsPlacedList.setItems(
-                    FXCollections.observableList(objectList.stream().map(Object::toString).collect(Collectors.toList())));
-            redrawElements(graphTable, objectList);
-        });
+        operationType.getItems().addAll("Ввод многоугольника",
+                "Ввод отсекателя");
     }
 
     @FXML
     public void onClearAllButton() {
         clearAllButton.setOnAction(event -> {
-            //copyObjectList = createCopyFunction(objectList, copyObjectList);
 
             objectList.clear();
             tempFigure.clear();
@@ -136,48 +119,55 @@ public class Controller implements Initializable {
             // Отрисовка поставленной точки
             GraphicalPoint tempPoint = new GraphicalPoint(xMouseClickedPos, yMouseClickedPos, Color.BLACK);
 
-            // Добавление точки и прямой на рисуок
-            objectList = addLineWithPointToObjects(
-                    objectList, tempFigure, tempPoint, mainRectangle);
+            if (operationType.getValue() == "Ввод многоугольника") {
+                objectList.add(tempPoint);
+                if (tempFigure.size() >= 1) {
+                    // Предыдущая точка отрезка
+                    GraphicalPoint previousPoint = new GraphicalPoint(tempFigure.get(tempFigure.size() - 1).xValue, tempFigure.get(tempFigure.size() - 1).yValue, Color.BLACK);
+
+                    // Добавление отрезка
+                    objectList.add(new GraphicalLine(previousPoint.xValue, previousPoint.yValue,
+                            tempPoint.xValue, tempPoint.yValue, Color.BLACK));
+                }
+            }
+            else {
+                System.out.println("inputFigure.size() = " + inputFigure.size());
+                // Добавление точки и прямой на рисуок
+                addLineWithPointToObjects(
+                        inputFigure, objectList, tempFigure, tempPoint, mainRectangle);
+            }
 
             // Добавление точки к текущей фигуре
             tempFigure.add(tempPoint);
 
             // Отрезок нарисован
-            if (tempFigure.size() == 2)
-                tempFigure.clear();
+            if (operationType.getValue() == "Ввод отсекателя") {
+                if (tempFigure.size() == 2)
+                    tempFigure.clear();
+            }
 
             redrawElements(graphTable, objectList);
         });
     }
 
     @FXML
-    public void onAddFigure() {
+    public void onInputFigure() {
+        inputFigureButton.setOnAction(actionEvent -> {
 
-        // Нажатие на кнопку Замкнуть
-        addFigureButton.setOnAction(actionEvent -> {
-           if (isFigureAvailiableToCreate(tempFigure)) {
-               objectList = addLine(graphTable, objectList, tempFigure.get(0).xValue, tempFigure.get(0).yValue, tempFigure.get(tempFigure.size() - 1).xValue, tempFigure.get(tempFigure.size() - 1).yValue, Color.BLACK);
-               tempFigure = addFigure(allFigures, tempFigure);
-           }
-           else
-               parameterErrorField.setText("Введите 3 и более точек!");
-        });
-    }
+            objectList.add(new GraphicalLine(tempFigure.get(0).xValue, tempFigure.get(0).yValue,
+                    tempFigure.get(tempFigure.size() - 1).xValue, tempFigure.get(tempFigure.size() - 1).yValue, Color.BLACK));
 
-    @FXML
-    public void onFill() {
-        fillButton.setOnAction(actionEvent -> {
-            if (isAllFiguresAvailiableToBeFilles(allFigures)) {
+            for (int numberOfFigure = 0; numberOfFigure < tempFigure.size(); numberOfFigure++)
+                inputFigure.add(new GraphicalPoint(tempFigure.get(numberOfFigure).xValue, tempFigure.get(numberOfFigure).yValue, Color.BLACK));
+            //inputFigure = tempFigure;
 
-                long startTime = System.nanoTime();
-                fillAllFigures(graphTable, allFigures, pixelList, CanvasOperations.getColor(colorFillingType.getValue().toString()));
-                long endTime = System.nanoTime();
+            System.out.println("inputFigure.size() = " + inputFigure.size());
 
-                workingTime.setText(Long.toString((endTime - startTime) / 100000000));
-            }
-            else
-                parameterErrorField.setText("Должна быть как минимум одна замкнутая фигура!");
+            tempFigure.clear();
+
+            System.out.println("inputFigure.size() = " + inputFigure.size());
+
+            redrawElements(graphTable, objectList);
         });
     }
 }
