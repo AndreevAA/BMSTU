@@ -15,3 +15,6 @@
 
 #define PROD_FMT "[*]     %-15.3g s\n"
 #define ASM_PROD_FMT "[*] asm %-15.3g s\n"
+
+#define SUCCESS_STATUS 0
+#define ERROR_STATUS 1

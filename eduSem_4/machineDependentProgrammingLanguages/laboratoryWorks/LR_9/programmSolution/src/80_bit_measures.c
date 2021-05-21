@@ -48,7 +48,7 @@ void get_80_bit_prod_asm(__float80 a, __float80 b, size_t count)
 #endif
 #endif
 
-void print_80_bit_measures()
+void out_80_bit_dimension()
 {
 #ifdef X87
     printf("__float80 type size: %zu bites\n", sizeof(__float80) * CHAR_BIT);

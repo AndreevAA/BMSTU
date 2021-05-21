@@ -46,7 +46,7 @@ void get_32_bit_prod_asm(float a, float b, size_t count)
 }
 #endif
 
-void print_32_bit_measures()
+void out_32_bit_dimension()
 {
     printf("float type size: %zu bites\n", sizeof(float) * CHAR_BIT);
 
@@ -58,13 +58,13 @@ void print_32_bit_measures()
 
     printf(SUM_FMT, (double)(end - begin) / CLOCKS_PER_SEC / repeats);
 
-#ifdef ASM
+    #ifdef ASM
     begin = clock();
     get_32_bit_sum_asm(a, b, repeats);
     end = clock();
 
     printf(ASM_SUM_FMT, (double)(end - begin) / CLOCKS_PER_SEC / repeats);
-#endif
+    #endif
 
     begin = clock();
     get_32_bit_prod(a, b, repeats);
@@ -72,13 +72,13 @@ void print_32_bit_measures()
 
     printf(PROD_FMT, (double)(end - begin) / CLOCKS_PER_SEC / repeats);
 
-#ifdef ASM
+    #ifdef ASM
     begin = clock();
     get_32_bit_prod_asm(a, b, repeats);
     end = clock();
 
     printf(ASM_PROD_FMT, (double)(end - begin) / CLOCKS_PER_SEC / repeats);
-#endif
+    #endif
 
     printf("\n");
 }
