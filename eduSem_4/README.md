@@ -97,7 +97,7 @@
         <td>✅</td>
     </tr>
     <tr>
-        <td rowspan="10"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages">machineDependentProgrammingLanguages</a></td>
+        <td rowspan="12"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages">machineDependentProgrammingLanguages</a></td>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_1">LR_1</a></td>
         <td>✅</td>
     </tr>
