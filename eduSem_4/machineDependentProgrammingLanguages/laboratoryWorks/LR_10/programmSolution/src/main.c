@@ -44,6 +44,7 @@ int main(void)
 {
     printf("asm:");
     measure_func(dot_prod_vector_arrays_asm);
+    
     printf("c:");
     measure_func(dot_prod_vector_arrays_c);
 
