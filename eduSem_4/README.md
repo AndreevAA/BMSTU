@@ -131,10 +131,18 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_9">LR_9</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_10">LR_10</a></td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_11">LR_11</a></td>
+        <td>🔄</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_12">LR_12</a></td>
         <td>🔄</td>
     </tr>
     <tr>
