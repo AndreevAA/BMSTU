@@ -51,7 +51,7 @@
         <td>✅</td>
     </tr>
     <tr>
-        <td rowspan="9"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics">computerGraphics</a></td>
+        <td rowspan="10"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics">computerGraphics</a></td>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_1">LR_1</a></td>
         <td>✅</td>
     </tr>
@@ -88,6 +88,10 @@
         <td>🔄</td>
     </tr>
     <tr>
+        <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_10">LR_10</a></td>
+        <td>🔄</td>
+    </tr>
+    <tr>
         <td rowspan="2"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/logicsAndTheoryOfAlgorithms">logicsAndTheoryOfAlgorithms</a></td>
         <td><a href="https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/logicsAndTheoryOfAlgorithms/DZ1">DZ1</a></td>
         <td>✅</td>
@@ -97,7 +101,7 @@
         <td>✅</td>
     </tr>
     <tr>
-        <td rowspan="10"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages">machineDependentProgrammingLanguages</a></td>
+        <td rowspan="12"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages">machineDependentProgrammingLanguages</a></td>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_1">LR_1</a></td>
         <td>✅</td>
     </tr>
@@ -131,10 +135,18 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_9">LR_9</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_10">LR_10</a></td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_11">LR_11</a></td>
+        <td>🔄</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/machineDependentProgrammingLanguages/LR_12">LR_12</a></td>
         <td>🔄</td>
     </tr>
     <tr>

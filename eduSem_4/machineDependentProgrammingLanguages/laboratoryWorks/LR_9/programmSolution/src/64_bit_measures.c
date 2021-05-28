@@ -24,6 +24,25 @@ void get_64_bit_sum_asm(double a, double b, size_t count)
 }
 #endif
 
+#ifdef ASM
+void get_64_bit_sum_asm_proc(float a, float b, size_t count)
+{
+    float c;
+
+    for (size_t i = 0; i < count; ++i)
+    {
+        asm(
+            "mov eax, %1\n"
+            "add eax, %2\n"
+            "mov %0, eax\n" : "=m"(c)
+            : "m"(a), "m"(b)
+            );
+    }
+
+    printf("Сложение процессором: %lf + %lf = %lf\n", a, b, c);
+}
+#endif
+
 void get_64_bit_prod(double a, double b, size_t count)
 {
     double c;
