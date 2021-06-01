@@ -53,8 +53,6 @@ void Cabin::cabin_stopping()
     qDebug() << "Лифт остановился на этаже " << QString::number(current_floor) << ".";
     emit cabin_stopped(current_floor);
   }
-  else
-    return;
 }
 
 void Cabin::cabin_call(int floor, direction dir) 
@@ -68,6 +66,4 @@ void Cabin::cabin_call(int floor, direction dir)
     current_direction = dir;
     emit cabin_called();
   }
-  else 
-    return;
 }

@@ -53,9 +53,9 @@ void HallPanel::achieved_floor(int floor)
       temp_direction = (temp_floor_number > temp_target) ? DOWN : UP;
 
       emit set_target(floor, temp_direction);
-    } else {
+    } 
+    else 
       temp_status = FREE;
-    }
   }
   else
     return;

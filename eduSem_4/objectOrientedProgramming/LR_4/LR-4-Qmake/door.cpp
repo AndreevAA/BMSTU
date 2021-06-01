@@ -27,7 +27,7 @@ void Doors::start_openning()
     qDebug() << "Двери лифта открываются...";
     doors_open_timer.start(OPENING_DOORS_TIME);
   } 
-  else if (temp_status == CLOSED)
+  else if (temp_status == CLOSING)
   {
     temp_status = OPENNING;
 
@@ -58,8 +58,6 @@ void Doors::open()
     qDebug() << "Двери лифта открыты!\nОбмен пассажирами...";
     emit opened_doors();
   }
-  else
-    return;
 }
 
 void Doors::close() 
@@ -70,8 +68,6 @@ void Doors::close()
     qDebug() << "Двери лифта закрылись!";
     emit closed_doors();
   }
-  else
-    return;
 }
 
 #endif
