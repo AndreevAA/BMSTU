@@ -10,103 +10,114 @@
 using namespace std;
 
 
-template <typename T>
-class List: public BaseList
-{
+template <typename C> class Vector : public baseVector {
 public:
-    List() noexcept;
-    explicit List(List<T> &list);
-    List(List<T> &&list) noexcept;
+  friend Iterator<C>;
+  friend IteratorConst<C>;
 
-    List(const T *array, const int size);
-    List(initializer_list<T> nodes);
+  // constructors
+  Vector();
 
-    template <typename Iterator>
-    List(const Iterator &begin, const Iterator &end);
+  explicit Vector(size_t dimension);
+  Vector(std::initializer_list<C> valueList);
+  Vector(size_t dimension, const C *valueArray);
+  template <typename _C> Vector(_C start, _C end);
 
-    ListIterator<T> begin();
-    ListIterator<T> end();
-    const ListIterator<T> begin() const; // add
-    const ListIterator<T> end() const; // add
+  Vector(const Vector<C> &srcVector);
+  Vector(Vector<C> &&srcVector) noexcept;
 
-    ConstListIterator<T> cbegin() const;
-    ConstListIterator<T> cend() const;
+  // Destructor
+  virtual ~Vector() = default;
 
-    ListIterator<T> add_back(const T &data);
-    ListIterator<T> add_back(const List<T> &list);
-    ListIterator<T> add_back(initializer_list<T> &nodes);
+  // bool functions
+  bool isZeroVector() const noexcept;
+  bool isUnitVector() const noexcept;
 
-    ListIterator<T> add_back(const ListIterator<T> &begin, const ListIterator<T> &end);
-    ListIterator<T> add_back(const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
-    ListIterator<T> add_back(const ListIterator<T> &begin, const int n);
-    ListIterator<T> add_back(const ConstListIterator<T> &begin, const int n);
+  // single vector
+  template <typename rC> rC getMagnitude() const;
+  template <typename rC> Vector<rC> getUnitVector() const;
 
-    ListIterator<T> add_front(const T &data);
-    ListIterator<T> add_front(const List<T> &list);
-    ListIterator<T> add_front(initializer_list<T> &nodes);
+  // two vectors
+  double getAngle(const Vector<C> &vector) const;
 
-    ListIterator<T> add_front(const ListIterator<T> &begin, const ListIterator<T> &end);
-    ListIterator<T> add_front(const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
-    ListIterator<T> add_front(const ListIterator<T> &begin, const int n);
-    ListIterator<T> add_front(const ConstListIterator<T> &begin, const int n);
+  // bool functions
+  bool areCollinear(const Vector<C> &vector) const;
+  bool areOrthogonal(const Vector<C> &vector) const;
 
-    List<T> &operator = (const List<T> &list);
-    List<T> &operator = (const List<T> &&list);
-    List<T> &operator + (const List<T> &list);
-    List<T> &operator + (const T &data);
-    List<T> &operator += (const List<T> &list);
-    List<T> &operator += (const T &data);
+  C &at(size_t inx);
+  const C &at(size_t inx) const;
 
-    T delete_front();
+  C &operator[](size_t inx);
+  const C &operator[](size_t index) const;
 
-    T remove(const ListIterator<T> &iterator);
-    void remove(const ListIterator<T> &begin, const ListIterator<T> &end); // add
-    void remove(const ListIterator<T> &begin, const int n); // add
+  // Iterator const
 
-    ListIterator<T> insert(const ListIterator<T> &iterator, const T &data);
-    ListIterator<T> insert(const ConstListIterator<T> &iterator, const T &data);
-    ListIterator<T> insert(const ListIterator<T> &iterator, const List<T> &list);
-    ListIterator<T> insert(const ConstListIterator<T> &iterator, const List<T> &list);
+  IteratorConst<C> cBegin() const noexcept;
+  IteratorConst<C> cEnd() const noexcept;
 
-    ListIterator<T> insert(const ListIterator<T> &iterator, const ListIterator<T> &begin, const ListIterator<T> &end);
-    ListIterator<T> insert(const ConstListIterator<T> &iterator, const ConstListIterator<T> &begin, const ConstListIterator<T> &end);
-    ListIterator<T> insert(const ListIterator<T> &iterator, const ListIterator<T> &begin, const int n);
-    ListIterator<T> insert(const ConstListIterator<T> &iterator, const ConstListIterator<T> &begin, const int n);
+  IteratorConst<C> begin() const noexcept;
+  IteratorConst<C> end() const noexcept;
 
-    ListIterator<T> insert(const ListIterator<T> &iterator, initializer_list<T> nodes);
-    ListIterator<T> insert(const ConstListIterator<T> &iterator, initializer_list<T> nodes);
+  // Iterator
+  Iterator<C> begin() noexcept;
+  Iterator<C> end() noexcept;
 
-    void reverse();
-    List<T> &merge(const List<T> &list);
-    List<T> &merge(const T &data);
-    List<T> &merge(initializer_list<T> nodes);
+  // overloads
+  Vector<C> &operator=(const Vector<C> &srcVector);
+  Vector<C> &operator=(Vector<C> &&srcVector);
+  Vector<C> &operator=(std::initializer_list<C> valueList);
 
-    bool equal(const List<T> &list) const;
-    bool not_equal(const List<T> &list) const;
-    bool operator == (const List<T> &list) const;
-    bool operator != (const List<T> &list) const;
+  // pair overload + method
+  // Addition
+  Vector<C> &operator+=(const Vector<C> &vector);
+  void addVector(const Vector<C> &vector);
 
-    bool is_correct() const;
-    bool is_empty() const;
+  template <typename vC>
+  decltype(auto) operator+(const Vector<vC> &vector) const;
+  template <typename vC>
+  decltype(auto) vectorSum(const Vector<vC> &vector) const;
 
-    virtual int get_size() const;
-    virtual operator bool() const;
-    virtual void clear();
+  // Subtraction
+  Vector<C> &operator-=(const Vector<C> &vector);
+  void subtractVector(const Vector<C> &vector);
 
-    ~List() = default;
+  template <typename vC>
+  decltype(auto) operator-(const Vector<vC> &vector) const;
+  template <typename vC>
+  decltype(auto) vectorDif(const Vector<vC> &vector) const;
+
+  // Multiplication
+  Vector<C> &operator*=(const Vector<C> &vector);
+
+  Vector<C> &operator*=(const C &value);
+
+  template <typename vC> decltype(auto) operator*(const vC &value) const;
+  template <typename vC>
+  decltype(auto) multiplyNumber(const vC &value) const;
+
+  template <typename vC>
+  decltype(auto) operator*(const Vector<vC> &vector) const;
+  template <typename vC>
+  decltype(auto) dotProduct(const Vector<vC> &vector) const;
+  template <typename vC>
+  decltype(auto) crossProduct(const Vector<vC> &vector) const;
+
+  // Unary operators
+  Vector<C> operator-();
+  Vector<C> getNegative();
+
+  // compare
+  bool operator==(const Vector<C> &vector) const;
+  bool areEqual(const Vector<C> &vector) const;
+  bool operator!=(const Vector<C> &vector) const;
+  bool areNotEqual(const Vector<C> &vector) const;
 
 protected:
-    shared_ptr<ListNode<T>> get_head();
-    shared_ptr<ListNode<T>> get_tail();
-    ListIterator<T> add_back(const shared_ptr<ListNode<T>> &node);
-    ListIterator<T> add_front(const shared_ptr<ListNode<T>> &node);
+  void isDimensionEqual(const Vector<C> &vector, size_t currentLine) const;
+  void allocateMemory(size_t vectorDim);
 
 private:
-    int size;
-    shared_ptr<ListNode<T>> head;
-    shared_ptr<ListNode<T>> tail;
-
+  std::shared_ptr<C[]> coordinates;
 };
-
 
 #endif

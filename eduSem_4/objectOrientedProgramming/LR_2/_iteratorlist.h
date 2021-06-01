@@ -5,93 +5,54 @@
 #include "_list.h"
 #include "_listitem.h"
 
-template <typename C> class list;
-template <typename C> class listItem;
 
 template <typename C>
-class iteratorBase
-{
-    public:
-        virtual void first()             = 0;
-        virtual void next()              = 0;
-        virtual void last()              = 0;
-        virtual bool inRange()           = 0;
-    protected:
-       C* _current;
+class IteratorConst
+    : public std::iterator<std::random_access_iterator_tag,
+                           int> { // перегрузка -[=] не нужна если наследоваться
+                                  // от forward
+public:
+  IteratorConst(const IteratorConst<C> &srcIterConst);
+  IteratorConst(const Vector<C> &srcVector) noexcept;
+
+  IteratorConst<C> &
+  operator=(const IteratorConst<C> &srcIterConst) noexcept;
+
+  const C &operator*() const;
+  const C *operator->() const;
+  operator bool() const;
+
+  // Increment
+  IteratorConst<C> &operator+=(size_t value);
+  IteratorConst<C> &operator+(size_t value) const;
+  IteratorConst<C> &operator++();
+  IteratorConst<C> &operator++(int);
+
+  // Decrement
+  IteratorConst<C> &operator-=(size_t value);
+  IteratorConst<C> &operator-(size_t value) const;
+  IteratorConst<C> &operator--();
+  IteratorConst<C> &operator--(int);
+
+  // Compare
+  bool operator>=(const IteratorConst<C> &srcIterConst) const;
+  bool operator>(const IteratorConst<C> &srcIterConst) const;
+  bool operator<=(const IteratorConst<C> &srcIterConst) const;
+  bool operator<(const IteratorConst<C> &srcIterConst) const;
+  bool operator==(const IteratorConst<C> &srcIterConst) const;
+  bool operator!=(const IteratorConst<C> &srcIterConst) const;
+
+  const C &operator[](const size_t inx) const;
+
+protected:
+  C *getCurrPointer() const;
+  void isPointerExpired(size_t currentLine) const;
+  void isIteratorValid(size_t currentLine) const;
+  size_t currentInx = 0;
+  size_t vectorDimension = 0;
+
+private:
+  std::weak_ptr<C[]> weakPointer;
 };
 
-
-template <class C>
-class iterator_list : public iteratorBase< listItem<C> >
-{
-    private:
-        const list<C>* _list;
-    public:
-        iterator_list(const list<C>& l);
-        iterator_list(const iterator_list<C>& it);
-        ~iterator_list();
-
-        void first();
-        void next();
-        void last();
-        bool inRange();
-        const C current();
-
-        iterator_list<C>& operator =(const iterator_list<C>& it);
-
-        iterator_list<C>& operator ++();
-        iterator_list<C> operator ++(int);
-
-        listItem<C>& operator *();
-        listItem<C>* operator ->();
-
-        iterator_list<C>& operator +=(size_t n);
-
-        iterator_list<C> operator +(size_t n) const;
-
-        bool operator != (const iterator_list<C>& it) const;
-        bool operator == (const iterator_list<C>& it) const;
-        bool operator <  (const iterator_list<C>& it) const;
-        bool operator >  (const iterator_list<C>& it) const;
-        bool operator <= (const iterator_list<C>& it) const;
-        bool operator >= (const iterator_list<C>& it) const;
-
-        int difference(const iterator_list<C> &it);
-};
-
-
-template <class C>
-class const_iterator_list : public iteratorBase< listItem<C> >
-{
-    private:
-        std::weak_ptr <C>* _list;
-    public:
-        const_iterator_list(const list<C>& l);
-        const_iterator_list(const const_iterator_list<C>& it);
-        ~const_iterator_list();
-
-        void first();
-        void next();
-        void last();
-        bool inRange();
-        const C& current() const;
-
-        const listItem<C>& operator *();
-
-        C &operator*();
-        const C &operator*() const;
-
-        C *operator->();
-        const C *operator->() const;
-
-        bool operator != (const const_iterator_list<C>& it) const;
-        bool operator == (const const_iterator_list<C>& it) const;
-        bool operator <  (const const_iterator_list<C>& it) const;
-        bool operator >  (const const_iterator_list<C>& it) const;
-        bool operator <= (const const_iterator_list<C>& it) const;
-        bool operator >= (const const_iterator_list<C>& it) const;
-
-        int difference(const const_iterator_list<C> &it);
-
-};
 #endif // _ITERATORLIST_H

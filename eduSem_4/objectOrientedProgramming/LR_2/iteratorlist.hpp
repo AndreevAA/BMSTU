@@ -2,317 +2,215 @@
 #define ITERATORLIST_H
 #include "_iteratorlist.h"
 
+// Constructors
 template <typename C>
-iterator_list<C>::iterator_list(const list<C>& l)
-{
-    this->_list = &l;
-    this->_current = l.head;
-}
-
-template <typename C>
-iterator_list<C>::iterator_list(const iterator_list<C>& it)
-{
-    this->_list = it._list;
-    this->_current = it._current;
+IteratorConst<C>::IteratorConst(const IteratorConst<C> &srcIterConst) {
+  this->weakPointer = srcIterConst.weakPointer;
+  this->currentInx = srcIterConst.currentInx;
+  this->vectorDimension = srcIterConst.vectorDimension;
 }
 
 template <typename C>
-iterator_list<C>::~iterator_list()
-{
-    this->_list = nullptr;
-    this->_current = nullptr;
+IteratorConst<C>::IteratorConst(const Vector<C> &srcVector) noexcept {
+  this->weakPointer = srcVector.coordinates;
+  this->currentInx = 0;
+  this->vectorDimension = srcVector.getDimention();
+}
+
+template <typename C> C *IteratorConst<C>::getCurrPointer() const {
+  std::shared_ptr<C[]> copy = this->weakPointer.lock();
+  return copy.get() + currentInx;
+}
+
+// Checks related methods
+template <typename C>
+void IteratorConst<C>::isPointerExpired(size_t currentLine) const {
+  if (weakPointer.expired()) {
+    time_t timeOccured = time(NULL);
+    throw deletedObjectException(__FILE__, typeid(*this).name(), currentLine,
+                                 ctime(&timeOccured));
+  }
 }
 
 template <typename C>
-iterator_list<C>& iterator_list<C>::operator =(const iterator_list<C>& it)
-{
-    this->_list = it._list;
-    this->_current = it._current;
-    return *this;
+void IteratorConst<C>::isIteratorValid(size_t currentLine) const {
+  if (this->currentInx >= this->vectorDimension) {
+    time_t timeOccured = time(NULL);
+    throw InvalidIteratorException(__FILE__, typeid(*this).name(), currentLine,
+                                   ctime(&timeOccured));
+  }
+}
+
+// Overloads
+template <typename C> IteratorConst<C>::operator bool() const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+
+  if (vectorDimension == 0 || currentInx >= vectorDimension)
+    return false;
+  else
+    return true;
 }
 
 template <typename C>
-void iterator_list<C>::first()
-{
-    this->_current = this->_list->head;
+const C &IteratorConst<C>::operator[](const size_t inx) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+
+  time_t timeOccured = time(NULL);
+  if (inx + this->currentInx >= this->vectorDimension)
+    throw(IndexException(__FILE__, typeid(*this).name(), currentLine,
+                         ctime(&timeOccured)));
+  return *(this + inx);
+}
+
+template <typename C> const C &IteratorConst<C>::operator*() const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+  isIteratorValid(currentLine);
+
+  return *getCurrPointer();
+}
+
+template <typename C> const C *IteratorConst<C>::operator->() const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+  isIteratorValid(currentLine);
+
+  return getCurrPointer();
+}
+
+// Increment
+template <typename C>
+IteratorConst<C> &IteratorConst<C>::operator+=(size_t value) {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+
+  currentInx += value;
+  return *this;
 }
 
 template <typename C>
-void iterator_list<C>::last()
-{
-    this->_current = this->_list->tail;
+IteratorConst<C> &IteratorConst<C>::operator+(size_t value) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+
+  IteratorConst<C> dstIter(*this);
+  dstIter += value;
+
+  return dstIter;
 }
 
 template <typename C>
-void iterator_list<C>::next()
-{
-    if(!this->inRange())
-       throw rangeError();
+IteratorConst<C> &IteratorConst<C>::operator++() {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    this->_current = this->_current->next;
+  ++currentInx;
+  return (*this);
 }
 
 template <typename C>
-bool iterator_list<C>::inRange()
-{
-    return !(this->_current == nullptr);
+IteratorConst<C> &IteratorConst<C>::operator++(int) {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+
+  ++(*this);
+  return (*this);
 }
 
-
+// Decrement
 template <typename C>
-iterator_list<C>& iterator_list<C>::operator ++()
-{
-    if (!this->inRange())
-        throw rangeError();
-    this->next();
+IteratorConst<C> &IteratorConst<C>::operator-=(size_t value) {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return *this;
-}
-
-template <typename C>
-iterator_list<C> iterator_list<C>::operator ++(int)
-{
-    if (!this->inRange())
-        throw rangeError();
-
-    iterator_list<C> r(*this);
-    this->next();
-
-    return r;
-}
-
-
-template <typename C>
-const C iterator_list<C>::current()
-{
-    if(!this->inRange())
-        throw emptyError();
-
-    return this->_current->get_data();
-}
-
-
-// Обязательное наличие пробрасований ошибок
-template <typename C> const C &iterator_list<Type>::operator*() const 
-{
-    if (_current == nullptr)
-        throw emptyError();
-
-    return *this->_current;
-}
-
-template <typename C> const C *iterator_list<Type>::operator->() const ()
-{
-    if (_current == nullptr)
-        throw  emptyError();
-
-    return this->_current;
+  currentInx -= value;
+  return *this;
 }
 
 template <typename C>
-iterator_list<C>& iterator_list<C>::operator +=(size_t n)
-{
-    while(n--)
-        this->_current = this->_current->next;
+IteratorConst<C> &IteratorConst<C>::operator-(size_t value) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return *this;
+  IteratorConst<C> dstIter(*this);
+  dstIter -= value;
+
+  return dstIter;
 }
 
 template <typename C>
-iterator_list<C> iterator_list<C>::operator +(size_t n) const
-{
-    iterator_list<C> it(*this);
+IteratorConst<C> &IteratorConst<C>::operator--() {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    it += n;
-
-    return it;
-}
-
-
-template <typename C>
-bool iterator_list<C>::operator != (const iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-        throw  cmpIterError();
-
-    return this->_current != it._current;
+  --currentInx;
+  return (*this);
 }
 
 template <typename C>
-bool iterator_list<C>::operator == (const iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-       throw  cmpIterError();
+IteratorConst<C> &IteratorConst<C>::operator--(int) {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return this->_current == it._current;
+  --(*this);
+  return (*this);
+}
+
+// Compare
+template <typename C>
+bool IteratorConst<C>::operator>=(
+    const IteratorConst<C> &srcIterConst) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
+
+  return this->currentInx >= srcIterConst.currentInx;
 }
 
 template <typename C>
-bool iterator_list<C>::operator < (const iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-       throw  cmpIterError();
+bool IteratorConst<C>::operator>(
+    const IteratorConst<C> &srcIterConst) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return this->_current < it._current;
+  return this->currentInx > srcIterConst.currentInx;
 }
 
 template <typename C>
-bool iterator_list<C>::operator > (const iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-        throw  cmpIterError();
+bool IteratorConst<C>::operator<=(
+    const IteratorConst<C> &srcIterConst) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return this->_current > it._current;
+  return this->currentInx <= srcIterConst.currentInx;
 }
 
 template <typename C>
-bool iterator_list<C>::operator <= (const iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-        throw  cmpIterError();
+bool IteratorConst<C>::operator<(
+    const IteratorConst<C> &srcIterConst) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return this->_current <= it._current;
+  return this->currentInx < srcIterConst.currentInx;
 }
 
 template <typename C>
-bool iterator_list<C>::operator >= (const iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-       throw  cmpIterError();
+bool IteratorConst<C>::operator==(
+    const IteratorConst<C> &srcIterConst) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-    return this->_current >= it._current;
-}
-
-//––––––––––––––––––––––––––––––––––––––––
-
-template <typename C>
-const_iterator_list<C>::~const_iterator_list()
-{
-    this->_list = nullptr;
-    this->_current = nullptr;
+  return this->currentInx == srcIterConst.currentInx;
 }
 
 template <typename C>
-const_iterator_list<C>::const_iterator_list(const list<C>& l)
-{
-    this->_list = &l;
-    this->_current = l.head;
-}
+bool IteratorConst<C>::operator!=(
+    const IteratorConst<C> &srcIterConst) const {
+  size_t currentLine = __LINE__;
+  isPointerExpired(currentLine);
 
-template <typename C>
-const_iterator_list<C>::const_iterator_list(const const_iterator_list<C>& it)
-{
-    this->_list = it._list;
-    this->_current = it._current;
-}
-
-//––––––––––––––––––––––––––––––––––––––––
-
-template <typename C>
-void const_iterator_list<C>::next()
-{
-    if(!this->inRange())
-       throw rangeError();
-
-    this->_current = this->_current->get_next();
-}
-
-template <typename C>
-void const_iterator_list<C>::first()
-{
-    this->_current = this->_list->get_head();
-}
-
-template <typename C>
-void const_iterator_list<C>::last()
-{
-    if(this->_list->get_head() == nullptr)
-        throw emptyError();
-
-    this->_current = this->_list->get_tail();
-}
-
-template <typename C>
-bool const_iterator_list<C>::inRange()
-{
-    return this->_current == nullptr;
-}
-
-
-template <typename C>
-const C& const_iterator_list<C>::current() const
-{
-    if(!this->inRange())
-        throw emptyError();
-
-    return this->_current->get_data();
-}
-
-template <typename C>
-const listItem<C> &const_iterator_list<C>::operator *()
-{
-    return *this->_current;
-}
-
-template <typename C>
-const listItem<C>* const_iterator_list<C>::operator ->()
-{
-    return this->_current;
-}
-
-
-template <typename C>
-bool const_iterator_list<C>::operator != (const const_iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-        throw  cmpIterError();
-
-    return this->_current != it._current;
-}
-
-template <typename C>
-bool const_iterator_list<C>::operator == (const const_iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-       throw  cmpIterError();
-
-    return this->_current == it._current;
-}
-
-template <typename C>
-bool const_iterator_list<C>::operator < (const const_iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-       throw  cmpIterError();
-
-    return this->_current < it._current;
-}
-
-template <typename C>
-bool const_iterator_list<C>::operator > (const const_iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-        throw  cmpIterError();
-
-    return this->_current > it._current;
-}
-
-template <typename C>
-bool const_iterator_list<C>::operator <= (const const_iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-        throw  cmpIterError();
-
-    return this->_current <= it._current;
-}
-
-template <typename C>
-bool const_iterator_list<C>::operator >= (const const_iterator_list<C>& it) const
-{
-    if (this->_list != it._list)
-       throw  cmpIterError();
-
-    return this->_current >= it._current;
+  return this->currentInx != srcIterConst.currentInx;
 }
 
 #endif // ITERATORLIST_H
