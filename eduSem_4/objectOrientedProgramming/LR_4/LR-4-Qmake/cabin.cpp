@@ -35,13 +35,10 @@ void Cabin::cabin_move()
   {
     current_state = MOVE;
 
-    if (current_floor == target) {
+    if (current_floor == target)
       emit cabin_reached_target(current_floor);
-    } else {
+    else 
       crossing_floor_timer.start(CROSSING_FLOOR);
-    }
-
-    return;
   }
 }
 

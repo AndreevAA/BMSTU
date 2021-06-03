@@ -40,9 +40,12 @@ void Doors::start_openning()
 
 void Doors::start_closing() 
 {
+  if (temp_status != OPENED && temp_status != CLOSED)
+    return;
+
   if (temp_status == CLOSED)
     emit closed_doors();
-  else if (temp_status == OPENED)
+  else 
   {
     temp_status = CLOSING;
     qDebug() << "Две лифта закрываются...";
@@ -71,4 +74,3 @@ void Doors::close()
 }
 
 #endif
-

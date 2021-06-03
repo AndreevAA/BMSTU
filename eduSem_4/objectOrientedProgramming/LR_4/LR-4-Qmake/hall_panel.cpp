@@ -51,14 +51,11 @@ void HallPanel::achieved_floor(int floor)
     if (next_target(floor)) 
     {
       temp_direction = (temp_floor_number > temp_target) ? DOWN : UP;
-
       emit set_target(floor, temp_direction);
     } 
     else 
       temp_status = FREE;
   }
-  else
-    return;
 }
 
 void HallPanel::passed_floor(int floor) 
@@ -71,60 +68,50 @@ void HallPanel::find_new_target()
 {
   int state = false;
 
-  if (temp_direction == UP) {
+  if (temp_direction == UP) 
     for (int temp_check_floor = NUM_FLOORS; temp_check_floor >= 1 && !state; temp_check_floor--) 
-    {
       if (is_target[temp_check_floor - 1]) 
       {
         state = true;
         temp_target = temp_check_floor;
       }
-    }
-    return;
-  }
-
-  for (int temp_check_floor = 1; temp_check_floor <= NUM_FLOORS && !state; temp_check_floor++) 
-  {
-    if (is_target[temp_check_floor - 1]) 
-    {
-      state = true;
-      temp_target = temp_check_floor;
-    }
-  }
+  else
+    for (int temp_check_floor = 1; temp_check_floor <= NUM_FLOORS && !state; temp_check_floor++) 
+      if (is_target[temp_check_floor - 1]) 
+      {
+        state = true;
+        temp_target = temp_check_floor;
+      }
 }
 
 bool HallPanel::next_target(int &floor) 
 {
-  bool res_status = false;
+  bool res_is_target = false;
 
   if (temp_target > temp_floor_number) 
   {
     bool is_in = true;
     for (int temp_check_floor = temp_floor_number; temp_check_floor <= NUM_FLOORS && is_in; temp_check_floor += 1) 
-    {
       if (is_target[temp_check_floor - 1]) 
       {
         floor = temp_check_floor;
 
-        res_status = true;
+        res_is_target = true;
         is_in = false;
       }
-    }
   } 
   else 
   {
     bool is_in = true;
     for (int temp_check_floor = temp_floor_number; temp_check_floor >= 1 && is_in; temp_check_floor -= 1) 
-    {
       if (is_target[temp_check_floor - 1]) 
       {
         floor = temp_check_floor;
 
-        res_status = true;
+        res_is_target = true;
         is_in = false;
       }
-    }
   }
 
-  return res_status;
+  return res_is_target;
 }
