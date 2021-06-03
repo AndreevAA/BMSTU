@@ -1,6 +1,8 @@
 #ifndef ITERATORLIST_H
 #define ITERATORLIST_H
 #include "_iteratorlist.h"
+#include "exception.h"
+#include "base_exception.h"
 
 // Constructors
 template <typename C>
