@@ -1,0 +1,106 @@
+{
+	"BUILD_DIR" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/lab_03_autogen",
+	"CMAKE_BINARY_DIR" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3",
+	"CMAKE_EXECUTABLE" : "/usr/local/Cellar/cmake/3.17.2/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/gui/qt/mainwindow.h",
+			"MU",
+			"PO2JQEDBWN/moc_mainwindow.cpp"
+		],
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/qt/drawer/qt_drawer.h",
+			"MU",
+			"MT2K6ILHJD/moc_qt_drawer.cpp"
+		],
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/qt/qt_drawer_factory.h",
+			"MU",
+			"R3WADQZVW2/moc_qt_drawer_factory.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/lab_03_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/lab_03_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/libs/driver/include",
+		"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src",
+		"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/libs/driver/include/driver",
+		"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/libs/driver/src",
+		"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/libs/driver/usr/local/include",
+		"/usr/local/opt/qt@5/lib/QtCore.framework",
+		"/usr/local/opt/qt@5/lib/QtCore.framework/Headers",
+		"/usr/local/opt/qt@5/mkspecs/macx-clang",
+		"/usr/local/opt/qt@5/lib/QtGui.framework",
+		"/usr/local/opt/qt@5/lib/QtGui.framework/Headers",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers",
+		"/usr/local/opt/qt@5/lib/QtWidgets.framework",
+		"/usr/local/opt/qt@5/lib/QtWidgets.framework/Headers",
+		"/usr/local/opt/libconfig/include",
+		"/Library/Developer/CommandLineTools/usr/include/c++/v1",
+		"/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include",
+		"/Library/Developer/CommandLineTools/usr/include",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/Library/Developer/CommandLineTools/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/local/Cellar/cmake/3.17.2/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/lab_03_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/CMakeFiles/lab_03_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/local/opt/qt@5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/local/opt/qt@5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/CMakeFiles/lab_03_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/gui/qt/mainwindow.cpp",
+			"MU"
+		],
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/main.cpp",
+			"MU"
+		],
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/qt/drawer/qt_drawer.cpp",
+			"MU"
+		],
+		[
+			"/Applications/AndreevAA/BMSTU/eduSem_4/objectOrientedProgramming/LR_3/src/qt/qt_drawer_factory.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
