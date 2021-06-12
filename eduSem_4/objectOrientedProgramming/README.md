@@ -7,7 +7,7 @@
 | [LR_3](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/objectOrientedProgramming/LR_3) | ✅ ||
 | [LR_4](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/objectOrientedProgramming/LR_4) | ✅ ||
 | [LR_5](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/objectOrientedProgramming/LR_5) | ✅ ||
-| [Exam](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/objectOrientedProgramming/Exam) |||
+| [Exam](https://github.com/AndreevAA/BMSTU/tree/master/eduSem_4/objectOrientedProgramming/Exam) | ✅ ||
 
 |  Темы  |     Статус прохождения     |  
 | ------------- |:-------------:|

@@ -85,11 +85,11 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_9">LR_9</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/computerGraphics/LR_10">LR_10</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td rowspan="2"><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/logicsAndTheoryOfAlgorithms">logicsAndTheoryOfAlgorithms</a></td>
@@ -160,7 +160,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_3">LR_3</a></td>
-        <td>❇✅</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_4">LR_4</a></td>
@@ -172,7 +172,7 @@
     </tr>
     <tr>
         <td><a href="https://github.com/AndreevAA/bmstu/tree/master/edusem_4/objectOrientedProgramming/LR_6">Exam</a></td>
-        <td>🔄</td>
+        <td>✅</td>
     </tr>
     
 </table>
