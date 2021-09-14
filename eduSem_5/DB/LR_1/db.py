@@ -125,6 +125,39 @@ class DB:
 
         self._execute_query(query)
 
+    # Добавление столбца
+    def add_columns(self, table_name, number_of_rows, rows):
+
+        # Подготовка столбцов
+        for number_of_row in range(number_of_rows):
+            prepared_operation = rows[number_of_row].title + " " + rows[number_of_row].value
+
+            # Формирование запроса на вставку записи
+            query = "ALTER TABLE " + f" {table_name}" + " ADD " + f" {prepared_operation}"
+
+            print(query)
+
+            self._execute_query(query)
+
+    def update(self, table_name, rows, values, condition):
+
+        prepared_operation = ""
+
+        # Подготовка столбцов
+        for number_of_row in range(len(rows)):
+            prepared_operation += str(rows[number_of_row]) + " = " + str(values[number_of_row])
+
+            if number_of_row < len(rows) - 1:
+                prepared_operation += ", "
+
+        # Формирование запроса на вставку записи
+        query = "UPDATE " + f" {table_name}" + " SET " + f" {prepared_operation} WHERE " + condition
+
+        print(query)
+
+        self._execute_query(query)
+
+
     # Получение статуса соединения
     def get_connection_status(self):
         return self._connection_status
