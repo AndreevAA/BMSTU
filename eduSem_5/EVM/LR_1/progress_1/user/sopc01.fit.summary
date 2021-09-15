@@ -1,0 +1,16 @@
+Fitter Status : Successful - Thu Sep 09 14:17:02 2021
+Quartus II 32-bit Version : 11.1 Build 173 11/01/2011 SJ Web Edition
+Revision Name : sopc01
+Top-level Entity Name : nios
+Family : Cyclone II
+Device : EP2C20F484C7
+Timing Models : Final
+Total logic elements : 1,463 / 18,752 ( 8 % )
+    Total combinational functions : 1,398 / 18,752 ( 7 % )
+    Dedicated logic registers : 737 / 18,752 ( 4 % )
+Total registers : 737
+Total pins : 4 / 315 ( 1 % )
+Total virtual pins : 0
+Total memory bits : 75,808 / 239,616 ( 32 % )
+Embedded Multiplier 9-bit elements : 0 / 52 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )

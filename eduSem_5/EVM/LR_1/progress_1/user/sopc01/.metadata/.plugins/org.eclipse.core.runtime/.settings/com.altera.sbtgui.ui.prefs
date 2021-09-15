@@ -1,0 +1,5 @@
+#Thu Sep 09 14:22:32 MSD 2021
+newSoftwareExampleWizardPage.defaultLocation=C\:\\user\\sopc01\\software\\hello
+newSoftwareExampleWizardPage.sopcinfoFile=C\:\\user\\sopc01\\nios.sopcinfo
+eclipse.preferences.version=1
+newSoftwareExampleWizardPage2.newBspLocation=C\:\\user\\sopc01\\software\\hello_bsp

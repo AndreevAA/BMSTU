@@ -1,0 +1,6942 @@
+Quartus II 32-bit
+Version 11.1 Build 173 11/01/2011 SJ Web Edition
+14
+1310
+OFF
+OFF
+OFF
+ON
+ON
+ON
+FV_OFF
+Level2
+0
+0
+0
+0
+VRSM_ON
+VHSM_ON
+0
+-- Start Library Paths --
+-- End Library Paths --
+-- Start VHDL Libraries --
+db|ip|nios|nios.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_avalon_sc_fifo.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_merlin_arbitrator.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_merlin_burst_uncompressor.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_merlin_master_agent.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_merlin_master_translator.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_merlin_slave_agent.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_merlin_slave_translator.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_reset_controller.sdc
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_reset_controller.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|altera_reset_synchronizer.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_addr_router.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_cmd_xbar_demux.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_cmd_xbar_mux.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_id_router.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_irq_mapper.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0.sdc
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_jtag_debug_module_sysclk.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_jtag_debug_module_tck.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_jtag_debug_module_wrapper.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_oci_test_bench.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_ociram_default_contents.mif
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_rf_ram_a.mif
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_rf_ram_b.mif
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_nios2_qsys_0_test_bench.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_onchip_memory2_0.hex
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_onchip_memory2_0.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_rsp_xbar_demux.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_rsp_xbar_mux.sv
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_sysid_qsys_0.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_uart_0.v
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_uart_0_input_data_mutex.dat
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_uart_0_input_data_stream.dat
+altera_reserved_qsys_nios
+db|ip|nios|submodules|nios_uart_0_log_module.txt
+altera_reserved_qsys_nios
+-- End VHDL Libraries --
+# entity
+nios_nios2_qsys_0
+# storage
+db|sopc01.(1).cnf
+db|sopc01.(1).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_test_bench
+# storage
+db|sopc01.(2).cnf
+db|sopc01.(2).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0_test_bench.v
+c2a66f7aed4314fb23e554de39f407e
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_test_bench:the_nios_nios2_qsys_0_test_bench
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_register_bank_a_module
+# storage
+db|sopc01.(3).cnf
+db|sopc01.(3).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+lpm_file
+nios_nios2_qsys_0_rf_ram_a.mif
+PARAMETER_STRING
+USR
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_register_bank_a_module:nios_nios2_qsys_0_register_bank_a
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram
+# storage
+db|sopc01.(4).cnf
+db|sopc01.(4).cnf
+# case_insensitive
+# source_file
+altsyncram.tdf
+3d6528bd8ae96e3cccbd5d2b8c04d81
+7
+# user_parameter {
+BYTE_SIZE_BLOCK
+8
+PARAMETER_UNKNOWN
+DEF
+AUTO_CARRY_CHAINS
+ON
+AUTO_CARRY
+USR
+IGNORE_CARRY_BUFFERS
+OFF
+IGNORE_CARRY
+USR
+AUTO_CASCADE_CHAINS
+ON
+AUTO_CASCADE
+USR
+IGNORE_CASCADE_BUFFERS
+OFF
+IGNORE_CASCADE
+USR
+WIDTH_BYTEENA
+1
+PARAMETER_UNKNOWN
+DEF
+OPERATION_MODE
+DUAL_PORT
+PARAMETER_UNKNOWN
+USR
+WIDTH_A
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_A
+5
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_A
+32
+PARAMETER_SIGNED_DEC
+USR
+OUTDATA_REG_A
+UNREGISTERED
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_B
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_B
+5
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_B
+32
+PARAMETER_SIGNED_DEC
+USR
+INDATA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_WRADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_REG_B
+CLOCK0
+PARAMETER_UNKNOWN
+USR
+ADDRESS_REG_B
+CLOCK0
+PARAMETER_UNKNOWN
+USR
+OUTDATA_REG_B
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+BYTEENA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_A
+1
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_B
+1
+PARAMETER_UNKNOWN
+DEF
+RAM_BLOCK_TYPE
+AUTO
+PARAMETER_UNKNOWN
+USR
+BYTE_SIZE
+8
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_MIXED_PORTS
+DONT_CARE
+PARAMETER_UNKNOWN
+USR
+READ_DURING_WRITE_MODE_PORT_A
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_PORT_B
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+INIT_FILE
+nios_nios2_qsys_0_rf_ram_a.mif
+PARAMETER_UNKNOWN
+USR
+INIT_FILE_LAYOUT
+PORT_A
+PARAMETER_UNKNOWN
+DEF
+MAXIMUM_DEPTH
+0
+PARAMETER_SIGNED_DEC
+USR
+CLOCK_ENABLE_INPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_A
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_B
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+ENABLE_ECC
+FALSE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_ECCSTATUS
+3
+PARAMETER_UNKNOWN
+DEF
+DEVICE_FAMILY
+Cyclone II
+PARAMETER_UNKNOWN
+USR
+CBXI_PARAMETER
+altsyncram_9ig1
+PARAMETER_UNKNOWN
+USR
+}
+# used_port {
+wren_a
+-1
+3
+q_b
+-1
+3
+data_a
+-1
+3
+clock0
+-1
+3
+address_b
+-1
+3
+address_a
+-1
+3
+}
+# include_file {
+stratix_ram_block.inc
+e3a03868917fb3dd57b6ed1dd195f22
+altdpram.inc
+2f9e6727b678ffd76e72bc5a95a2630
+altram.inc
+ad5518b39ffd3cf1df377e6360d1c9b6
+a_rdenreg.inc
+3fcdce755959d5a8afbe64788d21fb
+aglobal111.inc
+9cc1f9de5ad83fc94dd171c3f7986bd
+altrom.inc
+192b74eafa8debf2248ea73881e77f91
+lpm_decode.inc
+10da69a8bbd590d66779e7a142f73790
+lpm_mux.inc
+dd87bed9959d6126db09970164b7ba6
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_register_bank_a_module:nios_nios2_qsys_0_register_bank_a|altsyncram:the_altsyncram
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram_9ig1
+# storage
+db|sopc01.(5).cnf
+db|sopc01.(5).cnf
+# case_insensitive
+# source_file
+db|altsyncram_9ig1.tdf
+e1aea529fea65585bb90a81e4eace4
+7
+# used_port {
+wren_a
+-1
+3
+q_b9
+-1
+3
+q_b8
+-1
+3
+q_b7
+-1
+3
+q_b6
+-1
+3
+q_b5
+-1
+3
+q_b4
+-1
+3
+q_b31
+-1
+3
+q_b30
+-1
+3
+q_b3
+-1
+3
+q_b29
+-1
+3
+q_b28
+-1
+3
+q_b27
+-1
+3
+q_b26
+-1
+3
+q_b25
+-1
+3
+q_b24
+-1
+3
+q_b23
+-1
+3
+q_b22
+-1
+3
+q_b21
+-1
+3
+q_b20
+-1
+3
+q_b2
+-1
+3
+q_b19
+-1
+3
+q_b18
+-1
+3
+q_b17
+-1
+3
+q_b16
+-1
+3
+q_b15
+-1
+3
+q_b14
+-1
+3
+q_b13
+-1
+3
+q_b12
+-1
+3
+q_b11
+-1
+3
+q_b10
+-1
+3
+q_b1
+-1
+3
+q_b0
+-1
+3
+data_a9
+-1
+3
+data_a8
+-1
+3
+data_a7
+-1
+3
+data_a6
+-1
+3
+data_a5
+-1
+3
+data_a4
+-1
+3
+data_a31
+-1
+3
+data_a30
+-1
+3
+data_a3
+-1
+3
+data_a29
+-1
+3
+data_a28
+-1
+3
+data_a27
+-1
+3
+data_a26
+-1
+3
+data_a25
+-1
+3
+data_a24
+-1
+3
+data_a23
+-1
+3
+data_a22
+-1
+3
+data_a21
+-1
+3
+data_a20
+-1
+3
+data_a2
+-1
+3
+data_a19
+-1
+3
+data_a18
+-1
+3
+data_a17
+-1
+3
+data_a16
+-1
+3
+data_a15
+-1
+3
+data_a14
+-1
+3
+data_a13
+-1
+3
+data_a12
+-1
+3
+data_a11
+-1
+3
+data_a10
+-1
+3
+data_a1
+-1
+3
+data_a0
+-1
+3
+clock0
+-1
+3
+address_b4
+-1
+3
+address_b3
+-1
+3
+address_b2
+-1
+3
+address_b1
+-1
+3
+address_b0
+-1
+3
+address_a4
+-1
+3
+address_a3
+-1
+3
+address_a2
+-1
+3
+address_a1
+-1
+3
+address_a0
+-1
+3
+}
+# memory_file {
+nios_nios2_qsys_0_rf_ram_a.mif
+0
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_register_bank_a_module:nios_nios2_qsys_0_register_bank_a|altsyncram:the_altsyncram|altsyncram_9ig1:auto_generated
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_register_bank_b_module
+# storage
+db|sopc01.(6).cnf
+db|sopc01.(6).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+lpm_file
+nios_nios2_qsys_0_rf_ram_b.mif
+PARAMETER_STRING
+USR
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_register_bank_b_module:nios_nios2_qsys_0_register_bank_b
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram
+# storage
+db|sopc01.(7).cnf
+db|sopc01.(7).cnf
+# case_insensitive
+# source_file
+altsyncram.tdf
+3d6528bd8ae96e3cccbd5d2b8c04d81
+7
+# user_parameter {
+BYTE_SIZE_BLOCK
+8
+PARAMETER_UNKNOWN
+DEF
+AUTO_CARRY_CHAINS
+ON
+AUTO_CARRY
+USR
+IGNORE_CARRY_BUFFERS
+OFF
+IGNORE_CARRY
+USR
+AUTO_CASCADE_CHAINS
+ON
+AUTO_CASCADE
+USR
+IGNORE_CASCADE_BUFFERS
+OFF
+IGNORE_CASCADE
+USR
+WIDTH_BYTEENA
+1
+PARAMETER_UNKNOWN
+DEF
+OPERATION_MODE
+DUAL_PORT
+PARAMETER_UNKNOWN
+USR
+WIDTH_A
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_A
+5
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_A
+32
+PARAMETER_SIGNED_DEC
+USR
+OUTDATA_REG_A
+UNREGISTERED
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_B
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_B
+5
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_B
+32
+PARAMETER_SIGNED_DEC
+USR
+INDATA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_WRADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_REG_B
+CLOCK0
+PARAMETER_UNKNOWN
+USR
+ADDRESS_REG_B
+CLOCK0
+PARAMETER_UNKNOWN
+USR
+OUTDATA_REG_B
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+BYTEENA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_A
+1
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_B
+1
+PARAMETER_UNKNOWN
+DEF
+RAM_BLOCK_TYPE
+AUTO
+PARAMETER_UNKNOWN
+USR
+BYTE_SIZE
+8
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_MIXED_PORTS
+DONT_CARE
+PARAMETER_UNKNOWN
+USR
+READ_DURING_WRITE_MODE_PORT_A
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_PORT_B
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+INIT_FILE
+nios_nios2_qsys_0_rf_ram_b.mif
+PARAMETER_UNKNOWN
+USR
+INIT_FILE_LAYOUT
+PORT_A
+PARAMETER_UNKNOWN
+DEF
+MAXIMUM_DEPTH
+0
+PARAMETER_SIGNED_DEC
+USR
+CLOCK_ENABLE_INPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_A
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_B
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+ENABLE_ECC
+FALSE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_ECCSTATUS
+3
+PARAMETER_UNKNOWN
+DEF
+DEVICE_FAMILY
+Cyclone II
+PARAMETER_UNKNOWN
+USR
+CBXI_PARAMETER
+altsyncram_aig1
+PARAMETER_UNKNOWN
+USR
+}
+# used_port {
+wren_a
+-1
+3
+q_b
+-1
+3
+data_a
+-1
+3
+clock0
+-1
+3
+address_b
+-1
+3
+address_a
+-1
+3
+}
+# include_file {
+stratix_ram_block.inc
+e3a03868917fb3dd57b6ed1dd195f22
+altdpram.inc
+2f9e6727b678ffd76e72bc5a95a2630
+altram.inc
+ad5518b39ffd3cf1df377e6360d1c9b6
+a_rdenreg.inc
+3fcdce755959d5a8afbe64788d21fb
+aglobal111.inc
+9cc1f9de5ad83fc94dd171c3f7986bd
+altrom.inc
+192b74eafa8debf2248ea73881e77f91
+lpm_decode.inc
+10da69a8bbd590d66779e7a142f73790
+lpm_mux.inc
+dd87bed9959d6126db09970164b7ba6
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_register_bank_b_module:nios_nios2_qsys_0_register_bank_b|altsyncram:the_altsyncram
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram_aig1
+# storage
+db|sopc01.(8).cnf
+db|sopc01.(8).cnf
+# case_insensitive
+# source_file
+db|altsyncram_aig1.tdf
+672cabff7e82402e6d348741c86a4c6
+7
+# used_port {
+wren_a
+-1
+3
+q_b9
+-1
+3
+q_b8
+-1
+3
+q_b7
+-1
+3
+q_b6
+-1
+3
+q_b5
+-1
+3
+q_b4
+-1
+3
+q_b31
+-1
+3
+q_b30
+-1
+3
+q_b3
+-1
+3
+q_b29
+-1
+3
+q_b28
+-1
+3
+q_b27
+-1
+3
+q_b26
+-1
+3
+q_b25
+-1
+3
+q_b24
+-1
+3
+q_b23
+-1
+3
+q_b22
+-1
+3
+q_b21
+-1
+3
+q_b20
+-1
+3
+q_b2
+-1
+3
+q_b19
+-1
+3
+q_b18
+-1
+3
+q_b17
+-1
+3
+q_b16
+-1
+3
+q_b15
+-1
+3
+q_b14
+-1
+3
+q_b13
+-1
+3
+q_b12
+-1
+3
+q_b11
+-1
+3
+q_b10
+-1
+3
+q_b1
+-1
+3
+q_b0
+-1
+3
+data_a9
+-1
+3
+data_a8
+-1
+3
+data_a7
+-1
+3
+data_a6
+-1
+3
+data_a5
+-1
+3
+data_a4
+-1
+3
+data_a31
+-1
+3
+data_a30
+-1
+3
+data_a3
+-1
+3
+data_a29
+-1
+3
+data_a28
+-1
+3
+data_a27
+-1
+3
+data_a26
+-1
+3
+data_a25
+-1
+3
+data_a24
+-1
+3
+data_a23
+-1
+3
+data_a22
+-1
+3
+data_a21
+-1
+3
+data_a20
+-1
+3
+data_a2
+-1
+3
+data_a19
+-1
+3
+data_a18
+-1
+3
+data_a17
+-1
+3
+data_a16
+-1
+3
+data_a15
+-1
+3
+data_a14
+-1
+3
+data_a13
+-1
+3
+data_a12
+-1
+3
+data_a11
+-1
+3
+data_a10
+-1
+3
+data_a1
+-1
+3
+data_a0
+-1
+3
+clock0
+-1
+3
+address_b4
+-1
+3
+address_b3
+-1
+3
+address_b2
+-1
+3
+address_b1
+-1
+3
+address_b0
+-1
+3
+address_a4
+-1
+3
+address_a3
+-1
+3
+address_a2
+-1
+3
+address_a1
+-1
+3
+address_a0
+-1
+3
+}
+# memory_file {
+nios_nios2_qsys_0_rf_ram_b.mif
+0
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_register_bank_b_module:nios_nios2_qsys_0_register_bank_b|altsyncram:the_altsyncram|altsyncram_aig1:auto_generated
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci
+# storage
+db|sopc01.(9).cnf
+db|sopc01.(9).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_debug
+# storage
+db|sopc01.(10).cnf
+db|sopc01.(10).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_debug:the_nios_nios2_qsys_0_nios2_oci_debug
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_ocimem
+# storage
+db|sopc01.(11).cnf
+db|sopc01.(11).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_ocimem:the_nios_nios2_qsys_0_nios2_ocimem
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_ociram_lpm_dram_bdp_component_module
+# storage
+db|sopc01.(12).cnf
+db|sopc01.(12).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+lpm_file
+nios_nios2_qsys_0_ociram_default_contents.mif
+PARAMETER_STRING
+USR
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_ocimem:the_nios_nios2_qsys_0_nios2_ocimem|nios_nios2_qsys_0_ociram_lpm_dram_bdp_component_module:nios_nios2_qsys_0_ociram_lpm_dram_bdp_component
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram
+# storage
+db|sopc01.(13).cnf
+db|sopc01.(13).cnf
+# case_insensitive
+# source_file
+altsyncram.tdf
+3d6528bd8ae96e3cccbd5d2b8c04d81
+7
+# user_parameter {
+BYTE_SIZE_BLOCK
+8
+PARAMETER_UNKNOWN
+DEF
+AUTO_CARRY_CHAINS
+ON
+AUTO_CARRY
+USR
+IGNORE_CARRY_BUFFERS
+OFF
+IGNORE_CARRY
+USR
+AUTO_CASCADE_CHAINS
+ON
+AUTO_CASCADE
+USR
+IGNORE_CASCADE_BUFFERS
+OFF
+IGNORE_CASCADE
+USR
+WIDTH_BYTEENA
+1
+PARAMETER_UNKNOWN
+DEF
+OPERATION_MODE
+BIDIR_DUAL_PORT
+PARAMETER_UNKNOWN
+USR
+WIDTH_A
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_A
+8
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_A
+256
+PARAMETER_SIGNED_DEC
+USR
+OUTDATA_REG_A
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+ADDRESS_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+OUTDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+WRCONTROL_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+INDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+BYTEENA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_B
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_B
+8
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_B
+256
+PARAMETER_SIGNED_DEC
+USR
+INDATA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_WRADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+USR
+OUTDATA_REG_B
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+BYTEENA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+WRCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+ADDRESS_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+OUTDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+RDCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_A
+4
+PARAMETER_SIGNED_DEC
+USR
+WIDTH_BYTEENA_B
+1
+PARAMETER_UNKNOWN
+DEF
+RAM_BLOCK_TYPE
+AUTO
+PARAMETER_UNKNOWN
+USR
+BYTE_SIZE
+8
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_MIXED_PORTS
+OLD_DATA
+PARAMETER_UNKNOWN
+USR
+READ_DURING_WRITE_MODE_PORT_A
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_PORT_B
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+INIT_FILE
+nios_nios2_qsys_0_ociram_default_contents.mif
+PARAMETER_UNKNOWN
+USR
+INIT_FILE_LAYOUT
+PORT_A
+PARAMETER_UNKNOWN
+DEF
+MAXIMUM_DEPTH
+0
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_A
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_B
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+ENABLE_ECC
+FALSE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_ECCSTATUS
+3
+PARAMETER_UNKNOWN
+DEF
+DEVICE_FAMILY
+Cyclone II
+PARAMETER_UNKNOWN
+USR
+CBXI_PARAMETER
+altsyncram_mc82
+PARAMETER_UNKNOWN
+USR
+}
+# used_port {
+wren_b
+-1
+3
+wren_a
+-1
+3
+q_b
+-1
+3
+q_a
+-1
+3
+data_b
+-1
+3
+data_a
+-1
+3
+clocken1
+-1
+3
+clocken0
+-1
+3
+clock1
+-1
+3
+clock0
+-1
+3
+byteena_a
+-1
+3
+address_b
+-1
+3
+address_a
+-1
+3
+}
+# include_file {
+stratix_ram_block.inc
+e3a03868917fb3dd57b6ed1dd195f22
+altdpram.inc
+2f9e6727b678ffd76e72bc5a95a2630
+altram.inc
+ad5518b39ffd3cf1df377e6360d1c9b6
+a_rdenreg.inc
+3fcdce755959d5a8afbe64788d21fb
+aglobal111.inc
+9cc1f9de5ad83fc94dd171c3f7986bd
+altrom.inc
+192b74eafa8debf2248ea73881e77f91
+lpm_decode.inc
+10da69a8bbd590d66779e7a142f73790
+lpm_mux.inc
+dd87bed9959d6126db09970164b7ba6
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_ocimem:the_nios_nios2_qsys_0_nios2_ocimem|nios_nios2_qsys_0_ociram_lpm_dram_bdp_component_module:nios_nios2_qsys_0_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram_mc82
+# storage
+db|sopc01.(14).cnf
+db|sopc01.(14).cnf
+# case_insensitive
+# source_file
+db|altsyncram_mc82.tdf
+857e941c3c615a39a91675fd0ce42b2
+7
+# used_port {
+wren_b
+-1
+3
+wren_a
+-1
+3
+q_b9
+-1
+3
+q_b8
+-1
+3
+q_b7
+-1
+3
+q_b6
+-1
+3
+q_b5
+-1
+3
+q_b4
+-1
+3
+q_b31
+-1
+3
+q_b30
+-1
+3
+q_b3
+-1
+3
+q_b29
+-1
+3
+q_b28
+-1
+3
+q_b27
+-1
+3
+q_b26
+-1
+3
+q_b25
+-1
+3
+q_b24
+-1
+3
+q_b23
+-1
+3
+q_b22
+-1
+3
+q_b21
+-1
+3
+q_b20
+-1
+3
+q_b2
+-1
+3
+q_b19
+-1
+3
+q_b18
+-1
+3
+q_b17
+-1
+3
+q_b16
+-1
+3
+q_b15
+-1
+3
+q_b14
+-1
+3
+q_b13
+-1
+3
+q_b12
+-1
+3
+q_b11
+-1
+3
+q_b10
+-1
+3
+q_b1
+-1
+3
+q_b0
+-1
+3
+q_a9
+-1
+3
+q_a8
+-1
+3
+q_a7
+-1
+3
+q_a6
+-1
+3
+q_a5
+-1
+3
+q_a4
+-1
+3
+q_a31
+-1
+3
+q_a30
+-1
+3
+q_a3
+-1
+3
+q_a29
+-1
+3
+q_a28
+-1
+3
+q_a27
+-1
+3
+q_a26
+-1
+3
+q_a25
+-1
+3
+q_a24
+-1
+3
+q_a23
+-1
+3
+q_a22
+-1
+3
+q_a21
+-1
+3
+q_a20
+-1
+3
+q_a2
+-1
+3
+q_a19
+-1
+3
+q_a18
+-1
+3
+q_a17
+-1
+3
+q_a16
+-1
+3
+q_a15
+-1
+3
+q_a14
+-1
+3
+q_a13
+-1
+3
+q_a12
+-1
+3
+q_a11
+-1
+3
+q_a10
+-1
+3
+q_a1
+-1
+3
+q_a0
+-1
+3
+data_b9
+-1
+3
+data_b8
+-1
+3
+data_b7
+-1
+3
+data_b6
+-1
+3
+data_b5
+-1
+3
+data_b4
+-1
+3
+data_b31
+-1
+3
+data_b30
+-1
+3
+data_b3
+-1
+3
+data_b29
+-1
+3
+data_b28
+-1
+3
+data_b27
+-1
+3
+data_b26
+-1
+3
+data_b25
+-1
+3
+data_b24
+-1
+3
+data_b23
+-1
+3
+data_b22
+-1
+3
+data_b21
+-1
+3
+data_b20
+-1
+3
+data_b2
+-1
+3
+data_b19
+-1
+3
+data_b18
+-1
+3
+data_b17
+-1
+3
+data_b16
+-1
+3
+data_b15
+-1
+3
+data_b14
+-1
+3
+data_b13
+-1
+3
+data_b12
+-1
+3
+data_b11
+-1
+3
+data_b10
+-1
+3
+data_b1
+-1
+3
+data_b0
+-1
+3
+data_a9
+-1
+3
+data_a8
+-1
+3
+data_a7
+-1
+3
+data_a6
+-1
+3
+data_a5
+-1
+3
+data_a4
+-1
+3
+data_a31
+-1
+3
+data_a30
+-1
+3
+data_a3
+-1
+3
+data_a29
+-1
+3
+data_a28
+-1
+3
+data_a27
+-1
+3
+data_a26
+-1
+3
+data_a25
+-1
+3
+data_a24
+-1
+3
+data_a23
+-1
+3
+data_a22
+-1
+3
+data_a21
+-1
+3
+data_a20
+-1
+3
+data_a2
+-1
+3
+data_a19
+-1
+3
+data_a18
+-1
+3
+data_a17
+-1
+3
+data_a16
+-1
+3
+data_a15
+-1
+3
+data_a14
+-1
+3
+data_a13
+-1
+3
+data_a12
+-1
+3
+data_a11
+-1
+3
+data_a10
+-1
+3
+data_a1
+-1
+3
+data_a0
+-1
+3
+clocken1
+-1
+3
+clocken0
+-1
+3
+clock1
+-1
+3
+clock0
+-1
+3
+byteena_a3
+-1
+3
+byteena_a2
+-1
+3
+byteena_a1
+-1
+3
+byteena_a0
+-1
+3
+address_b7
+-1
+3
+address_b6
+-1
+3
+address_b5
+-1
+3
+address_b4
+-1
+3
+address_b3
+-1
+3
+address_b2
+-1
+3
+address_b1
+-1
+3
+address_b0
+-1
+3
+address_a7
+-1
+3
+address_a6
+-1
+3
+address_a5
+-1
+3
+address_a4
+-1
+3
+address_a3
+-1
+3
+address_a2
+-1
+3
+address_a1
+-1
+3
+address_a0
+-1
+3
+}
+# memory_file {
+nios_nios2_qsys_0_ociram_default_contents.mif
+0
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_ocimem:the_nios_nios2_qsys_0_nios2_ocimem|nios_nios2_qsys_0_ociram_lpm_dram_bdp_component_module:nios_nios2_qsys_0_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram|altsyncram_mc82:auto_generated
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_avalon_reg
+# storage
+db|sopc01.(15).cnf
+db|sopc01.(15).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_avalon_reg:the_nios_nios2_qsys_0_nios2_avalon_reg
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_break
+# storage
+db|sopc01.(16).cnf
+db|sopc01.(16).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_break:the_nios_nios2_qsys_0_nios2_oci_break
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_xbrk
+# storage
+db|sopc01.(17).cnf
+db|sopc01.(17).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_xbrk:the_nios_nios2_qsys_0_nios2_oci_xbrk
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_dbrk
+# storage
+db|sopc01.(18).cnf
+db|sopc01.(18).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_dbrk:the_nios_nios2_qsys_0_nios2_oci_dbrk
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_itrace
+# storage
+db|sopc01.(19).cnf
+db|sopc01.(19).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_itrace:the_nios_nios2_qsys_0_nios2_oci_itrace
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_dtrace
+# storage
+db|sopc01.(20).cnf
+db|sopc01.(20).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_dtrace:the_nios_nios2_qsys_0_nios2_oci_dtrace
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_td_mode
+# storage
+db|sopc01.(21).cnf
+db|sopc01.(21).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_dtrace:the_nios_nios2_qsys_0_nios2_oci_dtrace|nios_nios2_qsys_0_nios2_oci_td_mode:nios_nios2_qsys_0_nios2_oci_trc_ctrl_td_mode
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_fifo
+# storage
+db|sopc01.(22).cnf
+db|sopc01.(22).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_fifo:the_nios_nios2_qsys_0_nios2_oci_fifo
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_compute_tm_count
+# storage
+db|sopc01.(23).cnf
+db|sopc01.(23).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_fifo:the_nios_nios2_qsys_0_nios2_oci_fifo|nios_nios2_qsys_0_nios2_oci_compute_tm_count:nios_nios2_qsys_0_nios2_oci_compute_tm_count_tm_count
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_fifowp_inc
+# storage
+db|sopc01.(24).cnf
+db|sopc01.(24).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_fifo:the_nios_nios2_qsys_0_nios2_oci_fifo|nios_nios2_qsys_0_nios2_oci_fifowp_inc:nios_nios2_qsys_0_nios2_oci_fifowp_inc_fifowp
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_fifocount_inc
+# storage
+db|sopc01.(25).cnf
+db|sopc01.(25).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_fifo:the_nios_nios2_qsys_0_nios2_oci_fifo|nios_nios2_qsys_0_nios2_oci_fifocount_inc:nios_nios2_qsys_0_nios2_oci_fifocount_inc_fifocount
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_oci_test_bench
+# storage
+db|sopc01.(26).cnf
+db|sopc01.(26).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0_oci_test_bench.v
+b7d35fb2921d37641f285b05abac65b
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_fifo:the_nios_nios2_qsys_0_nios2_oci_fifo|nios_nios2_qsys_0_oci_test_bench:the_nios_nios2_qsys_0_oci_test_bench
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_pib
+# storage
+db|sopc01.(27).cnf
+db|sopc01.(27).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_pib:the_nios_nios2_qsys_0_nios2_oci_pib
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_nios2_oci_im
+# storage
+db|sopc01.(28).cnf
+db|sopc01.(28).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_im:the_nios_nios2_qsys_0_nios2_oci_im
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_traceram_lpm_dram_bdp_component_module
+# storage
+db|sopc01.(29).cnf
+db|sopc01.(29).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0.v
+75d73b32caf8c91988c24a595b961d9
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+lpm_file
+UNUSED
+PARAMETER_STRING
+DEF
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_im:the_nios_nios2_qsys_0_nios2_oci_im|nios_nios2_qsys_0_traceram_lpm_dram_bdp_component_module:nios_nios2_qsys_0_traceram_lpm_dram_bdp_component
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram
+# storage
+db|sopc01.(30).cnf
+db|sopc01.(30).cnf
+# case_insensitive
+# source_file
+altsyncram.tdf
+3d6528bd8ae96e3cccbd5d2b8c04d81
+7
+# user_parameter {
+BYTE_SIZE_BLOCK
+8
+PARAMETER_UNKNOWN
+DEF
+AUTO_CARRY_CHAINS
+ON
+AUTO_CARRY
+USR
+IGNORE_CARRY_BUFFERS
+OFF
+IGNORE_CARRY
+USR
+AUTO_CASCADE_CHAINS
+ON
+AUTO_CASCADE
+USR
+IGNORE_CASCADE_BUFFERS
+OFF
+IGNORE_CASCADE
+USR
+WIDTH_BYTEENA
+1
+PARAMETER_UNKNOWN
+DEF
+OPERATION_MODE
+BIDIR_DUAL_PORT
+PARAMETER_UNKNOWN
+USR
+WIDTH_A
+36
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_A
+7
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_A
+128
+PARAMETER_SIGNED_DEC
+USR
+OUTDATA_REG_A
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+ADDRESS_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+OUTDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+WRCONTROL_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+INDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+USR
+BYTEENA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_B
+36
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_B
+7
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_B
+128
+PARAMETER_SIGNED_DEC
+USR
+INDATA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_WRADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+USR
+OUTDATA_REG_B
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+BYTEENA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+WRCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+ADDRESS_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+OUTDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+USR
+RDCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_A
+1
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_B
+1
+PARAMETER_UNKNOWN
+DEF
+RAM_BLOCK_TYPE
+AUTO
+PARAMETER_UNKNOWN
+USR
+BYTE_SIZE
+8
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_MIXED_PORTS
+OLD_DATA
+PARAMETER_UNKNOWN
+USR
+READ_DURING_WRITE_MODE_PORT_A
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_PORT_B
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+INIT_FILE
+UNUSED
+PARAMETER_UNKNOWN
+DEF
+INIT_FILE_LAYOUT
+PORT_A
+PARAMETER_UNKNOWN
+DEF
+MAXIMUM_DEPTH
+0
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_A
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_B
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+ENABLE_ECC
+FALSE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_ECCSTATUS
+3
+PARAMETER_UNKNOWN
+DEF
+DEVICE_FAMILY
+Cyclone II
+PARAMETER_UNKNOWN
+USR
+CBXI_PARAMETER
+altsyncram_e502
+PARAMETER_UNKNOWN
+USR
+}
+# used_port {
+wren_b
+-1
+3
+wren_a
+-1
+3
+q_b
+-1
+3
+q_a
+-1
+3
+data_b
+-1
+3
+data_a
+-1
+3
+clocken1
+-1
+3
+clocken0
+-1
+3
+clock1
+-1
+3
+clock0
+-1
+3
+address_b
+-1
+3
+address_a
+-1
+3
+}
+# include_file {
+stratix_ram_block.inc
+e3a03868917fb3dd57b6ed1dd195f22
+altdpram.inc
+2f9e6727b678ffd76e72bc5a95a2630
+altram.inc
+ad5518b39ffd3cf1df377e6360d1c9b6
+a_rdenreg.inc
+3fcdce755959d5a8afbe64788d21fb
+aglobal111.inc
+9cc1f9de5ad83fc94dd171c3f7986bd
+altrom.inc
+192b74eafa8debf2248ea73881e77f91
+lpm_decode.inc
+10da69a8bbd590d66779e7a142f73790
+lpm_mux.inc
+dd87bed9959d6126db09970164b7ba6
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_im:the_nios_nios2_qsys_0_nios2_oci_im|nios_nios2_qsys_0_traceram_lpm_dram_bdp_component_module:nios_nios2_qsys_0_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram_e502
+# storage
+db|sopc01.(31).cnf
+db|sopc01.(31).cnf
+# case_insensitive
+# source_file
+db|altsyncram_e502.tdf
+29d6c313136cb27592cea1a8ba040cd
+7
+# used_port {
+wren_b
+-1
+3
+wren_a
+-1
+3
+q_b9
+-1
+3
+q_b8
+-1
+3
+q_b7
+-1
+3
+q_b6
+-1
+3
+q_b5
+-1
+3
+q_b4
+-1
+3
+q_b35
+-1
+3
+q_b34
+-1
+3
+q_b33
+-1
+3
+q_b32
+-1
+3
+q_b31
+-1
+3
+q_b30
+-1
+3
+q_b3
+-1
+3
+q_b29
+-1
+3
+q_b28
+-1
+3
+q_b27
+-1
+3
+q_b26
+-1
+3
+q_b25
+-1
+3
+q_b24
+-1
+3
+q_b23
+-1
+3
+q_b22
+-1
+3
+q_b21
+-1
+3
+q_b20
+-1
+3
+q_b2
+-1
+3
+q_b19
+-1
+3
+q_b18
+-1
+3
+q_b17
+-1
+3
+q_b16
+-1
+3
+q_b15
+-1
+3
+q_b14
+-1
+3
+q_b13
+-1
+3
+q_b12
+-1
+3
+q_b11
+-1
+3
+q_b10
+-1
+3
+q_b1
+-1
+3
+q_b0
+-1
+3
+q_a9
+-1
+3
+q_a8
+-1
+3
+q_a7
+-1
+3
+q_a6
+-1
+3
+q_a5
+-1
+3
+q_a4
+-1
+3
+q_a35
+-1
+3
+q_a34
+-1
+3
+q_a33
+-1
+3
+q_a32
+-1
+3
+q_a31
+-1
+3
+q_a30
+-1
+3
+q_a3
+-1
+3
+q_a29
+-1
+3
+q_a28
+-1
+3
+q_a27
+-1
+3
+q_a26
+-1
+3
+q_a25
+-1
+3
+q_a24
+-1
+3
+q_a23
+-1
+3
+q_a22
+-1
+3
+q_a21
+-1
+3
+q_a20
+-1
+3
+q_a2
+-1
+3
+q_a19
+-1
+3
+q_a18
+-1
+3
+q_a17
+-1
+3
+q_a16
+-1
+3
+q_a15
+-1
+3
+q_a14
+-1
+3
+q_a13
+-1
+3
+q_a12
+-1
+3
+q_a11
+-1
+3
+q_a10
+-1
+3
+q_a1
+-1
+3
+q_a0
+-1
+3
+data_b9
+-1
+3
+data_b8
+-1
+3
+data_b7
+-1
+3
+data_b6
+-1
+3
+data_b5
+-1
+3
+data_b4
+-1
+3
+data_b35
+-1
+3
+data_b34
+-1
+3
+data_b33
+-1
+3
+data_b32
+-1
+3
+data_b31
+-1
+3
+data_b30
+-1
+3
+data_b3
+-1
+3
+data_b29
+-1
+3
+data_b28
+-1
+3
+data_b27
+-1
+3
+data_b26
+-1
+3
+data_b25
+-1
+3
+data_b24
+-1
+3
+data_b23
+-1
+3
+data_b22
+-1
+3
+data_b21
+-1
+3
+data_b20
+-1
+3
+data_b2
+-1
+3
+data_b19
+-1
+3
+data_b18
+-1
+3
+data_b17
+-1
+3
+data_b16
+-1
+3
+data_b15
+-1
+3
+data_b14
+-1
+3
+data_b13
+-1
+3
+data_b12
+-1
+3
+data_b11
+-1
+3
+data_b10
+-1
+3
+data_b1
+-1
+3
+data_b0
+-1
+3
+data_a9
+-1
+3
+data_a8
+-1
+3
+data_a7
+-1
+3
+data_a6
+-1
+3
+data_a5
+-1
+3
+data_a4
+-1
+3
+data_a35
+-1
+3
+data_a34
+-1
+3
+data_a33
+-1
+3
+data_a32
+-1
+3
+data_a31
+-1
+3
+data_a30
+-1
+3
+data_a3
+-1
+3
+data_a29
+-1
+3
+data_a28
+-1
+3
+data_a27
+-1
+3
+data_a26
+-1
+3
+data_a25
+-1
+3
+data_a24
+-1
+3
+data_a23
+-1
+3
+data_a22
+-1
+3
+data_a21
+-1
+3
+data_a20
+-1
+3
+data_a2
+-1
+3
+data_a19
+-1
+3
+data_a18
+-1
+3
+data_a17
+-1
+3
+data_a16
+-1
+3
+data_a15
+-1
+3
+data_a14
+-1
+3
+data_a13
+-1
+3
+data_a12
+-1
+3
+data_a11
+-1
+3
+data_a10
+-1
+3
+data_a1
+-1
+3
+data_a0
+-1
+3
+clocken1
+-1
+3
+clocken0
+-1
+3
+clock1
+-1
+3
+clock0
+-1
+3
+address_b6
+-1
+3
+address_b5
+-1
+3
+address_b4
+-1
+3
+address_b3
+-1
+3
+address_b2
+-1
+3
+address_b1
+-1
+3
+address_b0
+-1
+3
+address_a6
+-1
+3
+address_a5
+-1
+3
+address_a4
+-1
+3
+address_a3
+-1
+3
+address_a2
+-1
+3
+address_a1
+-1
+3
+address_a0
+-1
+3
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_nios2_oci_im:the_nios_nios2_qsys_0_nios2_oci_im|nios_nios2_qsys_0_traceram_lpm_dram_bdp_component_module:nios_nios2_qsys_0_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram|altsyncram_e502:auto_generated
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_jtag_debug_module_wrapper
+# storage
+db|sopc01.(32).cnf
+db|sopc01.(32).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0_jtag_debug_module_wrapper.v
+84d18e80214185d68b5e74fc6cb8e8
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_jtag_debug_module_tck
+# storage
+db|sopc01.(33).cnf
+db|sopc01.(33).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0_jtag_debug_module_tck.v
+1fa59e4ed6c380d8b1f96f6bb2c94cbe
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|nios_nios2_qsys_0_jtag_debug_module_tck:the_nios_nios2_qsys_0_jtag_debug_module_tck
+}
+# macro_sequence
+
+# end
+# entity
+altera_std_synchronizer
+# storage
+db|sopc01.(34).cnf
+db|sopc01.(34).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+altera_std_synchronizer.v
+3953f4d05760cbbea8ee11c946b3e47
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+depth
+2
+PARAMETER_SIGNED_DEC
+USR
+}
+# include_file {
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|nios_nios2_qsys_0_jtag_debug_module_tck:the_nios_nios2_qsys_0_jtag_debug_module_tck|altera_std_synchronizer:the_altera_std_synchronizer
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|nios_nios2_qsys_0_jtag_debug_module_tck:the_nios_nios2_qsys_0_jtag_debug_module_tck|altera_std_synchronizer:the_altera_std_synchronizer1
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|nios_nios2_qsys_0_jtag_debug_module_sysclk:the_nios_nios2_qsys_0_jtag_debug_module_sysclk|altera_std_synchronizer:the_altera_std_synchronizer2
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|nios_nios2_qsys_0_jtag_debug_module_sysclk:the_nios_nios2_qsys_0_jtag_debug_module_sysclk|altera_std_synchronizer:the_altera_std_synchronizer3
+nios_uart_0:uart_0|nios_uart_0_rx:the_nios_uart_0_rx|altera_std_synchronizer:the_altera_std_synchronizer
+}
+# macro_sequence
+
+# end
+# entity
+nios_nios2_qsys_0_jtag_debug_module_sysclk
+# storage
+db|sopc01.(35).cnf
+db|sopc01.(35).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_nios2_qsys_0_jtag_debug_module_sysclk.v
+89714ef237b26c01366a8339fa85bd5
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|nios_nios2_qsys_0_jtag_debug_module_sysclk:the_nios_nios2_qsys_0_jtag_debug_module_sysclk
+}
+# macro_sequence
+
+# end
+# entity
+sld_virtual_jtag_basic
+# storage
+db|sopc01.(36).cnf
+db|sopc01.(36).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+sld_virtual_jtag_basic.v
+b09e4901691a6571b2839356bbbd691
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+sld_mfg_id
+70
+PARAMETER_SIGNED_DEC
+USR
+sld_type_id
+34
+PARAMETER_SIGNED_DEC
+USR
+sld_version
+3
+PARAMETER_SIGNED_DEC
+USR
+sld_instance_index
+0
+PARAMETER_SIGNED_DEC
+USR
+sld_auto_instance_index
+YES
+PARAMETER_STRING
+USR
+sld_ir_width
+2
+PARAMETER_SIGNED_DEC
+USR
+sld_sim_n_scan
+0
+PARAMETER_SIGNED_DEC
+USR
+sld_sim_action
+
+PARAMETER_STRING
+USR
+sld_sim_total_length
+0
+PARAMETER_SIGNED_DEC
+USR
+lpm_type
+sld_virtual_jtag_basic
+PARAMETER_STRING
+DEF
+lpm_hint
+UNUSED
+PARAMETER_STRING
+DEF
+}
+# include_file {
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|sld_virtual_jtag_basic:nios_nios2_qsys_0_jtag_debug_module_phy
+}
+# macro_sequence
+
+# end
+# entity
+sld_virtual_jtag_impl
+# storage
+db|sopc01.(37).cnf
+db|sopc01.(37).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+sld_virtual_jtag_basic.v
+b09e4901691a6571b2839356bbbd691
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+sld_mfg_id
+70
+PARAMETER_SIGNED_DEC
+USR
+sld_type_id
+34
+PARAMETER_SIGNED_DEC
+USR
+sld_version
+3
+PARAMETER_SIGNED_DEC
+USR
+sld_instance_index
+0
+PARAMETER_SIGNED_DEC
+USR
+sld_auto_instance_index
+YES
+PARAMETER_STRING
+USR
+sld_ir_width
+2
+PARAMETER_SIGNED_DEC
+USR
+SLD_NODE_INFO
+420496896
+PARAMETER_SIGNED_DEC
+DEF
+}
+# include_file {
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+}
+# hierarchies {
+nios_nios2_qsys_0:nios2_qsys_0|nios_nios2_qsys_0_nios2_oci:the_nios_nios2_qsys_0_nios2_oci|nios_nios2_qsys_0_jtag_debug_module_wrapper:the_nios_nios2_qsys_0_jtag_debug_module_wrapper|sld_virtual_jtag_basic:nios_nios2_qsys_0_jtag_debug_module_phy|sld_virtual_jtag_impl:sld_virtual_jtag_impl_inst
+}
+# macro_sequence
+MASK_8_BITS255INST_BIT_INDEX0MASK_11_BITS2047MFG_BIT_INDEX8MASK_8_BITS255TYPE_BIT_INDEX19MASK_5_BITS31VERION_BIT_INDEX27
+# end
+# entity
+nios_onchip_memory2_0
+# storage
+db|sopc01.(38).cnf
+db|sopc01.(38).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_onchip_memory2_0.v
+a7a8f9b475a5d01f869b9082de9ff0ff
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+INIT_FILE
+../nios_onchip_memory2_0.hex
+PARAMETER_STRING
+DEF
+}
+# hierarchies {
+nios_onchip_memory2_0:onchip_memory2_0
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram
+# storage
+db|sopc01.(39).cnf
+db|sopc01.(39).cnf
+# case_insensitive
+# source_file
+altsyncram.tdf
+3d6528bd8ae96e3cccbd5d2b8c04d81
+7
+# user_parameter {
+BYTE_SIZE_BLOCK
+8
+PARAMETER_UNKNOWN
+DEF
+AUTO_CARRY_CHAINS
+ON
+AUTO_CARRY
+USR
+IGNORE_CARRY_BUFFERS
+OFF
+IGNORE_CARRY
+USR
+AUTO_CASCADE_CHAINS
+ON
+AUTO_CASCADE
+USR
+IGNORE_CASCADE_BUFFERS
+OFF
+IGNORE_CASCADE
+USR
+WIDTH_BYTEENA
+1
+PARAMETER_UNKNOWN
+DEF
+OPERATION_MODE
+SINGLE_PORT
+PARAMETER_UNKNOWN
+USR
+WIDTH_A
+32
+PARAMETER_SIGNED_DEC
+USR
+WIDTHAD_A
+12
+PARAMETER_SIGNED_DEC
+USR
+NUMWORDS_A
+2049
+PARAMETER_SIGNED_DEC
+USR
+OUTDATA_REG_A
+UNREGISTERED
+PARAMETER_UNKNOWN
+USR
+ADDRESS_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_A
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_B
+1
+PARAMETER_UNKNOWN
+DEF
+WIDTHAD_B
+1
+PARAMETER_UNKNOWN
+DEF
+NUMWORDS_B
+1
+PARAMETER_UNKNOWN
+DEF
+INDATA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_WRADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_REG_B
+UNREGISTERED
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_REG_B
+CLOCK1
+PARAMETER_UNKNOWN
+DEF
+INDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WRCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+ADDRESS_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+OUTDATA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+RDCONTROL_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+BYTEENA_ACLR_B
+NONE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_BYTEENA_A
+4
+PARAMETER_SIGNED_DEC
+USR
+WIDTH_BYTEENA_B
+1
+PARAMETER_UNKNOWN
+DEF
+RAM_BLOCK_TYPE
+AUTO
+PARAMETER_UNKNOWN
+USR
+BYTE_SIZE
+8
+PARAMETER_SIGNED_DEC
+USR
+READ_DURING_WRITE_MODE_MIXED_PORTS
+DONT_CARE
+PARAMETER_UNKNOWN
+USR
+READ_DURING_WRITE_MODE_PORT_A
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+READ_DURING_WRITE_MODE_PORT_B
+NEW_DATA_NO_NBE_READ
+PARAMETER_UNKNOWN
+DEF
+INIT_FILE
+nios_onchip_memory2_0.hex
+PARAMETER_UNKNOWN
+USR
+INIT_FILE_LAYOUT
+PORT_A
+PARAMETER_UNKNOWN
+DEF
+MAXIMUM_DEPTH
+2049
+PARAMETER_SIGNED_DEC
+USR
+CLOCK_ENABLE_INPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_INPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_A
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_OUTPUT_B
+NORMAL
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_A
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+CLOCK_ENABLE_CORE_B
+USE_INPUT_CLKEN
+PARAMETER_UNKNOWN
+DEF
+ENABLE_ECC
+FALSE
+PARAMETER_UNKNOWN
+DEF
+WIDTH_ECCSTATUS
+3
+PARAMETER_UNKNOWN
+DEF
+DEVICE_FAMILY
+Cyclone II
+PARAMETER_UNKNOWN
+USR
+CBXI_PARAMETER
+altsyncram_pkc1
+PARAMETER_UNKNOWN
+USR
+}
+# used_port {
+wren_a
+-1
+3
+q_a
+-1
+3
+data_a
+-1
+3
+clocken0
+-1
+3
+clock0
+-1
+3
+byteena_a
+-1
+3
+address_a
+-1
+3
+}
+# include_file {
+stratix_ram_block.inc
+e3a03868917fb3dd57b6ed1dd195f22
+altdpram.inc
+2f9e6727b678ffd76e72bc5a95a2630
+altram.inc
+ad5518b39ffd3cf1df377e6360d1c9b6
+a_rdenreg.inc
+3fcdce755959d5a8afbe64788d21fb
+aglobal111.inc
+9cc1f9de5ad83fc94dd171c3f7986bd
+altrom.inc
+192b74eafa8debf2248ea73881e77f91
+lpm_decode.inc
+10da69a8bbd590d66779e7a142f73790
+lpm_mux.inc
+dd87bed9959d6126db09970164b7ba6
+}
+# hierarchies {
+nios_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram
+}
+# macro_sequence
+
+# end
+# entity
+altsyncram_pkc1
+# storage
+db|sopc01.(40).cnf
+db|sopc01.(40).cnf
+# case_insensitive
+# source_file
+db|altsyncram_pkc1.tdf
+7630aacbb0a7f5c58fc149624c0315
+7
+# used_port {
+wren_a
+-1
+3
+q_a9
+-1
+3
+q_a8
+-1
+3
+q_a7
+-1
+3
+q_a6
+-1
+3
+q_a5
+-1
+3
+q_a4
+-1
+3
+q_a31
+-1
+3
+q_a30
+-1
+3
+q_a3
+-1
+3
+q_a29
+-1
+3
+q_a28
+-1
+3
+q_a27
+-1
+3
+q_a26
+-1
+3
+q_a25
+-1
+3
+q_a24
+-1
+3
+q_a23
+-1
+3
+q_a22
+-1
+3
+q_a21
+-1
+3
+q_a20
+-1
+3
+q_a2
+-1
+3
+q_a19
+-1
+3
+q_a18
+-1
+3
+q_a17
+-1
+3
+q_a16
+-1
+3
+q_a15
+-1
+3
+q_a14
+-1
+3
+q_a13
+-1
+3
+q_a12
+-1
+3
+q_a11
+-1
+3
+q_a10
+-1
+3
+q_a1
+-1
+3
+q_a0
+-1
+3
+data_a9
+-1
+3
+data_a8
+-1
+3
+data_a7
+-1
+3
+data_a6
+-1
+3
+data_a5
+-1
+3
+data_a4
+-1
+3
+data_a31
+-1
+3
+data_a30
+-1
+3
+data_a3
+-1
+3
+data_a29
+-1
+3
+data_a28
+-1
+3
+data_a27
+-1
+3
+data_a26
+-1
+3
+data_a25
+-1
+3
+data_a24
+-1
+3
+data_a23
+-1
+3
+data_a22
+-1
+3
+data_a21
+-1
+3
+data_a20
+-1
+3
+data_a2
+-1
+3
+data_a19
+-1
+3
+data_a18
+-1
+3
+data_a17
+-1
+3
+data_a16
+-1
+3
+data_a15
+-1
+3
+data_a14
+-1
+3
+data_a13
+-1
+3
+data_a12
+-1
+3
+data_a11
+-1
+3
+data_a10
+-1
+3
+data_a1
+-1
+3
+data_a0
+-1
+3
+clocken0
+-1
+3
+clock0
+-1
+3
+byteena_a3
+-1
+3
+byteena_a2
+-1
+3
+byteena_a1
+-1
+3
+byteena_a0
+-1
+3
+address_a9
+-1
+3
+address_a8
+-1
+3
+address_a7
+-1
+3
+address_a6
+-1
+3
+address_a5
+-1
+3
+address_a4
+-1
+3
+address_a3
+-1
+3
+address_a2
+-1
+3
+address_a11
+-1
+3
+address_a10
+-1
+3
+address_a1
+-1
+3
+address_a0
+-1
+3
+}
+# memory_file {
+nios_onchip_memory2_0.hex
+0
+}
+# hierarchies {
+nios_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_pkc1:auto_generated
+}
+# macro_sequence
+
+# end
+# entity
+nios_uart_0
+# storage
+db|sopc01.(42).cnf
+db|sopc01.(42).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_uart_0:uart_0
+}
+# macro_sequence
+
+# end
+# entity
+nios_uart_0_tx
+# storage
+db|sopc01.(43).cnf
+db|sopc01.(43).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_uart_0:uart_0|nios_uart_0_tx:the_nios_uart_0_tx
+}
+# macro_sequence
+
+# end
+# entity
+nios_uart_0_rx
+# storage
+db|sopc01.(44).cnf
+db|sopc01.(44).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_uart_0:uart_0|nios_uart_0_rx:the_nios_uart_0_rx
+}
+# macro_sequence
+
+# end
+# entity
+nios_uart_0_rx_stimulus_source
+# storage
+db|sopc01.(45).cnf
+db|sopc01.(45).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_uart_0:uart_0|nios_uart_0_rx:the_nios_uart_0_rx|nios_uart_0_rx_stimulus_source:the_nios_uart_0_rx_stimulus_source
+}
+# macro_sequence
+
+# end
+# entity
+nios_uart_0_regs
+# storage
+db|sopc01.(46).cnf
+db|sopc01.(46).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_uart_0.v
+170ee14459b1d5e3573914fca9271b7
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_uart_0:uart_0|nios_uart_0_regs:the_nios_uart_0_regs
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_master_translator
+# storage
+db|sopc01.(47).cnf
+db|sopc01.(47).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_master_translator.sv
+76b57cdaffdeb51c4dbdbfc1ab2a2533
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+AV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+USE_BURSTCOUNT
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_BEGINBURSTTRANSFER
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_BEGINTRANSFER
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_CHIPSELECT
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_READ
+1
+PARAMETER_SIGNED_DEC
+USR
+USE_READDATAVALID
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WRITE
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WAITREQUEST
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_REGISTERINCOMINGSIGNALS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SYMBOLS_PER_WORD
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_ADDRESS_SYMBOLS
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_LINEWRAPBURSTS
+1
+PARAMETER_SIGNED_DEC
+USR
+UAV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+UAV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+UAV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_master_translator:nios2_qsys_0_instruction_master_translator
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_master_translator
+# storage
+db|sopc01.(48).cnf
+db|sopc01.(48).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_master_translator.sv
+76b57cdaffdeb51c4dbdbfc1ab2a2533
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+AV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+USE_BURSTCOUNT
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_BEGINBURSTTRANSFER
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_BEGINTRANSFER
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_CHIPSELECT
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_READ
+1
+PARAMETER_SIGNED_DEC
+USR
+USE_READDATAVALID
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WRITE
+1
+PARAMETER_SIGNED_DEC
+USR
+USE_WAITREQUEST
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_REGISTERINCOMINGSIGNALS
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_SYMBOLS_PER_WORD
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_ADDRESS_SYMBOLS
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_LINEWRAPBURSTS
+0
+PARAMETER_SIGNED_DEC
+USR
+UAV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+UAV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+UAV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_master_translator:nios2_qsys_0_data_master_translator
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_slave_translator
+# storage
+db|sopc01.(49).cnf
+db|sopc01.(49).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_slave_translator.sv
+bb4c98ca65ac2259c301956cc77a311
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+AV_ADDRESS_W
+9
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+UAV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_READ_WAIT_CYCLES
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_WRITE_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SETUP_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_HOLD_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_READDATAVALID
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WAITREQUEST
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SYMBOLS_PER_WORD
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_ADDRESS_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+BITS_PER_WORD
+2
+PARAMETER_SIGNED_DEC
+DEF
+UAV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+UAV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+UAV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+UAV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+CHIPSELECT_THROUGH_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_UAV_CLKEN
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_REQUIRE_UNALIGNED_ADDRESSES
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_slave_translator:nios2_qsys_0_jtag_debug_module_translator
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_slave_translator
+# storage
+db|sopc01.(50).cnf
+db|sopc01.(50).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_slave_translator.sv
+bb4c98ca65ac2259c301956cc77a311
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+AV_ADDRESS_W
+12
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+UAV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_READLATENCY
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_READ_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_WRITE_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SETUP_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_HOLD_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_READDATAVALID
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WAITREQUEST
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SYMBOLS_PER_WORD
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_ADDRESS_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+BITS_PER_WORD
+2
+PARAMETER_SIGNED_DEC
+DEF
+UAV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+UAV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+UAV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+UAV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+CHIPSELECT_THROUGH_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_UAV_CLKEN
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_REQUIRE_UNALIGNED_ADDRESSES
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_slave_translator:onchip_memory2_0_s1_translator
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_slave_translator
+# storage
+db|sopc01.(51).cnf
+db|sopc01.(51).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_slave_translator.sv
+bb4c98ca65ac2259c301956cc77a311
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+AV_ADDRESS_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+UAV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_READ_WAIT_CYCLES
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_WRITE_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SETUP_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_HOLD_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_READDATAVALID
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WAITREQUEST
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SYMBOLS_PER_WORD
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_ADDRESS_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+BITS_PER_WORD
+2
+PARAMETER_SIGNED_DEC
+DEF
+UAV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+UAV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+UAV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+UAV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+CHIPSELECT_THROUGH_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_UAV_CLKEN
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_REQUIRE_UNALIGNED_ADDRESSES
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_slave_translator:sysid_qsys_0_control_slave_translator
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_slave_translator
+# storage
+db|sopc01.(52).cnf
+db|sopc01.(52).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_slave_translator.sv
+bb4c98ca65ac2259c301956cc77a311
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+AV_ADDRESS_W
+3
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_W
+16
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_BYTEENABLE_W
+1
+PARAMETER_SIGNED_DEC
+USR
+UAV_BYTEENABLE_W
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_READ_WAIT_CYCLES
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_WRITE_WAIT_CYCLES
+1
+PARAMETER_SIGNED_DEC
+USR
+AV_SETUP_WAIT_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_DATA_HOLD_CYCLES
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_READDATAVALID
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_WAITREQUEST
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_SYMBOLS_PER_WORD
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_ADDRESS_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_SYMBOLS
+0
+PARAMETER_SIGNED_DEC
+USR
+BITS_PER_WORD
+2
+PARAMETER_SIGNED_DEC
+DEF
+UAV_ADDRESS_W
+16
+PARAMETER_SIGNED_DEC
+USR
+UAV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+UAV_DATA_W
+32
+PARAMETER_SIGNED_DEC
+USR
+AV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+UAV_CONSTANT_BURST_BEHAVIOR
+0
+PARAMETER_SIGNED_DEC
+USR
+CHIPSELECT_THROUGH_READLATENCY
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_UAV_CLKEN
+0
+PARAMETER_SIGNED_DEC
+USR
+AV_REQUIRE_UNALIGNED_ADDRESSES
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_slave_translator:uart_0_s1_translator
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_slave_agent
+# storage
+db|sopc01.(53).cnf
+db|sopc01.(53).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_slave_agent.sv
+48c46a581f93872bbc38e5b33ceed7
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+PKT_BEGIN_BURST
+63
+PARAMETER_SIGNED_DEC
+USR
+PKT_DATA_H
+31
+PARAMETER_SIGNED_DEC
+USR
+PKT_DATA_L
+0
+PARAMETER_SIGNED_DEC
+USR
+PKT_SYMBOL_W
+8
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTEEN_H
+35
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTEEN_L
+32
+PARAMETER_SIGNED_DEC
+USR
+PKT_ADDR_H
+51
+PARAMETER_SIGNED_DEC
+USR
+PKT_ADDR_L
+36
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_LOCK
+56
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_COMPRESSED_READ
+52
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_POSTED
+53
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_WRITE
+54
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_READ
+55
+PARAMETER_SIGNED_DEC
+USR
+PKT_SRC_ID_H
+65
+PARAMETER_SIGNED_DEC
+USR
+PKT_SRC_ID_L
+64
+PARAMETER_SIGNED_DEC
+USR
+PKT_DEST_ID_H
+67
+PARAMETER_SIGNED_DEC
+USR
+PKT_DEST_ID_L
+66
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_H
+62
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_L
+60
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTE_CNT_H
+59
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTE_CNT_L
+57
+PARAMETER_SIGNED_DEC
+USR
+PKT_PROTECTION_H
+68
+PARAMETER_SIGNED_DEC
+USR
+PKT_PROTECTION_L
+68
+PARAMETER_SIGNED_DEC
+USR
+ST_DATA_W
+69
+PARAMETER_SIGNED_DEC
+USR
+ST_CHANNEL_W
+4
+PARAMETER_SIGNED_DEC
+USR
+ADDR_W
+16
+PARAMETER_SIGNED_DEC
+DEF
+AVS_DATA_W
+32
+PARAMETER_SIGNED_DEC
+DEF
+AVS_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+PKT_SYMBOLS
+4
+PARAMETER_SIGNED_DEC
+DEF
+PREVENT_FIFO_OVERFLOW
+1
+PARAMETER_SIGNED_DEC
+USR
+SUPPRESS_0_BYTEEN_CMD
+0
+PARAMETER_SIGNED_DEC
+USR
+AVS_BE_W
+4
+PARAMETER_SIGNED_DEC
+DEF
+FIFO_DATA_W
+70
+PARAMETER_SIGNED_DEC
+DEF
+}
+# hierarchies {
+altera_merlin_slave_agent:uart_0_s1_translator_avalon_universal_slave_0_agent
+altera_merlin_slave_agent:onchip_memory2_0_s1_translator_avalon_universal_slave_0_agent
+altera_merlin_slave_agent:nios2_qsys_0_jtag_debug_module_translator_avalon_universal_slave_0_agent
+altera_merlin_slave_agent:sysid_qsys_0_control_slave_translator_avalon_universal_slave_0_agent
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_burst_uncompressor
+# storage
+db|sopc01.(54).cnf
+db|sopc01.(54).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_burst_uncompressor.sv
+68914288dac6af492f43b9e1ae4de9e1
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+ADDR_W
+16
+PARAMETER_SIGNED_DEC
+USR
+BURSTWRAP_W
+3
+PARAMETER_SIGNED_DEC
+USR
+BYTE_CNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+PKT_SYMBOLS
+4
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_merlin_slave_agent:uart_0_s1_translator_avalon_universal_slave_0_agent|altera_merlin_burst_uncompressor:uncompressor
+altera_merlin_slave_agent:onchip_memory2_0_s1_translator_avalon_universal_slave_0_agent|altera_merlin_burst_uncompressor:uncompressor
+altera_merlin_slave_agent:nios2_qsys_0_jtag_debug_module_translator_avalon_universal_slave_0_agent|altera_merlin_burst_uncompressor:uncompressor
+altera_merlin_slave_agent:sysid_qsys_0_control_slave_translator_avalon_universal_slave_0_agent|altera_merlin_burst_uncompressor:uncompressor
+}
+# macro_sequence
+
+# end
+# entity
+altera_avalon_sc_fifo
+# storage
+db|sopc01.(55).cnf
+db|sopc01.(55).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_avalon_sc_fifo.v
+5516d56e470110877a0bc69eb2498
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+SYMBOLS_PER_BEAT
+1
+PARAMETER_SIGNED_DEC
+USR
+BITS_PER_SYMBOL
+70
+PARAMETER_SIGNED_DEC
+USR
+FIFO_DEPTH
+2
+PARAMETER_SIGNED_DEC
+USR
+CHANNEL_WIDTH
+0
+PARAMETER_SIGNED_DEC
+USR
+ERROR_WIDTH
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_PACKETS
+1
+PARAMETER_SIGNED_DEC
+USR
+USE_FILL_LEVEL
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_STORE_FORWARD
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_ALMOST_FULL_IF
+0
+PARAMETER_SIGNED_DEC
+USR
+USE_ALMOST_EMPTY_IF
+0
+PARAMETER_SIGNED_DEC
+USR
+EMPTY_LATENCY
+1
+PARAMETER_SIGNED_DEC
+USR
+USE_MEMORY_BLOCKS
+0
+PARAMETER_SIGNED_DEC
+USR
+DATA_WIDTH
+70
+PARAMETER_SIGNED_DEC
+DEF
+EMPTY_WIDTH
+0
+PARAMETER_SIGNED_DEC
+DEF
+}
+# hierarchies {
+altera_avalon_sc_fifo:uart_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo
+altera_avalon_sc_fifo:onchip_memory2_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo
+altera_avalon_sc_fifo:nios2_qsys_0_jtag_debug_module_translator_avalon_universal_slave_0_agent_rsp_fifo
+altera_avalon_sc_fifo:sysid_qsys_0_control_slave_translator_avalon_universal_slave_0_agent_rsp_fifo
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_master_agent
+# storage
+db|sopc01.(56).cnf
+db|sopc01.(56).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_master_agent.sv
+d8d3f6547d1725a47083f76a27d0362
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+PKT_BEGIN_BURST
+63
+PARAMETER_SIGNED_DEC
+USR
+PKT_PROTECTION_H
+68
+PARAMETER_SIGNED_DEC
+USR
+PKT_PROTECTION_L
+68
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_H
+62
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_L
+60
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTE_CNT_H
+59
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTE_CNT_L
+57
+PARAMETER_SIGNED_DEC
+USR
+PKT_ADDR_H
+51
+PARAMETER_SIGNED_DEC
+USR
+PKT_ADDR_L
+36
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_LOCK
+56
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_COMPRESSED_READ
+52
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_POSTED
+53
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_WRITE
+54
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_READ
+55
+PARAMETER_SIGNED_DEC
+USR
+PKT_DATA_H
+31
+PARAMETER_SIGNED_DEC
+USR
+PKT_DATA_L
+0
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTEEN_H
+35
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTEEN_L
+32
+PARAMETER_SIGNED_DEC
+USR
+PKT_SRC_ID_H
+65
+PARAMETER_SIGNED_DEC
+USR
+PKT_SRC_ID_L
+64
+PARAMETER_SIGNED_DEC
+USR
+PKT_DEST_ID_H
+67
+PARAMETER_SIGNED_DEC
+USR
+PKT_DEST_ID_L
+66
+PARAMETER_SIGNED_DEC
+USR
+ST_DATA_W
+69
+PARAMETER_SIGNED_DEC
+USR
+ST_CHANNEL_W
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+ID
+0
+PARAMETER_SIGNED_DEC
+USR
+SUPPRESS_0_BYTEEN_RSP
+0
+PARAMETER_SIGNED_DEC
+USR
+BURSTWRAP_VALUE
+3
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_W
+3
+PARAMETER_SIGNED_DEC
+DEF
+PKT_BYTE_CNT_W
+3
+PARAMETER_SIGNED_DEC
+DEF
+PKT_ADDR_W
+16
+PARAMETER_SIGNED_DEC
+DEF
+PKT_DATA_W
+32
+PARAMETER_SIGNED_DEC
+DEF
+PKT_BYTEEN_W
+4
+PARAMETER_SIGNED_DEC
+DEF
+PKT_SRC_ID_W
+2
+PARAMETER_SIGNED_DEC
+DEF
+PKT_DEST_ID_W
+2
+PARAMETER_SIGNED_DEC
+DEF
+}
+# hierarchies {
+altera_merlin_master_agent:nios2_qsys_0_instruction_master_translator_avalon_universal_master_0_agent
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_master_agent
+# storage
+db|sopc01.(57).cnf
+db|sopc01.(57).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_master_agent.sv
+d8d3f6547d1725a47083f76a27d0362
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+PKT_BEGIN_BURST
+63
+PARAMETER_SIGNED_DEC
+USR
+PKT_PROTECTION_H
+68
+PARAMETER_SIGNED_DEC
+USR
+PKT_PROTECTION_L
+68
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_H
+62
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_L
+60
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTE_CNT_H
+59
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTE_CNT_L
+57
+PARAMETER_SIGNED_DEC
+USR
+PKT_ADDR_H
+51
+PARAMETER_SIGNED_DEC
+USR
+PKT_ADDR_L
+36
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_LOCK
+56
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_COMPRESSED_READ
+52
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_POSTED
+53
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_WRITE
+54
+PARAMETER_SIGNED_DEC
+USR
+PKT_TRANS_READ
+55
+PARAMETER_SIGNED_DEC
+USR
+PKT_DATA_H
+31
+PARAMETER_SIGNED_DEC
+USR
+PKT_DATA_L
+0
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTEEN_H
+35
+PARAMETER_SIGNED_DEC
+USR
+PKT_BYTEEN_L
+32
+PARAMETER_SIGNED_DEC
+USR
+PKT_SRC_ID_H
+65
+PARAMETER_SIGNED_DEC
+USR
+PKT_SRC_ID_L
+64
+PARAMETER_SIGNED_DEC
+USR
+PKT_DEST_ID_H
+67
+PARAMETER_SIGNED_DEC
+USR
+PKT_DEST_ID_L
+66
+PARAMETER_SIGNED_DEC
+USR
+ST_DATA_W
+69
+PARAMETER_SIGNED_DEC
+USR
+ST_CHANNEL_W
+4
+PARAMETER_SIGNED_DEC
+USR
+AV_BURSTCOUNT_W
+3
+PARAMETER_SIGNED_DEC
+USR
+ID
+1
+PARAMETER_SIGNED_DEC
+USR
+SUPPRESS_0_BYTEEN_RSP
+0
+PARAMETER_SIGNED_DEC
+USR
+BURSTWRAP_VALUE
+7
+PARAMETER_SIGNED_DEC
+USR
+PKT_BURSTWRAP_W
+3
+PARAMETER_SIGNED_DEC
+DEF
+PKT_BYTE_CNT_W
+3
+PARAMETER_SIGNED_DEC
+DEF
+PKT_ADDR_W
+16
+PARAMETER_SIGNED_DEC
+DEF
+PKT_DATA_W
+32
+PARAMETER_SIGNED_DEC
+DEF
+PKT_BYTEEN_W
+4
+PARAMETER_SIGNED_DEC
+DEF
+PKT_SRC_ID_W
+2
+PARAMETER_SIGNED_DEC
+DEF
+PKT_DEST_ID_W
+2
+PARAMETER_SIGNED_DEC
+DEF
+}
+# hierarchies {
+altera_merlin_master_agent:nios2_qsys_0_data_master_translator_avalon_universal_master_0_agent
+}
+# macro_sequence
+
+# end
+# entity
+nios_addr_router
+# storage
+db|sopc01.(58).cnf
+db|sopc01.(58).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_addr_router.sv
+ca2038952aba60233e54cd83dd7247bf
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_addr_router:addr_router
+nios_addr_router:addr_router_001
+}
+# macro_sequence
+
+# end
+# entity
+nios_addr_router_default_decode
+# storage
+db|sopc01.(59).cnf
+db|sopc01.(59).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_addr_router.sv
+ca2038952aba60233e54cd83dd7247bf
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+DEFAULT_CHANNEL
+1
+PARAMETER_SIGNED_DEC
+DEF
+DEFAULT_DESTID
+1
+PARAMETER_SIGNED_DEC
+DEF
+}
+# hierarchies {
+nios_addr_router:addr_router|nios_addr_router_default_decode:the_default_decode
+nios_addr_router:addr_router_001|nios_addr_router_default_decode:the_default_decode
+}
+# macro_sequence
+
+# end
+# entity
+nios_id_router
+# storage
+db|sopc01.(60).cnf
+db|sopc01.(60).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_id_router.sv
+2fed671420dd7fb83eabd0b92f1e7f8
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_id_router:id_router
+nios_id_router:id_router_001
+nios_id_router:id_router_002
+nios_id_router:id_router_003
+}
+# macro_sequence
+
+# end
+# entity
+nios_id_router_default_decode
+# storage
+db|sopc01.(61).cnf
+db|sopc01.(61).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_id_router.sv
+2fed671420dd7fb83eabd0b92f1e7f8
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+DEFAULT_CHANNEL
+0
+PARAMETER_SIGNED_DEC
+DEF
+DEFAULT_DESTID
+0
+PARAMETER_SIGNED_DEC
+DEF
+}
+# hierarchies {
+nios_id_router:id_router|nios_id_router_default_decode:the_default_decode
+nios_id_router:id_router_001|nios_id_router_default_decode:the_default_decode
+nios_id_router:id_router_002|nios_id_router_default_decode:the_default_decode
+nios_id_router:id_router_003|nios_id_router_default_decode:the_default_decode
+}
+# macro_sequence
+
+# end
+# entity
+altera_reset_controller
+# storage
+db|sopc01.(62).cnf
+db|sopc01.(62).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_reset_controller.v
+a5ac40ba73fe2fe39c2bbc1d2ae013
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+NUM_RESET_INPUTS
+1
+PARAMETER_SIGNED_DEC
+USR
+OUTPUT_RESET_SYNC_EDGES
+deassert
+PARAMETER_STRING
+USR
+SYNC_DEPTH
+2
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_reset_controller:rst_controller
+}
+# macro_sequence
+
+# end
+# entity
+altera_reset_synchronizer
+# storage
+db|sopc01.(63).cnf
+db|sopc01.(63).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_reset_synchronizer.v
+d32418f4fcb75d8c9a1a12b642acbbc4
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+ASYNC_RESET
+1
+PARAMETER_UNSIGNED_BIN
+USR
+DEPTH
+2
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_sync_uq1
+}
+# macro_sequence
+
+# end
+# entity
+nios_cmd_xbar_demux
+# storage
+db|sopc01.(64).cnf
+db|sopc01.(64).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_cmd_xbar_demux.sv
+20a925dec96891345ec01fe22160b3cc
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_cmd_xbar_demux:cmd_xbar_demux
+nios_cmd_xbar_demux:cmd_xbar_demux_001
+}
+# macro_sequence
+
+# end
+# entity
+nios_cmd_xbar_mux
+# storage
+db|sopc01.(65).cnf
+db|sopc01.(65).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_cmd_xbar_mux.sv
+53d67acc1d8264c693d8958938e4d99
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_cmd_xbar_mux:cmd_xbar_mux
+nios_cmd_xbar_mux:cmd_xbar_mux_001
+nios_cmd_xbar_mux:cmd_xbar_mux_002
+nios_cmd_xbar_mux:cmd_xbar_mux_003
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_arbitrator
+# storage
+db|sopc01.(66).cnf
+db|sopc01.(66).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_arbitrator.sv
+d8ab5c483a2cb09d7f88d6623ea554
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+NUM_REQUESTERS
+2
+PARAMETER_SIGNED_DEC
+USR
+SCHEME
+round-robin
+PARAMETER_STRING
+USR
+PIPELINE
+1
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+nios_cmd_xbar_mux:cmd_xbar_mux|altera_merlin_arbitrator:arb
+nios_cmd_xbar_mux:cmd_xbar_mux_001|altera_merlin_arbitrator:arb
+nios_cmd_xbar_mux:cmd_xbar_mux_002|altera_merlin_arbitrator:arb
+nios_cmd_xbar_mux:cmd_xbar_mux_003|altera_merlin_arbitrator:arb
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_arb_adder
+# storage
+db|sopc01.(67).cnf
+db|sopc01.(67).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_arbitrator.sv
+d8ab5c483a2cb09d7f88d6623ea554
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+WIDTH
+4
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+nios_cmd_xbar_mux:cmd_xbar_mux|altera_merlin_arbitrator:arb|altera_merlin_arb_adder:adder
+nios_cmd_xbar_mux:cmd_xbar_mux_001|altera_merlin_arbitrator:arb|altera_merlin_arb_adder:adder
+nios_cmd_xbar_mux:cmd_xbar_mux_002|altera_merlin_arbitrator:arb|altera_merlin_arb_adder:adder
+nios_cmd_xbar_mux:cmd_xbar_mux_003|altera_merlin_arbitrator:arb|altera_merlin_arb_adder:adder
+}
+# macro_sequence
+
+# end
+# entity
+nios_rsp_xbar_demux
+# storage
+db|sopc01.(68).cnf
+db|sopc01.(68).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_rsp_xbar_demux.sv
+6a67cae372832f325ec0d5c9b06e1b42
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_rsp_xbar_demux:rsp_xbar_demux
+nios_rsp_xbar_demux:rsp_xbar_demux_001
+nios_rsp_xbar_demux:rsp_xbar_demux_002
+nios_rsp_xbar_demux:rsp_xbar_demux_003
+}
+# macro_sequence
+
+# end
+# entity
+nios_rsp_xbar_mux
+# storage
+db|sopc01.(69).cnf
+db|sopc01.(69).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_rsp_xbar_mux.sv
+1aef6ce4334b28438a22ef4f56598
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_rsp_xbar_mux:rsp_xbar_mux
+nios_rsp_xbar_mux:rsp_xbar_mux_001
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_arbitrator
+# storage
+db|sopc01.(70).cnf
+db|sopc01.(70).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_arbitrator.sv
+d8ab5c483a2cb09d7f88d6623ea554
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+NUM_REQUESTERS
+4
+PARAMETER_SIGNED_DEC
+USR
+SCHEME
+no-arb
+PARAMETER_STRING
+USR
+PIPELINE
+0
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+nios_rsp_xbar_mux:rsp_xbar_mux|altera_merlin_arbitrator:arb
+nios_rsp_xbar_mux:rsp_xbar_mux_001|altera_merlin_arbitrator:arb
+}
+# macro_sequence
+
+# end
+# entity
+altera_merlin_arb_adder
+# storage
+db|sopc01.(71).cnf
+db|sopc01.(71).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|altera_merlin_arbitrator.sv
+d8ab5c483a2cb09d7f88d6623ea554
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# user_parameter {
+WIDTH
+8
+PARAMETER_SIGNED_DEC
+USR
+}
+# hierarchies {
+nios_rsp_xbar_mux:rsp_xbar_mux|altera_merlin_arbitrator:arb|altera_merlin_arb_adder:adder
+nios_rsp_xbar_mux:rsp_xbar_mux_001|altera_merlin_arbitrator:arb|altera_merlin_arb_adder:adder
+}
+# macro_sequence
+
+# end
+# entity
+nios_irq_mapper
+# storage
+db|sopc01.(72).cnf
+db|sopc01.(72).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_irq_mapper.sv
+50a95b7ed95174418921962f4db94a30
+9
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_irq_mapper:irq_mapper
+}
+# macro_sequence
+
+# end
+# entity
+sld_hub
+# storage
+db|sopc01.(73).cnf
+db|sopc01.(73).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_insensitive
+# source_file
+sld_hub.vhd
+215a3778c7ff73ee5bdda692e5af137d
+5
+# internal_option {
+IP_SHOW_ELABORATION_MESSAGES
+OFF
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+}
+# user_parameter {
+sld_hub_ip_version
+1
+PARAMETER_UNKNOWN
+USR
+sld_hub_ip_minor_version
+4
+PARAMETER_UNKNOWN
+USR
+sld_common_ip_version
+0
+PARAMETER_UNKNOWN
+USR
+device_family
+Cyclone II
+PARAMETER_UNKNOWN
+USR
+n_nodes
+1
+PARAMETER_UNKNOWN
+USR
+n_sel_bits
+1
+PARAMETER_UNKNOWN
+USR
+n_node_ir_bits
+4
+PARAMETER_UNKNOWN
+USR
+node_info
+00011001000100000100011000000000
+PARAMETER_UNSIGNED_BIN
+USR
+compilation_mode
+1
+PARAMETER_UNKNOWN
+USR
+BROADCAST_FEATURE
+1
+PARAMETER_SIGNED_DEC
+DEF
+FORCE_IR_CAPTURE_FEATURE
+1
+PARAMETER_SIGNED_DEC
+DEF
+}
+# macro_sequence
+
+# end
+# entity
+sld_shadow_jsm
+# storage
+db|sopc01.(74).cnf
+db|sopc01.(74).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_insensitive
+# source_file
+sld_hub.vhd
+215a3778c7ff73ee5bdda692e5af137d
+5
+# internal_option {
+IP_SHOW_ELABORATION_MESSAGES
+OFF
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+}
+# user_parameter {
+ip_major_version
+1
+PARAMETER_SIGNED_DEC
+USR
+ip_minor_version
+4
+PARAMETER_SIGNED_DEC
+USR
+common_ip_version
+0
+PARAMETER_SIGNED_DEC
+USR
+ constraint(jtag_state)
+15 downto 0
+PARAMETER_STRING
+USR
+}
+# macro_sequence
+
+# end
+# entity
+sld_rom_sr
+# storage
+db|sopc01.(75).cnf
+db|sopc01.(75).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_insensitive
+# source_file
+sld_rom_sr.vhd
+cd86f47d4ae3b6ccc3bc7c35a6c71f34
+5
+# internal_option {
+IP_SHOW_ELABORATION_MESSAGES
+OFF
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+}
+# user_parameter {
+common_ip_version
+0
+PARAMETER_SIGNED_DEC
+USR
+n_bits
+64
+PARAMETER_SIGNED_DEC
+USR
+word_size
+4
+PARAMETER_SIGNED_DEC
+USR
+ constraint(rom_data)
+63 downto 0
+PARAMETER_STRING
+USR
+}
+# macro_sequence
+
+# end
+# entity
+nios
+# storage
+db|sopc01.(0).cnf
+db|sopc01.(0).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|nios.v
+4ac8bc89ac6c4eec7787f589d4b6c
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+|
+}
+# macro_sequence
+
+# end
+# entity
+nios_sysid_qsys_0
+# storage
+db|sopc01.(41).cnf
+db|sopc01.(41).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_sensitive
+# source_file
+db|ip|nios|submodules|nios_sysid_qsys_0.v
+b1a35385973efa427d312e1dce84914d
+8
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+IGNORE_VERILOG_INITIAL_CONSTRUCTS
+OFF
+VERILOG_CONSTANT_LOOP_LIMIT
+5000
+VERILOG_NON_CONSTANT_LOOP_LIMIT
+250
+}
+# hierarchies {
+nios_sysid_qsys_0:sysid_qsys_0
+}
+# macro_sequence
+
+# end
+# complete
+

@@ -1,0 +1,13 @@
+!SESSION 2021-09-09 14:18:34.875 -----------------------------------------------
+eclipse.buildId=M20100909-0800
+java.version=1.6.0_23
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=ru_RU
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-09-09 14:22:48.406
+!MESSAGE Indexed 'hello_bsp' (78 sources, 58 headers) in 1,92 sec: 924 declarations; 2 167 references; 98 unresolved inclusions; 5 syntax errors; 184 unresolved names (5,62 %)
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-09-09 14:23:05.343
+!MESSAGE Indexed 'hello' (1 sources, 13 headers) in 0,03 sec: 1 declarations; 1 references; 14 unresolved inclusions; 0 syntax errors; 0 unresolved names (0,00 %)

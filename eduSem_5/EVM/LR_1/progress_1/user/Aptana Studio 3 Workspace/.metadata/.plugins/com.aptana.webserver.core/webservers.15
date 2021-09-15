@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<servers>
+<server host="0.0.0.0" port="3000" type="org.radrails.rails.railsServer">
+<name>test1</name>
+</server>
+<server host="0.0.0.0" port="3000" type="org.radrails.rails.railsServer">
+<name>test1</name>
+</server>
+<server host="0.0.0.0" port="3000" type="org.radrails.rails.railsServer">
+<name>test1</name>
+</server>
+<server host="0.0.0.0" port="3000" type="org.radrails.rails.railsServer">
+<name>test1</name>
+</server>
+<server host="0.0.0.0" port="3000" project="C:/user/Aptana Studio 3 Workspace/testapp" type="org.radrails.rails.railsServer">
+<name>testapp</name>
+</server>
+<server host="0.0.0.0" port="3000" project="C:/user/Aptana Studio 3 Workspace/testapp2" type="org.radrails.rails.railsServer">
+<name>testapp2</name>
+</server>
+</servers>

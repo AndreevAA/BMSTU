@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.aptana.ruby.debug.core.launchConfigurationType">
+<stringAttribute key="com.aptana.ruby.debug.ATTR_FILE_NAME" value="C:\user\Aptana Studio 3 Workspace\test1\script\rails"/>
+<stringAttribute key="com.aptana.ruby.debug.ATTR_PROGRAM_ARGUMENTS" value="server --binding=0.0.0.0 --port=3000"/>
+<stringAttribute key="com.aptana.ruby.debug.ATTR_WORKING_DIR" value="C:\user\Aptana Studio 3 Workspace\test1"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_id" value="com.aptana.ruby.debug.core.sourceLocator"/>
+<booleanAttribute key="org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND" value="false"/>
+<booleanAttribute key="org.eclipse.debug.ui.private" value="true"/>
+<stringAttribute key="process_factory_id" value="com.aptana.ruby.debug.core.interruptingProcessFactory"/>
+</launchConfiguration>
