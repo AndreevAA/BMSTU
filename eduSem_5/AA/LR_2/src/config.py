@@ -4,6 +4,9 @@
 SUCCESS_STATUS = 0
 ERROR_STATUS = 1
 ERROR_INPUT_DATA = 2
+ZERO_ELEMENTS = -1
+ONE_ELEMENT = 1
+START_TIME_ZERO_VALUE = -1
 
 # Тестовые массивы данных для тестировок
 test_data_sorted_digits = [
