@@ -6,9 +6,9 @@
 
 import levenshtein
 
+
 # Основная функция программы
 def main():
-
     input_string = ""
     while str(input_string) != "-1":
 
@@ -67,7 +67,7 @@ def main():
 
         if algorithm == "1" or algorithm == "2" or algorithm == "3" or algorithm == "4":
             print("\nРезультат: ")
-            print("\tРасстояние =",  objLev.get_distance())
+            print("\tРасстояние =", objLev.get_distance())
             print("\tВремя =", objLev.get_time())
             print()
             print("--")
