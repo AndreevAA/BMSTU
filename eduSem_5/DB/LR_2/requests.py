@@ -270,6 +270,15 @@ class Request:
     # 20. Простая инструкция DELETE.
     def instruction_update_scaler_set(self):
         #  Формирование query
+        query = "DELETE hull WHERE hull_id = 18"
+
+        # Возврат полученного SQL
+        return self._fetch_sql(query)
+
+    # 21. Инструкция DELETE с вложенным коррелированным подзапросом в
+    # предложении WHERE.
+    def instruction_delete_scaler_set(self):
+        #  Формирование query
         query = "UPDATE hull_to_tower " \
                     "SET hull_id = ( SELECT hull_id " \
                         "FROM hull " \
@@ -278,4 +287,56 @@ class Request:
 
         # Возврат полученного SQL
         return self._fetch_sql(query)
-    
+
+    # 22. Инструкция SELECT, использующая простое обобщенное табличное
+    # выражение
+    def select_table_reg(self):
+        #  Формирование query
+        query = "WITH CTE (hull_id, hull_width) AS " \
+                    "( SELECT hull_length, COUNT(*) AS Total FROM hull " \
+                    "WHERE hull_length > 15 " \
+                    "GROUP BY hull_length ) " \
+                "SELECT AVG(hull_width) AS AvgHW FROM hull"
+
+        # Возврат полученного SQL
+        return self._fetch_sql(query)
+
+    # 23. Инструкция SELECT, использующая рекурсивное обобщенное табличное
+    # выражение.
+    def select_recursive_union(self):
+
+        create_table_query = "CREATE TABLE IF NOT EXIST available_to_buy (" \
+                                "available_to_buy_id INTEGER NOT NULL, " \
+                                "available_to_buy_good_type nvarchar(30) NOT NULL " \
+                                "available_to_buy_price INTEGER NOT NULL " \
+                                "available_to_buy_good_id INTEGER NOT NULL)"
+
+        insert_table_query_1 = "INSERT INTO available_to_buy " \
+                                "(available_to_buy_id, available_to_buy_good_type, available_to_buy_price, available_to_buy_good_id) " \
+                                "VALUES " \
+                                "1, 'hull', 5680000, 19"
+
+        direct_report = "WITH DirectReports (available_to_buy_good_id, available_to_buy_good_type, available_to_buy_price, available_to_buy_good_id, RealD) AS " \
+                        "( " \
+                            "SELECT e.hull_id, e.hull_manufacturer AS RealD FROM hull AS e " \
+                            "WHERE hull_id IS NOT NULL " \
+                            "UNION ALL " \
+                            "ON e.hull_id = d.available_to_buy_good_id " \
+                        ")"
+
+        self._db.execute_query(create_table_query)
+        self._db.execute_query(insert_table_query_1)
+
+        return self._fetch_sql(direct_report)
+
+    # 24. Оконные функции. Использование конструкций MIN/MAX/AVG OVER()
+    def win_func(self):
+        #  Формирование query
+        query = "SELECT H.hull_id, H.hull_manufacturer, H.hull_name, H.hull_length, " \
+                    "AVG(H.hull_length) OVER(PARTITION BY H.hull_id, H.hull_name) AS AvgLength, " \
+                    "MIN(H.hull_length) OVER(PARTITION BY H.hull_id, H.hull_name) AS MinLength, " \
+                    "MAX(H.hull_length) OVER(PARTITION BY H.hull_id, H.hull_name) AS MaxLength " \
+                "FROM hull H LEFT OUTER JOIN hull_to_tower HTT ON HTT.tower_id = 11"
+
+        # Возврат полученного SQL
+        return self._fetch_sql(query)

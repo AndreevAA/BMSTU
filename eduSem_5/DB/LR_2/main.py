@@ -39,9 +39,11 @@ def main():
     #
     select_skalyar_requests_sql = request.select_skalyar_requests()
 
-    select_easy_case_sql = request.select_easy_case()
+    #select_easy_case_sql = request.select_easy_case()
 
-    print(select_easy_case_sql)
+    win_func_sql = request.win_func()
+
+    print(win_func_sql)
 
 
 # Точка входа
