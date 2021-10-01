@@ -24,7 +24,25 @@ def main():
     # Получение barrel_id пушек с модификацияим BED
     select_compare_like_barrel_id_from_barrel_name_sql = request.select_compare_like_barrel_id_from_barrel_name()
 
-    print(select_compare_like_barrel_id_from_barrel_name_sql)
+    # 4. Инструкция SELECT, использующая предикат IN с вложенным подзапросом.
+    # Получение hull_id основ танков из Италии с размером бака больше fuel_tank
+    select_in_hull_id_from_italy_with_hull_fuel_tank_more_sql = request.select_in_hull_id_from_italy_with_hull_fuel_tank_more(10)
+
+    # 5. Инструкция SELECT, использующая предикат EXISTS с вложенным подзапросом.
+    # Получение hull_id основ танков, если существую танки из Италии
+    select_in_all_hull_id_from_italy_if_they_exists_sql = request.select_in_all_hull_id_from_italy_if_they_exists()
+
+    # 6. Инструкция SELECT, использующая предикат сравнения с квантором.
+    # Получение hull_id основ танков по сравнению с квантором
+    select_kvantor_compare_all_hull_id_hull_length_19_sql = request.select_kvantor_compare_all_hull_id_hull_length_19()
+
+    #
+    select_skalyar_requests_sql = request.select_skalyar_requests()
+
+    select_easy_case_sql = request.select_easy_case()
+
+    print(select_easy_case_sql)
+
 
 # Точка входа
 if __name__ == '__main__':
