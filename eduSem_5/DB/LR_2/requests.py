@@ -340,3 +340,14 @@ class Request:
 
         # Возврат полученного SQL
         return self._fetch_sql(query)
+
+    # 25. Оконная функция для устранения дублей
+    def func_deleting_dublicates(self):
+        # Формирование query
+        query = "SELECT * " \
+                "FROM ( " \
+                    "SELECT hull_id, hull_name, hull_manufacturer, " \
+                    "ROW_NUMBER() OVER (PARTITION BY hull_id ORDER BY hull_id) as cnt " \
+                    "FROM hull " \
+                ") WHERE cnt = 1; "
+
