@@ -16,3 +16,6 @@ COUNTRIES = ['Abkhazia', 'Australia', 'Austria', 'Azerbaijan', 'острова',
 NUMBER_OF_HULLS_GENERATION = 1000
 MAX_NUMBER_OF_CONNECTIONS = 30
 SURNAMES = ['Ivanov', 'Lasky', 'Li', 'Silmo', 'Jeff', 'James']
+
+# Пустые данные
+empty_sql = []

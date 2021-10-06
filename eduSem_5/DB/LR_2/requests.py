@@ -1,4 +1,4 @@
-import db
+import config
 
 
 # Объект обертки набора запросов
@@ -13,7 +13,10 @@ class Request:
 
     # Получение распакованного SQL
     def _fetch_sql(self, query):
-        return self._db.execute_query(query).fetchall()
+        try:
+            return self._db.execute_query(query).fetchall()
+        except:
+            return config.empty_sql
 
     # 1. Инструкция SELECT, использующая предикат сравнения
     # Получить barrel_id пушек производством в Камбоджи
@@ -56,9 +59,9 @@ class Request:
         query = "SELECT hull_id, hull_manufacturer, hull_fuel_tank " \
                 "FROM hull " \
                 "WHERE hull_manufacturer IN (SELECT hull_manufacturer " \
-                "FROM hull \
-                    WHERE hull_manufacturer = 'Italy') \
-                AND hull_fuel_tank > " + str(hull_fuel_tank)
+                "FROM hull "\
+                    "WHERE hull_manufacturer = 'Italy') "\
+                "AND hull_fuel_tank >  + hull_fuel_tank "
 
         # Возврат полученного SQL
         return self._fetch_sql(query)
@@ -90,7 +93,7 @@ class Request:
 
     # 7. Инструкция SELECT, использующая агрегатные функции в выражениях столбцов.
     # Получение hull_id основ танков по сравнению с квантором
-    def select_kvantor_compare_all_hull_id_hull_length_19(self):
+    def select_kvantor_compare_all_hull_id_hull_length(self):
         #  Формирование query
         query = "SELECT hull_id, hull_manufacturer, hull_width, hull_length " \
                 "FROM hull " \
@@ -118,10 +121,10 @@ class Request:
     def select_easy_case(self):
         #  Формирование query
         query = "SELECT hull_id, hull_manufacturer, hull_width, hull_length, " \
-                "CASE hull_manufacturer = 'United states' " \
-                "WHEN hull_manufacturer = 'United states' THEN 'USA' " \
-                "ELSE 'NOT USA' " \
-                "END AS 'When' " \
+                    "CASE hull_manufacturer = 'United states' " \
+                        "WHEN hull_manufacturer = 'United states' THEN 'USA' " \
+                        "ELSE 'NOT USA' " \
+                    "END " \
                 "FROM hull"
 
         # Возврат полученного SQL
@@ -141,12 +144,14 @@ class Request:
         return self._fetch_sql(query)
 
     # 11. Создание новой временной локальной таблицы из результирующего набора данных инструкции SELECT.
-    def select_case(self):
+    def select_case_not_null(self):
         #  Формирование query
-        query = "SELECT hull_id, hull_length, hull_width, hull_height " \
-                "CAST(SUM(hull_length*hull_width*hull_height)AS square) AS SR INTO #BestLength " \
+        query = "SELECT hull_id, hull_length, hull_width, hull_height, " \
+                    " SUM(hull_length * hull_width * hull_height ) AS SQ " \
+                "INTO BestLength " \
                 "FROM hull " \
-                "WHERE hull_id IS NOT NULL GROUP BY hull_id"
+                "WHERE hull_id IS NOT NULL " \
+                "GROUP BY hull_id "
 
         # Возврат полученного SQL
         return self._fetch_sql(query)
@@ -261,14 +266,14 @@ class Request:
         query = "UPDATE hull_to_tower " \
                     "SET hull_id = ( SELECT hull_id " \
                         "FROM hull " \
-                        "WHERE hull_manufacturer = 'Italy' " \
-                "WHERE tower_id > 15"
+                        "WHERE hull_manufacturer = 'Italia' ) " \
+                "WHERE tower_id = 16 "
 
         # Возврат полученного SQL
         return self._fetch_sql(query)
 
     # 20. Простая инструкция DELETE.
-    def instruction_update_scaler_set(self):
+    def instruction_update_scaler_set_delete(self):
         #  Формирование query
         query = "DELETE hull WHERE hull_id = 18"
 
@@ -282,7 +287,7 @@ class Request:
         query = "UPDATE hull_to_tower " \
                     "SET hull_id = ( SELECT hull_id " \
                         "FROM hull " \
-                        "WHERE hull_manufacturer = 'Italy' " \
+                        "WHERE hull_manufacturer = 'Italy' ) " \
                 "WHERE tower_id > 15"
 
         # Возврат полученного SQL
@@ -305,21 +310,21 @@ class Request:
     # выражение.
     def select_recursive_union(self):
 
-        create_table_query = "CREATE TABLE IF NOT EXIST available_to_buy (" \
+        create_table_query = "CREATE TABLE IF NOT EXISTS available_to_buy ( " \
                                 "available_to_buy_id INTEGER NOT NULL, " \
-                                "available_to_buy_good_type nvarchar(30) NOT NULL " \
-                                "available_to_buy_price INTEGER NOT NULL " \
-                                "available_to_buy_good_id INTEGER NOT NULL)"
+                                "available_to_buy_good_type varchar(30) NOT NULL, " \
+                                "available_to_buy_price INTEGER NOT NULL, " \
+                                "available_to_buy_good_id INTEGER NOT NULL) "
 
         insert_table_query_1 = "INSERT INTO available_to_buy " \
                                 "(available_to_buy_id, available_to_buy_good_type, available_to_buy_price, available_to_buy_good_id) " \
                                 "VALUES " \
-                                "1, 'hull', 5680000, 19"
+                                "(1, 'hull', 5680000, 19)"
 
         direct_report = "WITH DirectReports (available_to_buy_good_id, available_to_buy_good_type, available_to_buy_price, available_to_buy_good_id, RealD) AS " \
                         "( " \
                             "SELECT e.hull_id, e.hull_manufacturer AS RealD FROM hull AS e " \
-                            "WHERE hull_id IS NOT NULL " \
+                                "WHERE hull_id IS NOT NULL " \
                             "UNION ALL " \
                             "ON e.hull_id = d.available_to_buy_good_id " \
                         ")"
