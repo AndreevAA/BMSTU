@@ -17,6 +17,13 @@ class MatrixMultiplication:
     def get_multiplied_matrix(self):
         return self._result_matrix
 
+    def _generate_result_matrix(self):
+        return matrix.Matrix(
+            self._first_matrix.get_size_of_matrix(),
+            [[0 for _ in range(self._first_matrix.get_size_of_matrix())]
+             for _ in range(self._first_matrix.get_size_of_matrix())]
+        )
+
 
 # Объект классического умножения матрицы
 class ClassicalMultiplication(MatrixMultiplication):
@@ -28,11 +35,7 @@ class ClassicalMultiplication(MatrixMultiplication):
     def _multiply(self):
 
         # Виртуальная результирующая матрица
-        result_matrix = matrix.Matrix(
-            self._first_matrix.get_size_of_matrix(),
-            [[0 for fill_row_cur in range(self._first_matrix.get_size_of_matrix())]
-             for fill_column_cur in range(self._first_matrix.get_size_of_matrix())]
-        )
+        result_matrix = self._generate_result_matrix()
 
         # Непоредственная операция умножения матрицы
         for check_row in range(result_matrix.get_size_of_matrix()):
@@ -53,6 +56,47 @@ class CoppersmittWinogradMultiplication(MatrixMultiplication):
         self._result_matrix = self._multiply()
         return self._result_matrix
 
-    def _multiplu(self):
+    def _multiply(self):
+
+        # Необходимые для вычислений данные
+        _first_matrix_size, _second_matrix_size = self._first_matrix.get_size_of_matrix(), \
+                                                  self._second_matrix.get_size_of_matrix()
+
+        # Виртуальная результирующая матрица
+        result_matrix = self._generate_result_matrix()
+
+        _mul_h, _mul_v = [0 for _ in range(self._first_matrix.get_size_of_matrix())], \
+                       [0 for _ in range(self._second_matrix.get_size_of_matrix())]
+
+        for check_row in range(self._first_matrix.get_size_of_matrix()):
+
+            _mul_h[check_row] = sum(
+                self._first_matrix.get_matrix_value()[check_row][2 * check_column] *
+                self._first_matrix.get_matrix_value()[check_row][2 * check_column + 1]
+                for check_column in range(self._first_matrix.get_size_of_matrix() // 2)
+            )
+
+            _mul_v[check_row] = sum(
+                self._second_matrix.get_matrix_value()[check_row][2 * check_column] *
+                self._second_matrix.get_matrix_value()[check_row][2 * check_column + 1]
+                for check_column in range(self._second_matrix.get_size_of_matrix() // 2)
+            )
+
+        for check_row in range(self._first_matrix.get_size_of_matrix()):
+            for check_column in range(self._first_matrix.get_size_of_matrix()):
+                result_matrix.update_matrix_value(check_row, check_column,
+                                                  sum(
+                                                      (self._first_matrix.get_matrix_value()[check_row][2 * k] +
+                                                       self._second_matrix.get_matrix_value[2 * k + 1][
+                                                           check_column]) * (
+                                                                  self._first_matrix.get_matrix_value[check_row][
+                                                                      2 * k + 1] +
+                                                                  self._second_matrix.get_matrix_value[2 * k][
+                                                                      check_column])
+                                                      for k in range(self._first_matrix.get_size_of_matrix() // 2)) \
+                                                  - _mul_h[check_row] - _mul_v[check_column]
+                                                  )
+
+        return result_matrix
 
         
