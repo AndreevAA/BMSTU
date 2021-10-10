@@ -6,3 +6,4 @@ ERROR_STATUS = -1
 
 # Пустые данные
 EMPTY_LIST = list()
+ZERO_COUNTER = 0
