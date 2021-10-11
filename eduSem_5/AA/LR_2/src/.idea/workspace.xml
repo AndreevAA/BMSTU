@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60c35612-74b8-4b64-a620-cc112c6f0b4e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/generate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__config__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__config__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analitics.py" beforeDir="false" afterPath="$PROJECT_DIR$/analitics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/matrix.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../DB/LR_2/requests.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../DB/LR_2/requests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../EVM/LR_2/riscv-lab" beforeDir="false" afterPath="$PROJECT_DIR$/../../../EVM/LR_2/riscv-lab" afterDir="false" />
     </list>
@@ -80,7 +82,7 @@
       <workItem from="1633629390750" duration="1021000" />
       <workItem from="1633631126901" duration="51000" />
       <workItem from="1633682389836" duration="771000" />
-      <workItem from="1633887520962" duration="5715000" />
+      <workItem from="1633887520962" duration="10113000" />
     </task>
     <servers />
   </component>
@@ -100,6 +102,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/src$main.coverage" NAME="main Coverage Results" MODIFIED="1633938689495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/src$main.coverage" NAME="main Coverage Results" MODIFIED="1633957847127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

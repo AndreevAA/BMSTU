@@ -1,4 +1,5 @@
 import __config__
+import generate
 import matrix
 
 # Основной блок программы
@@ -47,6 +48,357 @@ def main():
     first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
     first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
     first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix, second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    first_matrix = generate.Generate(10).get_generated_matrix()
+
+    second_matrix = generate.Generate(10).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+
+    print("\n\nРазмер 10:")
+    first_matrix = generate.Generate(10).get_generated_matrix()
+
+    second_matrix = generate.Generate(10).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+
+    print("\n\nРазмер 100:")
+    first_matrix = generate.Generate(100).get_generated_matrix()
+
+    second_matrix = generate.Generate(100).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+
+
+    print("\n\nРазмер 200:")
+    first_matrix = generate.Generate(200).get_generated_matrix()
+
+    second_matrix = generate.Generate(200).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 300:")
+    first_matrix = generate.Generate(300).get_generated_matrix()
+
+    second_matrix = generate.Generate(300).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 400:")
+    first_matrix = generate.Generate(400).get_generated_matrix()
+
+    second_matrix = generate.Generate(400).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 500:")
+    first_matrix = generate.Generate(500).get_generated_matrix()
+
+    second_matrix = generate.Generate(500).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 101:")
+    first_matrix = generate.Generate(101).get_generated_matrix()
+
+    second_matrix = generate.Generate(101).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 201:")
+    first_matrix = generate.Generate(201).get_generated_matrix()
+
+    second_matrix = generate.Generate(201).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 301:")
+    first_matrix = generate.Generate(301).get_generated_matrix()
+
+    second_matrix = generate.Generate(301).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 401:")
+    first_matrix = generate.Generate(401).get_generated_matrix()
+
+    second_matrix = generate.Generate(401).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
+
+    first_second_classic.multiply()
+    first_second_CM.multiply()
+    first_second_CM_optimized.multiply()
+
+    print("\nСтандартным методом:")
+    print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
+    print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
+    print(first_second_CM_optimized.get_result_processor_time())
+
+    print("\n\nРазмер 501:")
+    first_matrix = generate.Generate(501).get_generated_matrix()
+
+    second_matrix = generate.Generate(501).get_generated_matrix()
+
+    # print("Введенные матрицы: ")
+    #
+    # print("\nПервая матрица:")
+    # first_matrix.print_matrix()
+    #
+    # print("\nВторая матрица:")
+    # second_matrix.print_matrix()
+
+    first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
+    first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
+    first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix,
+                                                                                                 second_matrix)
 
     first_second_classic.multiply()
     first_second_CM.multiply()

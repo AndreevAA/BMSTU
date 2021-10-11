@@ -12,7 +12,7 @@ class Analytics:
 
     # Публичная функция получения результата аналитики
     def get_result(self):
-        return self._result
+        return self._result * 1000
 
 
 # Объект вычисления процессорного времени
