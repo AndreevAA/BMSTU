@@ -36,6 +36,14 @@ def main():
                                   [7, 8, 9]]
                                  )
 
+    print("Введенные матрицы: ")
+
+    print("\nПервая матрица:")
+    first_matrix.print_matrix()
+
+    print("\nВторая матрица:")
+    second_matrix.print_matrix()
+
     first_second_classic = matrix_multiplication.ClassicalMultiplication(first_matrix, second_matrix)
     first_second_CM = matrix_multiplication.CoppersmittWinogradMultiplication(first_matrix, second_matrix)
     first_second_CM_optimized = matrix_multiplication.CoppersmittWinogradOptimizedMultiplication(first_matrix, second_matrix)
@@ -44,8 +52,11 @@ def main():
     first_second_CM.multiply()
     first_second_CM_optimized.multiply()
 
+    print("\nСтандартным методом:")
     print(first_second_classic.get_result_processor_time())
+    print("\nВинограда методом:")
     print(first_second_CM.get_result_processor_time())
+    print("\nОптимизированным Винограда методом:")
     print(first_second_CM_optimized.get_result_processor_time())
 
     return __config__.SUCCESS_STATUS

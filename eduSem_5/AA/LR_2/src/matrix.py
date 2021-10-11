@@ -26,3 +26,7 @@ class Matrix:
 
     def get_matrix(self):
         return self._matrix
+
+    def print_matrix(self):
+        for check_row in self._matrix:
+            print(*check_row)
