@@ -1,4 +1,5 @@
 .386p
+
 descr struc
 	lim 	dw 0
 	base_l 	dw 0
@@ -7,6 +8,7 @@ descr struc
 	attr_2	db 0
 	base_h 	db 0
 descr ends
+
 
 int_descr struc
 	offs_l 	dw 0
@@ -19,6 +21,8 @@ int_descr ends
 ; Protected mode
 PM_seg	segment para public 'code' use32
 	    ASSUME cs:PM_seg
+
+	; Создаю GDT с параметрами
   	GDT	label byte
   	gdt_null	descr <>
   	gdt_flatDS	descr <0FFFFh,		 	0,		0,	92h,11001111b,0> ;92h = 10010010b
@@ -30,6 +34,7 @@ PM_seg	segment para public 'code' use32
   	gdt_size = $ - GDT
   	gdtr df 0
 
+  	; Создаю макросы селекторов с отступами селкторов
     SEL_flatDS	equ   8
     SEL_16bitCS	equ   16
     SEL_32bitCS	equ   24
@@ -37,26 +42,34 @@ PM_seg	segment para public 'code' use32
     SEL_32bitSS	equ   40
 	SEL_32Video equ   48
 
+	; Создаю таблицу прерываний IDT
+	; Пропускаю первые 13, 14-е назначаю general exp.
+  	; Пропускаю 18, после этого начнется прерывание
+  	; после пропущенных 13 + 18 начинается прерывание
     IDT	label byte
     int_descr 13 dup 	(<0, SEL_32bitCS,0, 8Fh, 0>) ; 10001111,type - trap
 	gen_exp int_descr    <0, SEL_32bitCS,0, 8Fh, 0>
 	int_descr 18 dup 	(<0, SEL_32bitCS,0, 8Fh, 0>)
     int_timer int_descr  <0, SEL_32bitCS,0, 8Eh, 0>	 ; 10001110,type - interrupt
     int_key int_descr	 <0, SEL_32bitCS,0, 8Eh, 0>
-    idt_size = $ - IDT
+    idt_size = $ - IDT 								 ; Размер текущей таблицы $-IDT
     idtr		df 0
-    idtr_real 	dw 3FFh, 0, 0
+    idtr_real 	dw 3FFh, 0, 0 						 ; Память под таблицу прерываний реального режима dw 3FFh, 0, 0
 
+    ; Сохраняю маски контроллеров
     master		db 0
     slave		db 0
 
+    ; Выделение флага escape и сохранение времени 
     escape		db 0
     time_save	dd 0
 
+    ; Устанавливаю значения выводимых сообщений
 	msg1 db 'In Real Mode now. To move to Protected Mode press any key...$'
 	msg2 db 'Back in Real Mode$'
 	msg3 db 'Protected Mode$'
 
+	; ASCII таблица
 	ASCII_table	db 0, 0, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48 ; NullEsc1234567890
 				db 45, 61, 0, 0									; -=,Backspace,Tab
 				db 113, 119, 101, 114, 116, 121					; qwerty
@@ -119,6 +132,7 @@ print_eax macro
 		pop ecx
 endm
 
+; Вход в защищенный режим
 PM_entry:
 	mov	ax,SEL_32bitDS
 	mov	ds,ax
@@ -316,10 +330,13 @@ SS_seg segment para stack 'stack'
 	stack_len = $ - stack_start
 SS_seg 	ENDS
 
+; Вход в реальный режим
 ; Real Mode
 RM_seg	segment para public 'code' use16
 	ASSUME cs:RM_seg, ds:PM_seg, ss:SS_seg
 start:
+	
+	; Загружаю в сегмен регистры селекторы
 	mov ax,PM_seg
 	mov ds,ax
 
