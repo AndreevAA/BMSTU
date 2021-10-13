@@ -199,13 +199,14 @@ return:
 
 ; Timer interrupt
 timer_int:
-	push eax
+	push eax 
 	push ebp
 	push ecx
 	push dx
 		
-	mov  eax,time_save
+	mov  eax,time_save ; time save
 
+	; Установка с строки 
 	xor esi,esi
 	mov esi,164
 	print_eax
@@ -217,9 +218,15 @@ timer_int:
 	pop ecx
 	pop ebp
 
+	
+
+	; Сигнал о завершении прерывания 
 	mov	al,20h
 	out	20h,al
+
 	pop eax
+
+	; Вовзрат из прерывания по адресу в стеке
 	iretd
 
 ; Keyboard interrupt
@@ -229,6 +236,7 @@ keyboard_int:
 	push ebp
 	push edx
 	
+	; получение кода клавиша из нужного порта  
 	in	al,60h
 	
 	cmp	al,1Ch  ; Enter keycode
@@ -236,18 +244,20 @@ keyboard_int:
 	mov escape,1
 	jmp quit
 stay:
-	cmp al,80h
+	cmp al,80h 	; Если код клавиши больше 80h игнор
 	ja quit
 
-; Delete cursor
+	; Delete cursor чтобы потом поместить перед напечатанным символом
 	mov ebx,out_pos
 	mov dx,0000h
 	mov dh,font_col
 	mov es:[ebx],dx
 	
+	; Сравнение со стиранием
 	cmp al,0Eh	; Backspace keycode
-	jne print
+	jne print ; не стирание - печатаем
 	
+	; Реализуем стирание
 	xor dx,dx
 	mov dh,font_col
 	dec ebx
@@ -264,15 +274,21 @@ stay:
 	jl backline
 	
 	jmp quit
+
+; не даем выйти за пределы первой строки
 border:
 	mov out_pos,1E0h
 	jmp quit
+
+; Если прозошло стирание до конца строки -> вренуться на прошлую строку и продлжить стриание оттуда
 backline:
 	mov ebx,line_curr
 	sub ebx,160
 	mov line_curr,ebx
 	mov char_cont,80
 	jmp quit
+
+; Вывод 
 print:
 	xor ah,ah
 	mov bp,ax
@@ -281,6 +297,8 @@ print:
 	jne continue
 	mov char_cont,0
 	add line_curr,160
+
+;
 continue:	
 	mov dl,ASCII_table[ebp]
 	mov dh, font_col
@@ -291,12 +309,12 @@ continue:
 	mov out_pos,ebx
 quit:
 	mov ebx,out_pos
-	mov dl,60
-	mov dh,10000000b ; 7 - sym flash, 6-4 - font color, 2-0 - sym color  
-	or dh,font_col
-	mov es:[ebx],dx
+	mov dl,60 ; код треугольной скобочки влево
+	mov dh,10000000b ; 7 - sym flash, 6-4 - font color, 2-0 - sym color ; Добавление мигания 
+	or dh,font_col ; Цвпет текста уст на зел
+	mov es:[ebx],dx 
 
-	in	al,61h  ; Output received
+	in	al,61h  ; Output received от клавиши
 	or	al,80h
 	out	61h,al
 
@@ -311,9 +329,9 @@ quit:
 
 ; General defence exception handler 
 new_gen_exp:
+	pop EAX ; 2 раза Так как в стек записывается код ошибки 
 	pop EAX
-	pop EAX
-	mov ax, 0Dh
+	mov ax, 0Dh  
 	iretd
 
 ; Compute available memory
@@ -347,6 +365,7 @@ mem_end:
 	PM_seg_size = $ - GDT
 PM_seg	ENDS
 
+; Чтобы возвращаться из прерывания нужно куда сохранять адреса, стек для этого
 SS_seg segment para stack 'stack'
 	stack_start	db	100h dup(?)
 	stack_len = $ - stack_start
