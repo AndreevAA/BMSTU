@@ -48,7 +48,7 @@ PM_seg	segment para public 'code' use32
   	; после пропущенных 13 + 18 начинается прерывание
     IDT	label byte
     int_descr 13 dup 	(<0, SEL_32bitCS,0, 8Fh, 0>) ; 10001111,type - trap
-	gen_exp int_descr    <0, SEL_32bitCS,0, 8Fh, 0>
+	gen_exp int_descr    <0, SEL_32bitCS,0, 8Fh, 0> ; Общая защита на доступ к защищенным участкам памяти
 	int_descr 18 dup 	(<0, SEL_32bitCS,0, 8Fh, 0>)
     int_timer int_descr  <0, SEL_32bitCS,0, 8Eh, 0>	 ; 10001110,type - interrupt
     int_key int_descr	 <0, SEL_32bitCS,0, 8Eh, 0>
@@ -88,18 +88,26 @@ PM_seg	segment para public 'code' use32
 				db 0, 0, 0  			; LeftArrow,CenterKey,RightArrow
 				db 43 					; +
 				db 0, 0, 0, 0, 0  		; End,DownArrow,PgDown,Ins,Del
+	; Позциия на экране для ввода следующего символа
 	out_pos		dd 1E0h					; 80 * 2 * 3 -> 3 line in VideoMem
+	
+	; Номер текущей строки в символах вывода (по 160)
 	line_curr	dd 1E0h
+
+	; Подсчет количества символов Стираю 80 и переходит на старую строку
 	char_cont   db 0
+
 	; Bright color 4bit - 1
 	font_col	db 00000010b ;white - 111b, black - 000b,blue - 001b, green - 010b,red - 100b
 
+; Вывод сообщения в реальном режиме через прерывание
 print_str macro str
 	mov ah,9
 	mov dx, str
 	int 21h
 endm
 
+; Строки в число
 num_convert macro
 	local number1
 		cmp dl,10
@@ -109,6 +117,7 @@ num_convert macro
 		add dl,'0'
 endm
 
+; Печать eax
 print_eax macro
 	local cycle
 		push ecx
@@ -134,7 +143,9 @@ endm
 
 ; Вход в защищенный режим
 PM_entry:
-	mov	ax,SEL_32bitDS
+	
+	; Устанвока селекторов
+	mov	ax,SEL_32bitDS 	
 	mov	ds,ax
 	mov ax,SEL_32Video
 	mov es,ax
@@ -145,32 +156,43 @@ PM_entry:
 	mov	ss,ax
 	mov	esp,ebx
 
+	; Разрешенеи прерываний
 	sti
+
+	; Вызов счетчика памяти
 	call memory_counter
-; Print that we are in Protected Mode
+	
+	; Вывод сообщения in Protected Mode
 	mov esi,offset msg3
 	xor edi,edi
 	push ecx
 	push dx
-	mov dh,font_col
-	or dh,00001000b
-	mov ecx,14
+	mov dh,font_col	; Цвето текста
+	or dh,00001000b	; Делаем цвет текст ярким
+	mov ecx,14	; Для цикла устанавливаем длину сообещняи
+
 cycle1:
 	mov dl,ds:[esi]
 	mov es:[edi],dx
-	inc esi
+	inc esi ; Выдео пямть с содержимым dx
 	inc edi
 	inc edi
 	loop cycle1
 	
 	pop dx
 	pop ecx
+
+
+; Пока ни одна кнопка не нажмется (пока Флаг не изменится по умолчанию на 1)
 work:
 	test escape, 1
 	jz	work
+
 return:
+	; Запрещаю прерываний. При выходе в реальный режим ничего не должно помещать
 	cli
-; Far jmp to RM_return (6 byte)
+
+	; Far jmp to RM_return (6 byte)
 	db	0EAh
 	dd	offset RM_return
 	dw	SEL_16bitCS
@@ -340,22 +362,28 @@ start:
 	mov ax,PM_seg
 	mov ds,ax
 
+	; Печать сообщения Я в реальном режиме
 	mov ah, 09h
 	mov edx, offset msg1
 	int 21h
 
+	; Работа с клавиатуров в реальном режим, фиксируем нажатие любой клавиши 16h
 	push eax
 	mov ah,10h
 	int 16h
 	pop eax
-		
+			
+	; Включение текстового режима видео памяти 
 	mov	ax,3
 	int	10h
 
-; Shadow register setup
-	;push PM_seg
-	;pop ds
 
+	; Перестанет заранее просчитывать линейный адрес при убирании теневого регистра
+	; Shadow register setup
+	; push PM_seg
+	; pop ds
+
+	; Загружаю смещение в дескриптор
 	xor	eax,eax
 	mov	ax,RM_seg
 	shl	eax,4
@@ -374,18 +402,22 @@ start:
 	mov	byte ptr GDT_32bitSS.base_m,al
 	mov	byte ptr GDT_32bitDS.base_m,al
 
+	; Устанавливаю указатель и загружаю его в регистр, где хранится адрес GDT
 	pop eax
 	add	eax,offset GDT
 		
 	mov	dword ptr gdtr + 2,eax
 	mov word ptr gdtr, gdt_size - 1
 		
+	; Аналогичные операции с IDT, чтобы в защищенном редиме была возможность обратитсья к ним обеим
 	lgdt fword ptr gdtr
 	pop	eax
 	add	eax,offset IDT
+
 	mov	dword ptr idtr + 2,eax
 	mov word ptr idtr, idt_size - 1
 
+	; Устанавливаю все смещения
 	mov	eax, offset timer_int
 	mov	int_timer.offs_l,ax
 	shr	eax, 16
@@ -397,13 +429,17 @@ start:
 	mov	eax, offset new_gen_exp
 	mov	gen_exp.offs_l,ax
 	shr	eax, 16
+
+	; Общая защита исключения
 	mov	gen_exp.offs_h,ax
-; Save masks
+	
+	; Save masks Меняю маски, чтобы проходили прерывания только от таймера и клавиуатуры, мне не нужны системные прерывания
 	in	al, 21h
 	mov	master,al
 	in	al, 0A1h
 	mov	slave,al
 
+	; Шлю сигнал контроллеру прерываний
 	mov	al, 11h
 	out	20h, al
 	mov	AL, 20h
@@ -414,41 +450,51 @@ start:
 	mov	al, 1
 	out	21h, al
 		
+	; Установка новых масок
 	mov	al, 0FCh
 	out	21h, al
 	mov	al, 0FFh
 	out	0A1h, al
 
+	; Загрузка адреса таблицы прерываний в регистр
 	lidt fword ptr idtr
 
-; Enable A20 line
+	; Enable A20 line
+	; Открытие линии
 	in	al,92h
 	or	al,2
 	out	92h,al
 
-; Clear Interrup Flag - no interrupts
+	; Clear Interrup Flag - no interrupts
 	cli
-; Turn off NMI
+
+	; Turn off NMI (немаскируемые прерывания выключить)
 	in	al,70h
 	or	al,80h
 	out	70h,al
-; Enter protected mode
+
+	; Enter protected mode
 	mov	eax,cr0
 	or	al,1
 	mov	cr0,eax
-; Far jmp with operand modificator 
+
+	; Far jmp with operand modificator 
 	db	66h
 	db	0EAh
 	dd	offset PM_entry
 	dw	SEL_32bitCS
 
+; Выход из защищенного режима
 RM_return:
+
+	; Менем в регистре бит управления протектыд
 	mov	eax,cr0
 	and	al,0FEh
 	mov	cr0,eax
-; Far jmp to "mov ax,PM_seg"
+
+	; Far jmp to "mov ax,PM_seg" чтобы обновить счетчик команд
 	db	0EAh
-	dw	$ + 4
+	dw	$ + 4	; От текущей строчки на 4 байта, так как след занимает 2 байта и предыдещая 2 байта
 	dw	RM_seg
 
 	mov	ax,PM_seg
@@ -459,7 +505,7 @@ RM_return:
 	mov	ss,ax
 	mov	sp,bx
 
-; Return base vector
+	; Return base vector (В реальном режиме базовый вектор это 8, в защищенном с 32 и это новый базовый вектор, мы его уставнливаем сверху и теперь мы его возвращаем)
 	mov	al, 11h
 	out	20h, al
 	mov	al, 8
@@ -469,29 +515,34 @@ RM_return:
 	mov	al, 1
 	out	21h, al
 
-; Return masks
+	; Return masks (Аналогично вовращаем сохракненные маски)
 	mov	al, master
 	out	21h, al
 	mov	al, slave
 	out	0A1h, al
 
+	; Возвращаю старый адрес таблицы прерываний
 	lidt fword ptr idtr_real
-; NMI on
+
+	; NMI on (Включаю немаскируемое прерывание)
 	in	al,70h
-	and	al,07FH
+	and	al,07FH 	
 	out	70h,al
-; Interrupts on
+
+	; Interrupts on (Включение возможности системных прерываний)
 	sti
 	mov	ax,3
 	int	10h
 	mov ah, 09h
 	mov edx, offset msg2
 	int 21h
-; Disable A20 line
+
+	; Disable A20 line (Выключение линии А20)
 	in	al,92h
 	or	al,2
 	out	92h,al
-; Exit in RM
+	
+	; Exit in RM
 	mov	ah,4Ch
 	int	21h
 RM_seg_size = $ - start
