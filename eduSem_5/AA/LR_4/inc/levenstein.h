@@ -25,6 +25,7 @@ typedef struct Args_values {
 	char *source;
     int *current_row;
     int target_cur;
+    int source_cur;
     int *previous_row;
     int add_c;
     int delete_c;

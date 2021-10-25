@@ -69,22 +69,16 @@ void out_levenstein_distance(char *target, char *source)
 		pthread_t thread_filling_rows;
 
 		// Выделение памяти
-		int *previous_row = (int *) malloc(target_length + 1);
+		int *previous_row = (int *) malloc(MAX_WORD_SIZE);
 
-		// Инициализация структуры
 		Args_rows args_rows;
 
-		// Установка данных потока
 		args_rows.current_row = current_row;
 		args_rows.previous_row = previous_row;
-		args_rows.target_length = target_length;
 		args_rows.i = i;
+		args_rows.target_length = target_length;
 
-		// Переназначение 
 		int change_rows_status = pthread_create(&thread_filling_rows, NULL, change_rows, (void*) &args_rows);
-
-		// Ожидание завершения потока
-		pthread_join(thread_filling_rows, NULL);
 		
 		// Установка данных из потока
 		current_row = args_rows.current_row;
@@ -104,6 +98,7 @@ void out_levenstein_distance(char *target, char *source)
 			args_values.target_cur = target_cur;
 			args_values.source = source;
 			args_values.target = target;
+			args_values.source_cur = i;
 
 			// Создание группы параллельных потоков вычислений стоимости
 			pthread_t thread_value_counting_add;
@@ -127,8 +122,6 @@ void out_levenstein_distance(char *target, char *source)
 
 			current_row[target_cur] = min(min(args_values.add_c, args_values.delete_c), args_values.change_c);
 		}
-
-		
 	}
 
 	result_levenstein_distance = current_row[target_length];
@@ -172,7 +165,7 @@ void *counting_change(void *args)
 
 	arg->change_c = arg->previous_row[arg->target_cur - 1];
 
-	if (arg->target[arg->target_cur - 1] != arg->source[arg->target_cur - 1])
+	if (arg->target[arg->target_cur - 1] != arg->source[arg->source_cur - 1])
 		arg->change_c += 1;
 
 	pthread_exit(0);
