@@ -28,11 +28,11 @@ class ProcessorTime(Analytics):
 
     # Установка отсечки старта блока программы
     def set_start_processor_time(self):
-        self._start_processor_time = clock()
+        self._start_processor_time = time()
 
     # Установка отсечки окончания блока программы
     def set_end_processor_time(self):
-        self._end_processor_time = clock()
+        self._end_processor_time = time()
         self._update_result()
 
     # Приватный модуль обновления результата вычислений процессорного времени

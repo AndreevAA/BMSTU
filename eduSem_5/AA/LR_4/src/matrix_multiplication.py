@@ -3,6 +3,7 @@ import __config__
 
 # Подключение функциональных блоков
 import matrix, analitics
+from threading import *
 
 
 # Базовый объект Умножения матрицы
@@ -54,32 +55,6 @@ class MatrixMultiplication:
     # Получение результата вычисления процессорного времени
     def get_result_processor_time(self):
         return self._processor_time.get_result()
-
-
-# Объект классического умножения матрицы
-class ClassicalMultiplication(MatrixMultiplication):
-
-    def multiply(self):
-
-        # Установка отсечки времени
-        self._set_start_processor_time()
-
-        # Виртуальная результирующая матрица
-        result_matrix = self._generate_result_matrix()
-
-        # Непоредственная операция умножения матрицы
-        for check_row in range(result_matrix.get_size_of_matrix()):
-            for check_column in range(result_matrix.get_size_of_matrix()):
-                for check_par in range(result_matrix.get_size_of_matrix()):
-                    result_matrix.update_matrix_value(check_row, check_column,
-                                                      result_matrix.get_matrix_value(check_row, check_column) +
-                                                      self._first_matrix.get_matrix_value(check_row, check_par) *
-                                                      self._second_matrix.get_matrix_value(check_par, check_column))
-
-        # Установка отсечки времени
-        self._set_end_processor_time()
-
-        self._set_result_matrix(result_matrix)
 
 
 # Объект умножения матриц Копперсмитта-Винограда
@@ -146,8 +121,22 @@ class CoppersmittWinogradMultiplication(MatrixMultiplication):
         self._set_result_matrix(result_matrix)
 
 
-# Объект умножения матриц оптимизированный Копперсмитта-Винограда
-class CoppersmittWinogradOptimizedMultiplication(MatrixMultiplication):
+# Объект умножения матриц Копперсмитта-Винограда
+class CoppersmittWinogradMultiplicationParallel(MatrixMultiplication):
+
+    _mul_h, _mul_v = None, None
+
+    def _fill_h(self):
+        for check_row in range(self._first_matrix.get_size_of_matrix()):
+            for check_column in range(self._first_matrix.get_size_of_matrix() // 2):
+                self._mul_h[check_row] += self._first_matrix.get_matrix()[check_row][2 * check_column] * \
+                                     self._first_matrix.get_matrix()[check_row][2 * check_column + 1]
+
+    def _fill_v(self):
+        for check_row in range(self._second_matrix.get_size_of_matrix()):
+            for check_column in range(self._second_matrix.get_size_of_matrix() // 2):
+                self._mul_v[check_row] += self._second_matrix.get_matrix()[check_row][2 * check_column] * \
+                                     self._second_matrix.get_matrix()[check_row][2 * check_column + 1]
 
     def multiply(self):
 
@@ -161,38 +150,51 @@ class CoppersmittWinogradOptimizedMultiplication(MatrixMultiplication):
         # Виртуальная результирующая матрица
         result_matrix = self._generate_result_matrix()
 
-        _mul_h, _mul_v = [0 for _ in range(self._first_matrix.get_size_of_matrix())], \
+        self._mul_h, self._mul_v = [0 for _ in range(self._first_matrix.get_size_of_matrix())], \
                          [0 for _ in range(self._second_matrix.get_size_of_matrix())]
 
-        for check_row in range(self._first_matrix.get_size_of_matrix()):
-            _mul_h[check_row] = sum(
-                self._first_matrix.get_matrix()[check_row][2 * check_column] *
-                self._first_matrix.get_matrix()[check_row][2 * check_column + 1]
-                for check_column in range(self._first_matrix.get_size_of_matrix() // 2)
-            )
+        # Поток заполенения по высоте
+        _threat_filling_h = Thread(target=self._fill_h())
 
-            _mul_v[check_row] = sum(
-                self._second_matrix.get_matrix()[check_row][2 * check_column] *
-                self._second_matrix.get_matrix()[check_row][2 * check_column + 1]
-                for check_column in range(self._second_matrix.get_size_of_matrix() // 2)
-            )
+        # Поток заполнения по ширине
+        _threat_filling_v = Thread(target=self._fill_v())
+
+        # Запуск потоков заполнения
+        _threat_filling_h.start()
+        _threat_filling_v.start()
 
         for check_row in range(self._first_matrix.get_size_of_matrix()):
             for check_column in range(self._first_matrix.get_size_of_matrix()):
                 result_matrix.update_matrix_value(check_row, check_column,
-                                                  sum(
-                                                      (self._first_matrix.get_matrix()[check_row][2 * k] +
-                                                       self._second_matrix.get_matrix()[2 * k + 1][
-                                                           check_column]) * (
-                                                              self._first_matrix.get_matrix()[check_row][
-                                                                  2 * k + 1] +
-                                                              self._second_matrix.get_matrix()[2 * k][
-                                                                  check_column])
-                                                      for k in range(self._first_matrix.get_size_of_matrix() // 2)) \
-                                                  - _mul_h[check_row] - _mul_v[check_column]
+                                                  - self._mul_h[check_row] - self._mul_v[check_column]
                                                   )
+
+                for k in range(self._first_matrix.get_size_of_matrix() // 2):
+                    result_matrix.update_matrix_value(check_row, check_column,
+                                                      result_matrix.get_matrix_value(check_row, check_column) +
+                                                      self._first_matrix.get_matrix()[check_row][2 * k] +
+                                                      self._second_matrix.get_matrix()[2 * k + 1][
+                                                          check_column] * \
+                                                        (
+                                                                self._first_matrix.get_matrix()[check_row][
+                                                                    2 * k + 1] +
+                                                                self._second_matrix.get_matrix()[2 * k][
+                                                                    check_column]
+                                                        ))
+
+        if self._second_matrix.get_size_of_matrix() % 2:
+            for check_row in range(self._first_matrix.get_size_of_matrix()):
+                for check_column in range(self._first_matrix.get_size_of_matrix()):
+                    result_matrix.update_matrix_value(check_row, check_column,
+                                                      result_matrix.get_matrix_value(check_row, check_column) +
+                                                      self._first_matrix.get_matrix()[check_row][
+                                                          self._first_matrix.get_size_of_matrix() - 1] *
+                                                      self._second_matrix.get_matrix()[
+                                                          self._second_matrix.get_size_of_matrix() - 1][check_column]
+                                                      )
 
         # Установка отсечки времени
         self._set_end_processor_time()
 
         self._set_result_matrix(result_matrix)
+
