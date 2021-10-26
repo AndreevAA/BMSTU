@@ -28,9 +28,78 @@ void *counting_delete(void *args);
 
 void *counting_change(void *args);
 
-// Получение расстояния между словами
+// Получение длин слов без потока
+void update_words_length(char **target, int *target_length, char **source, int *source_length);
+
+void update_rows(int **current_row, int **previous_row, int i, int target_length);
+
+// Получение расстояния между словами без распараллеливания
 void out_levenstein_distance(char *target, char *source)
 {
+	clock_t begin = clock();
+	// Инициализация основного поток вычисления и обработки длин
+	// pthread_t thread_words_lengths;
+
+	// Результирующая длина
+	int result_levenstein_distance = 0;
+
+	// Длины слов
+	int target_length = 0, source_length = 0;
+
+	// Обновление длин и смена местами
+	update_words_length(&target, &target_length, &source, &source_length);
+
+	// Выделение памяти под текущую строку
+	int *current_row = (int*) malloc(MAX_WORD_SIZE);
+
+	for (int check_cur = 0; check_cur < target_length + 1; check_cur++)
+		current_row[check_cur] = check_cur;
+
+	for (int i = 1; i < source_length + 1; i++)
+	{
+		// Выделение памяти
+		int *previous_row = (int *) malloc(MAX_WORD_SIZE);
+
+		// Переназначение рядов
+		for (int check_cur = 0; check_cur < target_length + 1; check_cur++)
+		{
+			previous_row[check_cur] = current_row[check_cur];
+
+			if (check_cur == 0)
+				current_row[check_cur] = i;
+			else
+				current_row[check_cur] = 0;
+		}
+
+		// Подсчет
+		for (int target_cur = 1; target_cur < target_length + 1; target_cur++)
+		{
+			int add_c = previous_row[target_cur] + 1;
+			int delete_c = current_row[target_cur - 1];
+			int change_c = previous_row[target_cur - 1];
+
+			if (target[target_cur - 1] != source[i - 1])
+				change_c += 1;
+
+					current_row[target_cur] = min(min(add_c, delete_c), change_c);
+				}
+			}
+
+
+	/* here, do your time-consuming job */
+
+	clock_t end = clock();
+	result_levenstein_distance = current_row[target_length];
+
+	printf("\nКлассическая реализация:\n");
+	printf("\tВремя: %f мкс\n", (double)(end - begin) / CLOCKS_PER_SEC * 1000);
+	out_levestein_get_distance_result(result_levenstein_distance);
+}
+
+// Получение расстояния между словами с распараллеливанием
+void out_levenstein_distance_parall(char *target, char *source)
+{
+	clock_t begin = clock();
 	// Инициализация основного поток вычисления и обработки длин
 	pthread_t thread_words_lengths;
 
@@ -124,8 +193,11 @@ void out_levenstein_distance(char *target, char *source)
 		}
 	}
 
+	clock_t end = clock();
 	result_levenstein_distance = current_row[target_length];
 
+	printf("\nМногопоточная реализация:\n");
+	printf("\tВремя: %f мкс\n", (double)(end - begin) / CLOCKS_PER_SEC * 1000);
 	out_levestein_get_distance_result(result_levenstein_distance);
 }
 
@@ -193,6 +265,19 @@ void *change_rows(void *args)
 	return SUCCESS_STATUS;
 }
 
+void update_rows(int **current_row, int **previous_row, int i, int target_length)
+{
+	for (int check_cur = 0; check_cur < target_length + 1; check_cur++)
+	{
+		*previous_row[check_cur] = *current_row[check_cur];
+
+		if (check_cur == 0)
+			*current_row[check_cur] = i;
+		else
+			*current_row[check_cur] = 0;
+	}
+}
+
 void out_row(int *row, int target_length)
 {
 	for (int out_cur = 0; out_cur < target_length; out_cur++)
@@ -255,3 +340,18 @@ void* get_words_lengths(void *args)
 	return SUCCESS_STATUS;
 }
 
+// Получение длин слов без потока
+void update_words_length(char **target, int *target_length, char **source, int *source_length)
+{
+	*target_length = strlen(*target);
+	*source_length = strlen(*source);
+
+	// Смена значений target и source
+	if (*target_length > *source_length)
+	{
+		swap(target, source);
+
+		*target_length = strlen(*target);
+	*source_length = strlen(*source);
+	}
+}
