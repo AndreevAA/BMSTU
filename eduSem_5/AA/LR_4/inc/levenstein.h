@@ -2,8 +2,11 @@
 #include "string.h"
 #include "../inc/io.h"
 
-// Получение расстояния между словами
+// Получение расстояния между словами без распаррелеливания
 void out_levenstein_distance(char *target, char *source);
+
+// Получение расстояния между словами 
+void out_levenstein_distance_parall(char *target, char *source);
 
 typedef struct Args_words {
     char *target;

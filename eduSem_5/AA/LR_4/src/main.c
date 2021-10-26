@@ -17,6 +17,7 @@ int main()
 	if (error_status == SUCCESS_STATUS)
 	{
 		out_levenstein_distance(first_word, second_word);
+		out_levenstein_distance_parall(first_word, second_word);
 
 		return SUCCESS_STATUS;
 	}
