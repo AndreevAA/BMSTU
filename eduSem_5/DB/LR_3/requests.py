@@ -13,7 +13,7 @@ class Request:
 
     # Получение распакованного SQL
     def _fetch_sql(self, query):
-        return self._db.execute_query(query).fetchall()
+        return self._db.execute_query(query)
         # try:
         #     return self._db.execute_query(query).fetchall()
         # except:
