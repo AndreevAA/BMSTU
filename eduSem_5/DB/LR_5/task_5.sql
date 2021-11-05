@@ -5,13 +5,12 @@ select * from hull_json_temp;
 copy (
     select *
     from hull_json_temp
-    where (row->>'hull_size')::hull_length > 10
+    where (row->>'hull_length') > '10'
     )
 to '//Users/andreevalexander/BMSTU/eduSem_5/DB/LR_5/jsons/hull_big.json';
 
 
 select hull_id, hull_name, hull_manufacturer, hull_fuel_tank, hull_size
-into hull_json
 from hull_json_temp J, json_to_record(J.row)
 as X(hull_id integer, hull_name text, hull_manufacturer text, hull_length double precision,
      hull_width double precision, hull_height double precision, hull_fuel_tank double precision,
