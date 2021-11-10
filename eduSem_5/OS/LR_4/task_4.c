@@ -14,7 +14,6 @@ int main()
 		perror("Pipe failed");
 		exit(1);
 	}
-
 	if ((child_1 = fork()) == -1)
 	{
 		perror("Fork failed");

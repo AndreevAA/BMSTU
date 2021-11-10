@@ -22,7 +22,9 @@ int main()
         perror("Pipe failed");
 		exit(1);
 	}
+
     signal(SIGQUIT, quit_signal_handler);
+    
     if ((child_1 = fork()) == -1)
     {
         perror("Fork failed");

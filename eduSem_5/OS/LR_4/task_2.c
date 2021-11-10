@@ -13,6 +13,7 @@ int main()
 		perror("Fork failed");
 		exit(1);
 	}
+  
 	else if (child_1 == 0)
 	{
         printf("\nПотомок child_1:\
