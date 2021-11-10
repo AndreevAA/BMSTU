@@ -1,5 +1,3 @@
-all: app.exe
-	
 # task_1.EXE
 task_1.exe : task_1.o 
 	gcc -o app.exe out/task_1.o
@@ -31,3 +29,11 @@ task_4.exe : task_4.o
 task_4.o :
 	mkdir -p out
 	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o out/task_4.o src/task_4.c
+
+# task_5.EXE
+task_5.exe : task_5.o 
+	gcc -o app.exe out/task_5.o
+
+task_5.o :
+	mkdir -p out
+	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o out/task_5.o src/task_5.c
