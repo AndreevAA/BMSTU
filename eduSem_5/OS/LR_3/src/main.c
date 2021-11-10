@@ -8,20 +8,18 @@
 int main()
 {
     // Создаю поток
-    int childpid = fork();
+    int childpid;
 
-    // Поток не создался
-    if (childpid == -1)
+    if ((childpid = fork()) == -1)
     {
         perror("Can’t fork.\n");
         return 1;
     }
-    // Поток создался
     else if (childpid == 0)
     {
         while (1) 
         {
-            printf("%d \n", getpid());
+            printf("%d ", getpid());
         }
     }
     // 
@@ -29,7 +27,7 @@ int main()
     {
         while(1)
         {
-            printf("%d \n", getpid());
+            printf("%d ", getpid());
         }
     }
 
