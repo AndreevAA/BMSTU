@@ -12,7 +12,7 @@ class DB:
 
     # Статус подключени к БД
     _connection_status = None
-    _connection = None
+    connection = None
 
     # Создание объекта
     def __init__(self, db_name, db_host, db_port):
@@ -43,12 +43,12 @@ class DB:
             print(f"The error '{e}' occurred")
 
         # Вывод статуса ошибки в объект
-        self._connection = connection
+        self.connection = connection
 
     # Операция проведения запроса к БД
     def execute_query(self, query):
-        self._connection.autocommit = True
-        cursor = self._connection.cursor()
+        self.connection.autocommit = True
+        cursor = self.connection.cursor()
         try:
             print("Query executed successfully")
             cursor.execute(query)
