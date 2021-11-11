@@ -21,8 +21,8 @@ class Request:
 
     # Получение по номеру таска
     def get_by_task_number(self, task_number):
-        query = str(open("task_" + str(task_number) + ".sql").read()) +\
-                str(open("task_" + str(task_number) + "_exec.sql").read())
+        query = str(open("clr_" + str(task_number) + ".sql").read()) +\
+                str(open("clr_" + str(task_number) + "_exec.sql").read())
 
         # Возврат полученного SQL
         return self._fetch_sql(query)

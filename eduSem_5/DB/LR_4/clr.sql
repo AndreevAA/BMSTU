@@ -1,6 +1,5 @@
 -- Создать, развернуть и протестировать 6 объектов SQL CLR:
 
-select * from pg_language;
 -- 1) Определяемую пользователем скалярную функцию CLR,
 -- Функция возвращает максимальную длину танка.
 create or replace function max_cost_clr()
@@ -11,9 +10,9 @@ return plpy.execute("select hull_length "
                     "order by hull_length desc "
                     "limit 1")[0]['hull_length']
 $$
-language plpythonu;
+language python;
 
--- select * from max_cos_clr();
+select * from max_cost_clr();
 --
 -- -- 2) Пользовательскую агрегатную функцию CLR,
 -- -- Вывести сумму мест по всем детским садам.
