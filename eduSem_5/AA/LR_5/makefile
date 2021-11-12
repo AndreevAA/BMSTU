@@ -1,7 +1,9 @@
-all: app.exe time.exe
+all: app.exe time.exe rm_out_files.exe
+
+rm out_files: rm_out_files.exe
 	
 # APP
-app.exe : main.o mamult.o matrix.o
+app.exe : main.o mamult.o matrix.o 
 	g++ out/main.o out/mamult.o out/matrix.o -o app.exe 
 
 mamult.o :
@@ -31,3 +33,9 @@ time.o :
 	g++ -E src/time.cpp -o out/time.ii
 	g++ -S out/time.ii -o out/time.s
 	as out/time.s -o out/time.o
+
+# RM OUT FILES
+rm_out_files.exe : 
+	rm out/*.s
+	rm out/*.ii
+	rm out/*.o
