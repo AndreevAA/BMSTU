@@ -1,60 +1,38 @@
-#include <iostream>
 #include <cstdlib>
-#include <ctime>
+#include <iostream>
+#include <chrono>
 
-#include "matrix.hpp"
-#include "mamult.hpp"
+#include "conveyor.hpp"
 
-int main(int argc, char **argv)
+int main(int argc, const char * argv[])
 {
     srand(time(NULL));
 
     if (argc == 2 && std::string(argv[1]) == "-memcheck")
-    {
-        unsigned m = 10, n = 20, q = 30;
-
-        Matrix A(m, n), B(n, q);
-        A.randomize(-10, 10);
-        B.randomize(-10, 10);
-
-        Matrix C = multiply_vinograd_thread(A, B, 10);
-
         return 0;
-    }
 
-    unsigned m, n, q, thread_amount;
-    std::cout << "Enter 3 size of matrices (M, N, Q): ";
-    int i = 0;
-    int a[3];
-    while(i < 3)
-    {
-        std::cin >> a[i];
-        i++;
-    }
-    m = a[0];
-    n = a[1];
-    q = a[2];
+    int obj_count = 0;
+    std::cin >> obj_count;
+    if (obj_count < 2)
+        return -1;
 
-    std::cout << "Enter amount of threads: ";
-    std::cin >> thread_amount;
+    Conveyor conveyor(obj_count, 3, 5);
 
-    Matrix A(m, n), B(n, q);
-    A.randomize(-10, 10);
-    B.randomize(-10, 10);
+    auto start = std::chrono::steady_clock::now();
+    conveyor.execute_parallel();
+    auto end = std::chrono::steady_clock::now();
 
-    std::cout << std::endl;
-    A.write(std::cout);
-    std::cout << std::endl;
-    B.write(std::cout);
-    std::cout << std::endl;
-
-    Matrix C = multiply_vinograd_thread(A, B, thread_amount);
-    C.write(std::cout);
-    std::cout << std::endl;
-
-    Matrix D = multiply_vinograd_nothread(A, B);
-    D.write(std::cout);
-    std::cout << std::endl;
-
+    auto duration1 = std::chrono::duration_cast<std::chrono::milliseconds>(
+        end - start);
+    std::cout << "Parallel: " << duration1.count() << " msec" << std::endl;
+    
+    start = std::chrono::steady_clock::now();
+    conveyor.execute_linear();
+    end = std::chrono::steady_clock::now();
+    
+    auto duration2 = std::chrono::duration_cast<std::chrono::milliseconds>(
+        end - start);
+    std::cout << "Linear: " << duration2.count() << " msec" << std::endl;
+    
     return 0;
 }

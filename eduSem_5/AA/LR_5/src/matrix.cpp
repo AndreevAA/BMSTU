@@ -21,6 +21,14 @@ Array::Array(unsigned size)
         ptr[i] = 0;
 }
 
+/*Array::Array(const Array& other)
+{
+    _size = other._size;
+    ptr = new int[_size];
+    for (unsigned i = 0; i < _size; i++)
+        ptr[i] = other.ptr[i];
+}*/
+
 Array::~Array()
 {
     delete [] ptr;
@@ -163,7 +171,7 @@ bool Matrix::operator!=(const Matrix &other)
     return !((*this) == other);
 }
 
-unsigned Matrix::get_rows()
+/*unsigned Matrix::get_rows()
 {
     return _rows;
 }
@@ -171,7 +179,7 @@ unsigned Matrix::get_rows()
 unsigned Matrix::get_cols()
 {
     return _cols;
-}
+}*/
 
 Array& Matrix::operator[](unsigned i)
 {

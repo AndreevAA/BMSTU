@@ -46,8 +46,8 @@ public:
     bool operator==(const Matrix &other);
     bool operator!=(const Matrix &other);
 
-    unsigned get_rows();
-    unsigned get_cols();
+    /*unsigned get_rows();
+    unsigned get_cols();*/
     Array& operator[] (unsigned i);
 
 private:
