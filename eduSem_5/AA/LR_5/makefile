@@ -1,31 +1,20 @@
-all: app.exe rm_out_files.exe
+CC := g++
+OBJ = src/*.cpp
+APPNAME := app.exe
+FLAGS=-lpthread -O0 -Wall -lpthread -pg -lc
+DEBUG_FLAGS=-D__DEBUG__ -g
 
-rm out_files: rm_out_files.exe
-	
-# APP
-app.exe : main.o conveyor.o matrix.o 
-	g++ out/main.o out/conveyor.o out/matrix.o -o app.exe 
+build:
+	$(CC) -o $(APPNAME) $(OBJ) $(FLAGS)
 
-conveyor.o :
-	mkdir -p out
-	g++ -E src/conveyor.cpp -o out/conveyor.ii
-	g++ -S out/conveyor.ii -o out/conveyor.s
-	as out/conveyor.s -o out/conveyor.o
+debug:
+	$(CC) -o $(APPNAME) $(OBJ) $(FLAGS) $(DEBUG_FLAGS)
 
-matrix.o :
-	mkdir -p out
-	g++ -E src/matrix.cpp -o out/matrix.ii
-	g++ -S out/matrix.ii -o out/matrix.s
-	as out/matrix.s -o out/matrix.o
+clean:
+	rm out/*.ii out/*.s out/*.o
 
-main.o :
-	mkdir -p out
-	g++ -E src/main.cpp -o out/main.ii
-	g++ -S out/main.ii -o out/main.s
-	as out/main.s -o out/main.o
+run: build
+	./$(APPNAME)
 
-# RM OUT FILES
-rm_out_files.exe : 
-	rm out/*.s
-	rm out/*.ii
-	rm out/*.o
+prof: run
+	gprof ${APPNAME} gmon.out -p
