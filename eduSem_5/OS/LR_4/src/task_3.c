@@ -2,69 +2,73 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define NUMBER_OF_CHILDREN 2
+
 int main()
 {
-    pid_t child_1, child_2;
-	int status, val;
+	char *p_exec[NUMBER_OF_CHILDREN] = {
+		"meta/average/out/first_thread.o",
+		"meta/factorial/out/second_thread.o"
+	};
 
-	if ((child_1 = fork()) == -1)
-	{
-		perror("Can't fork");
-		exit(1);
-	}
-	
-	else if (child_1 == 0)
-	{
-        printf("\nПотомок child_1:\
+	printf("\nРодитель parent:\
                \nСобственный идентификатор (pid) = %d\
-               \nИдентификатор предка (ppid) = %d\
                \nИдентификатор группы = %d\n",
-               getpid(), getppid(), getpgrp());
-        
-		if (execl("/bin/ls", "ls", 0) == -1)
+               getpid(), getpgrp());
+
+	for (size_t i = 0; i < NUMBER_OF_CHILDREN; i++) { 
+		pid_t child;
+
+		if ((child = fork()) == -1)
 		{
-			perror("exec");
-			exit(2);
+			perror("Can't fork");
+			exit(1);
 		}
 		
-	}
-
-	if ((child_2 = fork()) == -1)
-	{
-		perror("Can't fork");
-		exit(1);
-	}
-	else if (child_2 == 0)
-	{
-        printf("\nПотомок child_2:\
-               \nСобственный идентификатор (pid) = %d\
-               \nИдентификатор предка (ppid) = %d\
-               \nИдентификатор группы = %d\n",
-               getpid(), getppid(), getpgrp());
-
-		if (execl("/bin/ps", "ps", 0) == -1)
+		else if (child == 0)
 		{
-			perror("exec");
-			exit(3);
+	        printf("\nПотомок child_%ld: \
+	               \nСобственный идентификатор (pid) = %d\
+	               \nИдентификатор предка (ppid) = %d\
+	               \nИдентификатор группы = %d\n",
+	               i, getpid(), getppid(), getpgrp());
+	        
+			if (execl(p_exec[i], NULL) == -1)
+			{
+				perror("exec");
+				exit(2);
+			}
+			
 		}
 	}
 
-    while ((val = wait(&status)) != -1) {
-        if (WIFEXITED(status))
-            printf("\nДочерний процесс (%d) завершён нормально c кодом (%d).\n",
-                   val, WEXITSTATUS(status));
-        else if (WIFSIGNALED(status))
-            printf("\nДочерний процесс (%d) завершён неперехватываемым сигналом №(%d)\n", val, WTERMSIG(status));
-        else if (WIFSTOPPED(status))
-            printf("\nДочерний процесс (%d) остановился, номер сигнала: (%d)\n", val, WSTOPSIG(status));
-    }
-    
-    printf("\nПредок:\
-           \nСобственный идентификатор (pid) = %d\
-           \nИдентификатор группы = %d\
-           \nИдентификатор потомка child_1 (pid) = %d\
-           \nИдентификатор потомка child_2 (pid) = %d\n",
-           getpid(), getpgrp(), child_1, child_2);
+	for (size_t i = 0; i < NUMBER_OF_CHILDREN; i++) { 
+		int status = 0;
+		int val = 0;
+
+		pid_t childpid = wait(&status);
+
+		printf("\nРодитель parent: child %ld\
+               \nСобственный идентификатор (pid) = %d\
+               \nСтатус = %d\n",
+               i + 1, childpid, status);
+
+		if (WIFSIGNALED(val)) 
+		{
+			printf("\nРодитель parent: child %ld\
+			 \nКод окончания: %d\n", i + 1, WTERMSIG(val));
+		} 
+		else if (WIFEXITED(val)) 
+		{
+			printf("\nРодитель parent: child %ld\
+			 \nКод окончания: %d\n", i + 1, WEXITSTATUS(val));
+		} 
+		else if (WIFSTOPPED(val)) 
+		{
+			printf("\nРодитель parent: child %ld\
+			 \nКод окончания: %d\n", i + 1, WSTOPSIG(val));
+		} 
+	}
 
 	return 0;
 }

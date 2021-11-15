@@ -26,7 +26,7 @@ int main()
                \nИдентификатор предка (ppid) = %d\
                \nИдентификатор группы = %d\n",
                getpid(), getppid(), getpgrp());
-        char message[] = "(Сообщение от child_1)";
+        char message[] = "kdjfskjfhdksfhdsjhbncsdlkvjbf";
 		close(fd[0]);
 		write(fd[1], message, sizeof message - 1);
 		printf("\nПотомок child_1 написал: %s\n", message);
@@ -45,7 +45,7 @@ int main()
                \nИдентификатор предка (ppid) = %d\
                \nИдентификатор группы = %d\n",
                getpid(), getppid(), getpgrp());
-        char message[] = "(Сообщение от child_2)";
+        char message[] = "2094824093840928349023842093482093484234902834209384230948230498";
 		close(fd[0]);
 		write(fd[1], message, sizeof message - 1);
         printf("\nПотомок child_2 написал: %s\n", message);
