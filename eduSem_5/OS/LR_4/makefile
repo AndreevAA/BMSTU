@@ -28,11 +28,11 @@ task_3.o :
 	
 first_thread.exe :
 	mkdir -p meta/out
-	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o meta/factorial/out/first_thread.o meta/factorial/factorial.c
+	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o meta/factorial/out/first_thread.out meta/factorial/factorial.c
 
 second_thread.exe :
 	mkdir -p meta/out
-	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o meta/average/out/second_thread.o meta/average/average.c
+	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o meta/average/out/second_thread.out meta/average/average.c
 
 # task_4.EXE
 task_4.exe : task_4.o 
