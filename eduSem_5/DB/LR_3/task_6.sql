@@ -10,7 +10,7 @@ $$
             call recursive_increment_hull_fuel_tank($1 + 1, $2, $3);
         end if;
         update military_vehicles.public.hull
-        set hull_fuel_tank = hull_fuel_tank + 1;
+        set hull_fuel_tank = hull_fuel_tank + $3;
     end
 $$
 language 'plpgsql';
