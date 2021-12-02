@@ -17,26 +17,26 @@ class BinarySearch(search.Search):
     # Поиск записи
     def _find_record(self, _record_name):
         left = 0
-        right = self._dictionary.dict_size() - 1
+        right = len(self._dictionary.dict) - 1
 
-        if self._dictionary.dict[left][_record_name] > self._element or \
-                self._dictionary.dict[right][_record_name] < self._element:
+        if str(self._dictionary.dict[left][_record_name]) > str(self._element) or \
+                str(self._dictionary.dict[right][_record_name]) < str(self._element):
             return None
 
-        if self._dictionary.dict[left][_record_name] == self._element:
+        if str(self._dictionary.dict[left][_record_name]) == str(self._element):
             return self._dictionary.dict[left]
-        if self._dictionary.dict[right][_record_name] == self._element:
+        if str(self._dictionary.dict[right][_record_name]) == str(self._element):
             return self._dictionary.dict[right]
 
         mid = (left + right) // 2
         res = self._dictionary.dict[mid][_record_name]
 
-        while self._element != res:
-            if self._element < res:
+        while str(self._element) != res:
+            if str(self._element) < res:
                 right = mid
-            elif self._element > res:
+            elif str(self._element) > res:
                 left = mid
             mid = (left + right) // 2
-            res = self._dictionary.dict[mid][_record_name]
+            res = str(self._dictionary.dict[mid][_record_name])
 
         self._record = self._dictionary.dict[mid]

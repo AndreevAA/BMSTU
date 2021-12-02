@@ -26,3 +26,7 @@ class Search:
     @property
     def elem(self):
         return self._element
+
+    @property
+    def rec(self):
+        return self._record

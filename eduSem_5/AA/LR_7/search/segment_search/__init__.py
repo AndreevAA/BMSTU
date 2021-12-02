@@ -18,7 +18,7 @@ class SegmentSearch(search.Search):
 
         # Смена словаря
         _update_dict = dictionary.Dictionary()
-        _update_dict.dict = self.seg_list[self._element % self.seg_list_size]
+        self._dictionary.dict = self._segment_list
 
         # Отсечка времени при поиске записи
         s_time = process_time()

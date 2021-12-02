@@ -31,4 +31,4 @@ class Dictionary:
         self.__dictionary = value
 
     def dict_size(self):
-        return len(self.dict)
+        return len(self.__dictionary)
