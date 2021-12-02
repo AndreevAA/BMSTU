@@ -8,7 +8,6 @@ limit 1;
 
 -- 2. Извлечь значения конкретных узлов или атрибутов JSON документа.
 
--- Вывести ФИО работников женского пола. Использовался JSON документ из первого задания.
 select row->>'hull_name' as hull_name, row->>'hull_manufacturer' as hull_manufacturer
 from hull_json_temp
 where row->>'hull_manufacturer' = 'Niger';
@@ -34,7 +33,6 @@ values ('{"hull_name":"HULL_QDL_999","hull_manufacturer":"Niger"}'),
 
 select * from hull_info_json;
 
--- Заменил фамилию на свою.
 update hull_info_json
 set hull = jsonb_set(hull::jsonb, '{hull_manufacturer}', '"USA"', false)
 where hull->>'hull_manufacturer' = 'Russia';

@@ -35,7 +35,7 @@ class Request:
 
     # 2. Выполнить запрос с несколькими соединениями (JOIN).
     def multi_join_query(self):
-        print("\nНазвание танка и производитель с шириной кузова меньше 10.")
+        print("\nНазвание танка и производитель с шириной кузова меньше 30.")
         table = PrettyTable(['Название', 'Производитель'])
         table.add_rows(self._fetch_sql(sql.SQL("select P.hull_name as hull_name, Ch.hull_manufacturer as hull_manufacturer "
                         "from military_vehicles.public.hull Co join military_vehicles.public.hull Ch on Co.hull_id = Ch.hull_id "
@@ -106,6 +106,7 @@ class Request:
         create_temp_table = sql.SQL("select * "
                                     "into temp hull_temp "
                                     "from military_vehicles.public.hull;")
+
         get_hull_fuel_tanks = sql.SQL("select hull_id, hull_name, hull_fuel_tank "
                                    "from hull_temp "
                                    "order by hull_name "

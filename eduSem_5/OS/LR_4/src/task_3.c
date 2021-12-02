@@ -7,8 +7,8 @@
 int main()
 {
 	char *p_exec[NUMBER_OF_CHILDREN] = {
-		"meta/average/out/first_thread.o",
-		"meta/factorial/out/second_thread.o"
+		"meta/average/a.out",
+		"meta/factorial/a.out"
 	};
 
 	printf("\nРодитель parent:\

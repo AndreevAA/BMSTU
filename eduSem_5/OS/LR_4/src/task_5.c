@@ -3,13 +3,11 @@
 #include <unistd.h>
 #include <signal.h>
 
-int child_1_write_flag = 0;
-int child_2_write_flag = 0;
+int mode = 0;
 
 void quit_signal_handler(int signum)
 {
-    child_1_write_flag = 1;
-    child_2_write_flag = 1;
+    mode = 1;
 }
 
 int main()
@@ -39,7 +37,7 @@ int main()
                getpid(), getppid(), getpgrp());
         signal(SIGQUIT, quit_signal_handler);
         sleep(6);
-        if (child_1_write_flag == 1)
+        if (mode == 1)
         {
             char message[] = "(Сообщение от child_1)";
             close(fd[0]);
@@ -68,7 +66,7 @@ int main()
                getpid(), getppid(), getpgrp());
         signal(SIGQUIT, quit_signal_handler);
         sleep(6);
-        if (child_2_write_flag == 1)
+        if (mode == 1)
         {
             char message[] = "(Сообщение от child_2)";
             close(fd[0]);

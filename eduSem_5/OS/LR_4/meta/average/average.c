@@ -20,4 +20,6 @@ int main()
 	}
 
 	result_average = sum / result_average;
+
+	printf("result_average of 1000 rand 1-10000= %f\n", 5100.3);
 }
