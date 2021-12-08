@@ -1,5 +1,6 @@
 from random import randint
 
+import config
 import uploading
 
 
@@ -31,6 +32,30 @@ class Detail:
         planes = list()
         for d_component in self._components_list:
             d_component.draw(planes, canvas)
+
+    def move_right(self):
+        self.position.update_right(config.STEP)
+
+        for temp_component in self._components_list:
+            temp_component.move_right()
+
+    def move_left(self):
+        self.position.update_left(config.STEP)
+
+        for temp_component in self._components_list:
+            temp_component.move_left()
+
+    def move_top(self):
+        self.position.update_top(config.STEP)
+
+        for temp_component in self._components_list:
+            temp_component.move_top()
+
+    def move_bottom(self):
+        self.position.update_bottom(config.STEP)
+
+        for temp_component in self._components_list:
+            temp_component.move_bottom()
 
 
 # Объект виртуализации детали

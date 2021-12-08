@@ -22,6 +22,22 @@ class Component:
     def setNewPosition(self, position):
         self.position = position
 
+    def move_right(self):
+        for temp_vertex in self.position:
+            temp_vertex.update_right(config.STEP)
+
+    def move_left(self):
+        for temp_vertex in self.position:
+            temp_vertex.update_left(config.STEP)
+
+    def move_top(self):
+        for temp_vertex in self.position:
+            temp_vertex.update_top(config.STEP)
+
+    def move_bottom(self):
+        for temp_vertex in self.position:
+            temp_vertex.update_bottom(config.STEP)
+
 
 # Наследуемый объекта компоненты Куб
 class Cube(Component):
@@ -92,6 +108,8 @@ class Cube(Component):
         self._readPlanes()
 
         print(self._planes[0])
+
+        print(self._planes[0].vertex_1)
 
         for plane_number in range(6):
             canvas.create_polygon(self._planes[plane_number].vertex_1.x, self._planes[plane_number].vertex_1.y,
