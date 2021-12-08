@@ -10,7 +10,7 @@ task_2.exe : task_2.o
 	gcc -o app.exe task_2.o
 
 task_2.o :
-	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o task_2.o t_2.c
+	gcc -std=gnu99 -Wall -Werror -ggdb -pedantic -c -o task_2.o p_2.c
 
 clear :
 	rm *.o *exe
