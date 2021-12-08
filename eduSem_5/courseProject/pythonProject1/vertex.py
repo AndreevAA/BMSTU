@@ -25,3 +25,15 @@ class Vertex:
         self.draw()
         return self.canvas
 
+    def update_right(self, new_value):
+        self.x += new_value
+
+    def update_left(self, new_value):
+        self.x -= new_value
+
+    def update_top(self, new_value):
+        self.z += new_value
+
+    def update_bottom(self, new_value):
+        self.z -= new_value
+

@@ -16,6 +16,32 @@ class OperationData:
     def clear_all_details(self):
         self.details = list()
 
+    # Перемещение детали
+    def move_right_by_uid(self, uid):
+        for temp_number in range(len(self.details)):
+            if self.details[temp_number].uid == uid:
+                self.details[temp_number].move_right()
+                break
+
+    # Перемещение детали
+    def move_left_by_uid(self, uid):
+        for temp_number in range(len(self.details)):
+            if self.details[temp_number].uid == uid:
+                self.details[temp_number].move_left()
+                break
+
+    def move_top_by_uid(self, uid):
+        for temp_number in range(len(self.details)):
+            if self.details[temp_number].uid == uid:
+                self.details[temp_number].move_top()
+                break
+
+    def move_bottom_by_uid(self, uid):
+        for temp_number in range(len(self.details)):
+            if self.details[temp_number].uid == uid:
+                self.details[temp_number].move_bottom()
+                break
+
     # Очистка определенной детели из списка
     def clear_one_detail_by_uid(self, uid):
         number = 0

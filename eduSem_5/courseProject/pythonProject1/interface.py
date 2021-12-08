@@ -22,7 +22,6 @@ class Interface:
 
     # Запуск интерфейса
     def start(self):
-
         # Установка параметров окна
         self._setPreStartSetting()
 
@@ -74,6 +73,7 @@ class Controller(Interface):
         super().__init__()
 
         # Ярлык Деталь
+        self.controller_frame = None
         i_d_l = Label(text="Деталь", justify=LEFT)
         i_d_l.config(font=("Courier", 16, "bold"))
         i_d_l.grid(row=0, column=0, columnspan=2, pady=(20, 10), sticky=W)
@@ -104,10 +104,10 @@ class Controller(Interface):
         m_d_l.grid(row=5, column=0, columnspan=2, pady=(20, 10), sticky=W)
 
         # Блок перемещения детели
-        Button(text="Вверх", command=self.add_item).grid(row=6, column=0, columnspan=2)
-        Button(text="Влево", command=self.del_list).grid(row=7, column=0, columnspan=1)
-        Button(text="Вправо", command=self.del_list).grid(row=7, column=1, columnspan=1)
-        Button(text="Вниз", command=self.del_list).grid(row=8, column=0, columnspan=2)
+        Button(text="Вверх", command=self.move_top).grid(row=6, column=0, columnspan=2)
+        Button(text="Влево", command=self.move_left).grid(row=7, column=0, columnspan=1)
+        Button(text="Вправо", command=self.move_right).grid(row=7, column=1, columnspan=1)
+        Button(text="Вниз", command=self.move_bottom).grid(row=8, column=0, columnspan=2)
 
         # Ярлык поворота детали
         r_d_l = Label(text="Поворот", justify=LEFT)
@@ -127,6 +127,161 @@ class Controller(Interface):
 
         # Кнопка поворота
         Button(text="Повернуть", command=self.add_item).grid(row=14, column=0, columnspan=2)
+
+    def __update_box(self):
+        select = list(self._box.curselection())
+
+        if len(select) > 0:
+            select.reverse()
+            for temp_number in select:
+                # Информация о выбранной кликом детали
+                element_information = self._box.get(temp_number).split()
+
+                # Удаление детали из бокса
+                self._box.delete(temp_number)
+
+                self._box.insert(END, element_information)
+
+                # Обновление канваса
+                DrawingCanvas().update()
+
+    # Получение информации о элементе
+    def __get_element_information(self, __select, __element_number):
+        return self._box.get(__select[__element_number]).split()
+
+    # Проверки количество элементов выбора
+    def __is_selected_one(self):
+
+        error_status = config.ERROR_STATUS
+
+        # Получение выбора
+        __select = list(self._box.curselection())
+
+        if len(__select) == 1:
+            error_status = config.SUCCESS_STATUS
+
+        return error_status
+
+    def __is_selected_more_one(self):
+
+        error_status = config.ERROR_STATUS
+
+        # Получение выбора
+        __select = list(self._box.curselection())
+
+        if len(__select) > 1:
+            error_status = config.SUCCESS_STATUS
+
+        return error_status
+
+    def __is_selected_less_one(self):
+
+        error_status = config.ERROR_STATUS
+
+        # Получение выбора
+        __select = list(self._box.curselection())
+
+        if len(__select) == 0:
+            error_status = config.SUCCESS_STATUS
+
+        return error_status
+
+    # Наличие ошибок выбора
+    def __get_error_select_for_move_operation_status(self):
+
+        # Получение выбора
+        __select = list(self._box.curselection())
+
+        # Статус ошибки
+        __error_status = config.ERROR_STATUS
+
+        # Количество элементов выбора
+        if self.__is_selected_one() == config.SUCCESS_STATUS:
+            __error_status = config.SUCCESS_STATUS
+
+        if self.__is_selected_more_one() == config.SUCCESS_STATUS:
+            messagebox.showerror("Ошибка",
+                                 "Выбрано более одной фигуры!")
+            __error_status = config.ERROR_STATUS_MORE_ONE_DETAIL_SELECTED
+
+        if self.__is_selected_less_one() == config.SUCCESS_STATUS:
+            messagebox.showerror("Ошибка",
+                                 "При перемещение фигуры произошла ошибка: Фигура не выбрана. Выберите фигуру для перемещения!")
+            __error_status = config.ERROR_STATUS_LESS_ONE_DETAIL_SELECTED
+
+        return __error_status
+
+    def move_right(self):
+
+        # Статус ошибки по выбору для перемещения
+        __error_status = self.__get_error_select_for_move_operation_status()
+
+        # Операция выбора без ошибок
+        if __error_status == config.SUCCESS_STATUS:
+            # Выбор в списке
+            select = list(self._box.curselection())
+
+            # Информация о выбранной кликом детали
+            element_information = self._box.get(select[0]).split()
+
+            self.operation_data.move_right_by_uid(int(element_information[1]))
+
+        # Обновление канваса
+        DrawingCanvas().update()
+
+    def move_left(self):
+
+        # Статус ошибки по выбору для перемещения
+        __error_status = self.__get_error_select_for_move_operation_status()
+
+        # Операция выбора без ошибок
+        if __error_status == config.SUCCESS_STATUS:
+            # Выбор в списке
+            select = list(self._box.curselection())
+
+            # Информация о выбранной кликом детали
+            element_information = self._box.get(select[0]).split()
+
+            self.operation_data.move_left_by_uid(int(element_information[1]))
+
+        # Обновление канваса
+        DrawingCanvas().update()
+
+    def move_top(self):
+
+        # Статус ошибки по выбору для перемещения
+        __error_status = self.__get_error_select_for_move_operation_status()
+
+        # Операция выбора без ошибок
+        if __error_status == config.SUCCESS_STATUS:
+            # Выбор в списке
+            select = list(self._box.curselection())
+
+            # Информация о выбранной кликом детали
+            element_information = self._box.get(select[0]).split()
+
+            self.operation_data.move_top_by_uid(int(element_information[1]))
+
+        # Обновление канваса
+        DrawingCanvas().update()
+
+    def move_bottom(self):
+
+        # Статус ошибки по выбору для перемещения
+        __error_status = self.__get_error_select_for_move_operation_status()
+
+        # Операция выбора без ошибок
+        if __error_status == config.SUCCESS_STATUS:
+            # Выбор в списке
+            select = list(self._box.curselection())
+
+            # Информация о выбранной кликом детали
+            element_information = self._box.get(select[0]).split()
+
+            self.operation_data.move_bottom_by_uid(int(element_information[1]))
+
+        # Обновление канваса
+        DrawingCanvas().update()
 
     def add_item(self):
 
@@ -215,3 +370,6 @@ class DrawingCanvas(Interface):
 
         # Упаковка
         self.canvas.grid(row=0, column=3, columnspan=10, rowspan=10)
+
+
+
