@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2865272c-5285-487a-8745-cf9296b8a970" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../HW_1/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../HW_1/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LR_3/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LR_3/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LR_3/task_6.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LR_3/task_6.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LR_5/jsons/hull.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LR_5/jsons/hull.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LR_5/task_4.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LR_5/task_4.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LR_5/task_5.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LR_5/task_5.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LR_6/requests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LR_6/requests/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../EVM/LR_2/riscv-lab" beforeDir="false" afterPath="$PROJECT_DIR$/../../EVM/LR_2/riscv-lab" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="20rtHxjwf2N3f0bADwP0j2pAfW3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2865272c-5285-487a-8745-cf9296b8a970" name="Changes" comment="" />
+      <created>1636814452622</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636814452622</updated>
+      <workItem from="1636814455393" duration="38000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
