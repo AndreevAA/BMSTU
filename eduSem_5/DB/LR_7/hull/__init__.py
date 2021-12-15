@@ -1,3 +1,6 @@
+import config
+
+
 class Hull:
     hull_id = int()
     hull_name = str()
@@ -18,6 +21,13 @@ class Hull:
         self.hull_fuel_tank = hull_fuel_tank
 
     def get(self):
+        print({'hull_id': self.hull_id,
+               'hull_name': self.hull_name,
+               'hull_manufacturer': self.hull_manufacturer,
+               'hull_length': self.hull_length,
+               'hull_width': self.hull_width,
+               'hull_height': self.hull_height,
+               'hull_fuel_tank': self.hull_fuel_tank})
         return {
             'hull_id': self.hull_id,
             'hull_name': self.hull_name,
@@ -28,17 +38,26 @@ class Hull:
             'hull_fuel_tank': self.hull_fuel_tank
         }
 
+    def __str__(self):
+        return f"{self.hull_id : < 10}"
 
-def create_hull(file_name):
-    file = open(file_name, 'r')
+
+def create_hulls(file_name):
+    file = open(file_name)
     hulls = list()
 
+    k = 0
     for line in file:
-        arr = line.split(',')
-        arr[0] = int(arr[0])
-        arr[3] = int(arr[3])
-        arr[4] = int(arr[4])
-        arr[5] = int(arr[5])
+        if k > 0:
+            arr = line.split(',')
+            if int(arr[0]) < config.ID_LESS:
+                arr[0] = int(arr[0])
+                arr[3] = float(arr[3])
+                arr[4] = float(arr[4])
+                arr[5] = float(arr[5])
+                arr[6] = float(arr[6])
+
+                hulls.append(Hull(*arr).get())
+        k += 1
 
     return hulls
-
