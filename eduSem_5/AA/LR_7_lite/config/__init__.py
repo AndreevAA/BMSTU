@@ -1,0 +1,4 @@
+# ERROR STATUSES
+SS = 0
+ES = -1
+BS = -2
