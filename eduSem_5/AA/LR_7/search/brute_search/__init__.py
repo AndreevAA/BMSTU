@@ -9,6 +9,11 @@ class BruteSearch(search.Search):
     def __init__(self, _dictionary, _element, _record_name):
         super().__init__(_dictionary, _element)
 
+        self._dictionary = _dictionary
+        self._element = _element
+
+        print("BruteSearch: ", self._dictionary)
+
         # Отсечка времени при поиске записи
         s_time = process_time()
         self._find_record(_record_name)

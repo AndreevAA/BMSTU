@@ -13,6 +13,9 @@ class SegmentSearch(search.Search):
     def __init__(self, _dictionary, _element, _record_name, _segment_count):
         super().__init__(_dictionary, _element)
 
+        self._dictionary = _dictionary
+        self._element = _element
+
         # Разделение словаря
         self._divide_dict(_segment_count)
 
