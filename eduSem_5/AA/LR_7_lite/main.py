@@ -1,18 +1,7 @@
-from time import process_time
-from random import *
+import i_o
 
-import search
-
-
-def generate(count):
-    dictionary = []
-    type_contract = ["Двусторонний", "Многосторонний", "Договор подряда", "Договор возмездного оказания услсуг",
-                     "Купли-продажи", "Аренды"]
-    for i in range(count):
-        record = {'number': i + 1,
-                  'type': choice(type_contract)}
-        dictionary.append(record)
-    return dictionary
+import config
+import search, dictionary
 
 
 def brute(dictionary, number):
@@ -59,52 +48,23 @@ def segment(segment_list, number):
     return binary(segment_list[number % len(segment_list)], number)
 
 
-if __name__ == '__main__':
-
-    iteration = 100
-    segment_count = 2
-    dictionary = generate(1000)
-
-    print(dictionary)
+def main(iteration=100, segment_count=2, type_contract=config.type_contract):
+    data = dictionary.Dictionary(iteration, type_contract, show_generation=True)
 
     number = int(input("Введите номер договора: "))
-    print("Результат")
-    print("Поиск полным перебором:")
-    print(brute(dictionary, number))
-    print("Двоичный поиск:")
-    print(binary(dictionary, number))
-    print("Алгоритм с использованием частотного анализа:")
-    print(segment(divide_dict(dictionary, segment_count), number))
 
-    print()
-    print("Анализ времени(msc)")
-    print('Время поиска полным перебором:')
-    time = 0
-    for i in range(iteration):
-        t1 = process_time()
-        for j in range(1000):
-            search.BruteSearch(dictionary, j + 1)
-        t2 = process_time()
-        time += (t2 - t1) / 1000
-    print(time / iteration)
+    br_word, bi_word, se_word = search.BinarySearch(data.data, number).record, search.BinarySearch(data.data, number).record, \
+                                search.SegmentSearch(data.data, number, divide_dict(data.data, segment_count)).record
 
-    print('Время двоичного поиска:')
-    time = 0
-    for i in range(iteration):
-        t1 = process_time()
-        for j in range(1000):
-            search.BinarySearch(dictionary, j + 1)
-        t2 = process_time()
-        time += (t2 - t1) / 1000
-    print(time / iteration)
+    br_time, bi_time, se_time = search.get_time(iteration, data.data, config.BR_TYPE, segment_count), \
+                                search.get_time(iteration, data.data, config.BI_TYPE, segment_count), \
+                                search.get_time(iteration, data.data, config.SE_TYPE, segment_count)
 
-    print('Время поиска с помощью алгоритма с использование частотного анализа:')
-    time = 0
-    segment_list = divide_dict(dictionary, segment_count)
-    for i in range(iteration):
-        t1 = process_time()
-        for j in range(1000):
-            search.SegmentSearch(dictionary, j + 1, segment_list)
-        t2 = process_time()
-        time += (t2 - t1) / 1000
-    print(time / iteration)
+    i_o.IO(
+        br_word, bi_word, se_word,
+        br_time, bi_time, se_time
+    ).out_searching_results()
+
+
+if __name__ == '__main__':
+    main()
