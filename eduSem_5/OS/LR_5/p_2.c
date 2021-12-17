@@ -1,12 +1,11 @@
-#include <sys/shm.h>
 #include <sys/sem.h>
-#include <fcntl.h>
-#include <unistd.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
-#include <signal.h>
+#include <time.h>
+#include <unistd.h>
 
 #define ACTIVE_WRITER 	0
 #define WAITING_WRITERS	1
@@ -14,9 +13,29 @@
 #define WAITING_READERS 3 
 
 #define WRITERS_NUMBER 	3
-#define READERS_NUMBER 		5
+#define READERS_NUMBER 	5
+
+
+struct sembuf start_read[5] = {{WAITING_READERS, 1, SEM_UNDO}, 
+                               {WAITING_WRITERS, 0, SEM_UNDO}, 
+                               {ACTIVE_WRITER, 0, SEM_UNDO}, 
+                               {WAITING_READERS, -1, SEM_UNDO}, 
+                               {ACTIVE_READERS, 1, SEM_UNDO}};
+
+struct sembuf stop_read[1] = {{ACTIVE_READERS, -1, SEM_UNDO}};
+
+struct sembuf start_write[5] = {{WAITING_WRITERS, 1, SEM_UNDO}, 
+                                {ACTIVE_WRITER, 0, SEM_UNDO}, 
+                                {ACTIVE_READERS, 0, SEM_UNDO}, 
+                                {WAITING_WRITERS, -1, SEM_UNDO}, 
+                                {ACTIVE_WRITER, 1, SEM_UNDO}};
+
+struct sembuf stop_write[1] = {{ACTIVE_WRITER, -1, SEM_UNDO}};
 
 int *shm;
+
+void writer(const int semid, const int index);
+void reader(const int semid, const int index);
 
 int main()
 {
@@ -26,22 +45,37 @@ int main()
 	pid_t pid[WRITERS_NUMBER + READERS_NUMBER];
 	const int PERMS = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
-	if ((semid == semget(IPC_PRIVATE, 4, IPC_CREATE | PERMS)) == -1)
-	{
-		perror("Semget failed.\n");
-		exit(1);
-	}  
+	if ((semid = semget(IPC_PRIVATE, 4, IPC_CREAT | PERMS)) == -1)
+    {
+        perror("Semget failed.\n");
+	    exit(1);
+    } 
 
-	ctl_ar = semctl(semid, ACTIVE_READERS, SETVAl, 0);
-	ctl_wr = semctl(semid, WAITING_READERS, SETVAl, 0);
-	ctl_aw = semctl(semid, ACTIVE_WRITER, SETVAl, 0);
-	ctl_ww = semctl(semid, WAITING_WRITERS, SETVAl, 0);
+	ctl_ar = semctl(semid, ACTIVE_READERS, SETVAL, 0);
+    ctl_wr = semctl(semid, WAITING_READERS, SETVAL, 0);
+    ctl_aw = semctl(semid, ACTIVE_WRITER, SETVAL, 0);
+    ctl_ww = semctl(semid, WAITING_WRITERS, SETVAL, 0);
 
-	if (ctt_ar == -1 || ctl_wr == -1 || ctl_aw == -1 || ctl_ww == -1)
+	int ctl_status = ctl_ar;
+
+	if (ctl_status != -1)
+		ctl_status = ctl_wr;
+	if (ctl_status != -1)
+		ctl_status = ctl_aw;
+	if (ctl_status != -1)
+		ctl_status = ctl_ww;
+
+	if (ctl_status == -1)
 	{
 		perror("Semget failed.\n");
 		exit(2);
 	}
+
+	if ((shmid = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | PERMS)) == -1)
+    {
+        perror("Shmget failed.\n");
+        exit(5);
+    }
 
 	shm = shmat(shmid, 0, 0);
 	if (*shm == - 1)
@@ -101,7 +135,7 @@ void writer(const int semid, const int index)
 	sleep(rand() % 10);
 	if (semop(semid, start_write, 5) == -1)
 	{
-		perror("Semop failed.\n")
+		perror("Semop failed.\n");
 		exit(5);
 	}
 
@@ -122,13 +156,13 @@ void reader(const int semid, const int index)
 	sleep(rand() % 10);
 	if (semop(semid, start_read, 5) == -1)
 	{
-		perror("Semop failed.\n")
+		perror("Semop failed.\n");
 		exit(8);
 	}
 
 	(*shm)++;
 
-	printf("Читатель %d прочитал %d\n", index - WRITERS_NUM + 1, *shm);
+	printf("Читатель %d прочитал %d\n", index - WRITERS_NUMBER + 1, *shm);
 
 	if (semop(semid, stop_read, 1) == -1)
 	{
