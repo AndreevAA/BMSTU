@@ -1,11 +1,8 @@
 from time import process_time
 from random import *
 
-<<<<<<< HEAD
-=======
 import search
 
->>>>>>> b9983316979122d457554e3c7715878b253c6026
 
 def generate(count):
     dictionary = []
@@ -86,11 +83,7 @@ if __name__ == '__main__':
     for i in range(iteration):
         t1 = process_time()
         for j in range(1000):
-<<<<<<< HEAD
-            brute(dictionary, j + 1)
-=======
             search.BruteSearch(dictionary, j + 1)
->>>>>>> b9983316979122d457554e3c7715878b253c6026
         t2 = process_time()
         time += (t2 - t1) / 1000
     print(time / iteration)
@@ -100,11 +93,7 @@ if __name__ == '__main__':
     for i in range(iteration):
         t1 = process_time()
         for j in range(1000):
-<<<<<<< HEAD
-            binary(dictionary, j + 1)
-=======
             search.BinarySearch(dictionary, j + 1)
->>>>>>> b9983316979122d457554e3c7715878b253c6026
         t2 = process_time()
         time += (t2 - t1) / 1000
     print(time / iteration)
@@ -115,14 +104,7 @@ if __name__ == '__main__':
     for i in range(iteration):
         t1 = process_time()
         for j in range(1000):
-<<<<<<< HEAD
-            segment(segment_list, j + 1)
-        t2 = process_time()
-        time += (t2 - t1) / 1000
-    print(time / iteration)
-=======
             search.SegmentSearch(dictionary, j + 1, segment_list)
         t2 = process_time()
         time += (t2 - t1) / 1000
     print(time / iteration)
->>>>>>> b9983316979122d457554e3c7715878b253c6026
