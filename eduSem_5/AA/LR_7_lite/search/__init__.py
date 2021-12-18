@@ -1,5 +1,33 @@
 # Base object
+from time import process_time
+
 import config
+
+
+def divide_dict(dictionary, segment_count):
+    segment_list = [[] for _ in range(segment_count)]
+    for record in dictionary:
+        segment_list[record['number'] % segment_count].append(record)
+    return segment_list
+
+
+def get_time(iteration, dictionary, s_type, segment_count):
+    segment_list = divide_dict(dictionary, segment_count)
+
+    time = 0
+    for i in range(iteration):
+        t1 = process_time()
+        for j in range(1000):
+            if s_type == config.BR_TYPE:
+                BruteSearch(dictionary, j + 1)
+            elif s_type == config.BI_TYPE:
+                BinarySearch(dictionary, j + 1)
+            elif s_type == config.SE_TYPE:
+                SegmentSearch(dictionary, j + 1, segment_list)
+        t2 = process_time()
+        time += (t2 - t1) / 1000
+
+    return time / iteration
 
 
 class Search:
@@ -38,6 +66,7 @@ class BruteSearch(Search):
         self._record = None
         return config.BS
 
+
 class BinarySearch(Search):
 
     def __init__(self, dictionary, number):
@@ -71,6 +100,7 @@ class BinarySearch(Search):
         self._record = self.dict[mid]
         return config.BS
 
+
 class SegmentSearch(Search):
 
     _segment_list = None
@@ -87,3 +117,4 @@ class SegmentSearch(Search):
 
         self._record = BinarySearch(self._segment_list[self.number % len(self._segment_list)], self.number).record
         return config.BS
+
