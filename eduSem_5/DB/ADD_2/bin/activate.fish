@@ -57,7 +57,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV '/Users/andreevalexander/BMSTU/eduSem_5/DB/LR_2_additional'
+set -gx VIRTUAL_ENV '/Users/andreevalexander/BMSTU/eduSem_5/DB/additional_2'
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (echo $FISH_VERSION | head -c 1) -lt 3
