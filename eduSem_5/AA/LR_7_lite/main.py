@@ -21,5 +21,7 @@ def main(iteration=100, segment_count=2, type_contract=config.type_contract):
     ).out_searching_results()
 
 
+
+
 if __name__ == '__main__':
     main()
