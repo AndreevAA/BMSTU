@@ -38,7 +38,7 @@ dmesg | tail -n60 | grep MD
 MODULE_LICENSE("GPL"); 
 
 // позволяет сообщить ядру автора модуля, только для информационных целей
-MODULE_AUTHOR("Tursunov Jasur"); 
+MODULE_AUTHOR("Andreev Alexander"); 
 
 // __init - действие, на которое в системе надо обратить внимание
 // __init используются для обозначения функций, встраиваемых в ядро, 
