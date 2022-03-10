@@ -1,183 +1,155 @@
-#include <errno.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/* Написать программу, которая создавала бы процесс-демон с помощью функций Demonize, Already running, Main  */ 
 #include <syslog.h>
+#include <stdlib.h>
+#include <fcntl.h>
 #include <sys/resource.h>
-#include <sys/stat.h>
-#include <time.h>
-#include <unistd.h>
+#include <sys/stat.h> //umask
+#include <unistd.h> //setsid
+#include <stdio.h> //perror
+#include <signal.h> //sidaction
+#include <string.h> 
+#include <errno.h> 
+#include <sys/file.h>
 
-#define SLEEP_TIME 5
+#define LOCKFILE "/var/run/daemon.pid" //чтобы создавать в этой директории файлы нужны права суперпользователя
+#define LOCKMODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) 
 
-/*
- * ps -ajx
- *
- * Демон — лидер группы и сессии, не имеет управляющего терминала.
- * Пользователь не должен влиять на него из командной строки.
- *
- * PROCESS STATE CODES:
- * D — uninterruptible sleep (usually IO)
- * I — Idle kernel thread
- * R — running or runnable (on run queue)
- * S — interruptible sleep (waiting for an event to complete)
- * T — stopped by job control signal
- * t — stopped by debugger during the tracing
- * W — paging (not valid since the 2.6.xx kernel)
- * X — dead (should never be seen)
- * Z — defunct ("zombie") process, terminated but not reaped by its parent
- *
- * Какой сон можно прервать?
- * Если процесс блокирован на каком-то событии, такой сон можно прервать.
- * (Нельзя прервать, если процесс блокирован на в/в)
- */
-
-void syslog_quit(const char *prompt) {
-    syslog(LOG_ERR, "Unable to %s: %m", prompt);
-    exit(EXIT_FAILURE);
+int lockfile(int fd)
+{
+    struct flock fl;
+    fl.l_type = F_WRLCK;
+    fl.l_start = 0;
+    fl.l_whence = SEEK_SET;
+    fl.l_len = 0;
+    return(fcntl(fd, F_SETLK, &fl));
 }
 
-void fsyslog_quit(const char *format, ...) {
-    char prompt[256];
+int already_running(void)
+{
 
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(prompt, sizeof prompt, format, ap);
-    va_end(ap);
+    syslog(LOG_ERR, "Проверка на многократный запуск!");
 
-    syslog_quit(prompt);
-}
-
-#define LOCKFILE "/var/run/daemon.pid"
-#define LOCKMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
-// S_IRUSR — владелец может читать
-// S_IWUSR — владелец может писать
-// S_IRGRP — группа-владелец может читать
-// S_IROTH — все остальные могут читать
-
-int lockfile(int fd) {
-    struct flock fl = {
-        .l_type = F_WRLCK,      // Режим блокировки (F_WRLCK — блокировка записи)
-        .l_start = 0,           // Относительное смещение в байтах, зависит от l_whence
-        .l_whence = SEEK_SET,   // Считать смещение от начала файла
-        .l_len = 0              // Длина блокируемой области в байтах (0 — до конца файла)
-    };
-    return fcntl(fd, F_SETLK, &fl); // Установить блокировку
-}
-
-int already_running(void) {
-    const int fd = open(LOCKFILE, O_RDWR|O_CREAT, LOCKMODE);
-    if (fd == -1) {
-        fsyslog_quit("open %s", LOCKFILE);
-    }
-    if (lockfile(fd) == -1) {
-        if (errno == EACCES || errno == EAGAIN) {
-            close(fd);
-            return EXIT_FAILURE;
-        }
-        fsyslog_quit("lock %s", LOCKFILE);
-    }
+    int fd;
     char buf[16];
+
+    fd = open(LOCKFILE, O_RDWR | O_CREAT, LOCKMODE);
+
+    if (fd < 0)
+    {
+        syslog(LOG_ERR, "невозможно открыть %s: %s!", LOCKFILE, strerror(errno));
+        exit(1);
+    }
+
+    syslog(LOG_WARNING, "Lock-файл открыт!");
+
+    // if (lockfile(fd) < 0)
+    // {
+    //     if (errno == EACCES || errno == EAGAIN)
+    //     {
+    //         close(fd);
+    //         exit(1);
+    //     }
+
+    //     syslog(LOG_ERR, "невозможно установить блокировку на %s: %s!\n", LOCKFILE, strerror(errno));
+    //     exit(1);
+    // }
+    flock(fd, LOCK_EX | LOCK_UN);
+    if (errno == EWOULDBLOCK) {
+        syslog(LOG_ERR, "невозможно установить блокировку на %s: %s!", LOCKFILE, strerror(errno));
+        close(fd);
+        exit(1);
+    }
+
+    syslog(LOG_WARNING, "Записываем PID!");
+
     ftruncate(fd, 0);
-    sprintf(buf, "%ld", (long) getpid());
+    sprintf(buf, "%ld", (long)getpid());
     write(fd, buf, strlen(buf) + 1);
-    return EXIT_SUCCESS;
+
+    syslog(LOG_WARNING, "Записали PID!");
+     
+    return 0;
 }
 
-void daemonize(const char *cmd) {
-    // Инициализировать файл журнала
-    // (ALERT: У Раго это сделано в конце функции)
-    openlog(cmd, LOG_CONS, LOG_DAEMON);
+void daemonize(const char *cmd)
+{
+    int fd0, fd1, fd2;
+    pid_t pid;
+    struct rlimit rl;
+    struct sigaction sa;
 
-    // 1. Сбросить маску режима создания файлов. Маска наследуется и может
-    // маскировать некоторые биты прав доступа.
+    // 1. Сбрасывание маски режима создания файла 
     umask(0);
 
-    // Получить максимально возможный номер дескриптора файла.
-    // (ALERT: Ещё раз, ничего перемещать нельзя, Н. Ю. банит)
-    struct rlimit rl;
-    if (getrlimit(RLIMIT_NOFILE, &rl) == -1) {
-        syslog_quit("getrlimit");
-    }
+    // 2. Получение максимального возможного номера дискриптора 
+    if (getrlimit(RLIMIT_NOFILE, &rl) < 0)
+        perror("Невозможно получить максимальный номер дискриптора!\n");
+    
+    // 3. Стать лидером новой сессии, чтобы утратить управляющий терминал 
+    if ((pid = fork()) < 0)
+        perror("Ошибка функции fork!\n");
+    else if (pid != 0) //родительский процесс
+        exit(0);
+    
+    setsid();
 
-    // 2. Вызвать функцию fork и завершить родительский процесс. Этим самым
-    // мы гарантируем, что дочерний процесс не будет являться лидером
-    // группы, а это необходимое условие для вызова функции setsid
-    const pid_t pid = fork();
-    if (pid == -1) {
-        syslog_quit("fork");
-    } else if (pid != 0) {
-        exit(EXIT_SUCCESS);
-    }
-
-    // Обеспечить невозможность обретения управляющего терминала в будущем.
-    // SIGHUP — сигнал, посылаемый процессу для уведомления о потере
-    // соединения с управляющим терминалом пользователя.
-    struct sigaction sa;
+    // 4. Обеспечение невозможности обретения терминала в будущем 
     sa.sa_handler = SIG_IGN;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
-    if (sigaction(SIGHUP, &sa, NULL) == -1) {
-        syslog_quit("ignore SIGHUP");
-    }
+    if (sigaction(SIGHUP, &sa, NULL) < 0)
+        perror("Невозможно игнорировать сигнал SIGHUP!\n");
 
-    // 3. Создать новую сессию, при этом процесс становится (а) лидером
-    // новой сессии (б) лидером новой группы процессов и (в) лишается
-    // управляющего терминала
-    if (setsid() == -1) {
-        syslog_quit("setsid");
-    }
+    // if ((pid = fork()) < 0)
+    //     perror("Ошибка функции fork!\n");
+    // else if (pid != 0) //родительский процесс
+    //     exit(0);
 
-    // 4. Сделать корневой каталог текущим рабочим каталогом
-    if (chdir("/") == -1) {
-        syslog_quit("chdir");
-    }
-
-    // 5. Закрыть все открытые файловые дескрипторы. Это ненужные процессу-
-    // демону файловые дескрипторы, закрытию которых он может препятствовать
-    //
-    // The value RLIM_INFINITY, defined in <sys/resource.h>, is considered
-    // to be larger than any other limit value. If a call to getrlimit()
-    // returns RLIM_INFINITY for a resource, it means the implementation
-    // does not enforce limits on that resource. Specifying RLIM_INFINITY as
-    // any resource limit value on a successful call to setrlimit() inhibits
-    // enforcement of that resource limit.
-    // (https://pubs.opengroup.org/onlinepubs/7908799/xsh/getrlimit.html)
-    if (rl.rlim_max == RLIM_INFINITY) {
+    // 5. Назначить корневой каталог текущим рабочим каталогом, 
+    // чтобы впоследствии можно было отмонтировать файловую систему 
+    if (chdir("/") < 0)
+        perror("Невозможно назначить корневой каталог текущим рабочим каталогом!\n");
+    
+    // 6. Зактрыть все файловые дескрипторы 
+    if (rl.rlim_max == RLIM_INFINITY)
         rl.rlim_max = 1024;
-    }
-    for (rlim_t fd = 0; fd < rl.rlim_max; ++fd) {
-        close(fd);
+    for (int i = 0; i < rl.rlim_max; i++)
+        close(i);
+
+    // 7. Присоеденить файловые дескрипторы 0, 1, 2 к /dev/null
+    fd0 = open("/dev/null", O_RDWR);
+    fd1 = dup(0); //копируем файловый дискриптор
+    fd2 = dup(0);
+
+    // 8. Инициализировать файл журнала
+    openlog(cmd, LOG_CONS, LOG_DAEMON);
+    if (fd0 != 0 || fd1 != 1 || fd2 != 2)
+    {
+        syslog(LOG_ERR, "ошибочные файловые дескрипторы %d %d %d\n", fd0, fd1, fd2);
+        exit(1);
     }
 
-    // 6. Присоединить файловые дескрипторы 0, 1 и 2 к /dev/null.
-    //
-    // Для того, чтобы можно было использовать функции стандартных библиотек
-    // и они не выдавали ошибки.
-    if (open("/dev/null", O_RDWR) != 0) {
-        syslog_quit("open /dev/null");
-    }
-    (void) dup(0);
-    (void) dup(1);
+    syslog(LOG_WARNING, "Демон запущен!");
+    
 }
 
-int main(void) {
-    daemonize("DAEMON");
-
-    if (already_running() != EXIT_SUCCESS) {
-        syslog(LOG_ERR, "ALREADY RUNNING");
-        exit(EXIT_FAILURE);
+int main() 
+{
+    daemonize("tursunovJr");
+    // 9. Блокировка файла для одной существующей копии демона 
+    if (already_running() != 0)
+    {
+        syslog(LOG_ERR, "Демон уже запущен!\n");
+        exit(1);
     }
 
-    time_t t = time(NULL);
-    syslog(LOG_WARNING, "STARTS %s", asctime(localtime(&t)));
-
-    for (;;) {
-        t = time(NULL);
-        syslog(LOG_INFO, "current time is %s", asctime(localtime(&t)));
-        sleep(SLEEP_TIME);
+    syslog(LOG_WARNING, "Проверка пройдена!");
+    while(1) 
+    {
+        syslog(LOG_INFO, "Демон!");
+        sleep(5);
     }
+
+
 }
+
