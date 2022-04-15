@@ -49,7 +49,9 @@ static int dopath(const char *filename, int recursion_depth)
 	if (strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
 		return OK;
 
-	//Вызов lstat() идентичен stat(), но в случае, если filename является символьной ссылкой, то возвращается информация о самой ссылке, а не о файле, на который она указывает; возвращает информацию об указанном файле
+	//Вызов lstat() идентичен stat(), но в случае, если filename является 
+	// символьной ссылкой, то возвращается информация о самой ссылке, а не о файле, 
+	// на который она указывает; возвращает информацию об указанном файле
 	if (lstat(filename, &statbuf) < 0) {
 		switch(errno)
 		{
@@ -90,33 +92,28 @@ static int dopath(const char *filename, int recursion_depth)
 	for (int i = 0; i < recursion_depth; ++i)
 		printf("       |");
 	
+	// statbuf.st_ino
 
 	/* печатаем имя файла */
 	// s_isdir проверяет, является ли данный файл каталогом
 	if (S_ISDIR(statbuf.st_mode) == 0) {
-		printf("%s\n", filename);
+		printf("%s (inode = %llu)\n", filename, statbuf.st_ino);
 		return OK;
 	}
 
 	/* каталог */
-	printf("%s\n", filename);
+	printf("%s (inode = %llu)\n", filename, statbuf.st_ino);
 	if ((dp = opendir(filename)) == NULL) {
 		printf("couldn't open directory '%s'\n", filename);
 		return ERROR_OPEN_DIR;
 	}
 
-	// chdir() изменяет текущий рабочий каталог вызывающего процесса на каталог, указанный в path; PATH — переменная окружения, представляющая собой набор каталогов, в которых расположены исполняемые файлы; нужен для коротких имен
-	
 	chdir(filename);
 	
-	// для каждого элемента каталога
-	// Функция readdir() возвращает указатель на следующую запись каталога в структуре dirent, прочитанную из потока каталога. Каталог указан в dir. Функция возвращает NULL по достижении последней записи или если была обнаружена ошибка.
 	while ((dirp = readdir(dp)) != NULL) 
 		dopath(dirp -> d_name, recursion_depth + 1);
 	chdir("..");
 
-	//закрывает поток каталога и освобождает ресурсы, выделенные ему. 
-	//Она возвращает 0 в случае успеха и -1 при наличии ошибки.
 	closedir(dp);
 
 	return OK;
